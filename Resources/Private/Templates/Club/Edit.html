@@ -1,0 +1,20 @@
+<f:layout name="Default" />
+
+<f:section name="main">
+	<f:flashMessages renderMode="div" class="info-box2" />
+
+	<f:render partial="FormErrors" arguments="{object:Club}"/>
+
+	<f:form action="update" enctype="multipart/form-data" name="club" object="{club}" class="extform withinfo">
+		<legend>
+			<f:translate key="edit"/>
+		</legend>
+		<div class="floatright clearfix marginbottom">
+			<f:cObject typoscriptObjectPath="lib.feformdocumentation"/>
+		</div>
+		<f:render partial="Club/FormFields" arguments="{_all}" />
+		<div class="powermail_fieldwrap powermail_fieldwrap_submit">
+			<f:form.submit value="Save" />
+		</div>
+	</f:form>
+</f:section>

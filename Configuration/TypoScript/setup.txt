@@ -1,0 +1,54 @@
+plugin.tx_clubdirectory {
+	view {
+		templateRootPath = {$plugin.tx_clubdirectory.view.templateRootPath}
+		partialRootPath = {$plugin.tx_clubdirectory.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_clubdirectory.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_clubdirectory.persistence.storagePid}
+		updateReferenceIndex = 1
+		classes{
+			JWeiland\Clubdirectory\Domain\Model\FileReference {
+				mapping {
+					tableName = sys_file_reference
+				}
+			}
+		}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		rewrittenPropertyMapper = 1
+	}
+	settings {
+		pidOfMaps2Plugin = {$plugin.tx_clubdirectory.settings.pidOfMaps2Plugin}
+		pidOfDetailPage = {$plugin.tx_clubdirectory.settings.pidOfDetailPage}
+		list {
+			image {
+				width = 50c
+				height= 50c
+				minWidth = 50
+				maxWidth = 50
+				minHeight = 50
+				maxHeight = 50
+			}
+		}
+		pageBrowser {
+			itemsPerPage = {$plugin.tx_clubdirectory.settings.pageBrowser.itemsPerPage}
+			insertAbove = {$plugin.tx_clubdirectory.settings.pageBrowser.insertAbove}
+			insertBelow = {$plugin.tx_clubdirectory.settings.pageBrowser.insertBelow}
+			maximumNumberOfLinks = {$plugin.tx_clubdirectory.settings.pageBrowser.maximumNumberOfLinks}
+		}
+	}
+}
+
+plugin.tx_clubdirectory._CSS_DEFAULT_STYLE (
+	textarea.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+)

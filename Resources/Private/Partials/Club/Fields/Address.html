@@ -1,0 +1,45 @@
+{namespace maps2=JWeiland\Maps2\ViewHelpers}
+
+<div class="powermail_fieldwrap">
+	<label for="title_{index}" class="powermail_label"><f:translate key="tx_clubdirectory_domain_model_address.title" /></label>
+	<div class="hidden hidden_title_{index}">
+		<f:translate key="cshtitle_{index}"/>
+	</div>
+	<span class="csh" title="Hinweis">i</span>
+	<f:form.select property="title" id="title_{index}" class="powermail_field powermail_select" options="{addressTitles}" size="1" optionValueField="value" optionLabelField="label" sortByOptionLabel="1" />
+</div>
+<div class="powermail_fieldwrap">
+	<label for="street_{index}" class="powermail_label"><f:translate key="tx_clubdirectory_domain_model_address.street" /></label>
+	<f:form.textfield property="street" id="street_{index}" class="powermail_field powermail_input" />
+</div>
+<div class="powermail_fieldwrap">
+	<label for="housenumber_{index}" class="powermail_label"><f:translate key="tx_clubdirectory_domain_model_address.houseNumber" /></label>
+	<f:form.textfield property="houseNumber" id="housenumber_{index}" class="powermail_field powermail_input" />
+</div>
+<div class="powermail_fieldwrap">
+	<label for="zip_{index}" class="powermail_label"><f:translate key="tx_clubdirectory_domain_model_address.zip" /></label>
+	<f:form.textfield property="zip" id="zip_{index}" class="powermail_field powermail_input" />
+</div>
+<div class="powermail_fieldwrap">
+	<label for="city_{index}" class="powermail_label"><f:translate key="tx_clubdirectory_domain_model_address.city" /></label>
+	<f:form.textfield property="city" id="city_{index}" class="powermail_field powermail_input" />
+</div>
+<div class="powermail_fieldwrap">
+	<label for="telephone_{index}" class="powermail_label"><f:translate key="tx_clubdirectory_domain_model_address.telephone" /></label>
+	<f:form.textfield property="telephone" id="telephone_{index}" class="powermail_field powermail_input" />
+</div>
+<div class="powermail_fieldwrap">
+	<label for="fax_{index}" class="powermail_label"><f:translate key="tx_clubdirectory_domain_model_address.fax" /></label>
+	<f:form.textfield property="fax" id="fax_{index}" class="powermail_field powermail_input" />
+</div>
+<div class="powermail_fieldwrap">
+	<label for="barrierfree_{index}" class="powermail_label"><f:translate key="tx_clubdirectory_domain_model_address.barrierFree" /></label>
+	<f:form.checkbox property="barrierFree" id="barrierfree_{index}" class="powermail_field powermail_check" value="1" />
+</div>
+<f:if condition="{address.txMaps2Uid}">
+	<div class="powermail_fieldwrap">
+		<label class="powermail_label">MAP</label>
+		<input type="hidden" name="tx_clubdirectory_clubdirectory[club][addresses][{index}][__identity]" value="{address.uid}" />
+		<maps2:widget.editPoi id="maps2_{index}" poiCollection="{address.txMaps2Uid}" prepend="tx_clubdirectory_clubdirectory[club][addresses][{index}]" mapOptions="{mapTypeId: 'google.maps.MapTypeId.ROADMAP'}" />
+	</div>
+</f:if>

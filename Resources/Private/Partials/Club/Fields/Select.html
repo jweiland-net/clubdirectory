@@ -1,0 +1,13 @@
+<f:form.select
+	property="{field}"
+	class="powermail_field powermail_select"
+	id="{field}"
+	options="{options}"
+	size="{f:if(condition: size, then: size, else: 1)}"
+	multiple="{f:if(condition: multiple, then: 1, else: 0)}"
+	optionValueField="uid"
+	optionLabelField="title"
+	sortByOptionLabel="1"
+	prependOptionLabel="{f:translate(key: 'pleaseChoose')}"
+	prependOptionValue=""
+/>

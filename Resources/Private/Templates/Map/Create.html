@@ -1,0 +1,90 @@
+<p>Hallo,</p>
+<p>hier die Daten des neu angelegten Datensatzes:</p>
+<table>
+	<tr>
+		<th>Eigenschaft</th>
+		<th>Wert</th>
+	</tr>
+	<tr>
+		<td>UID</td>
+		<td>{club.uid}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.title" /></td>
+		<td>{club.title}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.sortTitle" /></td>
+		<td>{club.sortTitle}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.activity" /></td>
+		<td>{club.actitity}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.contactPerson" /></td>
+		<td>{club.contactPerson}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.contactTimes" /></td>
+		<td>{club.contactTimes}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.email" /></td>
+		<td>{club.email}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.website" /></td>
+		<td>{club.website}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.members" /></td>
+		<td>{club.members}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.clubHome" /></td>
+		<td>{club.clubHome}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.description" /></td>
+		<td>{club.description}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.facebook" /></td>
+		<td>{club.facebook}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.twitter" /></td>
+		<td>{club.twitter}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.google" /></td>
+		<td>{club.google}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.tags" /></td>
+		<td>{club.tags}</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.categories" /></td>
+		<td>
+			<ul>
+				<f:for each="{club.categories}" as="category">
+					<li>{category.title}</li>
+				</f:for>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td><f:translate key="tx_clubdirectory_domain_model_club.addresses" /></td>
+		<td>
+			<f:for each="{club.addresses}" as="address">
+				<div><f:translate key="tx_clubdirectory_domain_model_address.title.{address.title}"/>:<br />
+					{address.street} {address.houseNumber}<br />
+					{address.zip} {address.city}<br />
+					{address.telephone}<br />
+					{address.fax}</div>
+			</f:for>
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,60 @@
+{namespace club=JWeiland\Clubdirectory\ViewHelpers}
+
+<script type="text/javascript">
+	jQuery(function () {
+		/* <![CDATA[ */
+		// initialize dialog box
+		jQuery("#dialogHint").dialog({
+			autoOpen: false,
+			height: 150,
+			width: 300,
+			modal: true
+		});
+
+		// show dialog box on click
+		jQuery( "span.csh" )
+			.css( "cursor", "pointer")
+			.click(function() {
+				var id = jQuery( this ).nextAll( ":input:not(:hidden)" ).attr( "id" );
+				jQuery( "#dialogHint p" ).text(jQuery( "div.hidden_" + id ).text());
+				jQuery( "#dialogHint" ).dialog( "open" );
+			});
+		/* ]]> */
+	});
+</script>
+<f:render partial="Club/Field" arguments="{field: 'title', type: 'text', mandatory: 'yes'}" />
+<f:render partial="Club/Field" arguments="{field: 'sortTitle', type: 'text', mandatory: 'yes'}" />
+<f:render partial="Club/Field" arguments="{field: 'categories', type: 'select', options: categories, size: 5, multiple: 1, css: 'selectmultiple'}" />
+<f:render partial="Club/Field" arguments="{field: 'activity', type: 'textarea'}" />
+<f:render partial="Club/Field" arguments="{field: 'description', type: 'textarea'}"/>
+<div class="csc-frame-rulerAfter clearer"></div>
+<f:render partial="Club/Field" arguments="{field: 'contactPerson', type: 'text'}"/>
+<f:render partial="Club/Field" arguments="{field: 'contactTimes', type: 'text'}"/>
+<f:render partial="Club/Field" arguments="{field: 'email', type: 'text'}"/>
+<f:render partial="Club/Field" arguments="{field: 'website', type: 'text'}"/>
+<f:render partial="Club/Field" arguments="{field: 'members', type: 'text'}"/>
+<f:render partial="Club/Field" arguments="{field: 'clubHome', type: 'text'}"/>
+<div class="csc-frame-rulerAfter clearer"></div>
+<label class="powermail_label marginbottom2"><strong><f:translate key="tx_clubdirectory_domain_model_club.addresses"/>:</strong></label>
+<f:for each="{0: 0, 1: 1, 2: 2}" as="number" iteration="numberIterator">
+	<f:for each="{club.addresses}" as="address" iteration="iterator">
+		<f:if condition="{iterator.index}=={number}">
+			<club:form.objectContext parentProperty="addresses" object="{address}">
+				<f:render partial="Club/Fields/Address" arguments="{addressTitles: addressTitles, address: address, index: iterator.index}" />
+			</club:form.objectContext>
+		</f:if>
+	</f:for>
+	<div class="csc-frame-rulerAfter clearer"></div>
+</f:for>
+
+<f:comment>Neue Felder</f:comment>
+<f:render partial="Club/Field" arguments="{field: 'facebook', type: 'text'}"/>
+<f:render partial="Club/Field" arguments="{field: 'twitter', type: 'text'}"/>
+<f:render partial="Club/Field" arguments="{field: 'google', type: 'text'}"/>
+<f:render partial="Club/Field" arguments="{field: 'tags', type: 'text'}"/>
+<div class="csc-frame-rulerAfter clearer"></div>
+<f:render partial="Club/Field" arguments="{field: 'logo', type: 'logo', club: club, css: 'file'}" />
+<f:render partial="Club/Field" arguments="{field: 'images', type: 'images', club: club, numbers: {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}, css: 'file'}" />
+<div id="dialogHint" title="{f:translate(key: 'hint')}">
+	<p>{settings.textForHint}</p>
+</div>

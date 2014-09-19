@@ -1,0 +1,41 @@
+<f:if condition="{clubs}">
+	<f:then>
+		<div class="list gridright scroll-container">
+			<f:widget.paginate objects="{clubs}" as="paginatedClubs" configuration="{addQueryStringMethod: 'POST,GET', itemsPerPage: settings.pageBrowser.itemsPerPage, insertAbove: settings.pageBrowser.insertAbove, insertBelow: settings.pageBrowser.insertBelow, maximumNumberOfLinks: settings.pageBrowser.maximumNumberOfLinks}">
+				<f:for each="{paginatedClubs}" as="club">
+					<div class="marginbottom scroll-item clearfix">
+						<div class="thumbnail grid_2 floatleft">
+							<figure class="gridrightstd">
+								<f:if condition="{club.allowedLogo}">
+									<f:then>
+										<f:render partial="Club/Logo" arguments="{path: 'uploads/tx_files/', file: club.allowedLogo.file, alt: club.title}" />
+									</f:then>
+									<f:else>
+										<f:if condition="{club.categories -> f:count()}">
+											<f:for each="{club.categories}" as="category" iteration="iterator">
+												<f:if condition="{iterator.isFirst}">
+													<f:render partial="Club/Logo" arguments="{path: 'uploads/tx_jwapi/', file: category.icon, alt: club.title}" />
+												</f:if>
+											</f:for>
+										</f:if>
+									</f:else>
+								</f:if>
+							</figure>
+						</div>
+						<div class="entry grid_10 floatleft borderbottom">
+							<h2 class="noborder nomargin">
+								<f:link.action action="show" title="{club.title}" pageUid="{settings.pidOfDetailPage}" arguments="{club: club}">{club.sortTitle}</f:link.action>
+							</h2>
+							<f:if condition="{club.district}">
+								<div class="district">{club.district.district}</div>
+							</f:if>
+						</div>
+					</div>
+				</f:for>
+			</f:widget.paginate>
+		</div>
+	</f:then>
+	<f:else>
+		<div class="noResults"><f:translate key="noResults" /></div>
+	</f:else>
+</f:if>

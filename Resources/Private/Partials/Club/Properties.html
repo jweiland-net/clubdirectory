@@ -1,0 +1,62 @@
+<div class="thumbnail grid_1 floatleft">
+	<figure class="marginbottom gridrightstd">
+		<f:if condition="{club.allowedLogo}">
+			<f:then>
+				<f:image src="uploads/tx_files/{club.allowedLogo.file}" alt="{club.title}" width="{settings.show.logo.width}" height="{settings.show.logo.height}"/>
+			</f:then>
+			<f:else>
+				<f:if condition="{club.categories -> f:count()}">
+					<f:for each="{club.categories}" as="category" iteration="iterator">
+						<f:if condition="{iterator.isFirst}">
+							<f:if condition="{category.icon}">
+								<f:image src="uploads/tx_jwapi/{category.icon}" alt="{club.title}" width="{settings.show.logo.width}" height="{settings.show.logo.height}"/>
+							</f:if>
+						</f:if>
+					</f:for>
+				</f:if>
+			</f:else>
+		</f:if>
+	</figure>
+</div>
+<div class="grid_11 floatleft marginbottom"><h1>{club.title}</h1></div>
+<div class="grid_12 clearer clearfix">
+	<div class="grid_6 floatleft">
+		<f:if condition="{club.images->f:count()}">
+			<figure class="gridright marginbottom2">
+				<f:render partial="Club/Images" arguments="{club: club}" />
+			</figure>
+		</f:if>
+		<f:if condition="{club.activity}">
+			<div class="gridright marginbottom">{club.activity -> f:format.html(parseFuncTSPath:'lib.parseFunc') -> f:format.nl2br()}</div>
+		</f:if>
+		<f:if condition="{club.description}">
+			<div class="gridright marginbottom"><f:format.html>{club.description}</f:format.html></div>
+		</f:if>
+		&nbsp;
+	</div>
+	<div class="grid_6 floatleft">
+		<div class="gridleft clearfix rulerbefore4">
+			<f:render partial="Club/Address" arguments="{club: club}"/>
+			<dl class="extdl">
+				<f:if condition="{club.district.district}">
+					<dd><strong><f:translate key="tx_clubdirectory_domain_model_club.district"/>:</strong> {club.district.district}</dd>
+				</f:if>
+				<f:if condition="{club.email}">
+					<dd><span aria-hidden="true" class="icon-email"></span>
+						<f:link.email class="email" title="{club.email}" email="{club.email}"><f:translate key="tx_clubdirectory_domain_model_club.email"/></f:link.email></dd>
+				</f:if>
+				<f:if condition="{club.website}">
+					<dd><span aria-hidden="true" class="icon-earth"></span><f:link.external title="{club.website}" uri="{club.website}" target="_blank"><f:translate key="tx_clubdirectory_domain_model_club.website"/></f:link.external></dd>
+				</f:if>
+				<f:render partial="Club/SingleLine" arguments="{field: 'contactPerson', value: club.contactPerson}"/>
+				<f:if condition="{club.contactTimes}">
+					<dt><f:translate key="tx_clubdirectory_domain_model_club.contactTimes"/>:</dt>
+						<dd>{club.contactTimes -> f:format.html(parseFuncTSPath: 'lib.parseFunc') -> f:format.nl2br()}</dd>
+				</f:if>
+				<f:render partial="Club/SingleLine" arguments="{field: 'members', value: club.members}"/>
+				<f:render partial="Club/SingleLine" arguments="{field: 'clubHome', value: club.clubHome}"/>
+			</dl>
+			<f:render partial="Club/Social.html" arguments="{club: club}"/>
+		</div>
+	</div>
+</div>

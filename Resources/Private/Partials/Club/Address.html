@@ -1,0 +1,29 @@
+<f:for each="{club.addresses}" as="address">
+	<dl>
+		<dt>
+			<f:translate key="tx_clubdirectory_domain_model_address.title.{address.title}"/>:
+		</dt>
+		<dd>
+		{club.title}<br/>
+		{address.street} {address.houseNumber}<br />
+		{address.zip} {address.city}
+		</dd>
+	</dl>
+	<dl class="extdl clearfix rulerafter">
+		<dd class="grid_8 floatleft noborder">
+			<f:if condition="{address.telephone}">
+				<span aria-hidden="true" class="icon-phone_pf"></span>{address.telephone}
+			</f:if>
+			<f:if condition="{address.fax}">
+				<br/><span aria-hidden="true" class="icon-fax_pf"></span>{address.fax}
+			</f:if>
+		</dd>
+		<dd class="grid_4 floatleft noborder">
+			<figure>
+				<f:link.action title="<f:translate key='LLL:fileadmin/templates/language/locallang.xml:mapview'/>" action="show" controller="PoiCollection" extensionName="maps2" pluginName="maps2" pageUid="{settings.pidOfMaps2Plugin}" arguments="{poiCollection: address.txMaps2Uid}">
+					<f:image class="floatright" src="fileadmin/templates/img/thumbmaps.png" alt="{f:translate(key: 'altTextMapImg')}"/>
+				</f:link.action>
+			</figure>
+		</dd>
+	</dl>
+</f:for>

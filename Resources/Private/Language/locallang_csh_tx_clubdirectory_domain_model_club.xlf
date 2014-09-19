@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory">
+		<header/>
+		<body>
+
+			<trans-unit id="title.description">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="activity.description">
+				<source>Activity</source>
+			</trans-unit>
+			<trans-unit id="street.description">
+				<source>Street</source>
+			</trans-unit>
+			<trans-unit id="houseNumber.description">
+				<source>House number</source>
+			</trans-unit>
+			<trans-unit id="zip.description">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="city.description">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="telephone.description">
+				<source>Telephone</source>
+			</trans-unit>
+			<trans-unit id="fax.description">
+				<source>Fax</source>
+			</trans-unit>
+			<trans-unit id="contactPerson.description">
+				<source>Contact person</source>
+			</trans-unit>
+			<trans-unit id="contactTimes.description">
+				<source>Contact Times</source>
+			</trans-unit>
+			<trans-unit id="email.description">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="website.description">
+				<source>Website</source>
+			</trans-unit>
+			<trans-unit id="members.description">
+				<source>Members</source>
+			</trans-unit>
+			<trans-unit id="clubHome.description">
+				<source>Club home</source>
+			</trans-unit>
+			<trans-unit id="description.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="feUser.description">
+				<source>User</source>
+			</trans-unit>
+			<trans-unit id="logo.description">
+				<source>Logo</source>
+			</trans-unit>
+			<trans-unit id="images.description">
+				<source>Images</source>
+			</trans-unit>
+			<trans-unit id="facebook.description">
+				<source>Facebook</source>
+			</trans-unit>
+			<trans-unit id="twitter.description">
+				<source>Twitter</source>
+			</trans-unit>
+			<trans-unit id="google.description">
+				<source>Google+</source>
+			</trans-unit>
+			<trans-unit id="tags.description">
+				<source>tags</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

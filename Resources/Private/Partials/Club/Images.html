@@ -1,0 +1,18 @@
+<f:if condition="{club.images->f:count()}">
+	<f:if condition="{club.images -> f:count()}==1">
+		<f:then>
+			<div>
+		</f:then>
+		<f:else>
+			<div class="flexslider">
+		</f:else>
+	</f:if>
+	<ul class="slides">
+		<f:for each="{club.images}" as="image" iteration="iterator">
+			<f:if condition="{image}">
+				<li><f:image src="uploads/tx_files/{image.file}" alt="Sliderimage-{iterator.cycle}" width="{settings.show.image.width}" height="{settings.show.image.height}" /></li>
+			</f:if>
+		</f:for>
+	</ul>
+	</div>
+</f:if>

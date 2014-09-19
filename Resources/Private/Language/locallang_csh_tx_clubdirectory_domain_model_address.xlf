@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory">
+		<header/>
+		<body>
+
+			<trans-unit id="street.description">
+				<source>Street</source>
+			</trans-unit>
+			<trans-unit id="houseNumber.description">
+				<source>House number</source>
+			</trans-unit>
+			<trans-unit id="zip.description">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="city.description">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="telephone.description">
+				<source>Telephone</source>
+			</trans-unit>
+			<trans-unit id="fax.description">
+				<source>Fax</source>
+			</trans-unit>
+			<trans-unit id="district.description">
+				<source>District</source>
+			</trans-unit>
+			<trans-unit id="barrierFree.description">
+				<source>Barrier-free</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,12 @@
+<f:layout name="Default" />
+
+<f:section name="main">
+	<f:flashMessages renderMode="div" class="info-box2" />
+
+	<div class="grid_8 floatleft">
+		<f:render partial="Club/Search" arguments="{search: search}" />
+		<f:render partial="Club/Glossar" arguments="{glossar: glossar}" />
+		<f:render partial="Club/List" arguments="{clubs: clubs}" />
+	</div>
+	<f:render partial="Club/InsertEditLinks" arguments="{allowedUserGroup: allowedUserGroup}" />
+</f:section>

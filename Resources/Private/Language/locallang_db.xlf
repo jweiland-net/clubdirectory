@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory">
+		<header/>
+		<body>
+
+			<trans-unit id="plugin.title">
+				<source>Club Directory</source>
+			</trans-unit>
+
+			<trans-unit id="tabs.category">
+				<source>Category</source>
+			</trans-unit>
+
+			<trans-unit id="tx_clubdirectory_domain_model_club">
+				<source>Club</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.sortTitle">
+				<source>Title to sort by</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.activity">
+				<source>Activity</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.contactPerson">
+				<source>Contact Person</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.contactTimes">
+				<source>Contact Times</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.email">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.website">
+				<source>Website</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.members">
+				<source>Members</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.clubHome">
+				<source>Club Home</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.feUsers">
+				<source>Frontend User</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.logo">
+				<source>Logo</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.images">
+				<source>Images</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.facebook">
+				<source>Facebook</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.twitter">
+				<source>Twitter</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.google">
+				<source>Google+</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.tags">
+				<source>Tags</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.district">
+				<source>District</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.addresses">
+				<source>Addresses</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.categories">
+				<source>Categories</source>
+			</trans-unit>
+
+			<trans-unit id="tx_clubdirectory_domain_model_address">
+				<source>Address</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.title.organizationAddress">
+				<source>Organization Address</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.title.postAddress">
+				<source>Post Address</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.title.clubAddress">
+				<source>Club Address</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.street">
+				<source>Street</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.houseNumber">
+				<source>House Number</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.zip">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.city">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.telephone">
+				<source>Telephone</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.fax">
+				<source>Fax</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.barrierFree">
+				<source>Barrier Free</source>
+			</trans-unit>
+
+			<trans-unit id="tx_clubdirectory_domain_model_district">
+				<source>District (clubs)</source>
+			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_district.district">
+				<source>District</source>
+			</trans-unit>
+
+		</body>
+	</file>
+</xliff>
