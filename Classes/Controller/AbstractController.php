@@ -74,12 +74,12 @@ class AbstractController extends ActionController
     protected $session;
 
     /**
-     * googleMaps.
+     * GeocodeUtility
      *
-     * @var \JWeiland\Maps2\Utility\GoogleMaps
+     * @var \JWeiland\Maps2\Utility\GeocodeUtility
      * @inject
      */
-    protected $googleMaps;
+    protected $geocodeUtility;
 
     /**
      * @var \TYPO3\CMS\Core\Mail\MailMessage
@@ -197,7 +197,7 @@ class AbstractController extends ActionController
         foreach ($club->getAddresses() as $address) {
             // add a new poi record if not set allready
             if ($address->getTxMaps2Uid() === null) {
-                $results = $this->googleMaps->findPositionByAddress($address->getAddress());
+                $results = $this->geocodeUtility->findPositionByAddress($address->getAddress());
                 if (count($results)) {
                     $results->rewind();
                     /** @var \JWeiland\Maps2\Domain\Model\RadiusResult $result */
