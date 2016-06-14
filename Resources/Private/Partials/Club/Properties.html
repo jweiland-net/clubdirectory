@@ -1,15 +1,15 @@
 <div class="thumbnail grid_1 floatleft">
 	<figure class="marginbottom gridrightstd">
-		<f:if condition="{club.allowedLogo}">
+		<f:if condition="{club.logo}">
 			<f:then>
-				<f:image src="uploads/tx_files/{club.allowedLogo.file}" alt="{club.title}" width="{settings.show.logo.width}" height="{settings.show.logo.height}"/>
+				<f:image src="{club.logo.originalResource.publicUrl}" alt="{club.title}" />
 			</f:then>
 			<f:else>
 				<f:if condition="{club.categories -> f:count()}">
 					<f:for each="{club.categories}" as="category" iteration="iterator">
 						<f:if condition="{iterator.isFirst}">
 							<f:if condition="{category.icon}">
-								<f:image src="uploads/tx_jwapi/{category.icon}" alt="{club.title}" width="{settings.show.logo.width}" height="{settings.show.logo.height}"/>
+								<f:image src="uploads/tx_jwapi/{category.icon}" alt="{club.title}" />
 							</f:if>
 						</f:if>
 					</f:for>

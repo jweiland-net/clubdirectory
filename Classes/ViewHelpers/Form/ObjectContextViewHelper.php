@@ -1,4 +1,5 @@
 <?php
+
 namespace JWeiland\Clubdirectory\ViewHelpers\Form;
 
 /***************************************************************
@@ -43,122 +44,123 @@ use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormViewHelper;
  * </code>
  * This automatically inserts the value of {shoppingCart.[customerUid].customer.name} inside the textbox and adjusts the name of the textbox accordingly.
  */
-class ObjectContextViewHelper extends AbstractFormViewHelper {
+class ObjectContextViewHelper extends AbstractFormViewHelper
+{
+    /**
+     * @var array
+     */
+    protected $backupViewHelperVariableContainer;
 
-	/**
-	 * @var array
-	 */
-	protected $backupViewHelperVariableContainer;
+    /**
+     * @var int
+     */
+    protected $objectPositionInParentCollection;
 
-	/**
-	 * @var int
-	 */
-	protected $objectPositionInParentCollection;
+    /**
+     * Initialize arguments.
+     *
+     * @api
+     */
+    public function initializeArguments()
+    {
+        parent::initializeArguments();
+        $this->registerArgument('parentProperty', 'string', 'Name of parent object property that contains object argument', true);
+        $this->registerArgument('object', 'mixed', 'Object to use for the form object context. Use in conjunction with the "property" attribute on the sub tags', true);
+    }
 
-	/**
-	 * Initialize arguments.
-	 *
-	 * @return void
-	 * @api
-	 */
-	public function initializeArguments() {
-		parent::initializeArguments();
-		$this->registerArgument('parentProperty', 'string', 'Name of parent object property that contains object argument', TRUE);
-		$this->registerArgument('object', 'mixed', 'Object to use for the form object context. Use in conjunction with the "property" attribute on the sub tags', TRUE);
-	}
+    /**
+     * Render the object context.
+     *
+     * @throws \OutOfBoundsException
+     * @throws \InvalidArgumentException
+     *
+     * @return string rendered form
+     */
+    public function render()
+    {
+        if (!$this->viewHelperVariableContainer->exists('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName')) {
+            throw new \OutOfBoundsException('The ObjectContextViewHelper may not be used outside the object acessor mode of a form viewhelper.', 1379072385);
+        }
+        if (!is_object($this->arguments['object'])) {
+            throw new \InvalidArgumentException('The value of the object argument has to be an object.', 1379073736);
+        }
 
-	/**
-	 * Render the object context.
-	 *
-	 * @throws \OutOfBoundsException
-	 * @throws \InvalidArgumentException
-	 * @return string rendered form
-	 */
-	public function render() {
-		if (!$this->viewHelperVariableContainer->exists('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName'))
-			throw new \OutOfBoundsException('The ObjectContextViewHelper may not be used outside the object acessor mode of a form viewhelper.', 1379072385);
-		if (!is_object($this->arguments['object']))
-			throw new \InvalidArgumentException('The value of the object argument has to be an object.', 1379073736);
+        $this->objectPositionInParentCollection = $this->detectObjectPositionInParentCollection();
 
-		$this->objectPositionInParentCollection = $this->detectObjectPositionInParentCollection();
+        $this->addFormObjectNameToViewHelperVariableContainer();
+        $this->addFormObjectToViewHelperVariableContainer();
 
-		$this->addFormObjectNameToViewHelperVariableContainer();
-		$this->addFormObjectToViewHelperVariableContainer();
+        $content = $this->renderChildren();
 
-		$content = $this->renderChildren();
+        $additionalIdentityProperties = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'additionalIdentityProperties');
+        $additionalIdentityProperties[$this->getFormObjectName()] = $this->renderHiddenIdentityField($this->arguments['object'], $this->getFormObjectName());
+        $this->viewHelperVariableContainer->addOrUpdate('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'additionalIdentityProperties', $additionalIdentityProperties);
 
-		$additionalIdentityProperties = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'additionalIdentityProperties');
-		$additionalIdentityProperties[$this->getFormObjectName()] = $this->renderHiddenIdentityField($this->arguments['object'], $this->getFormObjectName());
-		$this->viewHelperVariableContainer->addOrUpdate('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'additionalIdentityProperties', $additionalIdentityProperties);
+        $this->restoreFormObjectInViewHelperVariableContainer();
+        $this->restoreFormObjectNameInViewHelperVariableContainer();
 
-		$this->restoreFormObjectInViewHelperVariableContainer();
-		$this->restoreFormObjectNameInViewHelperVariableContainer();
+        return $content;
+    }
 
-		return $content;
-	}
+    /**
+     * @return int
+     */
+    protected function detectObjectPositionInParentCollection()
+    {
+        $formObject = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
+        $collection = ObjectAccess::getProperty($formObject, $this->arguments['parentProperty']);
+        $position = 0;
+        foreach ($collection as $item) {
+            if ($item === $this->arguments['object']) {
+                return $position;
+            }
+            ++$position;
+        }
+    }
 
-	/**
-	 * @return int
-	 */
-	protected function detectObjectPositionInParentCollection() {
-		$formObject = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
-		$collection = ObjectAccess::getProperty($formObject, $this->arguments['parentProperty']);
-		$position = 0;
-		foreach ($collection as $item) {
-			if ($item === $this->arguments['object']) {
-				return $position;
-			}
-			$position++;
-		}
-	}
+    /**
+     * Adds the form object name to the ViewHelperVariableContainer if "objectName" argument or "name" attribute is specified.
+     */
+    protected function addFormObjectNameToViewHelperVariableContainer()
+    {
+        $this->backupViewHelperVariableContainer['formObjectName'] = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
+        $this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
+        $this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName', $this->getFormObjectName());
+    }
 
-	/**
-	 * Adds the form object name to the ViewHelperVariableContainer if "objectName" argument or "name" attribute is specified.
-	 *
-	 * @return void
-	 */
-	protected function addFormObjectNameToViewHelperVariableContainer() {
-		$this->backupViewHelperVariableContainer['formObjectName'] = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
-		$this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
-		$this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName', $this->getFormObjectName());
-	}
+    /**
+     * @return string
+     */
+    protected function getFormObjectName()
+    {
+        return $this->backupViewHelperVariableContainer['formObjectName'].'['.$this->arguments['parentProperty'].']['.$this->objectPositionInParentCollection.']';
+    }
 
-	/**
-	 * @return string
-	 */
-	protected function getFormObjectName() {
-		return $this->backupViewHelperVariableContainer['formObjectName'] . '[' . $this->arguments['parentProperty'] . '][' . $this->objectPositionInParentCollection . ']';
-	}
+    /**
+     * Removes the form name from the ViewHelperVariableContainer.
+     */
+    protected function restoreFormObjectNameInViewHelperVariableContainer()
+    {
+        $this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
+        $this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName', $this->backupViewHelperVariableContainer['formObjectName']);
+    }
 
-	/**
-	 * Removes the form name from the ViewHelperVariableContainer.
-	 *
-	 * @return void
-	 */
-	protected function restoreFormObjectNameInViewHelperVariableContainer() {
-		$this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
-		$this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName', $this->backupViewHelperVariableContainer['formObjectName']);
-	}
+    /**
+     * Adds the object that is bound to this form to the ViewHelperVariableContainer if the formObject attribute is specified.
+     */
+    protected function addFormObjectToViewHelperVariableContainer()
+    {
+        $this->backupViewHelperVariableContainer['formObject'] = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
+        $this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
+        $this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject', $this->arguments['object']);
+    }
 
-	/**
-	 * Adds the object that is bound to this form to the ViewHelperVariableContainer if the formObject attribute is specified.
-	 *
-	 * @return void
-	 */
-	protected function addFormObjectToViewHelperVariableContainer() {
-		$this->backupViewHelperVariableContainer['formObject'] = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
-		$this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
-		$this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject', $this->arguments['object']);
-	}
-
-	/**
-	 * Removes the form object from the ViewHelperVariableContainer.
-	 *
-	 * @return void
-	 */
-	protected function restoreFormObjectInViewHelperVariableContainer() {
-		$this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
-		$this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject', $this->backupViewHelperVariableContainer['formObject']);
-	}
-
+    /**
+     * Removes the form object from the ViewHelperVariableContainer.
+     */
+    protected function restoreFormObjectInViewHelperVariableContainer()
+    {
+        $this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
+        $this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject', $this->backupViewHelperVariableContainer['formObject']);
+    }
 }

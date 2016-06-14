@@ -1,4 +1,5 @@
 <?php
+
 namespace JWeiland\Clubdirectory\Tca;
 
 /***************************************************************
@@ -27,51 +28,48 @@ namespace JWeiland\Clubdirectory\Tca;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 /**
- * @package clubdirectory
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Cities {
+class Cities
+{
+    /**
+     * @var \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected $database;
 
-	/**
-	 * @var \TYPO3\CMS\Core\Database\DatabaseConnection
-	 */
-	protected $database;
+    /**
+     * initializes the DB connection.
+     */
+    protected function init()
+    {
+        $this->database = $GLOBALS['TYPO3_DB'];
+    }
 
-	/**
-	 * initializes the DB connection
-	 *
-	 * @return void
-	 */
-	protected function init() {
-		$this->database = $GLOBALS['TYPO3_DB'];
-	}
+    /**
+     * add cities to selectbox.
+     *
+     * @param array                              $parentArray
+     * @param \TYPO3\CMS\Backend\Form\FormEngine $fObj
+     */
+    public function addCityItems(array $parentArray, \TYPO3\CMS\Backend\Form\FormEngine $fObj)
+    {
+        $this->init();
 
-	/**
-	 * add cities to selectbox
-	 *
-	 * @param array $parentArray
-	 * @param \TYPO3\CMS\Backend\Form\FormEngine $fObj
-	 * @return void
-	 */
-	public function addCityItems(array $parentArray, \TYPO3\CMS\Backend\Form\FormEngine $fObj) {
-		$this->init();
+        $rows = $this->database->exec_SELECTgetRows(
+            'city',
+            'tx_clubdirectory_domain_model_address',
+            '1=1 '.
+            BackendUtility::BEenableFields('tx_clubdirectory_domain_model_address').
+            BackendUtility::deleteClause('tx_clubdirectory_domain_model_address'),
+            'city', 'city', ''
+        );
 
-		$rows = $this->database->exec_SELECTgetRows(
-			'city',
-			'tx_clubdirectory_domain_model_address',
-			'1=1 ' .
-			BackendUtility::BEenableFields('tx_clubdirectory_domain_model_address') .
-			BackendUtility::deleteClause('tx_clubdirectory_domain_model_address'),
-			'city', 'city', ''
-		);
-
-		foreach ($rows as $row) {
-			$item = array();
-			$item[0] = $row['city'];
-			$item[1] = $row['city'];
-			$item[2] = NULL;
-			$parentArray['items'][] = $item;
-		}
-	}
-
+        foreach ($rows as $row) {
+            $item = array();
+            $item[0] = $row['city'];
+            $item[1] = $row['city'];
+            $item[2] = null;
+            $parentArray['items'][] = $item;
+        }
+    }
 }

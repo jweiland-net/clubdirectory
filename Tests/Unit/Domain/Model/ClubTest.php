@@ -28,452 +28,525 @@
  * Test case for class Tx_Clubdirectory_Domain_Model_Club.
  *
  * @version $Id$
+ *
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- * @package TYPO3
- * @subpackage Club Directory
- *
  * @author Stefan Froemken <projects@jweiland.net>
  */
-class Tx_Clubdirectory_Domain_Model_ClubTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
-	/**
-	 * @var Tx_Clubdirectory_Domain_Model_Club
-	 */
-	protected $fixture;
+class Tx_Clubdirectory_Domain_Model_ClubTest extends Tx_Extbase_Tests_Unit_BaseTestCase
+{
+    /**
+     * @var Tx_Clubdirectory_Domain_Model_Club
+     */
+    protected $fixture;
 
-	public function setUp() {
-		$this->fixture = new Tx_Clubdirectory_Domain_Model_Club();
-	}
+    public function setUp()
+    {
+        $this->fixture = new Tx_Clubdirectory_Domain_Model_Club();
+    }
 
-	public function tearDown() {
-		unset($this->fixture);
-	}
+    public function tearDown()
+    {
+        unset($this->fixture);
+    }
 
-	/**
-	 * @test
-	 */
-	public function getNameReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function getNameReturnsInitialValueForString()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setNameForStringSetsName() { 
-		$this->fixture->setName('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setNameForStringSetsName()
+    {
+        $this->fixture->setName('Conceived at T3CON10');
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getName()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getActivityReturnsInitialValueForString() { }
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getName()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setActivityForStringSetsActivity() { 
-		$this->fixture->setActivity('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function getActivityReturnsInitialValueForString()
+    {
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getActivity()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getStreetReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function setActivityForStringSetsActivity()
+    {
+        $this->fixture->setActivity('Conceived at T3CON10');
 
-	/**
-	 * @test
-	 */
-	public function setStreetForStringSetsStreet() { 
-		$this->fixture->setStreet('Conceived at T3CON10');
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getActivity()
+        );
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getStreet()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getHouseNumberReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function getStreetReturnsInitialValueForString()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setHouseNumberForStringSetsHouseNumber() { 
-		$this->fixture->setHouseNumber('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setStreetForStringSetsStreet()
+    {
+        $this->fixture->setStreet('Conceived at T3CON10');
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getHouseNumber()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getZipReturnsInitialValueForString() { }
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getStreet()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setZipForStringSetsZip() { 
-		$this->fixture->setZip('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function getHouseNumberReturnsInitialValueForString()
+    {
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getZip()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getCityReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function setHouseNumberForStringSetsHouseNumber()
+    {
+        $this->fixture->setHouseNumber('Conceived at T3CON10');
 
-	/**
-	 * @test
-	 */
-	public function setCityForStringSetsCity() { 
-		$this->fixture->setCity('Conceived at T3CON10');
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getHouseNumber()
+        );
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getCity()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getTelephoneReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function getZipReturnsInitialValueForString()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setTelephoneForStringSetsTelephone() { 
-		$this->fixture->setTelephone('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setZipForStringSetsZip()
+    {
+        $this->fixture->setZip('Conceived at T3CON10');
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getTelephone()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getFaxReturnsInitialValueForString() { }
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getZip()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setFaxForStringSetsFax() { 
-		$this->fixture->setFax('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function getCityReturnsInitialValueForString()
+    {
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getFax()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getContactPersonReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function setCityForStringSetsCity()
+    {
+        $this->fixture->setCity('Conceived at T3CON10');
 
-	/**
-	 * @test
-	 */
-	public function setContactPersonForStringSetsContactPerson() { 
-		$this->fixture->setContactPerson('Conceived at T3CON10');
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getCity()
+        );
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getContactPerson()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getContactTimesReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function getTelephoneReturnsInitialValueForString()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setContactTimesForStringSetsContactTimes() { 
-		$this->fixture->setContactTimes('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setTelephoneForStringSetsTelephone()
+    {
+        $this->fixture->setTelephone('Conceived at T3CON10');
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getContactTimes()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getEmailReturnsInitialValueForString() { }
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getTelephone()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setEmailForStringSetsEmail() { 
-		$this->fixture->setEmail('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function getFaxReturnsInitialValueForString()
+    {
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getEmail()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getWebsiteReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function setFaxForStringSetsFax()
+    {
+        $this->fixture->setFax('Conceived at T3CON10');
 
-	/**
-	 * @test
-	 */
-	public function setWebsiteForStringSetsWebsite() { 
-		$this->fixture->setWebsite('Conceived at T3CON10');
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getFax()
+        );
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getWebsite()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getDistrictReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function getContactPersonReturnsInitialValueForString()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setDistrictForStringSetsDistrict() { 
-		$this->fixture->setDistrict('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setContactPersonForStringSetsContactPerson()
+    {
+        $this->fixture->setContactPerson('Conceived at T3CON10');
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getDistrict()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getBarrierFreeReturnsInitialValueForString() { }
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getContactPerson()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setBarrierFreeForStringSetsBarrierFree() { 
-		$this->fixture->setBarrierFree('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function getContactTimesReturnsInitialValueForString()
+    {
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getBarrierFree()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getMembersReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function setContactTimesForStringSetsContactTimes()
+    {
+        $this->fixture->setContactTimes('Conceived at T3CON10');
 
-	/**
-	 * @test
-	 */
-	public function setMembersForStringSetsMembers() { 
-		$this->fixture->setMembers('Conceived at T3CON10');
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getContactTimes()
+        );
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getMembers()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getClubHomeReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function getEmailReturnsInitialValueForString()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setClubHomeForStringSetsClubHome() { 
-		$this->fixture->setClubHome('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setEmailForStringSetsEmail()
+    {
+        $this->fixture->setEmail('Conceived at T3CON10');
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getClubHome()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getDescriptionReturnsInitialValueForString() { }
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getEmail()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setDescriptionForStringSetsDescription() { 
-		$this->fixture->setDescription('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function getWebsiteReturnsInitialValueForString()
+    {
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getDescription()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getTxMaps2UidReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function setWebsiteForStringSetsWebsite()
+    {
+        $this->fixture->setWebsite('Conceived at T3CON10');
 
-	/**
-	 * @test
-	 */
-	public function setTxMaps2UidForStringSetsTxMaps2Uid() { 
-		$this->fixture->setTxMaps2Uid('Conceived at T3CON10');
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getWebsite()
+        );
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getTxMaps2Uid()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getUserReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function getDistrictReturnsInitialValueForString()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setUserForStringSetsUser() { 
-		$this->fixture->setUser('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setDistrictForStringSetsDistrict()
+    {
+        $this->fixture->setDistrict('Conceived at T3CON10');
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getUser()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getLogoReturnsInitialValueForString() { }
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getDistrict()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setLogoForStringSetsLogo() { 
-		$this->fixture->setLogo('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function getBarrierFreeReturnsInitialValueForString()
+    {
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getLogo()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getImagesReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function setBarrierFreeForStringSetsBarrierFree()
+    {
+        $this->fixture->setBarrierFree('Conceived at T3CON10');
 
-	/**
-	 * @test
-	 */
-	public function setImagesForStringSetsImages() { 
-		$this->fixture->setImages('Conceived at T3CON10');
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getBarrierFree()
+        );
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getImages()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getFacebookReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function getMembersReturnsInitialValueForString()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setFacebookForStringSetsFacebook() { 
-		$this->fixture->setFacebook('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setMembersForStringSetsMembers()
+    {
+        $this->fixture->setMembers('Conceived at T3CON10');
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getFacebook()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getTwitterReturnsInitialValueForString() { }
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getMembers()
+        );
+    }
 
-	/**
-	 * @test
-	 */
-	public function setTwitterForStringSetsTwitter() { 
-		$this->fixture->setTwitter('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function getClubHomeReturnsInitialValueForString()
+    {
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getTwitter()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getGoogleReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function setClubHomeForStringSetsClubHome()
+    {
+        $this->fixture->setClubHome('Conceived at T3CON10');
 
-	/**
-	 * @test
-	 */
-	public function setGoogleForStringSetsGoogle() { 
-		$this->fixture->setGoogle('Conceived at T3CON10');
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getClubHome()
+        );
+    }
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getGoogle()
-		);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function getTagsReturnsInitialValueForString() { }
+    /**
+     * @test
+     */
+    public function getDescriptionReturnsInitialValueForString()
+    {
+    }
 
-	/**
-	 * @test
-	 */
-	public function setTagsForStringSetsTags() { 
-		$this->fixture->setTags('Conceived at T3CON10');
+    /**
+     * @test
+     */
+    public function setDescriptionForStringSetsDescription()
+    {
+        $this->fixture->setDescription('Conceived at T3CON10');
 
-		$this->assertSame(
-			'Conceived at T3CON10',
-			$this->fixture->getTags()
-		);
-	}
-	
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getDescription()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getTxMaps2UidReturnsInitialValueForString()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setTxMaps2UidForStringSetsTxMaps2Uid()
+    {
+        $this->fixture->setTxMaps2Uid('Conceived at T3CON10');
+
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getTxMaps2Uid()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getUserReturnsInitialValueForString()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setUserForStringSetsUser()
+    {
+        $this->fixture->setUser('Conceived at T3CON10');
+
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getUser()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getLogoReturnsInitialValueForString()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setLogoForStringSetsLogo()
+    {
+        $this->fixture->setLogo('Conceived at T3CON10');
+
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getLogo()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getImagesReturnsInitialValueForString()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setImagesForStringSetsImages()
+    {
+        $this->fixture->setImages('Conceived at T3CON10');
+
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getImages()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getFacebookReturnsInitialValueForString()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setFacebookForStringSetsFacebook()
+    {
+        $this->fixture->setFacebook('Conceived at T3CON10');
+
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getFacebook()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getTwitterReturnsInitialValueForString()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setTwitterForStringSetsTwitter()
+    {
+        $this->fixture->setTwitter('Conceived at T3CON10');
+
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getTwitter()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getGoogleReturnsInitialValueForString()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setGoogleForStringSetsGoogle()
+    {
+        $this->fixture->setGoogle('Conceived at T3CON10');
+
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getGoogle()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getTagsReturnsInitialValueForString()
+    {
+    }
+
+    /**
+     * @test
+     */
+    public function setTagsForStringSetsTags()
+    {
+        $this->fixture->setTags('Conceived at T3CON10');
+
+        $this->assertSame(
+            'Conceived at T3CON10',
+            $this->fixture->getTags()
+        );
+    }
 }
-?>

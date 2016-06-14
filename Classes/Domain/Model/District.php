@@ -1,4 +1,5 @@
 <?php
+
 namespace JWeiland\Clubdirectory\Domain\Model;
 
 /***************************************************************
@@ -27,40 +28,35 @@ namespace JWeiland\Clubdirectory\Domain\Model;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * @package clubdirectory
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class District extends AbstractEntity {
+class District extends AbstractEntity
+{
+    /**
+     * District.
+     *
+     * @var string
+     * @validate NotEmpty
+     */
+    protected $district = '';
 
-	/**
-	 * District
-	 *
-	 * @var string
-	 * @validate NotEmpty
-	 */
-	protected $district = '';
+    /**
+     * Returns the district.
+     *
+     * @return string $district
+     */
+    public function getDistrict()
+    {
+        return $this->district;
+    }
 
-
-
-
-
-	/**
-	 * Returns the district
-	 *
-	 * @return string $district
-	 */
-	public function getDistrict() {
-		return $this->district;
-	}
-
-	/**
-	 * Sets the district
-	 *
-	 * @param string $district
-	 * @return void
-	 */
-	public function setDistrict($district) {
-		$this->district = (string)$district;
-	}
-
+    /**
+     * Sets the district.
+     *
+     * @param string $district
+     */
+    public function setDistrict($district)
+    {
+        $this->district = (string) $district;
+    }
 }

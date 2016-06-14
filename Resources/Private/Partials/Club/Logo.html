@@ -1,5 +1,5 @@
 {namespace cd=JWeiland\Clubdirectory\ViewHelpers}
 
-<f:if condition="{file}">
-	<cd:grayScaleImage src="{path}{file}" alt="Logo: {alt}" width="{settings.list.image.width}" height="{settings.list.image.height}" minWidth="{settings.list.image.minWidth}" maxWidth="{settings.list.image.maxWidth}" minHeight="{settings.list.image.minHeight}" maxHeight="{settings.list.image.maxHeight}" />
-</f:if>
+<f:alias map="{src: '{f:if(condition: file.originalResource, then: file.originalResource.publicUrl, else: \'{path}{file}\')}'}">
+	<cd:grayScaleImage src="{src}" alt="Logo: {alt}" width="{settings.list.image.width}" height="{settings.list.image.height}" minWidth="{settings.list.image.minWidth}" maxWidth="{settings.list.image.maxWidth}" minHeight="{settings.list.image.minHeight}" maxHeight="{settings.list.image.maxHeight}" />
+</f:alias>

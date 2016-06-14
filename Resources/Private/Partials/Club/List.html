@@ -6,9 +6,9 @@
 					<div class="marginbottom scroll-item clearfix">
 						<div class="thumbnail grid_2 floatleft">
 							<figure class="gridrightstd">
-								<f:if condition="{club.allowedLogo}">
+								<f:if condition="{club.logo}">
 									<f:then>
-										<f:render partial="Club/Logo" arguments="{path: 'uploads/tx_files/', file: club.allowedLogo.file, alt: club.title}" />
+										<f:render partial="Club/Logo" arguments="{file: club.logo, alt: club.title}" />
 									</f:then>
 									<f:else>
 										<f:if condition="{club.categories -> f:count()}">

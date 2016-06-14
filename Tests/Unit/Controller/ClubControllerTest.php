@@ -28,34 +28,33 @@
  * Test case for class Tx_Clubdirectory_Controller_ClubController.
  *
  * @version $Id$
+ *
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
- * @package TYPO3
- * @subpackage Club Directory
- *
  * @author Stefan Froemken <projects@jweiland.net>
  */
-class Tx_Clubdirectory_Controller_ClubControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
-	/**
-	 * @var Tx_Clubdirectory_Domain_Model_Club
-	 */
-	protected $fixture;
+class Tx_Clubdirectory_Controller_ClubControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase
+{
+    /**
+     * @var Tx_Clubdirectory_Domain_Model_Club
+     */
+    protected $fixture;
 
-	public function setUp() {
-		$this->fixture = new Tx_Clubdirectory_Domain_Model_Club();
-	}
+    public function setUp()
+    {
+        $this->fixture = new Tx_Clubdirectory_Domain_Model_Club();
+    }
 
-	public function tearDown() {
-		unset($this->fixture);
-	}
+    public function tearDown()
+    {
+        unset($this->fixture);
+    }
 
-	/**
-	 * @test
-	 */
-	public function dummyMethod() {
-		$this->markTestIncomplete();
-	}
-
+    /**
+     * @test
+     */
+    public function dummyMethod()
+    {
+        $this->markTestIncomplete();
+    }
 }
-?>
