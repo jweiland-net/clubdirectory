@@ -195,7 +195,7 @@ class AbstractController extends ActionController
     {
         /** @var \JWeiland\Clubdirectory\Domain\Model\Address $address */
         foreach ($club->getAddresses() as $address) {
-            // add a new poi record if not set allready
+            // add a new poi record if not set already
             if ($address->getTxMaps2Uid() === null) {
                 $results = $this->geocodeUtility->findPositionByAddress($address->getAddress());
                 if (count($results)) {

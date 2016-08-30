@@ -18,7 +18,7 @@
 							{address.zip} {address.city}
 						</dd>
 					</dl>
-					<maps2:widget.editPoi id="maps2_{iterator.index}" poiCollection="{address.txMaps2Uid}" prepend="tx_clubdirectory_clubdirectory[club][addresses][{iterator.index}]" mapOptions="{mapTypeId: 'google.maps.MapTypeId.ROADMAP'}" />
+					<maps2:widget.editPoi poiCollection="{company.txMaps2Uid}" override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
 				</f:for>
 			</f:then>
 			<f:else><div>Sie haben keine Adresse angegeben</div></f:else>

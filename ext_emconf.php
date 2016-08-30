@@ -20,17 +20,18 @@ $EM_CONF[$_EXTKEY] = array(
     'shy' => '',
     'priority' => '',
     'module' => '',
-    'state' => 'alpha',
+    'state' => 'beta',
     'internal' => '',
     'uploadfolder' => '1',
     'createDirs' => '',
     'modify_tables' => '',
     'clearCacheOnLoad' => 0,
     'lockType' => '',
-    'version' => '0.1.2',
+    'version' => '0.2.0',
     'constraints' => array(
         'depends' => array(
             'extbase' => '6.2',
+            'maps2' => '2.6.0'
         ),
         'conflicts' => array(
         ),
