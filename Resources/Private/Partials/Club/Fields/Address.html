@@ -40,6 +40,6 @@
 	<div class="powermail_fieldwrap">
 		<label class="powermail_label">MAP</label>
 		<input type="hidden" name="tx_clubdirectory_clubdirectory[club][addresses][{index}][__identity]" value="{address.uid}" />
-		<maps2:widget.editPoi poiCollection="{address.txMaps2Uid}" override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
+		<maps2:widget.editPoi property="txMaps2Uid" poiCollection="{address.txMaps2Uid}" override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
 	</div>
 </f:if>
