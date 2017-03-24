@@ -25,6 +25,7 @@ namespace JWeiland\Clubdirectory\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -47,7 +48,6 @@ class AbstractController extends ActionController
      * feUserRepository.
      *
      * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
-     * @inject
      */
     protected $feUserRepository;
 
@@ -55,7 +55,6 @@ class AbstractController extends ActionController
      * categoryRepository.
      *
      * @var \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
-     * @inject
      */
     protected $categoryRepository;
 
@@ -63,13 +62,11 @@ class AbstractController extends ActionController
      * persistenceManager.
      *
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
-     * @inject
      */
     protected $persistenceManager;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\Generic\Session
-     * @inject
      */
     protected $session;
 
@@ -77,26 +74,105 @@ class AbstractController extends ActionController
      * GeocodeUtility
      *
      * @var \JWeiland\Maps2\Utility\GeocodeUtility
-     * @inject
      */
     protected $geocodeUtility;
-
-    /**
-     * @var \TYPO3\CMS\Core\Mail\MailMessage
-     * @inject
-     */
-    protected $mail;
 
     /**
      * extConf.
      *
      * @var \JWeiland\Clubdirectory\Configuration\ExtConf
-     * @inject
      */
     protected $extConf;
-
+    
+    /**
+     * @var string
+     */
     protected $letters = '0-9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
-
+    
+    /**
+     * inject clubRepository
+     *
+     * @param \JWeiland\Clubdirectory\Domain\Repository\ClubRepository $clubRepository
+     *
+     * @return void
+     */
+    public function injectClubRepository(\JWeiland\Clubdirectory\Domain\Repository\ClubRepository $clubRepository)
+    {
+        $this->clubRepository = $clubRepository;
+    }
+    
+    /**
+     * inject frontendUserRepository
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository $feUserRepository
+     *
+     * @return void
+     */
+    public function injectFeUserRepository(\TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository $feUserRepository)
+    {
+        $this->feUserRepository = $feUserRepository;
+    }
+    
+    /**
+     * inject categoryRepository
+     *
+     * @param \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository $categoryRepository
+     *
+     * @return void
+     */
+    public function injectCategoryRepository(\TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+    
+    /**
+     * inject persistenceManager
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
+     *
+     * @return void
+     */
+    public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager)
+    {
+        $this->persistenceManager = $persistenceManager;
+    }
+    
+    /**
+     * inject session
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\Generic\Session $session
+     *
+     * @return void
+     */
+    public function injectSession(\TYPO3\CMS\Extbase\Persistence\Generic\Session $session)
+    {
+        $this->session = $session;
+    }
+    
+    /**
+     * inject geocodeUtility
+     *
+     * @param \JWeiland\Maps2\Utility\GeocodeUtility $geocodeUtility
+     *
+     * @return void
+     */
+    public function injectGeocodeUtility(\JWeiland\Maps2\Utility\GeocodeUtility $geocodeUtility)
+    {
+        $this->geocodeUtility = $geocodeUtility;
+    }
+    
+    /**
+     * inject extConf
+     *
+     * @param \JWeiland\Clubdirectory\Configuration\ExtConf $extConf
+     *
+     * @return void
+     */
+    public function injectExtConf(\JWeiland\Clubdirectory\Configuration\ExtConf $extConf)
+    {
+        $this->extConf = $extConf;
+    }
+    
     /**
      * preprocessing of all actions.
      */
@@ -229,12 +305,14 @@ class AbstractController extends ActionController
     {
         $this->view->assign('club', $club);
 
-        $this->mail->setFrom($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName());
-        $this->mail->setTo($this->extConf->getEmailToAddress(), $this->extConf->getEmailToName());
-        $this->mail->setSubject(LocalizationUtility::translate('email.subject.'.$subjectKey, 'clubdirectory'));
-        $this->mail->setBody($this->view->render(), 'text/html');
+        /** @var MailMessage $mail */
+        $mail = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
+        $mail->setFrom($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName());
+        $mail->setTo($this->extConf->getEmailToAddress(), $this->extConf->getEmailToName());
+        $mail->setSubject(LocalizationUtility::translate('email.subject.'.$subjectKey, 'clubdirectory'));
+        $mail->setBody($this->view->render(), 'text/html');
 
-        return $this->mail->send();
+        return $mail->send();
     }
 
     /**

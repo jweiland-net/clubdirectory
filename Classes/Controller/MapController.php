@@ -6,7 +6,7 @@ namespace JWeiland\Clubdirectory\Controller;
  *  Copyright notice
  *
  *  (c) 2013 Stefan Froemken <projects@jweiland.net>, jweiland.net
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -86,9 +86,9 @@ class MapController extends AbstractController
         if ($GLOBALS['TSFE']->fe_user->user['uid']) {
             $this->sendMail('create', $club);
             $this->clubRepository->update($club);
-            $this->flashMessageContainer->add(LocalizationUtility::translate('clubCreated', 'clubdirectory'));
+            $this->addFlashMessage(LocalizationUtility::translate('clubCreated', 'clubdirectory'));
         } else {
-            $this->flashMessageContainer->add('There is no valid user logged in. So record was not saved');
+            $this->addFlashMessage('There is no valid user logged in. So record was not saved');
         }
         $this->redirect('list', 'Club');
     }
@@ -144,7 +144,6 @@ class MapController extends AbstractController
         $this->clubRepository->update($club);
         $this->sendMail('update', $club);
         $club->setHidden(true);
-        $this->flashMessageContainer->add(LocalizationUtility::translate('clubUpdated', 'clubdirectory'));
         $this->redirect('edit', null, null, array('club' => $club));
     }
 

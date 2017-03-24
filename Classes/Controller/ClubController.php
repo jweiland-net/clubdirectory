@@ -155,7 +155,6 @@ class ClubController extends AbstractController
             $club->setHidden(true);
             $this->clubRepository->add($club);
             $this->persistenceManager->persistAll();
-            //$this->flashMessageContainer->add(LocalizationUtility::translate('clubCreated', 'clubdirectory'));
             $this->redirect('new', 'Map', 'clubdirectory', array('club' => $club));
         } else {
             $this->addFlashMessage('There is no valid user logged in. So record was not saved');
