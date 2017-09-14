@@ -1,35 +1,28 @@
 <?php
-
+declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
-/***************************************************************
- *  Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2013 Stefan Froemken <projects@jweiland.net>, jweiland.net
- *  
- *  All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * Class ExportController
+ *
+ * @package JWeiland\Clubdirectory\Controller
  */
 class ExportController extends ActionController
 {
@@ -49,22 +42,25 @@ class ExportController extends ActionController
     protected $exportFile = 'export.csv';
 
     /**
-     * @var \JWeiland\Clubdirectory\Domain\Repository\ClubRepository
+     * @var ClubRepository
      */
-    protected $clubRepository = null;
+    protected $clubRepository;
 
     /**
      * inject clubRepository.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Repository\ClubRepository $clubRepository
+     * @param ClubRepository $clubRepository
+     * @return void
      */
-    public function injectClubRepository(\JWeiland\Clubdirectory\Domain\Repository\ClubRepository $clubRepository)
+    public function injectClubRepository(ClubRepository $clubRepository)
     {
         $this->clubRepository = $clubRepository;
     }
 
     /**
      * action index.
+     *
+     * @return void
      */
     public function indexAction()
     {
@@ -72,31 +68,35 @@ class ExportController extends ActionController
         $this->removePreviousExports();
 
         $exportFile = PATH_site.$this->exportPath.$this->exportFile;
-        $fp = fopen($exportFile, 'w');
+        $fp = \fopen($exportFile, 'wb');
         foreach ($this->clubRepository->findAllForExport() as $row) {
-            fputcsv($fp, $row, ';', '\'');
+            \fputcsv($fp, $row, ';', '\'');
         }
-        fclose($fp);
+        \fclose($fp);
     }
 
     /**
      * check directory and create directory structure if not already created.
+     *
+     * @return void
      */
     protected function createDirectoryStructure()
     {
-        if (!is_dir(PATH_site.$this->exportPath)) {
+        if (!\is_dir(PATH_site.$this->exportPath)) {
             GeneralUtility::mkdir_deep(PATH_site.$this->exportPath);
         }
     }
 
     /**
      * remove previously created exports.
+     *
+     * @return void
      */
     protected function removePreviousExports()
     {
         $exportFile = PATH_site.$this->exportPath.$this->exportFile;
-        if (is_file($exportFile)) {
-            unlink($exportFile); // only to be sure
+        if (\is_file($exportFile)) {
+            \unlink($exportFile); // only to be sure
         }
     }
 }

@@ -15,40 +15,35 @@ namespace JWeiland\Clubdirectory\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
-
 /**
- * Class District
+ * Class Category
  *
  * @package JWeiland\Clubdirectory\Domain\Model
  */
-class District extends AbstractEntity
+class Category extends \TYPO3\CMS\Extbase\Domain\Model\Category
 {
     /**
-     * District.
-     *
      * @var string
-     * @validate NotEmpty
      */
-    protected $district = '';
+    protected $icon = '';
 
     /**
-     * Returns the district.
+     * Gets icon
      *
-     * @return string $district
+     * @return string
      */
-    public function getDistrict(): string
+    public function getIcon(): string
     {
-        return $this->district;
+        return $this->icon;
     }
 
     /**
-     * Sets the district.
+     * Sets icon
      *
-     * @param string $district
+     * @param string $icon
      */
-    public function setDistrict($district)
+    public function setIcon($icon)
     {
-        $this->district = (string) $district;
+        $this->icon = $icon;
     }
 }

@@ -1,41 +1,36 @@
 <?php
-
+declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
-/***************************************************************
- *  Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2013 Stefan Froemken <projects@jweiland.net>, jweiland.net
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
 use JWeiland\Clubdirectory\Domain\Model\Address;
+use JWeiland\Clubdirectory\Domain\Model\Club;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * Class MapController
+ *
+ * @package JWeiland\Clubdirectory\Controller
  */
 class MapController extends AbstractController
 {
     /**
      * initialize action new
      * hidden record throws an exception. Thats why I check it here before calling newAction.
+     *
+     * @return void
      */
     public function initializeNewAction()
     {
@@ -45,9 +40,11 @@ class MapController extends AbstractController
     /**
      * action new.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @param Club $club
+     *
+     * @return void
      */
-    public function newAction(\JWeiland\Clubdirectory\Domain\Model\Club $club)
+    public function newAction(Club $club)
     {
         $this->view->assign('club', $club);
     }
@@ -55,12 +52,15 @@ class MapController extends AbstractController
     /**
      * initialize action create
      * hidden record throws an exception. Thats why I check it here before calling createAction.
+     *
+     * @return void
      */
     public function initializeCreateAction()
     {
         $this->registerClubFromRequest('club');
 
-        // we can't work with addresses.* here, because f:form has created addresses.0-3 already, and numbered paths have a higher priority
+        // we can't work with addresses.* here, because f:form has created addresses.0-3 already,
+        // and numbered paths have a higher priority
         //$this->arguments->getArgument('club')->getPropertyMappingConfiguration()->allowModificationForSubProperty('addresses');
         for ($i = 0; $i < 3; ++$i) {
             $this->arguments->getArgument('club')->getPropertyMappingConfiguration()
@@ -71,17 +71,23 @@ class MapController extends AbstractController
                 ->allowProperties('txMaps2Uid')
                 ->forProperty('txMaps2Uid')
                 ->allowProperties('latitude', 'longitude', '__identity');
-            $this->arguments->getArgument('club')->getPropertyMappingConfiguration()->allowModificationForSubProperty('addresses.'.$i);
-            $this->arguments->getArgument('club')->getPropertyMappingConfiguration()->allowModificationForSubProperty('addresses.'.$i.'.txMaps2Uid');
+            $this->arguments->getArgument('club')
+                ->getPropertyMappingConfiguration()
+                ->allowModificationForSubProperty('addresses.'.$i);
+
+            $this->arguments->getArgument('club')
+                ->getPropertyMappingConfiguration()
+                ->allowModificationForSubProperty('addresses.'.$i.'.txMaps2Uid');
         }
     }
 
     /**
      * action create.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @param Club $club
+     * @return void
      */
-    public function createAction(\JWeiland\Clubdirectory\Domain\Model\Club $club)
+    public function createAction(Club $club)
     {
         if ($GLOBALS['TSFE']->fe_user->user['uid']) {
             $this->sendMail('create', $club);
@@ -96,14 +102,14 @@ class MapController extends AbstractController
     /**
      * action edit.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @param Club $club
+     * @return void
      */
-    public function editAction(\JWeiland\Clubdirectory\Domain\Model\Club $club)
+    public function editAction(Club $club)
     {
         // this is something very terrible of extbase
         // because of the checkboxes in address records we have to add all 3 addresses. Filled or not filled.
-        $i = count($club->getAddresses());
-        for ($i; $i < 3; ++$i) {
+        for ($i = \count($club->getAddresses()); $i < 3; ++$i) {
             $club->getAddresses()->attach(new Address());
         }
 
@@ -114,6 +120,8 @@ class MapController extends AbstractController
 
     /**
      * initialized update action.
+     *
+     * @return void
      */
     public function initializeUpdateAction()
     {
@@ -122,14 +130,23 @@ class MapController extends AbstractController
         $object = $this->clubRepository->findHiddenEntryByUid($postVars['__identity']);
         $this->session->registerObject($object, $postVars['__identity']);
 
-        // we can't work with addresses.* here, because f:form has created addresses.0-3 already, and numbered paths have a higher priority
-        $this->arguments->getArgument('club')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('logo', 'array');
-        $this->arguments->getArgument('club')->getPropertyMappingConfiguration()->setTargetTypeForSubProperty('images', 'array');
+        // we can't work with addresses.* here, because f:form has created addresses.0-3 already,
+        // and numbered paths have a higher priority
+        $this->arguments->getArgument('club')
+            ->getPropertyMappingConfiguration()
+            ->setTargetTypeForSubProperty('logo', 'array');
+
+        $this->arguments->getArgument('club')
+            ->getPropertyMappingConfiguration()
+            ->setTargetTypeForSubProperty('images', 'array');
+
         for ($i = 0; $i < 3; ++$i) {
             $this->arguments->getArgument('club')->getPropertyMappingConfiguration()
                 ->forProperty('addresses.'.$i)->allowProperties('txMaps2Uid')
                 ->forProperty('txMaps2Uid')->allowProperties('latitude', 'longitude', '__identity');
-            $this->arguments->getArgument('club')->getPropertyMappingConfiguration()->allowModificationForSubProperty('addresses.'.$i.'.txMaps2Uid');
+            $this->arguments->getArgument('club')
+                ->getPropertyMappingConfiguration()
+                ->allowModificationForSubProperty('addresses.'.$i.'.txMaps2Uid');
         }
     }
 
@@ -137,23 +154,26 @@ class MapController extends AbstractController
      * action update.
      *
      * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @return void
      */
-    public function updateAction(\JWeiland\Clubdirectory\Domain\Model\Club $club)
+    public function updateAction(Club $club)
     {
         $this->addMapRecordIfPossible($club);
         $this->clubRepository->update($club);
         $this->sendMail('update', $club);
         $club->setHidden(true);
-        $this->redirect('edit', null, null, array('club' => $club));
+        $this->redirect('edit', null, null, ['club' => $club]);
     }
 
     /**
      * $search isn't a domainmodel, so we have to do htmlspecialchars on our own.
+     *
+     * @return void
      */
     public function initializeSearchAction()
     {
         if ($this->request->hasArgument('search')) {
-            $search = htmlspecialchars($this->request->getArgument('search'));
+            $search = \htmlspecialchars($this->request->getArgument('search'));
             $this->request->setArgument('search', $search);
         }
     }
@@ -162,6 +182,7 @@ class MapController extends AbstractController
      * search show.
      *
      * @param string $search
+     * @return void
      */
     public function searchAction($search)
     {

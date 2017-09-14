@@ -1,87 +1,90 @@
 <?php
-
+declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
-/***************************************************************
- *  Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2013 Stefan Froemken <projects@jweiland.net>, jweiland.net
- *  
- *  All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use JWeiland\Clubdirectory\Domain\Model\Club;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Charset\CharsetConverter;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * Class ClubRepository
+ *
+ * @package JWeiland\Clubdirectory\Domain\Repository
  */
 class ClubRepository extends Repository
 {
     /**
      * @var array
      */
-    protected $defaultOrderings = array(
-        'sortTitle' => QueryInterface::ORDER_ASCENDING,
-    );
+    protected $defaultOrderings = [
+        'sortTitle' => QueryInterface::ORDER_ASCENDING
+    ];
 
     /**
      * charset converter
      * We need some UTF-8 compatible functions for search.
      *
-     * @var \TYPO3\CMS\Core\Charset\CharsetConverter
-     * @inject
+     * @var CharsetConverter
      */
     protected $charsetConverter;
+
+    /**
+     * inject charsetConverter
+     *
+     * @param CharsetConverter $charsetConverter
+     * @return void
+     */
+    public function injectCharsetConverter(CharsetConverter $charsetConverter)
+    {
+        $this->charsetConverter = $charsetConverter;
+    }
 
     /**
      * find all records by category.
      *
      * @param int $category
      * @param int $district
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return QueryResultInterface|array
      */
     public function findByCategory($category, $district = 0)
     {
         $query = $this->createQuery();
 
-        $constraints = array();
+        $constraints = [];
         if (!empty($category)) {
             $constraints[] = $query->contains('categories', $category);
         }
         if ($district) {
             $constraints[] = $query->equals('district', $district);
         }
-        if (!empty($constraints)) {
-            return $query->matching($query->logicalAnd($constraints))->execute();
-        } else {
+        if (empty($constraints)) {
             return $query->execute();
         }
+
+        return $query->matching($query->logicalAnd($constraints))->execute();
     }
 
     /**
      * find all records by feUser.
      *
      * @param int $feUser
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return QueryResultInterface|array
      */
     public function findByFeUser($feUser)
     {
@@ -94,19 +97,18 @@ class ClubRepository extends Repository
      * find all records starting with given letter.
      *
      * @param string $letter
-     * @param int    $district
-     * @param string $city
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @param int $category
+     * @param int $district
+     * @return QueryResultInterface|array
      */
     public function findByStartingLetter($letter, $category = 0, $district = 0)
     {
         $query = $this->createQuery();
 
-        $constraintOr = array();
-        $constraintAnd = array();
+        $constraintOr = [];
+        $constraintAnd = [];
 
-        if ($letter == '0-9') {
+        if ($letter === '0-9') {
             $constraintOr[] = $query->like('sortTitle', '0%');
             $constraintOr[] = $query->like('sortTitle', '1%');
             $constraintOr[] = $query->like('sortTitle', '2%');
@@ -133,9 +135,9 @@ class ClubRepository extends Repository
 
         if ($constraintAnd) {
             return $query->matching($query->logicalAnd($constraintAnd))->execute();
-        } else {
-            return $query->matching()->execute();
         }
+
+        return $query->execute();
     }
 
     /**
@@ -143,7 +145,7 @@ class ClubRepository extends Repository
      *
      * @return array
      */
-    public function getStartingLetters()
+    public function getStartingLetters(): array
     {
         $query = $this->createQuery();
 
@@ -162,8 +164,7 @@ class ClubRepository extends Repository
      * search records.
      *
      * @param string $search
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return QueryResultInterface|array
      */
     public function searchClubs($search)
     {
@@ -173,31 +174,33 @@ class ClubRepository extends Repository
         $smallStreetSearch = $search;
 
         // unify street search
-        if (strtolower($this->charsetConverter->utf8_substr($search, -6) === 'straße')) {
-            $smallStreetSearch = str_ireplace('straße', 'str', $search);
+        if (\strtolower(mb_substr($search, -6)) === 'straße') {
+            $smallStreetSearch = \str_ireplace('straße', 'str', $search);
         }
-        if (strtolower($this->charsetConverter->utf8_substr($search, -4)) === 'str.') {
-            $longStreetSearch = str_ireplace('str.', 'straße', $search);
-            $smallStreetSearch = str_ireplace('str.', 'str', $search);
+        if (\strtolower(mb_substr($search, -4)) === 'str.') {
+            $longStreetSearch = \str_ireplace('str.', 'straße', $search);
+            $smallStreetSearch = \str_ireplace('str.', 'str', $search);
         }
-        if (strtolower($this->charsetConverter->utf8_substr($search, -3)) === 'str') {
-            $longStreetSearch = str_ireplace('str', 'straße', $search);
+        if (\strtolower(mb_substr($search, -3)) === 'str') {
+            $longStreetSearch = \str_ireplace('str', 'straße', $search);
         }
 
         $query = $this->createQuery();
 
+        $logicalOrConstraints = [
+            $query->like('title', '%'.$search.'%'),
+            $query->like('sortTitle', '%'.$search.'%'),
+            $query->like('addresses.street', '%'.$longStreetSearch.'%'),
+            $query->like('addresses.street', '%'.$smallStreetSearch.'%'),
+            $query->like('addresses.zip', '%'.$search.'%'),
+            $query->like('addresses.city', '%'.$search.'%'),
+            $query->like('contactPerson', '%'.$search.'%'),
+            $query->like('description', '%'.$search.'%'),
+            $query->like('tags', '%'.$search.'%')
+        ];
+
         return $query->matching(
-            $query->logicalOr(
-                $query->like('title', '%'.$search.'%'),
-                $query->like('sortTitle', '%'.$search.'%'),
-                $query->like('addresses.street', '%'.$longStreetSearch.'%'),
-                $query->like('addresses.street', '%'.$smallStreetSearch.'%'),
-                $query->like('addresses.zip', '%'.$search.'%'),
-                $query->like('addresses.city', '%'.$search.'%'),
-                $query->like('contactPerson', '%'.$search.'%'),
-                $query->like('description', '%'.$search.'%'),
-                $query->like('tags', '%'.$search.'%')
-            )
+            $query->logicalOr($logicalOrConstraints)
         )->execute();
     }
 
@@ -205,14 +208,13 @@ class ClubRepository extends Repository
      * find hidden entry by uid.
      *
      * @param int $clubUid
-     *
-     * @return \JWeiland\Clubdirectory\Domain\Model\Club
+     * @return Club|object
      */
     public function findHiddenEntryByUid($clubUid)
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(true);
-        $query->getQuerySettings()->setEnableFieldsToBeIgnored(array('disabled'));
+        $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
 
         return $query->matching($query->equals('uid', (int) $clubUid))->execute()->getFirst();
     }
@@ -223,10 +225,10 @@ class ClubRepository extends Repository
      *
      * @return array
      */
-    public function findAllForExport()
+    public function findAllForExport(): array
     {
-        $clubs = array();
-        $clubs[] = array('Title', 'Email', 'Street', 'HouseNumber', 'Zip', 'City', 'Tel');
+        $clubs = [];
+        $clubs[] = ['Title', 'Email', 'Street', 'HouseNumber', 'Zip', 'City', 'Tel'];
         $clubObjects = $this->findAll();
         if ($clubObjects->count()) {
             /** @var \JWeiland\Clubdirectory\Domain\Model\Club $club */
@@ -235,7 +237,15 @@ class ClubRepository extends Repository
                     /** @var \JWeiland\Clubdirectory\Domain\Model\Address $address */
                     foreach ($club->getAddresses() as $address) {
                         if ($address->getTitle() === 'postAddress') {
-                            $clubs[] = array($club->getTitle(), $club->getEmail(), $address->getStreet(), $address->getHouseNumber(), $address->getZip(), $address->getCity(), $address->getTelephone());
+                            $clubs[] = [
+                                $club->getTitle(),
+                                $club->getEmail(),
+                                $address->getStreet(),
+                                $address->getHouseNumber(),
+                                $address->getZip(),
+                                $address->getCity(),
+                                $address->getTelephone()
+                            ];
                         }
                     }
                 }

@@ -19,4 +19,4 @@ if (!defined('TYPO3_MODE')) {
 );
 
 // use hook to automatically add a map record to current yellow page
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'JWeiland\\Clubdirectory\\Tca\\CreateMap';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = \JWeiland\Clubdirectory\Tca\CreateMap::class;

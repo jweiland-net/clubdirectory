@@ -1,16 +1,28 @@
 plugin.tx_clubdirectory {
   view {
-    templateRootPath = {$plugin.tx_clubdirectory.view.templateRootPath}
-    partialRootPath = {$plugin.tx_clubdirectory.view.partialRootPath}
-    layoutRootPath = {$plugin.tx_clubdirectory.view.layoutRootPath}
+    templateRootPaths {
+      0 = EXT:clubdirectory/Resources/Private/Templates/
+      1 = {$plugin.tx_clubdirectory.view.templateRootPath}
+    }
+    partialRootPaths {
+      0 = EXT:clubdirectory/Resources/Private/Partials/
+      1 = {$plugin.tx_clubdirectory.view.partialRootPath}
+    }
+    layoutRootPath {
+      0 = EXT:clubdirectory/Resources/Private/Layouts/
+      1 = {$plugin.tx_clubdirectory.view.layoutRootPath}
+    }
   }
   persistence {
     storagePid = {$plugin.tx_clubdirectory.persistence.storagePid}
     updateReferenceIndex = 1
-  }
-  features {
-    # uncomment the following line to enable the new Property Mapper.
-    rewrittenPropertyMapper = 1
+    classes {
+      JWeiland\Clubdirectory\Domain\Model\Category {
+        mapping {
+          table = sys_category
+        }
+      }
+    }
   }
   settings {
     pidOfMaps2Plugin = {$plugin.tx_clubdirectory.settings.pidOfMaps2Plugin}
@@ -36,9 +48,18 @@ plugin.tx_clubdirectory {
 
 module.tx_clubdirectory {
   view {
-    templateRootPath = {$module.tx_clubdirectory.view.templateRootPath}
-    partialRootPath = {$module.tx_clubdirectory.view.partialRootPath}
-    layoutRootPath = {$module.tx_clubdirectory.view.layoutRootPath}
+    templateRootPaths {
+      0 = EXT:clubdirectory/Resources/Private/Backend/Templates/
+      1 = {$module.tx_clubdirectory.view.templateRootPath}
+    }
+    partialRootPaths {
+      0 = EXT:clubdirectory/Resources/Private/Backend/Partials/
+      1 = {$module.tx_clubdirectory.view.partialRootPath}
+    }
+    layoutRootPath {
+      0 = EXT:clubdirectory/Resources/Private/Backend/Layouts/
+      1 = {$module.tx_clubdirectory.view.layoutRootPath}
+    }
   }
   persistence < plugin.tx_clubdirectory.persistence
 }

@@ -1,38 +1,34 @@
 <?php
-
+declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
-/***************************************************************
- *  Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2013 Stefan Froemken <projects@jweiland.net>, jweiland.net
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
 use JWeiland\Clubdirectory\Domain\Model\Address;
+use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Property\TypeConverter\UploadMultipleFilesConverter;
 use JWeiland\Clubdirectory\Property\TypeConverter\UploadOneFileConverter;
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * Class ClubController
+ *
+ * @package JWeiland\Clubdirectory\Controller
  */
 class ClubController extends AbstractController
 {
@@ -41,6 +37,7 @@ class ClubController extends AbstractController
      *
      * @param string $letter Show only records starting with this letter
      * @validate $letter String, StringLength(minimum=0,maximum=3)
+     * @return void
      */
     public function listAction($letter = null)
     {
@@ -67,6 +64,8 @@ class ClubController extends AbstractController
 
     /**
      * action listMyClubs.
+     *
+     * @return void
      */
     public function listMyClubsAction()
     {
@@ -78,13 +77,14 @@ class ClubController extends AbstractController
     /**
      * action show.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @param Club $club
+     * @return void
      */
-    public function showAction(\JWeiland\Clubdirectory\Domain\Model\Club $club)
+    public function showAction(Club $club)
     {
         $isValidUser = false;
-        if (is_array($GLOBALS['TSFE']->fe_user->user) && count($club->getFeUsers())) {
-            /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser */
+        if (\is_array($GLOBALS['TSFE']->fe_user->user) && \count($club->getFeUsers())) {
+            /** @var FrontendUser $feUser */
             foreach ($club->getFeUsers() as $feUser) {
                 if ($feUser->getUid() === (integer) $GLOBALS['TSFE']->fe_user->user['uid']) {
                     $isValidUser = true;
@@ -98,17 +98,25 @@ class ClubController extends AbstractController
 
     /**
      * action new.
+     *
+     * @return void
      */
     public function newAction()
     {
         $this->deleteUploadedFilesOnValidationErrors('club');
-        /** @var \JWeiland\Clubdirectory\Domain\Model\Club $club */
-        $club = $this->objectManager->get('JWeiland\\Clubdirectory\\Domain\\Model\\Club');
+        /** @var Club $club */
+        $club = $this->objectManager->get(Club::class);
         for ($i = 0; $i < 3; ++$i) {
-            /** @var \JWeiland\Clubdirectory\Domain\Model\Address $address */
-            $address = $this->objectManager->get('JWeiland\\Clubdirectory\\Domain\\Model\\Address');
+            /** @var Address $address */
+            $address = $this->objectManager->get(Address::class);
             $club->addAddress($address);
         }
+
+        $script = ExtensionManagementUtility::siteRelPath($this->request->getControllerExtensionKey())
+            . 'Resources/Public/JavaScript/script.js';
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->addJsFooterFile($script);
+
         $this->view->assign('club', $club);
         $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
         $this->view->assign('addressTitles', $this->getAddressTitles());
@@ -123,7 +131,7 @@ class ClubController extends AbstractController
     {
         /** @var UploadOneFileConverter $oneFileTypeConverter */
         $oneFileTypeConverter = $this->objectManager->get(
-            'JWeiland\\Clubdirectory\\Property\\TypeConverter\\UploadOneFileConverter'
+            UploadOneFileConverter::class
         );
         $this->arguments->getArgument('club')
             ->getPropertyMappingConfiguration()
@@ -132,7 +140,7 @@ class ClubController extends AbstractController
 
         /** @var UploadMultipleFilesConverter $multipleFilesTypeConverter */
         $multipleFilesTypeConverter = $this->objectManager->get(
-            'JWeiland\\Clubdirectory\\Property\\TypeConverter\\UploadMultipleFilesConverter'
+            UploadMultipleFilesConverter::class
         );
         $this->arguments->getArgument('club')
             ->getPropertyMappingConfiguration()
@@ -143,9 +151,10 @@ class ClubController extends AbstractController
     /**
      * action create.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @param Club $club
+     * @return void
      */
-    public function createAction(\JWeiland\Clubdirectory\Domain\Model\Club $club)
+    public function createAction(Club $club)
     {
         if ($GLOBALS['TSFE']->fe_user->user['uid']) {
             /** @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser */
@@ -155,7 +164,7 @@ class ClubController extends AbstractController
             $club->setHidden(true);
             $this->clubRepository->add($club);
             $this->persistenceManager->persistAll();
-            $this->redirect('new', 'Map', 'clubdirectory', array('club' => $club));
+            $this->redirect('new', 'Map', 'clubdirectory', ['club' => $club]);
         } else {
             $this->addFlashMessage('There is no valid user logged in. So record was not saved');
             $this->redirect('list');
@@ -164,6 +173,8 @@ class ClubController extends AbstractController
 
     /**
      * initialized edit action.
+     *
+     * @return void
      */
     public function initializeEditAction()
     {
@@ -173,13 +184,14 @@ class ClubController extends AbstractController
     /**
      * action edit.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @param Club $club
+     * @return void
      */
-    public function editAction(\JWeiland\Clubdirectory\Domain\Model\Club $club)
+    public function editAction(Club $club)
     {
         // this is something very terrible of extbase
         // because of the checkboxes in address records we have to add all 3 addresses. Filled or not filled.
-        for ($i = count($club->getAddresses()); $i < 3; ++$i) {
+        for ($i = \count($club->getAddresses()); $i < 3; ++$i) {
             $club->getAddresses()->attach(new Address());
         }
 
@@ -190,6 +202,8 @@ class ClubController extends AbstractController
 
     /**
      * initialized update action.
+     *
+     * @return void
      */
     public function initializeUpdateAction()
     {
@@ -200,32 +214,32 @@ class ClubController extends AbstractController
         $club = $this->clubRepository->findByIdentifier($argument['__identity']);
         /** @var UploadOneFileConverter $oneFileTypeConverter */
         $oneFileTypeConverter = $this->objectManager->get(
-            'JWeiland\\Clubdirectory\\Property\\TypeConverter\\UploadOneFileConverter'
+            UploadOneFileConverter::class
         );
         $this->arguments->getArgument('club')
             ->getPropertyMappingConfiguration()
             ->forProperty('logo')
             ->setTypeConverter($oneFileTypeConverter)
             ->setTypeConverterOptions(
-                'JWeiland\\Clubdirectory\\Property\\TypeConverter\\UploadOneFileConverter',
-                array(
+                UploadOneFileConverter::class,
+                [
                     'IMAGE' => $club->getLogo()
-                )
+                ]
             );
 
         /** @var UploadMultipleFilesConverter $multipleFilesTypeConverter */
         $multipleFilesTypeConverter = $this->objectManager->get(
-            'JWeiland\\Clubdirectory\\Property\\TypeConverter\\UploadMultipleFilesConverter'
+            UploadMultipleFilesConverter::class
         );
         $this->arguments->getArgument('club')
             ->getPropertyMappingConfiguration()
             ->forProperty('images')
             ->setTypeConverter($multipleFilesTypeConverter)
             ->setTypeConverterOptions(
-                'JWeiland\\Clubdirectory\\Property\\TypeConverter\\UploadMultipleFilesConverter',
-                array(
+                UploadMultipleFilesConverter::class,
+                [
                     'IMAGES' => $club->getImages()
-                )
+                ]
             );
 
         // we can't work with addresses.* here,
@@ -243,25 +257,28 @@ class ClubController extends AbstractController
     /**
      * action update.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @param Club $club
+     * @return void
      */
-    public function updateAction(\JWeiland\Clubdirectory\Domain\Model\Club $club)
+    public function updateAction(Club $club)
     {
         $this->addMapRecordIfPossible($club);
         $this->clubRepository->update($club);
         $this->sendMail('update', $club);
         $club->setHidden(true);
         $this->addFlashMessage(LocalizationUtility::translate('clubUpdated', 'clubdirectory'));
-        $this->redirect('list', null, null, array('club' => $club));
+        $this->redirect('list', null, null, ['club' => $club]);
     }
 
     /**
      * $search isn't a domainmodel, so we have to do htmlspecialchars on our own.
+     *
+     * @return void
      */
     public function initializeSearchAction()
     {
         if ($this->request->hasArgument('search')) {
-            $search = htmlspecialchars($this->request->getArgument('search'));
+            $search = \htmlspecialchars($this->request->getArgument('search'));
             $this->request->setArgument('search', $search);
         }
     }
@@ -270,6 +287,7 @@ class ClubController extends AbstractController
      * search show.
      *
      * @param string $search
+     * @return void
      */
     public function searchAction($search)
     {

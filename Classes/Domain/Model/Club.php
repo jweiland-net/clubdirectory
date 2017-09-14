@@ -1,35 +1,28 @@
 <?php
-
+declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Model;
 
-/***************************************************************
- *  Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2013 Stefan Froemken <projects@jweiland.net>, jweiland.net
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * Class Club
+ *
+ * @package JWeiland\Clubdirectory\Domain\Model
  */
 class Club extends AbstractEntity
 {
@@ -200,7 +193,7 @@ class Club extends AbstractEntity
      *
      * @return bool $hidden
      */
-    public function getHidden()
+    public function getHidden(): bool
     {
         return $this->hidden;
     }
@@ -220,7 +213,7 @@ class Club extends AbstractEntity
      *
      * @return string $title
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -240,7 +233,7 @@ class Club extends AbstractEntity
      *
      * @return string $sortTitle
      */
-    public function getSortTitle()
+    public function getSortTitle(): string
     {
         return $this->sortTitle;
     }
@@ -260,7 +253,7 @@ class Club extends AbstractEntity
      *
      * @return string $activity
      */
-    public function getActivity()
+    public function getActivity(): string
     {
         return $this->activity;
     }
@@ -280,7 +273,7 @@ class Club extends AbstractEntity
      *
      * @return string $contactPerson
      */
-    public function getContactPerson()
+    public function getContactPerson(): string
     {
         return $this->contactPerson;
     }
@@ -300,7 +293,7 @@ class Club extends AbstractEntity
      *
      * @return string $contactTimes
      */
-    public function getContactTimes()
+    public function getContactTimes(): string
     {
         return $this->contactTimes;
     }
@@ -320,7 +313,7 @@ class Club extends AbstractEntity
      *
      * @return string $email
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -340,7 +333,7 @@ class Club extends AbstractEntity
      *
      * @return string $website
      */
-    public function getWebsite()
+    public function getWebsite(): string
     {
         return $this->website;
     }
@@ -360,7 +353,7 @@ class Club extends AbstractEntity
      *
      * @return string $members
      */
-    public function getMembers()
+    public function getMembers(): string
     {
         return $this->members;
     }
@@ -380,7 +373,7 @@ class Club extends AbstractEntity
      *
      * @return string $clubHome
      */
-    public function getClubHome()
+    public function getClubHome(): string
     {
         return $this->clubHome;
     }
@@ -400,7 +393,7 @@ class Club extends AbstractEntity
      *
      * @return string $description
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -418,9 +411,9 @@ class Club extends AbstractEntity
     /**
      * Adds a feUser.
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser
+     * @param FrontendUser $feUser
      */
-    public function addFeUser(\TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser)
+    public function addFeUser(FrontendUser $feUser)
     {
         $this->feUsers->attach($feUser);
     }
@@ -428,9 +421,9 @@ class Club extends AbstractEntity
     /**
      * Removes a feUser.
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser
+     * @param FrontendUser $feUser
      */
-    public function removeFeUser(\TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser)
+    public function removeFeUser(FrontendUser $feUser)
     {
         $this->feUsers->detach($feUser);
     }
@@ -438,9 +431,9 @@ class Club extends AbstractEntity
     /**
      * Returns the feUsers.
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers
+     * @return ObjectStorage $feUsers
      */
-    public function getFeUsers()
+    public function getFeUsers(): ObjectStorage
     {
         return $this->feUsers;
     }
@@ -448,9 +441,9 @@ class Club extends AbstractEntity
     /**
      * Sets the feUsers.
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers
+     * @param ObjectStorage $feUsers
      */
-    public function setFeUser(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers)
+    public function setFeUser(ObjectStorage $feUsers)
     {
         $this->feUsers = $feUsers;
     }
@@ -458,7 +451,7 @@ class Club extends AbstractEntity
     /**
      * Returns the logo.
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference $logo
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference|null $logo
      */
     public function getLogo()
     {
@@ -468,9 +461,9 @@ class Club extends AbstractEntity
     /**
      * Sets the logo.
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $logo
+     * @param FileReference $logo
      */
-    public function setLogo(\TYPO3\CMS\Extbase\Domain\Model\FileReference $logo = null)
+    public function setLogo(FileReference $logo = null)
     {
         $this->logo = $logo;
     }
@@ -478,11 +471,11 @@ class Club extends AbstractEntity
     /**
      * Returns the images.
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $images
+     * @return ObjectStorage|array $images
      */
     public function getImages()
     {
-        $references = array();
+        $references = [];
         foreach ($this->images as $image) {
             $references[] = $image;
         }
@@ -493,9 +486,9 @@ class Club extends AbstractEntity
     /**
      * Sets the images.
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $images
+     * @param ObjectStorage $images
      */
-    public function setImages(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $images)
+    public function setImages(ObjectStorage $images)
     {
         $this->images = $images;
     }
@@ -505,7 +498,7 @@ class Club extends AbstractEntity
      *
      * @return string $facebook
      */
-    public function getFacebook()
+    public function getFacebook(): string
     {
         return $this->facebook;
     }
@@ -525,7 +518,7 @@ class Club extends AbstractEntity
      *
      * @return string $twitter
      */
-    public function getTwitter()
+    public function getTwitter(): string
     {
         return $this->twitter;
     }
@@ -545,7 +538,7 @@ class Club extends AbstractEntity
      *
      * @return string $google
      */
-    public function getGoogle()
+    public function getGoogle(): string
     {
         return $this->google;
     }
@@ -565,7 +558,7 @@ class Club extends AbstractEntity
      *
      * @return string $tags
      */
-    public function getTags()
+    public function getTags(): string
     {
         return $this->tags;
     }
@@ -583,7 +576,7 @@ class Club extends AbstractEntity
     /**
      * Returns the district.
      *
-     * @return \JWeiland\Clubdirectory\Domain\Model\District $district
+     * @return District $district
      */
     public function getDistrict()
     {
@@ -593,9 +586,9 @@ class Club extends AbstractEntity
     /**
      * Sets the district.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\District $district
+     * @param District $district
      */
-    public function setDistrict(\JWeiland\Clubdirectory\Domain\Model\District $district)
+    public function setDistrict(District $district)
     {
         $this->district = $district;
     }
@@ -603,9 +596,9 @@ class Club extends AbstractEntity
     /**
      * Returns the addresses.
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $addresses
+     * @return ObjectStorage $addresses
      */
-    public function getAddresses()
+    public function getAddresses(): ObjectStorage
     {
         return $this->addresses;
     }
@@ -613,9 +606,9 @@ class Club extends AbstractEntity
     /**
      * Sets the addresses.
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $addresses
+     * @param ObjectStorage $addresses
      */
-    public function setAddresses(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $addresses)
+    public function setAddresses(ObjectStorage $addresses)
     {
         $this->addresses = $addresses;
     }
@@ -623,9 +616,9 @@ class Club extends AbstractEntity
     /**
      * add a new address.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Address $address
+     * @param Address $address
      */
-    public function addAddress(\JWeiland\Clubdirectory\Domain\Model\Address $address)
+    public function addAddress(Address $address)
     {
         $this->addresses->attach($address);
     }
@@ -633,9 +626,9 @@ class Club extends AbstractEntity
     /**
      * remove an address.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Address $address
+     * @param Address $address
      */
-    public function removeAddress(\JWeiland\Clubdirectory\Domain\Model\Address $address)
+    public function removeAddress(Address $address)
     {
         $this->addresses->detach($address);
     }
@@ -643,9 +636,9 @@ class Club extends AbstractEntity
     /**
      * Returns the categories.
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
+     * @return ObjectStorage $categories
      */
-    public function getCategories()
+    public function getCategories(): ObjectStorage
     {
         return $this->categories;
     }
@@ -653,9 +646,9 @@ class Club extends AbstractEntity
     /**
      * Sets the categories.
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
+     * @param ObjectStorage $categories
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
+    public function setCategories(ObjectStorage $categories)
     {
         $this->categories = $categories;
     }

@@ -26,10 +26,14 @@ namespace JWeiland\Clubdirectory\Configuration;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\SingletonInterface;
+
 /**
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * Class ExtConf
+ *
+ * @package JWeiland\Clubdirectory\Configuration
  */
-class ExtConf implements \TYPO3\CMS\Core\SingletonInterface
+class ExtConf implements SingletonInterface
 {
     /**
      * usergroup which is allowed to create new clubs.

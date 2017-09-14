@@ -3,6 +3,9 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory">
 		<header/>
 		<body>
+			<trans-unit id="sys_category.icon" xml:space="preserve">
+				<source>Icon</source>
+			</trans-unit>
 
 			<trans-unit id="plugin.title">
 				<source>Club Directory</source>

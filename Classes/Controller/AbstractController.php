@@ -1,180 +1,174 @@
 <?php
-
+declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
-/***************************************************************
- *  Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2013 Stefan Froemken <projects@jweiland.net>, jweiland.net
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use JWeiland\Clubdirectory\Configuration\ExtConf;
+use JWeiland\Clubdirectory\Domain\Model\Address;
+use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
+use JWeiland\Maps2\Domain\Model\PoiCollection;
+use JWeiland\Maps2\Domain\Model\RadiusResult;
+use JWeiland\Maps2\Utility\GeocodeUtility;
 use TYPO3\CMS\Core\Mail\MailMessage;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository;
+use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Extbase\Persistence\Generic\Session;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * Class AbstractController
+ *
+ * @package JWeiland\Clubdirectory\Controller
  */
 class AbstractController extends ActionController
 {
     /**
      * clubRepository.
      *
-     * @var \JWeiland\Clubdirectory\Domain\Repository\ClubRepository
-     * @inject
+     * @var ClubRepository
      */
     protected $clubRepository;
-
     /**
      * feUserRepository.
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository
+     * @var FrontendUserRepository
      */
     protected $feUserRepository;
-
     /**
      * categoryRepository.
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
+     * @var CategoryRepository
      */
     protected $categoryRepository;
-
     /**
      * persistenceManager.
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
+     * @var PersistenceManager
      */
     protected $persistenceManager;
-
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\Session
+     * @var Session
      */
     protected $session;
-
     /**
      * GeocodeUtility
      *
-     * @var \JWeiland\Maps2\Utility\GeocodeUtility
+     * @var GeocodeUtility
      */
     protected $geocodeUtility;
-
     /**
      * extConf.
      *
-     * @var \JWeiland\Clubdirectory\Configuration\ExtConf
+     * @var ExtConf
      */
     protected $extConf;
-    
     /**
      * @var string
      */
     protected $letters = '0-9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
-    
+
     /**
      * inject clubRepository
      *
-     * @param \JWeiland\Clubdirectory\Domain\Repository\ClubRepository $clubRepository
-     *
+     * @param ClubRepository $clubRepository
      * @return void
      */
-    public function injectClubRepository(\JWeiland\Clubdirectory\Domain\Repository\ClubRepository $clubRepository)
+    public function injectClubRepository(ClubRepository $clubRepository)
     {
         $this->clubRepository = $clubRepository;
     }
-    
+
     /**
      * inject frontendUserRepository
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository $feUserRepository
-     *
+     * @param FrontendUserRepository $feUserRepository
      * @return void
      */
-    public function injectFeUserRepository(\TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository $feUserRepository)
+    public function injectFeUserRepository(FrontendUserRepository $feUserRepository)
     {
         $this->feUserRepository = $feUserRepository;
     }
-    
+
     /**
      * inject categoryRepository
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository $categoryRepository
-     *
+     * @param CategoryRepository $categoryRepository
      * @return void
      */
-    public function injectCategoryRepository(\TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository $categoryRepository)
+    public function injectCategoryRepository(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }
-    
+
     /**
      * inject persistenceManager
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
-     *
+     * @param PersistenceManager $persistenceManager
      * @return void
      */
-    public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager)
+    public function injectPersistenceManager(PersistenceManager $persistenceManager)
     {
         $this->persistenceManager = $persistenceManager;
     }
-    
+
     /**
      * inject session
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\Generic\Session $session
-     *
+     * @param Session $session
      * @return void
      */
-    public function injectSession(\TYPO3\CMS\Extbase\Persistence\Generic\Session $session)
+    public function injectSession(Session $session)
     {
         $this->session = $session;
     }
-    
+
     /**
      * inject geocodeUtility
      *
-     * @param \JWeiland\Maps2\Utility\GeocodeUtility $geocodeUtility
-     *
+     * @param GeocodeUtility $geocodeUtility
      * @return void
      */
-    public function injectGeocodeUtility(\JWeiland\Maps2\Utility\GeocodeUtility $geocodeUtility)
+    public function injectGeocodeUtility(GeocodeUtility $geocodeUtility)
     {
         $this->geocodeUtility = $geocodeUtility;
     }
-    
+
     /**
      * inject extConf
      *
-     * @param \JWeiland\Clubdirectory\Configuration\ExtConf $extConf
-     *
+     * @param ExtConf $extConf
      * @return void
      */
-    public function injectExtConf(\JWeiland\Clubdirectory\Configuration\ExtConf $extConf)
+    public function injectExtConf(ExtConf $extConf)
     {
         $this->extConf = $extConf;
     }
-    
+
     /**
-     * preprocessing of all actions.
+     * Pre processing of all actions.
+     *
+     * @return void
      */
     public function initializeAction()
     {
@@ -186,35 +180,52 @@ class AbstractController extends ActionController
     }
 
     /**
+     * send email on new/update.
+     *
+     * @param string $subjectKey
+     * @param Club $club
+     * @return int The amound of email receivers
+     */
+    public function sendMail($subjectKey, Club $club): int
+    {
+        $this->view->assign('club', $club);
+        /** @var MailMessage $mail */
+        $mail = $this->objectManager->get(MailMessage::class);
+        $mail->setFrom($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName());
+        $mail->setTo($this->extConf->getEmailToAddress(), $this->extConf->getEmailToName());
+        $mail->setSubject(LocalizationUtility::translate('email.subject.' . $subjectKey, 'clubdirectory'));
+        $mail->setBody($this->view->render(), 'text/html');
+
+        return $mail->send();
+    }
+
+    /**
      * get an array with letters as keys for the glossar.
      *
      * @return array Array with starting letters as keys
      */
-    protected function getGlossar()
+    protected function getGlossar(): array
     {
-        $glossar = array();
+        $glossar = [];
         $availableLetters = $this->clubRepository->getStartingLetters();
         $possibleLetters = GeneralUtility::trimExplode(',', $this->letters);
-
         // add all letters which we have found in DB
         foreach ($availableLetters as $availableLetter) {
             if (MathUtility::canBeInterpretedAsInteger($availableLetter['letter'])) {
                 $availableLetter['letter'] = '0-9';
             }
             // add only letters which are valid (do not add "§$%")
-            if (array_search($availableLetter['letter'], $possibleLetters) !== false) {
+            if (\in_array($availableLetter['letter'], $possibleLetters, true)) {
                 $glossar[$availableLetter['letter']] = true;
             }
         }
-
         // add all valid letters which are not set/found by previous foreach
         foreach ($possibleLetters as $possibleLetter) {
-            if (!array_key_exists($possibleLetter, $glossar)) {
+            if (!\array_key_exists($possibleLetter, $glossar)) {
                 $glossar[$possibleLetter] = false;
             }
         }
-
-        ksort($glossar, SORT_STRING);
+        \ksort($glossar, \SORT_STRING);
 
         return $glossar;
     }
@@ -223,14 +234,15 @@ class AbstractController extends ActionController
      * This is a workaround to help controller actions to find (hidden) posts.
      *
      * @param $argumentName
+     * @return void
      */
     protected function registerClubFromRequest($argumentName)
     {
         $argument = $this->request->getArgument($argumentName);
-        if (is_array($argument)) {
+        if (\is_array($argument)) {
             // get club from form ($_POST)
             $club = $this->clubRepository->findHiddenEntryByUid($argument['__identity']);
-        } elseif (is_object($argument)) {
+        } elseif (\is_object($argument)) {
             // get club from domain model
             $club = $argument;
         } else {
@@ -245,15 +257,15 @@ class AbstractController extends ActionController
      *
      * @return array Array containing all allowed address titles
      */
-    protected function getAddressTitles()
+    protected function getAddressTitles(): array
     {
         $values = GeneralUtility::trimExplode(',', 'organizationAddress, postAddress, clubAddress');
-        $titles = array();
+        $titles = [];
         foreach ($values as $value) {
             $title = new \stdClass();
             $title->value = $value;
             $title->label = LocalizationUtility::translate(
-                'tx_clubdirectory_domain_model_address.title.'.$value,
+                'tx_clubdirectory_domain_model_address.title.' . $value,
                 'clubdirectory'
             );
             $titles[] = $title;
@@ -265,21 +277,22 @@ class AbstractController extends ActionController
     /**
      * If no poi record was connected with address try to create one.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @param Club $club
+     * @return void
      */
-    protected function addMapRecordIfPossible(\JWeiland\Clubdirectory\Domain\Model\Club $club)
+    protected function addMapRecordIfPossible(Club $club)
     {
-        /** @var \JWeiland\Clubdirectory\Domain\Model\Address $address */
+        /** @var Address $address */
         foreach ($club->getAddresses() as $address) {
             // add a new poi record if not set already
             if ($address->getTxMaps2Uid() === null) {
                 $results = $this->geocodeUtility->findPositionByAddress($address->getAddress());
-                if (count($results)) {
+                if (\count($results)) {
                     $results->rewind();
-                    /** @var \JWeiland\Maps2\Domain\Model\RadiusResult $result */
+                    /** @var RadiusResult $result */
                     $result = $results->current();
-                    /** @var \JWeiland\Maps2\Domain\Model\PoiCollection $poi */
-                    $poi = $this->objectManager->get('JWeiland\\Maps2\\Domain\\Model\\PoiCollection');
+                    /** @var PoiCollection $poi */
+                    $poi = $this->objectManager->get(PoiCollection::class);
                     $poi->setCollectionType('Point');
                     $poi->setTitle($result->getFormattedAddress());
                     $poi->setAddress($result->getFormattedAddress());
@@ -294,55 +307,30 @@ class AbstractController extends ActionController
     }
 
     /**
-     * send email on new/update.
-     *
-     * @param string                                    $subjectKey
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
-     *
-     * @return int The amound of email receivers
-     */
-    public function sendMail($subjectKey, \JWeiland\Clubdirectory\Domain\Model\Club $club)
-    {
-        $this->view->assign('club', $club);
-
-        /** @var MailMessage $mail */
-        $mail = $this->objectManager->get('TYPO3\\CMS\\Core\\Mail\\MailMessage');
-        $mail->setFrom($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName());
-        $mail->setTo($this->extConf->getEmailToAddress(), $this->extConf->getEmailToName());
-        $mail->setSubject(LocalizationUtility::translate('email.subject.'.$subjectKey, 'clubdirectory'));
-        $mail->setBody($this->view->render(), 'text/html');
-
-        return $mail->send();
-    }
-
-    /**
      * A special action which is called if the originally intended action could
      * not be called, for example if the arguments were not valid.
-     *
      * The default implementation sets a flash message, request errors and forwards back
      * to the originating action. This is suitable for most actions dealing with form input.
-     *
      * We clear the page cache by default on an error as well, as we need to make sure the
      * data is re-evaluated when the user changes something.
      *
      * @return string
-     *
      * @api
      */
-    protected function errorAction()
+    protected function errorAction(): string
     {
         $this->clearCacheOnError();
-        /* @var \TYPO3\CMS\Extbase\Mvc\Controller\Argument $argument */
-        $preparedArguments = array();
+        /* @var Argument $argument */
+        $preparedArguments = [];
         foreach ($this->arguments as $argument) {
             $preparedArguments[$argument->getName()] = $argument->getValue();
         }
         $errorFlashMessage = $this->getErrorFlashMessage();
         if ($errorFlashMessage !== false) {
-            $errorFlashMessageObject = new \TYPO3\CMS\Core\Messaging\FlashMessage(
+            $errorFlashMessageObject = new FlashMessage(
                 $errorFlashMessage,
                 '',
-                \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR
+                FlashMessage::ERROR
             );
             $this->controllerContext->getFlashMessageQueue()->enqueue($errorFlashMessageObject);
         }
@@ -358,8 +346,9 @@ class AbstractController extends ActionController
                 $preparedArguments
             );
         }
-        $message = 'An error occurred while trying to call ' .
-            get_class($this) . '->' . $this->actionMethodName . '().' . PHP_EOL;
+        $message = 'An error occurred while trying to call ' . \get_class(
+            $this
+        ) . '->' . $this->actionMethodName . '().' . \PHP_EOL;
 
         return $message;
     }
@@ -369,17 +358,18 @@ class AbstractController extends ActionController
      * But, if an error occurs we have to remove them.
      *
      * @param string $argument
+     * @return void
      */
     protected function deleteUploadedFilesOnValidationErrors($argument)
     {
         if ($this->getControllerContext()->getRequest()->hasArgument($argument)) {
-            /** @var \JWeiland\Clubdirectory\Domain\Model\Club $club */
+            /** @var Club $club */
             $club = $this->getControllerContext()->getRequest()->getArgument($argument);
             // in case of realurl $argument can be set, but is empty
-            if ($club instanceof \JWeiland\Clubdirectory\Domain\Model\Club) {
+            if ($club instanceof Club) {
                 $images = $club->getImages();
-                if (count($images)) {
-                    /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $image */
+                if (\count($images)) {
+                    /** @var FileReference $image */
                     foreach ($images as $image) {
                         $image->getOriginalResource()->getOriginalFile()->delete();
                     }

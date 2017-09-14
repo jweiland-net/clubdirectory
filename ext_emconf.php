@@ -30,12 +30,12 @@ $EM_CONF[$_EXTKEY] = array(
     'version' => '0.2.1',
     'constraints' => array(
         'depends' => array(
-            'extbase' => '6.2',
+            'typo3' => '8.7.0-8.7.99',
             'maps2' => '2.6.0'
         ),
         'conflicts' => array(
         ),
         'suggests' => array(
-        ),
-    ),
+        )
+    )
 );

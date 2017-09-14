@@ -20,14 +20,14 @@ return array(
         'enablecolumns' => array(
             'disabled' => 'hidden',
             'starttime' => 'starttime',
-            'endtime' => 'endtime',
+            'endtime' => 'endtime'
         ),
         'searchFields' => 'title,activity,contact_person,email,website,members,club_home,description,user,logo,images,facebook,twitter,google,tags,',
         'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('clubdirectory').'Configuration/TCA/Club.php',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('clubdirectory').'Resources/Public/Icons/tx_clubdirectory_domain_model_club.gif',
+        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('clubdirectory').'Resources/Public/Icons/tx_clubdirectory_domain_model_club.gif'
     ),
     'interface' => array(
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, sort_title, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, google, tags, district, addresses',
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, sort_title, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, google, tags, district, addresses'
     ),
     'columns' => array(
         'sys_language_uid' => array(
@@ -39,9 +39,9 @@ return array(
                 'foreign_table_where' => 'ORDER BY sys_language.title',
                 'items' => array(
                     array('LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages', -1),
-                    array('LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0),
-                ),
-            ),
+                    array('LLL:EXT:lang/locallang_general.xlf:LGL.default_value', 0)
+                )
+            )
         ),
         'l10n_parent' => array(
             'displayCond' => 'FIELD:sys_language_uid:>:0',
@@ -50,31 +50,31 @@ return array(
             'config' => array(
                 'type' => 'select',
                 'items' => array(
-                    array('', 0),
+                    array('', 0)
                 ),
                 'foreign_table' => 'tx_clubdirectory_domain_model_club',
-                'foreign_table_where' => 'AND tx_clubdirectory_domain_model_club.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_club.sys_language_uid IN (-1,0)',
-            ),
+                'foreign_table_where' => 'AND tx_clubdirectory_domain_model_club.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_club.sys_language_uid IN (-1,0)'
+            )
         ),
         'l10n_diffsource' => array(
             'config' => array(
-                'type' => 'passthrough',
-            ),
+                'type' => 'passthrough'
+            )
         ),
         't3ver_label' => array(
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'max' => 255,
-            ),
+                'max' => 255
+            )
         ),
         'hidden' => array(
             'exclude' => 1,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
             'config' => array(
-                'type' => 'check',
-            ),
+                'type' => 'check'
+            )
         ),
         'starttime' => array(
             'exclude' => 1,
@@ -88,9 +88,9 @@ return array(
                 'checkbox' => 0,
                 'default' => 0,
                 'range' => array(
-                    'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
-                ),
-            ),
+                    'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
+                )
+            )
         ),
         'endtime' => array(
             'exclude' => 1,
@@ -104,9 +104,9 @@ return array(
                 'checkbox' => 0,
                 'default' => 0,
                 'range' => array(
-                    'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y')),
-                ),
-            ),
+                    'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
+                )
+            )
         ),
         'title' => array(
             'exclude' => 1,
@@ -114,8 +114,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required',
-            ),
+                'eval' => 'trim,required'
+            )
         ),
         'sort_title' => array(
             'exclude' => 1,
@@ -123,8 +123,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required',
-            ),
+                'eval' => 'trim,required'
+            )
         ),
         'activity' => array(
             'exclude' => 1,
@@ -133,8 +133,8 @@ return array(
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim'
+            )
         ),
         'contact_person' => array(
             'exclude' => 1,
@@ -142,8 +142,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim'
+            )
         ),
         'contact_times' => array(
             'exclude' => 1,
@@ -152,8 +152,8 @@ return array(
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim'
+            )
         ),
         'email' => array(
             'exclude' => 1,
@@ -161,8 +161,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim, email'
+            )
         ),
         'website' => array(
             'exclude' => 1,
@@ -175,14 +175,16 @@ return array(
                     '_PADDING' => 2,
                     'link' => array(
                         'type' => 'popup',
-                        'title' => 'Link',
-                        'icon' => 'link_popup.gif',
-                        'script' => 'browse_links.php?mode=wizard',
-                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1',
-                    ),
+                        'title' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_link_formlabel',
+                        'icon' => 'actions-wizard-link',
+                        'module' => array(
+                            'name' => 'wizard_link'
+                        ),
+                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
+                    )
                 ),
-                'softref' => 'typolink[linkList]',
-            ),
+                'softref' => 'typolink'
+            )
         ),
         'members' => array(
             'exclude' => 1,
@@ -190,8 +192,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim'
+            )
         ),
         'club_home' => array(
             'exclude' => 1,
@@ -199,8 +201,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim'
+            )
         ),
         'description' => array(
             'exclude' => 1,
@@ -215,13 +217,13 @@ return array(
                         'icon' => 'wizard_rte2.gif',
                         'notNewRecords' => 1,
                         'RTEonly' => 1,
-                        'script' => 'wizard_rte.php',
+                        'module' => 'wizard_rte',
                         'title' => 'LLL:EXT:cms/locallang_ttc.xlf:bodytext.W.RTE',
-                        'type' => 'script',
-                    ),
-                ),
+                        'type' => 'script'
+                    )
+                )
             ),
-            'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]',
+            'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]'
         ),
         'fe_users' => array(
             'exclude' => 1,
@@ -234,8 +236,8 @@ return array(
                 'MM' => 'tx_clubdirectory_club_user_mm',
                 'minitems' => 0,
                 'maxitems' => 3,
-                'size' => 5,
-            ),
+                'size' => 5
+            )
         ),
         'logo' => array(
             'exclude' => 1,
@@ -248,10 +250,10 @@ return array(
                     'foreign_match_fields' => array(
                         'fieldname' => 'logo',
                         'tablenames' => 'tx_clubdirectory_domain_model_club',
-                        'table_local' => 'sys_file',
-                    ),
+                        'table_local' => 'sys_file'
+                    )
                 )
-            ),
+            )
         ),
         'images' => array(
             'exclude' => 1,
@@ -264,10 +266,10 @@ return array(
                     'foreign_match_fields' => array(
                         'fieldname' => 'images',
                         'tablenames' => 'tx_clubdirectory_domain_model_club',
-                        'table_local' => 'sys_file',
-                    ),
+                        'table_local' => 'sys_file'
+                    )
                 )
-            ),
+            )
         ),
         'facebook' => array(
             'exclude' => 1,
@@ -275,8 +277,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim'
+            )
         ),
         'twitter' => array(
             'exclude' => 1,
@@ -284,8 +286,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim'
+            )
         ),
         'google' => array(
             'exclude' => 1,
@@ -293,8 +295,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim'
+            )
         ),
         'tags' => array(
             'exclude' => 1,
@@ -302,8 +304,8 @@ return array(
             'config' => array(
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim',
-            ),
+                'eval' => 'trim'
+            )
         ),
         'district' => array(
             'exclude' => 1,
@@ -313,11 +315,11 @@ return array(
                 'foreign_table' => 'tx_clubdirectory_domain_model_district',
                 'foreign_table_where' => 'ORDER BY tx_clubdirectory_domain_model_district.district',
                 'items' => array(
-                    array('', ''),
+                    array('', '')
                 ),
                 'minitems' => 0,
-                'maxitems' => 1,
-            ),
+                'maxitems' => 1
+            )
         ),
         'addresses' => array(
             'exclude' => 1,
@@ -326,7 +328,7 @@ return array(
                 'type' => 'inline',
                 'foreign_table' => 'tx_clubdirectory_domain_model_address',
                 'foreign_field' => 'club',
-                'minitems' => 0,
+                'minitems' => 3,
                 'maxitems' => 3,
                 'appearance' => array(
                     'collapseAll' => true,
@@ -334,15 +336,15 @@ return array(
                     'levelLinksPosition' => 'both',
                     'showSynchronizationLink' => 1,
                     'showPossibleLocalizationRecords' => 1,
-                    'showAllLocalizationLink' => 1,
-                ),
-            ),
-        ),
+                    'showAllLocalizationLink' => 1
+                )
+            )
+        )
     ),
     'types' => array(
-        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, sort_title, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, google, tags, district, addresses,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,starttime, endtime'),
+        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, sort_title, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, google, tags, district, addresses,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,starttime, endtime')
     ),
     'palettes' => array(
-        '1' => array('showitem' => ''),
-    ),
+        '1' => array('showitem' => '')
+    )
 );
