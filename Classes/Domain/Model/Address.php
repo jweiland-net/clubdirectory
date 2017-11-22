@@ -104,6 +104,7 @@ class Address extends AbstractEntity
      * Sets the title.
      *
      * @param string $title
+     * @return void
      */
     public function setTitle($title)
     {
@@ -124,6 +125,7 @@ class Address extends AbstractEntity
      * Sets the street.
      *
      * @param string $street
+     * @return void
      */
     public function setStreet($street)
     {
@@ -144,6 +146,7 @@ class Address extends AbstractEntity
      * Sets the houseNumber.
      *
      * @param string $houseNumber
+     * @return void
      */
     public function setHouseNumber($houseNumber)
     {
@@ -164,6 +167,7 @@ class Address extends AbstractEntity
      * Sets the zip.
      *
      * @param string $zip
+     * @return void
      */
     public function setZip($zip)
     {
@@ -184,6 +188,7 @@ class Address extends AbstractEntity
      * Sets the city.
      *
      * @param string $city
+     * @return void
      */
     public function setCity($city)
     {
@@ -204,6 +209,7 @@ class Address extends AbstractEntity
      * Sets the telephone.
      *
      * @param string $telephone
+     * @return void
      */
     public function setTelephone($telephone)
     {
@@ -224,6 +230,7 @@ class Address extends AbstractEntity
      * Sets the fax.
      *
      * @param string $fax
+     * @return void
      */
     public function setFax($fax)
     {
@@ -244,6 +251,7 @@ class Address extends AbstractEntity
      * Sets the barrierFree.
      *
      * @param bool $barrierFree
+     * @return void
      */
     public function setBarrierFree($barrierFree)
     {
@@ -264,6 +272,7 @@ class Address extends AbstractEntity
      * Sets the txMaps2Uid.
      *
      * @param PoiCollection $txMaps2Uid
+     * @return void
      */
     public function setTxMaps2Uid(PoiCollection $txMaps2Uid = null)
     {

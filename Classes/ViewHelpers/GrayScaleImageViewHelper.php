@@ -59,15 +59,15 @@ class GrayScaleImageViewHelper extends ImageViewHelper
             $this->arguments['image'],
             $this->arguments['treatIdAsReference']
         );
-        $processingInstructions = array(
+        $processingInstructions = [
             'width' => $this->arguments['width'],
             'height' => $this->arguments['height'],
             'minWidth' => $this->arguments['minWidth'],
             'minHeight' => $this->arguments['minHeight'],
             'maxWidth' => $this->arguments['maxWidth'],
             'maxHeight' => $this->arguments['maxHeight'],
-            'additionalParameters' => '-colorspace GRAY',
-        );
+            'additionalParameters' => '-colorspace GRAY'
+        ];
         $processedImage = $this->imageService->applyProcessingInstructions($image, $processingInstructions);
         $imageUri = $this->imageService->getImageUri($processedImage);
 

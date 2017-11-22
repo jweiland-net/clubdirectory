@@ -3,11 +3,11 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-$tempColumns = array(
-    'icon' => array(
+$tempColumns = [
+    'icon' => [
         'exclude' => 1,
         'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:sys_category.icon',
-        'config' => array(
+        'config' => [
             'type' => 'group',
             'internal_type' => 'file',
             'uploadfolder' => 'uploads/tx_jwapi',
@@ -16,10 +16,10 @@ $tempColumns = array(
             'show_thumbs' => true,
             'size' => 5,
             'maxitems' => 1,
-            'minitems' => 0,
-        ),
-    ),
-);
+            'minitems' => 0
+        ]
+    ]
+];
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('sys_category', $tempColumns);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('sys_category', 'icon', '1', 'after:description');

@@ -2,29 +2,18 @@
 
 namespace JWeiland\Clubdirectory\Configuration;
 
-/***************************************************************
- *  Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- *  (c) 2013 Stefan Froemken <projects@jweiland.net>, jweiland.net
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
 
 use TYPO3\CMS\Core\SingletonInterface;
 
@@ -40,49 +29,49 @@ class ExtConf implements SingletonInterface
      *
      * @var int
      */
-    protected $userGroup;
+    protected $userGroup = 0;
 
     /**
      * pid of poi collection.
      *
      * @var int
      */
-    protected $poiCollectionPid;
+    protected $poiCollectionPid = 0;
 
     /**
      * root category.
      *
      * @var int
      */
-    protected $rootCategory;
+    protected $rootCategory = 0;
 
     /**
      * email from address.
      *
      * @var string
      */
-    protected $emailFromAddress;
+    protected $emailFromAddress = '';
 
     /**
      * email from name.
      *
      * @var string
      */
-    protected $emailFromName;
+    protected $emailFromName = '';
 
     /**
      * email to address.
      *
      * @var string
      */
-    protected $emailToAddress;
+    protected $emailToAddress = '';
 
     /**
      * email to name.
      *
      * @var string
      */
-    protected $emailToName;
+    protected $emailToName = '';
 
     /**
      * constructor of this class
@@ -117,10 +106,11 @@ class ExtConf implements SingletonInterface
      * setter for userGroup.
      *
      * @param int $userGroup
+     * @return void
      */
     public function setUserGroup($userGroup)
     {
-        $this->userGroup = (integer) $userGroup;
+        $this->userGroup = (int) $userGroup;
     }
 
     /**
@@ -137,10 +127,11 @@ class ExtConf implements SingletonInterface
      * setter for poiCollectionPid.
      *
      * @param int $poiCollectionPid
+     * @return void
      */
     public function setPoiCollectionPid($poiCollectionPid)
     {
-        $this->poiCollectionPid = (integer) $poiCollectionPid;
+        $this->poiCollectionPid = (int) $poiCollectionPid;
     }
 
     /**
@@ -157,10 +148,11 @@ class ExtConf implements SingletonInterface
      * setter for rootCategory.
      *
      * @param int $rootCategory
+     * @return void
      */
     public function setRootCategory($rootCategory)
     {
-        $this->rootCategory = (integer) $rootCategory;
+        $this->rootCategory = (int) $rootCategory;
     }
 
     /**
@@ -175,7 +167,9 @@ class ExtConf implements SingletonInterface
         if (empty($this->emailFromAddress)) {
             $senderMail = $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'];
             if (empty($senderMail)) {
-                throw new \Exception('You have forgotten to set a sender email address in extension configuration or in install tool');
+                throw new \Exception(
+                    'You have forgotten to set a sender email address in extension configuration or in install tool'
+                );
             } else {
                 return $senderMail;
             }
@@ -188,6 +182,7 @@ class ExtConf implements SingletonInterface
      * setter for email from address.
      *
      * @param string $emailFromAddress
+     * @return void
      */
     public function setEmailFromAddress($emailFromAddress)
     {
@@ -219,6 +214,7 @@ class ExtConf implements SingletonInterface
      * setter for emailFromName.
      *
      * @param string $emailFromName
+     * @return void
      */
     public function setEmailFromName($emailFromName)
     {
@@ -239,6 +235,7 @@ class ExtConf implements SingletonInterface
      * setter for email to address.
      *
      * @param string $emailToAddress
+     * @return void
      */
     public function setEmailToAddress($emailToAddress)
     {
@@ -259,6 +256,7 @@ class ExtConf implements SingletonInterface
      * setter for emailToName.
      *
      * @param string $emailToName
+     * @return void
      */
     public function setEmailToName($emailToName)
     {

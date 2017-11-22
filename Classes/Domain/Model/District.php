@@ -46,6 +46,7 @@ class District extends AbstractEntity
      * Sets the district.
      *
      * @param string $district
+     * @return void
      */
     public function setDistrict($district)
     {

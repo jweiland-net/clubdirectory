@@ -2,7 +2,7 @@
     "name": "jweiland/clubdirectory",
     "type": "typo3-cms-extension",
     "description": "Club directory",
-    "version": "0.2.1",
+    "version": "1.0.0",
     "license": "GPL-2.0+",
     "keywords": ["typo3", "TYPO3 CMS", "club", "directory"],
     "homepage": "http://www.jweiland.net",
@@ -19,7 +19,6 @@
       "source": "https://github.com/jweiland-net/clubdirectory"
     },
     "require": {
-      "php": ">=5.3.7 <6.0",
       "typo3/cms-core": ">=8.7.0,<8.8"
     },
     "require-dev": {

@@ -202,6 +202,7 @@ class Club extends AbstractEntity
      * Sets the hidden.
      *
      * @param bool $hidden
+     * @return void
      */
     public function setHidden($hidden)
     {
@@ -222,6 +223,7 @@ class Club extends AbstractEntity
      * Sets the title.
      *
      * @param string $title
+     * @return void
      */
     public function setTitle($title)
     {
@@ -242,6 +244,7 @@ class Club extends AbstractEntity
      * Sets the sortTitle.
      *
      * @param string $sortTitle
+     * @return void
      */
     public function setSortTitle($sortTitle)
     {
@@ -262,6 +265,7 @@ class Club extends AbstractEntity
      * Sets the activity.
      *
      * @param string $activity
+     * @return void
      */
     public function setActivity($activity)
     {
@@ -282,6 +286,7 @@ class Club extends AbstractEntity
      * Sets the contactPerson.
      *
      * @param string $contactPerson
+     * @return void
      */
     public function setContactPerson($contactPerson)
     {
@@ -302,6 +307,7 @@ class Club extends AbstractEntity
      * Sets the contactTimes.
      *
      * @param string $contactTimes
+     * @return void
      */
     public function setContactTimes($contactTimes)
     {
@@ -322,6 +328,7 @@ class Club extends AbstractEntity
      * Sets the email.
      *
      * @param string $email
+     * @return void
      */
     public function setEmail($email)
     {
@@ -342,6 +349,7 @@ class Club extends AbstractEntity
      * Sets the website.
      *
      * @param string $website
+     * @return void
      */
     public function setWebsite($website)
     {
@@ -362,6 +370,7 @@ class Club extends AbstractEntity
      * Sets the members.
      *
      * @param string $members
+     * @return void
      */
     public function setMembers($members)
     {
@@ -382,6 +391,7 @@ class Club extends AbstractEntity
      * Sets the clubHome.
      *
      * @param string $clubHome
+     * @return void
      */
     public function setClubHome($clubHome)
     {
@@ -402,6 +412,7 @@ class Club extends AbstractEntity
      * Sets the description.
      *
      * @param string $description
+     * @return void
      */
     public function setDescription($description)
     {
@@ -412,6 +423,7 @@ class Club extends AbstractEntity
      * Adds a feUser.
      *
      * @param FrontendUser $feUser
+     * @return void
      */
     public function addFeUser(FrontendUser $feUser)
     {
@@ -422,6 +434,7 @@ class Club extends AbstractEntity
      * Removes a feUser.
      *
      * @param FrontendUser $feUser
+     * @return void
      */
     public function removeFeUser(FrontendUser $feUser)
     {
@@ -442,6 +455,7 @@ class Club extends AbstractEntity
      * Sets the feUsers.
      *
      * @param ObjectStorage $feUsers
+     * @return void
      */
     public function setFeUser(ObjectStorage $feUsers)
     {
@@ -462,6 +476,7 @@ class Club extends AbstractEntity
      * Sets the logo.
      *
      * @param FileReference $logo
+     * @return void
      */
     public function setLogo(FileReference $logo = null)
     {
@@ -487,6 +502,7 @@ class Club extends AbstractEntity
      * Sets the images.
      *
      * @param ObjectStorage $images
+     * @return void
      */
     public function setImages(ObjectStorage $images)
     {
@@ -507,6 +523,7 @@ class Club extends AbstractEntity
      * Sets the facebook.
      *
      * @param string $facebook
+     * @return void
      */
     public function setFacebook($facebook)
     {
@@ -527,6 +544,7 @@ class Club extends AbstractEntity
      * Sets the twitter.
      *
      * @param string $twitter
+     * @return void
      */
     public function setTwitter($twitter)
     {
@@ -547,6 +565,7 @@ class Club extends AbstractEntity
      * Sets the google.
      *
      * @param string $google
+     * @return void
      */
     public function setGoogle($google)
     {
@@ -567,6 +586,7 @@ class Club extends AbstractEntity
      * Sets the tags.
      *
      * @param string $tags
+     * @return void
      */
     public function setTags($tags)
     {
@@ -587,6 +607,7 @@ class Club extends AbstractEntity
      * Sets the district.
      *
      * @param District $district
+     * @return void
      */
     public function setDistrict(District $district)
     {
@@ -607,6 +628,7 @@ class Club extends AbstractEntity
      * Sets the addresses.
      *
      * @param ObjectStorage $addresses
+     * @return void
      */
     public function setAddresses(ObjectStorage $addresses)
     {
@@ -617,6 +639,7 @@ class Club extends AbstractEntity
      * add a new address.
      *
      * @param Address $address
+     * @return void
      */
     public function addAddress(Address $address)
     {
@@ -627,6 +650,7 @@ class Club extends AbstractEntity
      * remove an address.
      *
      * @param Address $address
+     * @return void
      */
     public function removeAddress(Address $address)
     {
@@ -647,6 +671,7 @@ class Club extends AbstractEntity
      * Sets the categories.
      *
      * @param ObjectStorage $categories
+     * @return void
      */
     public function setCategories(ObjectStorage $categories)
     {

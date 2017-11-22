@@ -33,7 +33,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -186,7 +185,7 @@ class AbstractController extends ActionController
      * @param Club $club
      * @return int The amound of email receivers
      */
-    public function sendMail($subjectKey, Club $club): int
+    public function sendMail($subjectKey, Club $club)
     {
         $this->view->assign('club', $club);
         /** @var MailMessage $mail */
@@ -204,7 +203,7 @@ class AbstractController extends ActionController
      *
      * @return array Array with starting letters as keys
      */
-    protected function getGlossar(): array
+    protected function getGlossar()
     {
         $glossar = [];
         $availableLetters = $this->clubRepository->getStartingLetters();
@@ -257,7 +256,7 @@ class AbstractController extends ActionController
      *
      * @return array Array containing all allowed address titles
      */
-    protected function getAddressTitles(): array
+    protected function getAddressTitles()
     {
         $values = GeneralUtility::trimExplode(',', 'organizationAddress, postAddress, clubAddress');
         $titles = [];
@@ -317,7 +316,7 @@ class AbstractController extends ActionController
      * @return string
      * @api
      */
-    protected function errorAction(): string
+    protected function errorAction()
     {
         $this->clearCacheOnError();
         /* @var Argument $argument */

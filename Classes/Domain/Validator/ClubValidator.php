@@ -63,6 +63,7 @@ class ClubValidator extends AbstractValidator
      * But it's bad to add these empty addresses into DB. So we remove empty addresses here.
      *
      * @param Club $club
+     * @return void
      */
     protected function removeEmptyAddresses(Club $club)
     {

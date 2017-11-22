@@ -153,7 +153,7 @@ class MapController extends AbstractController
     /**
      * action update.
      *
-     * @param \JWeiland\Clubdirectory\Domain\Model\Club $club
+     * @param Club $club
      * @return void
      */
     public function updateAction(Club $club)

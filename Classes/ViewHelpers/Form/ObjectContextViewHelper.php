@@ -27,6 +27,7 @@ namespace JWeiland\Clubdirectory\ViewHelpers\Form;
 
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Fluid\ViewHelpers\Form\AbstractFormViewHelper;
+use TYPO3\CMS\Fluid\ViewHelpers\FormViewHelper;
 
 /**
  * Form Object context helper. Changes the form object for nested domain objects.
@@ -79,7 +80,7 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
      */
     public function render()
     {
-        if (!$this->viewHelperVariableContainer->exists('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName')) {
+        if (!$this->viewHelperVariableContainer->exists(FormViewHelper::class, 'formObjectName')) {
             throw new \OutOfBoundsException('The ObjectContextViewHelper may not be used outside the object acessor mode of a form viewhelper.', 1379072385);
         }
         if (!is_object($this->arguments['object'])) {
@@ -93,9 +94,9 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
 
         $content = $this->renderChildren();
 
-        $additionalIdentityProperties = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'additionalIdentityProperties');
+        $additionalIdentityProperties = $this->viewHelperVariableContainer->get(FormViewHelper::class, 'additionalIdentityProperties');
         $additionalIdentityProperties[$this->getFormObjectName()] = $this->renderHiddenIdentityField($this->arguments['object'], $this->getFormObjectName());
-        $this->viewHelperVariableContainer->addOrUpdate('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'additionalIdentityProperties', $additionalIdentityProperties);
+        $this->viewHelperVariableContainer->addOrUpdate(FormViewHelper::class, 'additionalIdentityProperties', $additionalIdentityProperties);
 
         $this->restoreFormObjectInViewHelperVariableContainer();
         $this->restoreFormObjectNameInViewHelperVariableContainer();
@@ -108,7 +109,7 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
      */
     protected function detectObjectPositionInParentCollection()
     {
-        $formObject = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
+        $formObject = $this->viewHelperVariableContainer->get(FormViewHelper::class, 'formObject');
         $collection = ObjectAccess::getProperty($formObject, $this->arguments['parentProperty']);
         $position = 0;
         foreach ($collection as $item) {
@@ -120,13 +121,15 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
     }
 
     /**
-     * Adds the form object name to the ViewHelperVariableContainer if "objectName" argument or "name" attribute is specified.
+     * Adds the form object name to the ViewHelperVariableContainer if
+     * "objectName" argument or "name" attribute is specified.
      */
     protected function addFormObjectNameToViewHelperVariableContainer()
     {
-        $this->backupViewHelperVariableContainer['formObjectName'] = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
-        $this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
-        $this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName', $this->getFormObjectName());
+        $this->backupViewHelperVariableContainer['formObjectName'] = $this->viewHelperVariableContainer->get(
+            FormViewHelper::class, 'formObjectName');
+        $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObjectName');
+        $this->viewHelperVariableContainer->add(FormViewHelper::class, 'formObjectName', $this->getFormObjectName());
     }
 
     /**
@@ -142,18 +145,20 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
      */
     protected function restoreFormObjectNameInViewHelperVariableContainer()
     {
-        $this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName');
-        $this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObjectName', $this->backupViewHelperVariableContainer['formObjectName']);
+        $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObjectName');
+        $this->viewHelperVariableContainer->add(FormViewHelper::class, 'formObjectName', $this->backupViewHelperVariableContainer['formObjectName']);
     }
 
     /**
-     * Adds the object that is bound to this form to the ViewHelperVariableContainer if the formObject attribute is specified.
+     * Adds the object that is bound to this form to the ViewHelperVariableContainer
+     * if the formObject attribute is specified.
      */
     protected function addFormObjectToViewHelperVariableContainer()
     {
-        $this->backupViewHelperVariableContainer['formObject'] = $this->viewHelperVariableContainer->get('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
-        $this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
-        $this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject', $this->arguments['object']);
+        $this->backupViewHelperVariableContainer['formObject'] = $this->viewHelperVariableContainer->get(
+            FormViewHelper::class, 'formObject');
+        $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObject');
+        $this->viewHelperVariableContainer->add(FormViewHelper::class, 'formObject', $this->arguments['object']);
     }
 
     /**
@@ -161,7 +166,7 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
      */
     protected function restoreFormObjectInViewHelperVariableContainer()
     {
-        $this->viewHelperVariableContainer->remove('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject');
-        $this->viewHelperVariableContainer->add('TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper', 'formObject', $this->backupViewHelperVariableContainer['formObject']);
+        $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObject');
+        $this->viewHelperVariableContainer->add(FormViewHelper::class, 'formObject', $this->backupViewHelperVariableContainer['formObject']);
     }
 }

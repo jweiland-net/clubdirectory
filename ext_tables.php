@@ -15,14 +15,14 @@ if (TYPO3_MODE === 'BE') {
         'web',    // Make module a submodule of 'web'
         'club',    // Submodule key
         '',    // Position
-        array(
-            'Export' => 'index',
-        ),
-        array(
+        [
+            'Export' => 'index'
+        ],
+        [
             'access' => 'user,group',
             'icon' => 'EXT:'.$_EXTKEY.'/ext_icon.gif',
-            'labels' => 'LLL:EXT:'.$_EXTKEY.'/Resources/Private/Language/locallang_export.xlf',
-        )
+            'labels' => 'LLL:EXT:'.$_EXTKEY.'/Resources/Private/Language/locallang_export.xlf'
+        ]
     );
 }
 
@@ -31,24 +31,40 @@ $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamel
 $pluginSignature = strtolower($extensionName).'_clubdirectory';
 $TCA['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'layout,select_key,pages,recursive';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($pluginSignature, 'FILE:EXT:'.$_EXTKEY.'/Configuration/FlexForms/ClubDirectory.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    $pluginSignature,
+    'FILE:EXT:'.$_EXTKEY.'/Configuration/FlexForms/ClubDirectory.xml'
+);
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Club Directory');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    $_EXTKEY,
+    'Configuration/TypoScript',
+    'Club Directory'
+);
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_clubdirectory_domain_model_club', 'EXT:clubdirectory/Resources/Private/Language/locallang_csh_tx_clubdirectory_domain_model_club.xlf');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
+    'tx_clubdirectory_domain_model_club',
+    'EXT:clubdirectory/Resources/Private/Language/locallang_csh_tx_clubdirectory_domain_model_club.xlf'
+);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_clubdirectory_domain_model_club');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_clubdirectory_domain_model_address', 'EXT:clubdirectory/Resources/Private/Language/locallang_csh_tx_clubdirectory_domain_model_address.xlf');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
+    'tx_clubdirectory_domain_model_address',
+    'EXT:clubdirectory/Resources/Private/Language/locallang_csh_tx_clubdirectory_domain_model_address.xlf'
+);
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_clubdirectory_domain_model_address');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_clubdirectory_domain_model_district', 'EXT:clubdirectory/Resources/Private/Language/locallang_csh_tx_clubdirectory_domain_model_district.xlf');
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_clubdirectory_domain_model_district');
 
 $extConf = unserialize($_EXTCONF);
-$tsConfig = array();
+$tsConfig = [];
 $tsConfig[] = 'ext.clubdirectory.pid = '.(integer) $extConf['poiCollectionPid'];
-$tsConfig[] = 'TCEFORM.tx_clubdirectory_domain_model_club.categories.PAGE_TSCONFIG_ID = '.(integer) $extConf['rootCategory'];
+
+$tsConfig[] = 'TCEFORM.tx_clubdirectory_domain_model_club.categories.PAGE_TSCONFIG_ID = '
+    . (integer) $extConf['rootCategory'];
+
 $tsConfig[] = 'TCEFORM.tx_clubdirectory_domain_model_club.fe_users.PAGE_TSCONFIG_ID = '.(integer) $extConf['userGroup'];
+
 // following line was not used in current system. So it should not crash somewhere else.
 $tsConfig[] = 'TCEFORM.tt_content.pi_flexform.PAGE_TSCONFIG_ID = '.(integer) $extConf['rootCategory'];
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(implode(LF, $tsConfig));

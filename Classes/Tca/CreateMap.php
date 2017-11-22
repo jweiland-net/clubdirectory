@@ -71,7 +71,10 @@ class CreateMap
             $this->updateMmEntries();
         } else {
             // create new map-record and set them in relation
-            $jSon = GeneralUtility::getUrl('http://maps.googleapis.com/maps/api/geocode/json?address='.$this->getAddress().'&sensor=false');
+            $jSon = GeneralUtility::getUrl(
+                'http://maps.googleapis.com/maps/api/geocode/json?address='.$this->getAddress().'&sensor=false'
+            );
+
             $response = \json_decode($jSon, true);
             if (\is_array($response) && $response['status'] === 'OK') {
                 $location = $response['results'][0]['geometry']['location'];
@@ -206,6 +209,8 @@ class CreateMap
 
     /**
      * update mm table for poiCollections.
+     *
+     * @return void
      */
     public function updateMmEntries()
     {

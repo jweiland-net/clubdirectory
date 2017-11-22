@@ -27,7 +27,7 @@ class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
      *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * cruserId
