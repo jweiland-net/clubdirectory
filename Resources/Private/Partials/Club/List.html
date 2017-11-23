@@ -14,7 +14,9 @@
 										<f:if condition="{club.categories -> f:count()}">
 											<f:for each="{club.categories}" as="category" iteration="iterator">
 												<f:if condition="{iterator.isFirst}">
-													<f:render partial="Club/Logo" arguments="{path: '{fallbackIconPath}', file: category.icon, alt: club.title}" />
+													<f:if condition="{fallbackIconPath} && {company.mainTrade.icon}">
+														<f:render partial="Club/Logo" arguments="{path: '{fallbackIconPath}', file: category.icon, alt: club.title}" />
+													</f:if>
 												</f:if>
 											</f:for>
 										</f:if>

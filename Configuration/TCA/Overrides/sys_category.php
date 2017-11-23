@@ -3,8 +3,9 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-if ($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['clubdirectory']['fallbackIconPath']) {
-    $fallbackIconPath = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['clubdirectory']['fallbackIconPath'];
+$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['clubdirectory']);
+if ($extConf['fallbackIconPath']) {
+    $fallbackIconPath = $extConf['fallbackIconPath'];
 } else {
     $fallbackIconPath = '/uploads/tx_clubdirectory/';
 }
