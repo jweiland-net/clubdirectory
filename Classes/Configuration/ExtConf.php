@@ -25,6 +25,13 @@ use TYPO3\CMS\Core\SingletonInterface;
 class ExtConf implements SingletonInterface
 {
     /**
+     * fallback icon path
+     *
+     * @var string
+     */
+    protected $fallbackIconPath = '';
+
+    /**
      * usergroup which is allowed to create new clubs.
      *
      * @var int
@@ -90,6 +97,27 @@ class ExtConf implements SingletonInterface
                 }
             }
         }
+    }
+
+    /**
+     * Gets FallbackIconPath
+     *
+     * @return string
+     */
+    public function getFallbackIconPath(): string
+    {
+        return $this->fallbackIconPath;
+    }
+
+    /**
+     * Sets FallbackIconPath
+     *
+     * @param string $fallbackIconPath
+     * @return void
+     */
+    public function setFallbackIconPath(string $fallbackIconPath)
+    {
+        $this->fallbackIconPath = $fallbackIconPath;
     }
 
     /**

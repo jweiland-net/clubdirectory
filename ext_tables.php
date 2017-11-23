@@ -58,7 +58,7 @@ $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_
 
 $extConf = unserialize($_EXTCONF);
 $tsConfig = [];
-$tsConfig[] = 'ext.clubdirectory.pid = '.(integer) $extConf['poiCollectionPid'];
+$tsConfig[] = 'ext.clubdirectory.pid = '.(int) $extConf['poiCollectionPid'];
 
 $tsConfig[] = 'TCEFORM.tx_clubdirectory_domain_model_club.categories.PAGE_TSCONFIG_ID = '
     . (integer) $extConf['rootCategory'];

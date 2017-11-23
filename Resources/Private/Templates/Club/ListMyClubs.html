@@ -6,7 +6,7 @@
 	<div class="grid_8 floatleft">
 		<f:render partial="Club/Search" arguments="{search: search}" />
 		<f:render partial="Club/Glossar" arguments="{glossar: glossar}" />
-		<f:render partial="Club/List" arguments="{clubs: clubs}" />
+		<f:render partial="Club/List" arguments="{fallbackIconPath: fallbackIconPath, clubs: clubs}" />
 	</div>
 	<f:render partial="Club/InsertEditLinks" arguments="{allowedUserGroup: allowedUserGroup}" />
 </f:section>

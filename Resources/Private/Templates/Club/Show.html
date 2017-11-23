@@ -5,5 +5,5 @@
 		<p class="align-right info-box">
 		<f:link.action action="edit" arguments="{club: club}" title="<f:translate key='edit' />"><span><f:translate key="edit" /></span><span aria-hidden="true" class="icon-arrowright"></span></f:link.action></p>
 	</f:if>
-	<f:render partial="Club/Properties" arguments="{club: club}" />
+	<f:render partial="Club/Properties" arguments="{fallbackIconPath: fallbackIconPath, club: club}" />
 </f:section>
