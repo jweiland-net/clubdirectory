@@ -3,6 +3,12 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
+if ($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['clubdirectory']['fallbackIconPath']) {
+    $fallbackIconPath = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['clubdirectory']['fallbackIconPath'];
+} else {
+    $fallbackIconPath = '/uploads/tx_clubdirectory/';
+}
+
 $tempColumns = [
     'icon' => [
         'exclude' => 1,
@@ -10,7 +16,7 @@ $tempColumns = [
         'config' => [
             'type' => 'group',
             'internal_type' => 'file',
-            'uploadfolder' => $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['clubdirectory']['fallbackIconPath'],
+            'uploadfolder' => $fallbackIconPath,
             'allowed' => $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
             'max_size' => $GLOBALS['TYPO3_CONF_VARS']['BE']['maxFileSize'],
             'show_thumbs' => true,

@@ -106,6 +106,9 @@ class ExtConf implements SingletonInterface
      */
     public function getFallbackIconPath(): string
     {
+        if (!$this->fallbackIconPath) {
+            $this->fallbackIconPath = '/uploads/tx_clubdirectory/';
+        }
         return $this->fallbackIconPath;
     }
 
