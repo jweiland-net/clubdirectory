@@ -19,7 +19,8 @@
       "source": "https://github.com/jweiland-net/clubdirectory"
     },
     "require": {
-      "typo3/cms-core": ">=8.7.0,<8.8"
+      "typo3/cms-core": ">=8.7.0,<8.8",
+      "jweiland/maps2": "~3.0"
     },
     "require-dev": {
       "phpunit/phpunit": "~4.8.0"
