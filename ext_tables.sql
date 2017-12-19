@@ -157,10 +157,3 @@ CREATE TABLE tx_clubdirectory_club_user_mm (
 	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
 );
-
-#
-# Table structure for table 'sys_category'
-#
-CREATE TABLE sys_category (
-	icon varchar(255) DEFAULT '' NOT NULL,
-);
