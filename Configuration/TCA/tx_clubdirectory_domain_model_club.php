@@ -1,9 +1,4 @@
 <?php
-if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.6')) {
-    $ttContentLanguageFile = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
-} else {
-    $ttContentLanguageFile = 'LLL:EXT:cms/locallang_ttc.xlf';
-}
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club',
@@ -32,9 +27,24 @@ return [
     'interface' => [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, sort_title, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, google, tags, district, addresses'
     ],
+    'types' => [
+        '1' => [
+            'showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, sort_title,
+            activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo,
+            images, facebook, twitter, google, tags, district, addresses,
+            --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
+        ]
+    ],
+    'palettes' => [
+        'access' => [
+            'showitem' => 'starttime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:starttime_formlabel,endtime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:endtime_formlabel',
+        ]
+    ],
+
     'columns' => [
         'sys_language_uid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'select',
@@ -51,21 +61,19 @@ return [
             ]
         ],
         'l10n_parent' => [
-            'exclude' => 1,
             'displayCond' => 'FIELD:sys_language_uid:>:0',
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [
-                        '',
-                        0
-                    ]
+                    ['', 0],
                 ],
-                'foreign_table' => 'tt_content',
-                'foreign_table_where' => 'AND tt_content.pid=###CURRENT_PID### AND tt_content.sys_language_uid IN (-1,0)',
-                'default' => 0
+                'foreign_table' => 'tx_clubdirectory_domain_model_club',
+                'foreign_table_where' => 'AND tx_clubdirectory_domain_model_club.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_club.sys_language_uid IN (-1,0)',
+                'showIconTable' => false,
+                'default' => 0,
             ]
         ],
         'l10n_diffsource' => [
@@ -83,7 +91,7 @@ return [
             ]
         ],
         'hidden' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
@@ -95,7 +103,7 @@ return [
             ]
         ],
         'starttime' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
@@ -107,7 +115,7 @@ return [
             'l10n_display' => 'defaultAsReadonly'
         ],
         'endtime' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
@@ -122,7 +130,7 @@ return [
             'l10n_display' => 'defaultAsReadonly'
         ],
         'title' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.title',
             'config' => [
                 'type' => 'input',
@@ -131,7 +139,7 @@ return [
             ]
         ],
         'sort_title' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.sortTitle',
             'config' => [
                 'type' => 'input',
@@ -140,7 +148,7 @@ return [
             ]
         ],
         'activity' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.activity',
             'config' => [
                 'type' => 'text',
@@ -150,7 +158,7 @@ return [
             ]
         ],
         'contact_person' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.contactPerson',
             'config' => [
                 'type' => 'input',
@@ -159,7 +167,7 @@ return [
             ]
         ],
         'contact_times' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.contactTimes',
             'config' => [
                 'type' => 'text',
@@ -169,7 +177,7 @@ return [
             ]
         ],
         'email' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.email',
             'config' => [
                 'type' => 'input',
@@ -178,7 +186,7 @@ return [
             ]
         ],
         'website' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.website',
             'config' => [
                 'type' => 'input',
@@ -200,7 +208,7 @@ return [
             ]
         ],
         'members' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.members',
             'config' => [
                 'type' => 'input',
@@ -209,7 +217,7 @@ return [
             ]
         ],
         'club_home' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.clubHome',
             'config' => [
                 'type' => 'input',
@@ -218,7 +226,7 @@ return [
             ]
         ],
         'description' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.description',
             'config' => [
                 'type' => 'text',
@@ -239,7 +247,7 @@ return [
             'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]'
         ],
         'fe_users' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.feUsers',
             'config' => [
                 'type' => 'select',
@@ -253,7 +261,7 @@ return [
             ]
         ],
         'logo' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.logo',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'logo',
@@ -269,7 +277,7 @@ return [
             )
         ],
         'images' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.images',
             'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
                 'images',
@@ -285,7 +293,7 @@ return [
             )
         ],
         'facebook' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.facebook',
             'config' => [
                 'type' => 'input',
@@ -294,7 +302,7 @@ return [
             ]
         ],
         'twitter' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.twitter',
             'config' => [
                 'type' => 'input',
@@ -303,7 +311,7 @@ return [
             ]
         ],
         'google' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.google',
             'config' => [
                 'type' => 'input',
@@ -312,7 +320,7 @@ return [
             ]
         ],
         'tags' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.tags',
             'config' => [
                 'type' => 'input',
@@ -321,7 +329,7 @@ return [
             ]
         ],
         'district' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.district',
             'config' => [
                 'type' => 'select',
@@ -335,7 +343,7 @@ return [
             ]
         ],
         'addresses' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.addresses',
             'config' => [
                 'type' => 'inline',
@@ -353,11 +361,5 @@ return [
                 ]
             ]
         ]
-    ],
-    'types' => [
-        '1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, sort_title, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, google, tags, district, addresses,--div--;' . $ttContentLanguageFile . ':tabs.access,starttime, endtime']
-    ],
-    'palettes' => [
-        '1' => ['showitem' => '']
     ]
 ];

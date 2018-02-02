@@ -1,9 +1,4 @@
 <?php
-if (\TYPO3\CMS\Core\Utility\GeneralUtility::compat_version('7.6')) {
-    $ttContentLanguageFile = 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf';
-} else {
-    $ttContentLanguageFile = 'LLL:EXT:cms/locallang_ttc.xlf';
-}
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address',
@@ -27,14 +22,26 @@ return [
             'endtime' => 'endtime'
         ],
         'searchFields' => 'title,street,house_number,zip,city,telephone,fax',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('clubdirectory').'Resources/Public/Icons/tx_clubdirectory_domain_model_address.gif'
+        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('clubdirectory') . 'Resources/Public/Icons/tx_clubdirectory_domain_model_address.gif'
     ],
     'interface' => [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, street, house_number, zip, city, telephone, fax, barrier_free, tx_maps2_uid'
     ],
+    'types' => [
+        '1' => [
+            'showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, street, house_number, zip, city, telephone, fax, barrier_free, tx_maps2_uid,
+            --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
+        ]
+    ],
+    'palettes' => [
+        'access' => [
+            'showitem' => 'starttime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:starttime_formlabel,endtime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:endtime_formlabel',
+        ]
+    ],
     'columns' => [
         'sys_language_uid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'select',
@@ -51,21 +58,19 @@ return [
             ]
         ],
         'l10n_parent' => [
-            'exclude' => 1,
             'displayCond' => 'FIELD:sys_language_uid:>:0',
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [
-                        '',
-                        0
-                    ]
+                    ['', 0],
                 ],
-                'foreign_table' => 'tt_content',
-                'foreign_table_where' => 'AND tt_content.pid=###CURRENT_PID### AND tt_content.sys_language_uid IN (-1,0)',
-                'default' => 0
+                'foreign_table' => 'tx_clubdirectory_domain_model_address',
+                'foreign_table_where' => 'AND tx_clubdirectory_domain_model_address.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_address.sys_language_uid IN (-1,0)',
+                'showIconTable' => false,
+                'default' => 0,
             ]
         ],
         'l10n_diffsource' => [
@@ -83,7 +88,7 @@ return [
             ]
         ],
         'hidden' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
@@ -95,7 +100,7 @@ return [
             ]
         ],
         'starttime' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
@@ -107,7 +112,7 @@ return [
             'l10n_display' => 'defaultAsReadonly'
         ],
         'endtime' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
@@ -122,7 +127,7 @@ return [
             'l10n_display' => 'defaultAsReadonly'
         ],
         'title' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.title',
             'config' => [
                 'type' => 'select',
@@ -137,7 +142,7 @@ return [
             ]
         ],
         'street' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.street',
             'config' => [
                 'type' => 'input',
@@ -146,7 +151,7 @@ return [
             ]
         ],
         'house_number' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.houseNumber',
             'config' => [
                 'type' => 'input',
@@ -155,7 +160,7 @@ return [
             ]
         ],
         'zip' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.zip',
             'config' => [
                 'type' => 'input',
@@ -164,7 +169,7 @@ return [
             ]
         ],
         'city' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.city',
             'config' => [
                 'type' => 'input',
@@ -173,7 +178,7 @@ return [
             ]
         ],
         'telephone' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.telephone',
             'config' => [
                 'type' => 'input',
@@ -182,7 +187,7 @@ return [
             ]
         ],
         'fax' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.fax',
             'config' => [
                 'type' => 'input',
@@ -191,7 +196,7 @@ return [
             ]
         ],
         'barrier_free' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.barrierFree',
             'config' => [
                 'type' => 'check',
@@ -199,7 +204,7 @@ return [
             ]
         ],
         'tx_maps2_uid' => [
-            'exclude' => 1,
+            'exclude' => true,
             'label' => 'LLL:EXT:maps2/Resources/Private/Language/locallang_db.xlf:tx_maps2_uid',
             'config' => [
                 'type' => 'group',
@@ -224,11 +229,5 @@ return [
                 'type' => 'passthrough'
             ]
         ]
-    ],
-    'types' => [
-        '1' => ['showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, street, house_number, zip, city, telephone, fax, barrier_free, tx_maps2_uid,--div--;' . $ttContentLanguageFile . ':tabs.access,starttime, endtime']
-    ],
-    'palettes' => [
-        '1' => ['showitem' => '']
     ]
 ];
