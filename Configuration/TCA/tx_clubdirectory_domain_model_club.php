@@ -349,7 +349,7 @@ return [
                 'type' => 'inline',
                 'foreign_table' => 'tx_clubdirectory_domain_model_address',
                 'foreign_field' => 'club',
-                'minitems' => 3,
+                'minitems' => 0,
                 'maxitems' => 3,
                 'appearance' => [
                     'collapseAll' => true,
