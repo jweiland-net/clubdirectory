@@ -16,13 +16,6 @@ plugin.tx_clubdirectory {
   persistence {
     storagePid = {$plugin.tx_clubdirectory.persistence.storagePid}
     updateReferenceIndex = 1
-    classes {
-      JWeiland\Clubdirectory\Domain\Model\Category {
-        mapping {
-          table = sys_category
-        }
-      }
-    }
   }
   settings {
     pidOfMaps2Plugin = {$plugin.tx_clubdirectory.settings.pidOfMaps2Plugin}

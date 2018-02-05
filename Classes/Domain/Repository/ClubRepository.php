@@ -21,6 +21,7 @@ use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class ClubRepository

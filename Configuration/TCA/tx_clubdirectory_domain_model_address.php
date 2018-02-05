@@ -9,8 +9,6 @@ return [
         'dividers2tabs' => true,
         'default_sortby' => 'ORDER BY title',
 
-        'versioningWS' => 2,
-        'versioning_followPages' => true,
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -22,14 +20,14 @@ return [
             'endtime' => 'endtime'
         ],
         'searchFields' => 'title,street,house_number,zip,city,telephone,fax',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('clubdirectory') . 'Resources/Public/Icons/tx_clubdirectory_domain_model_address.gif'
+        'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_address.gif'
     ],
     'interface' => [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, street, house_number, zip, city, telephone, fax, barrier_free, tx_maps2_uid'
     ],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, street, house_number, zip, city, telephone, fax, barrier_free, tx_maps2_uid,
+            'showitem' => 'sys_language_uid;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, street, house_number, zip, city, telephone, fax, barrier_free, tx_maps2_uid,
             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
         ]
@@ -65,12 +63,11 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['', 0],
+                    ['', 0]
                 ],
                 'foreign_table' => 'tx_clubdirectory_domain_model_address',
                 'foreign_table_where' => 'AND tx_clubdirectory_domain_model_address.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_address.sys_language_uid IN (-1,0)',
-                'showIconTable' => false,
-                'default' => 0,
+                'default' => 0
             ]
         ],
         'l10n_diffsource' => [
@@ -83,8 +80,8 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
             'config' => [
                 'type' => 'input',
-                'size' => '30',
-                'max' => '255'
+                'size' => 30,
+                'max' => 255
             ]
         ],
         'hidden' => [
@@ -104,8 +101,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
-                'size' => '13',
+                'size' => 13,
                 'eval' => 'datetime',
+                'renderType' => 'inputDateTime',
                 'default' => 0
             ],
             'l10n_mode' => 'exclude',
@@ -116,8 +114,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
-                'size' => '13',
+                'size' => 13,
                 'eval' => 'datetime',
+                'renderType' => 'inputDateTime',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
@@ -211,7 +210,6 @@ return [
                 'internal_type' => 'db',
                 'allowed' => 'tx_maps2_domain_model_poicollection',
                 'prepend_tname' => false,
-                'show_thumbs' => false,
                 'size' => 1,
                 'maxitems' => 1,
                 'wizards' => [

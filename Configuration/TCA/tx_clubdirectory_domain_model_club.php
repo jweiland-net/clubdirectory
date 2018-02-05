@@ -9,8 +9,6 @@ return [
         'dividers2tabs' => true,
         'default_sortby' => 'ORDER BY title',
 
-        'versioningWS' => 2,
-        'versioning_followPages' => true,
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -22,14 +20,14 @@ return [
             'endtime' => 'endtime'
         ],
         'searchFields' => 'title,activity,contact_person,email,website,members,club_home,description,user,logo,images,facebook,twitter,google,tags,',
-        'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('clubdirectory').'Resources/Public/Icons/tx_clubdirectory_domain_model_club.gif'
+        'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_club.gif'
     ],
     'interface' => [
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, sort_title, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, google, tags, district, addresses'
     ],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, sort_title,
+            'showitem' => 'sys_language_uid;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, sort_title,
             activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo,
             images, facebook, twitter, google, tags, district, addresses,
             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
@@ -55,9 +53,9 @@ return [
                         'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
                         -1,
                         'flags-multiple'
-                    ],
+                    ]
                 ],
-                'default' => 0,
+                'default' => 0
             ]
         ],
         'l10n_parent' => [
@@ -68,12 +66,11 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['', 0],
+                    ['', 0]
                 ],
                 'foreign_table' => 'tx_clubdirectory_domain_model_club',
                 'foreign_table_where' => 'AND tx_clubdirectory_domain_model_club.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_club.sys_language_uid IN (-1,0)',
-                'showIconTable' => false,
-                'default' => 0,
+                'default' => 0
             ]
         ],
         'l10n_diffsource' => [
@@ -86,8 +83,8 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.versionLabel',
             'config' => [
                 'type' => 'input',
-                'size' => '30',
-                'max' => '255'
+                'size' => 30,
+                'max' => 255
             ]
         ],
         'hidden' => [
@@ -107,8 +104,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
-                'size' => '13',
+                'size' => 13,
                 'eval' => 'datetime',
+                'renderType' => 'inputDateTime',
                 'default' => 0
             ],
             'l10n_mode' => 'exclude',
@@ -119,8 +117,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
-                'size' => '13',
+                'size' => 13,
                 'eval' => 'datetime',
+                'renderType' => 'inputDateTime',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
@@ -192,18 +191,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
-                'wizards' => [
-                    '_PADDING' => 2,
-                    'link' => [
-                        'type' => 'popup',
-                        'title' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_link_formlabel',
-                        'icon' => 'actions-wizard-link',
-                        'module' => [
-                            'name' => 'wizard_link'
-                        ],
-                        'JSopenParams' => 'height=300,width=500,status=0,menubar=0,scrollbars=1'
-                    ]
-                ],
+                'renderType' => 'inputLink',
                 'softref' => 'typolink'
             ]
         ],
@@ -235,7 +223,7 @@ return [
                 'eval' => 'trim',
                 'wizards' => [
                     'RTE' => [
-                        'icon' => 'wizard_rte2.gif',
+                        'icon' => 'actions-wizard-rte',
                         'notNewRecords' => 1,
                         'RTEonly' => 1,
                         'module' => 'wizard_rte',
