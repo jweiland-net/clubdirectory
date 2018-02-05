@@ -207,7 +207,7 @@ class AbstractController extends ActionController
     {
         $glossar = [];
         if ($this->settings['category']) {
-            $availableLetters = $this->clubRepository->getStartingLetters($this->settings['category']);
+            $availableLetters = $this->clubRepository->getStartingLetters((int)$this->settings['category']);
         } else {
             $availableLetters = $this->clubRepository->getStartingLetters();
         }
