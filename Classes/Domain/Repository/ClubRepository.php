@@ -127,11 +127,11 @@ class ClubRepository extends Repository
         $constraintAnd[] = $query->logicalOr($constraintOr);
 
         if ($category) {
-            $constraintAnd[] = $query->equals('categories.uid', $category);
+            $constraintAnd[] = $query->contains('categories', $category);
         }
 
         if (!empty($district)) {
-            $constraintAnd[] = $query->equals('district.uid', $district);
+            $constraintAnd[] = $query->equals('district', $district);
         }
 
         if ($constraintAnd) {
