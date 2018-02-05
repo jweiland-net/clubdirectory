@@ -144,17 +144,24 @@ class ClubRepository extends Repository
     /**
      * get an array with available starting letters.
      *
+     * @param int $category
      * @return array
      */
-    public function getStartingLetters(): array
+    public function getStartingLetters(int $category = 0): array
     {
         $query = $this->createQuery();
+
+        if ($category) {
+            $where = 'sys_category_record_mm.uid_local=' . $category;
+        } else {
+            $where = '1=1';
+        }
 
         return $query->statement('
 			SELECT UPPER(LEFT(sort_title, 1)) as letter
 			FROM tx_clubdirectory_domain_model_club
 			JOIN sys_category_record_mm ON sys_category_record_mm.uid_foreign = tx_clubdirectory_domain_model_club.uid
-			WHERE 1=1'.
+			WHERE ' .$where .
             BackendUtility::BEenableFields('tx_clubdirectory_domain_model_club').
             BackendUtility::deleteClause('tx_clubdirectory_domain_model_club').'
 			GROUP BY letter

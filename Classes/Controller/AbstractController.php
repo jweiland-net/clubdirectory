@@ -206,7 +206,12 @@ class AbstractController extends ActionController
     protected function getGlossar()
     {
         $glossar = [];
-        $availableLetters = $this->clubRepository->getStartingLetters();
+        if ($this->settings['category']) {
+            $availableLetters = $this->clubRepository->getStartingLetters($this->settings['category']);
+        } else {
+            $availableLetters = $this->clubRepository->getStartingLetters();
+        }
+
         $possibleLetters = GeneralUtility::trimExplode(',', $this->letters);
         // add all letters which we have found in DB
         foreach ($availableLetters as $availableLetter) {
