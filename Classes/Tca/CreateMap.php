@@ -240,7 +240,7 @@ class CreateMap
             // insert rows for with poiCollection related categories
             $GLOBALS['TYPO3_DB']->exec_INSERTmultipleRows(
                 'sys_category_record_mm',
-                ['uid_local', 'uid_foreign', 'tablenames', 'sorting', 'sorting_foreign'],
+                ['uid_local', 'uid_foreign', 'tablenames', 'sorting', 'sorting_foreign', 'fieldname'],
                 $rows
             );
         }
