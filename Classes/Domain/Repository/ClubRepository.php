@@ -21,7 +21,6 @@ use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class ClubRepository
@@ -130,7 +129,7 @@ class ClubRepository extends Repository
             $constraintAnd[] = $query->contains('categories', $category);
         }
 
-        if (!empty($district)) {
+        if ($district) {
             $constraintAnd[] = $query->equals('district', $district);
         }
 
@@ -152,7 +151,9 @@ class ClubRepository extends Repository
         $query = $this->createQuery();
 
         if ($category) {
-            $where = 'sys_category_record_mm.uid_local=' . $category;
+            $where = 'sys_category_record_mm.uid_local=' . $category
+                . ' AND tablenames = \'tx_clubdirectory_domain_model_club\''
+                . ' AND fieldname = \'categories\'';
         } else {
             $where = '1=1';
         }
