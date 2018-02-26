@@ -261,7 +261,7 @@ class AbstractController extends ActionController
      *
      * @return array Array containing all allowed address titles
      */
-    protected function getAddressTitles()
+    protected function getAddressTitles(): array
     {
         $values = GeneralUtility::trimExplode(',', 'organizationAddress, postAddress, clubAddress');
         $titles = [];
@@ -289,7 +289,7 @@ class AbstractController extends ActionController
         /** @var Address $address */
         foreach ($club->getAddresses() as $address) {
             // add a new poi record if not set already
-            if ($address->getTxMaps2Uid() === null) {
+            if ($address->getTxMaps2Uid() === null && $address->getZip() && $address->getCity()) {
                 $results = $this->geocodeUtility->findPositionByAddress($address->getAddress());
                 if (\count($results)) {
                     $results->rewind();
