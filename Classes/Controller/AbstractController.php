@@ -33,6 +33,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -291,7 +292,7 @@ class AbstractController extends ActionController
             // add a new poi record if not set already
             if ($address->getTxMaps2Uid() === null && $address->getZip() && $address->getCity()) {
                 $results = $this->geocodeUtility->findPositionByAddress($address->getAddress());
-                if (\count($results)) {
+                if ($results instanceof ObjectStorage && $results->count()) {
                     $results->rewind();
                     /** @var RadiusResult $result */
                     $result = $results->current();
