@@ -171,6 +171,18 @@
 				<source>You only can upload files with following file extensions: %1$s</source>
 			</trans-unit>
 
+			<trans-unit id="mapview">
+				<source>Map View</source>
+			</trans-unit>
+			<trans-unit id="google">
+				<source>google+</source>
+			</trans-unit>
+			<trans-unit id="twitter">
+				<source>twitter</source>
+			</trans-unit>
+			<trans-unit id="facebook">
+				<source>facebook</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

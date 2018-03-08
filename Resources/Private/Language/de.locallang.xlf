@@ -298,6 +298,23 @@
 				<target>Sie können nur Bilder mit folgenden Dateiendungen hochladen: %1$s</target>
 			</trans-unit>
 
+			<trans-unit id="mapview">
+				<source>Map View</source>
+				<target>Kartenansicht</target>
+			</trans-unit>
+
+			<trans-unit id="google">
+				<source>google+</source>
+				<target>google+</target>
+			</trans-unit>
+			<trans-unit id="twitter">
+				<source>twitter</source>
+				<target>twitter</target>
+			</trans-unit>
+			<trans-unit id="facebook">
+				<source>facebook</source>
+				<target>facebook</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
