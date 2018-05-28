@@ -1,12 +1,12 @@
-<div class="glossar gridright rulerafter4">
-	<ul class="az_list clearfix">
+<nav aria-label="Glossary">
+	<ul class="pagination small">
 		<f:for each="{glossar}" as="hasLink" key="letter">
 			<li>
 				<f:if condition="{hasLink}">
-					<f:then><f:link.action title="{letter}" action="list" arguments="{letter: letter}">{letter}</f:link.action></f:then>
+					<f:then><f:link.action title="{letter}" action="search" arguments="{letter: letter}"><span>{letter}</span></f:link.action></f:then>
 					<f:else><span>{letter}</span></f:else>
 				</f:if>
 			</li>
 		</f:for>
 	</ul>
-</div>
+</nav>

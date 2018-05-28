@@ -39,6 +39,12 @@ plugin.tx_clubdirectory {
   }
 }
 
+# TYPO3 8 comes with a new security feature which requires a cHash for all URLs
+# I need an uncached search form where I don't have a cHash. So I disable that feature for that individual action.
+[globalString = GP:tx_clubdirectory_clubdirectory|action = search]
+  plugin.tx_clubdirectory_clubdirectory.features.requireCHashArgumentForActionArguments = 0
+[end]
+
 module.tx_clubdirectory {
   view {
     templateRootPaths {

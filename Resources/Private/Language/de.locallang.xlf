@@ -159,6 +159,10 @@
 				<source>Ascending</source>
 				<target>Aufsteigend</target>
 			</trans-unit>
+			<trans-unit id="filterBy">
+				<source>Filter by</source>
+				<target>Filtern</target>
+			</trans-unit>
 			<trans-unit id="descending">
 				<source>Descending</source>
 				<target>Absteigend</target>

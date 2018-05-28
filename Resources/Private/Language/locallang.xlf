@@ -118,6 +118,9 @@
 			<trans-unit id="noResults">
 				<source>No results found</source>
 			</trans-unit>
+			<trans-unit id="filterBy">
+				<source>Filter by</source>
+			</trans-unit>
 			<trans-unit id="ascending">
 				<source>Ascending</source>
 			</trans-unit>

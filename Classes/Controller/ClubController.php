@@ -37,22 +37,12 @@ class ClubController extends AbstractController
     /**
      * action list.
      *
-     * @param Search $search
      * @return void
      */
-    public function listAction(Search $search = null)
+    public function listAction()
     {
-        if ($search instanceof Search) {
-            $clubs = $this->clubRepository->findBySearch($search);
-            if ($search->getCategory()) {
-                $this->view->assign('subCategories', $this->categoryRepository->getSubCategories($search->getCategory()));
-            }
-        } else {
-            $clubs = $this->clubRepository->findAll();
-        }
-        $this->view->assign('clubs', $clubs);
+        $this->view->assign('clubs', $this->clubRepository->findAll());
         $this->view->assign('categories', $this->categoryRepository->getSubCategories());
-        $this->view->assign('search', $search);
         $this->view->assign('glossar', $this->getGlossar());
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
         $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
@@ -269,29 +259,26 @@ class ClubController extends AbstractController
     }
 
     /**
-     * $search isn't a domainmodel, so we have to do htmlspecialchars on our own.
-     *
-     * @return void
-     */
-    public function initializeSearchAction()
-    {
-        if ($this->request->hasArgument('search')) {
-            $search = \htmlspecialchars($this->request->getArgument('search'));
-            $this->request->setArgument('search', $search);
-        }
-    }
-
-    /**
      * search show.
      *
-     * @param string $search
+     * @param Search $search
      * @return void
      */
-    public function searchAction($search)
+    public function searchAction(Search $search = null)
     {
-        $clubs = $this->clubRepository->searchClubs($search);
-        $this->view->assign('search', $search);
+        if ($search instanceof Search) {
+            $clubs = $this->clubRepository->findBySearch($search);
+            if ($search->getCategory()) {
+                $this->view->assign('subCategories', $this->categoryRepository->getSubCategories($search->getCategory()));
+            }
+        } else {
+            $clubs = $this->clubRepository->findAll();
+        }
         $this->view->assign('clubs', $clubs);
+        $this->view->assign('categories', $this->categoryRepository->getSubCategories());
+        $this->view->assign('search', $search);
+        $this->view->assign('glossar', $this->getGlossar());
+        $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
         $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
 }

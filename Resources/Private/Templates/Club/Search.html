@@ -1,9 +1,18 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-	<div class="grid_8 floatleft">
-		<f:render partial="Club/Search" arguments="{search: search}"/>
-		<f:render partial="Club/List" arguments="{fallbackIconPath: fallbackIconPath, clubs: clubs}"/>
-	</div>
-</f:section>
+	<f:flashMessages/>
 
+	<div class="row">
+		<div class="col-md-8">
+			<f:render partial="Club/Search" arguments="{search: search}" />
+			<f:render partial="Club/Glossar" arguments="{glossar: glossar}" />
+			<f:render partial="Club/List" arguments="{fallbackIconPath: fallbackIconPath, clubs: clubs}" />
+		</div>
+		<div class="col-md-4">
+			<f:render partial="Club/Filter" arguments="{search: search, categories: categories, subCategories: subCategories}" />
+		</div>
+	</div>
+
+	<f:render partial="Club/InsertEditLinks" arguments="{allowedUserGroup: allowedUserGroup}" />
+</f:section>
