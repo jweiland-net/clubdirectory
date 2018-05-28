@@ -118,6 +118,12 @@
 			<trans-unit id="noResults">
 				<source>No results found</source>
 			</trans-unit>
+			<trans-unit id="ascending">
+				<source>Ascending</source>
+			</trans-unit>
+			<trans-unit id="descending">
+				<source>Descending</source>
+			</trans-unit>
 			<trans-unit id="create">
 				<source>Create</source>
 			</trans-unit>

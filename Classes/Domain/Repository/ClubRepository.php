@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
 /*
- * This file is part of the TYPO3 CMS project.
+ * This file is part of the clubdirectory project.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -16,8 +16,10 @@ namespace JWeiland\Clubdirectory\Domain\Repository;
  */
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Domain\Model\Search;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Charset\CharsetConverter;
+use TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -53,6 +55,64 @@ class ClubRepository extends Repository
     public function injectCharsetConverter(CharsetConverter $charsetConverter)
     {
         $this->charsetConverter = $charsetConverter;
+    }
+
+    /**
+     * Find clubs
+     *
+     * @param Search|null $search
+     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
+     */
+    public function findBySearch(Search $search)
+    {
+        $query = $this->createQuery();
+        $constraints = [];
+
+        // if a searchWord is set, do not process other filtering methods
+        if ($search->getSearchWord()) {
+            $constraints[] = $this->getConstraintForSearchWord($query, $search->getSearchWord());
+        } elseif ($search->getLetter()) {
+            // if a letter is set, do not process other filtering methods
+            $constraintOr = [];
+            if ($search->getLetter() === '0-9') {
+                $constraintOr[] = $query->like('sortTitle', '0%');
+                $constraintOr[] = $query->like('sortTitle', '1%');
+                $constraintOr[] = $query->like('sortTitle', '2%');
+                $constraintOr[] = $query->like('sortTitle', '3%');
+                $constraintOr[] = $query->like('sortTitle', '4%');
+                $constraintOr[] = $query->like('sortTitle', '5%');
+                $constraintOr[] = $query->like('sortTitle', '6%');
+                $constraintOr[] = $query->like('sortTitle', '7%');
+                $constraintOr[] = $query->like('sortTitle', '8%');
+                $constraintOr[] = $query->like('sortTitle', '9%');
+            } else {
+                $constraintOr[] = $query->like('sortTitle', $search->getLetter() . '%');
+            }
+            $constraints[] = $query->logicalOr($constraintOr);
+        } else {
+            // add (Sub-)Category
+            if ($search->getSubCategory()) {
+                $constraints[] = $query->contains('categories', $search->getSubCategory());
+            } elseif ($search->getCategory()) {
+                $constraints[] = $query->contains('categories', $search->getCategory());
+            }
+
+            // set ordering
+            if (in_array($search->getOrderBy(), ['title', 'sortTitle'], true)) {
+                if (!in_array($search->getDirection(), [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING], true)) {
+                    $search->setDirection(QueryInterface::ORDER_ASCENDING);
+                }
+                $query->setOrderings([
+                    $search->getOrderBy() => $search->getDirection()
+                ]);
+            }
+        }
+
+        if (!empty($constraints)) {
+            return $query->matching($query->logicalAnd($constraints))->execute();
+        } else {
+            return $this->findAll();
+        }
     }
 
     /**
@@ -120,7 +180,7 @@ class ClubRepository extends Repository
             $constraintOr[] = $query->like('sortTitle', '8%');
             $constraintOr[] = $query->like('sortTitle', '9%');
         } else {
-            $constraintOr[] = $query->like('sortTitle', $letter.'%');
+            $constraintOr[] = $query->like('sortTitle', $letter . '%');
         }
 
         $constraintAnd[] = $query->logicalOr($constraintOr);
@@ -171,47 +231,43 @@ class ClubRepository extends Repository
     }
 
     /**
-     * search records.
+     * Get constraint to search clubs by searchWord
      *
-     * @param string $search
-     * @return QueryResultInterface|array
+     * @param QueryInterface $query
+     * @param string $searchWord
+     * @return OrInterface
      */
-    public function searchClubs($search)
+    protected function getConstraintForSearchWord(QueryInterface $query, string $searchWord)
     {
         // strtolower is not UTF-8 compatible
-        // $search = strtolower($search);
-        $longStreetSearch = $search;
-        $smallStreetSearch = $search;
+        $longStreetSearch = $searchWord;
+        $smallStreetSearch = $searchWord;
 
         // unify street search
-        if (\strtolower(mb_substr($search, -6)) === 'straße') {
-            $smallStreetSearch = \str_ireplace('straße', 'str', $search);
+        if (\strtolower(mb_substr($searchWord, -6)) === 'straße') {
+            $smallStreetSearch = \str_ireplace('straße', 'str', $searchWord);
         }
-        if (\strtolower(mb_substr($search, -4)) === 'str.') {
-            $longStreetSearch = \str_ireplace('str.', 'straße', $search);
-            $smallStreetSearch = \str_ireplace('str.', 'str', $search);
+        if (\strtolower(mb_substr($searchWord, -4)) === 'str.') {
+            $longStreetSearch = \str_ireplace('str.', 'straße', $searchWord);
+            $smallStreetSearch = \str_ireplace('str.', 'str', $searchWord);
         }
-        if (\strtolower(mb_substr($search, -3)) === 'str') {
-            $longStreetSearch = \str_ireplace('str', 'straße', $search);
+        if (\strtolower(mb_substr($searchWord, -3)) === 'str') {
+            $longStreetSearch = \str_ireplace('str', 'straße', $searchWord);
         }
-
-        $query = $this->createQuery();
 
         $logicalOrConstraints = [
-            $query->like('title', '%'.$search.'%'),
-            $query->like('sortTitle', '%'.$search.'%'),
+            $query->like('title', '%'.$searchWord.'%'),
+            $query->like('sortTitle', '%'.$searchWord.'%'),
             $query->like('addresses.street', '%'.$longStreetSearch.'%'),
             $query->like('addresses.street', '%'.$smallStreetSearch.'%'),
-            $query->like('addresses.zip', '%'.$search.'%'),
-            $query->like('addresses.city', '%'.$search.'%'),
-            $query->like('contactPerson', '%'.$search.'%'),
-            $query->like('description', '%'.$search.'%'),
-            $query->like('tags', '%'.$search.'%')
+            $query->like('addresses.zip', '%'.$searchWord.'%'),
+            $query->like('addresses.city', '%'.$searchWord.'%'),
+            $query->like('contactPerson', '%'.$searchWord.'%'),
+            $query->like('description', '%'.$searchWord.'%'),
+            $query->like('tags', '%'.$searchWord.'%')
         ];
 
-        return $query->matching(
-            $query->logicalOr($logicalOrConstraints)
-        )->execute();
+        return $query->logicalOr($logicalOrConstraints);
     }
 
     /**

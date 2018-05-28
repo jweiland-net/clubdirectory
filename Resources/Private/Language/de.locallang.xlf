@@ -155,6 +155,14 @@
 				<source>No results found</source>
 				<target>Keine Einträge gefunden</target>
 			</trans-unit>
+			<trans-unit id="ascending">
+				<source>Ascending</source>
+				<target>Aufsteigend</target>
+			</trans-unit>
+			<trans-unit id="descending">
+				<source>Descending</source>
+				<target>Absteigend</target>
+			</trans-unit>
 			<trans-unit id="new">
 				<source>New record</source>
 				<target>Neuer Eintrag</target>

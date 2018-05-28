@@ -3,7 +3,7 @@
 namespace JWeiland\Clubdirectory\Configuration;
 
 /*
- * This file is part of the TYPO3 CMS project.
+ * This file is part of the clubdirectory project.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -128,7 +128,7 @@ class ExtConf implements SingletonInterface
      *
      * @return int
      */
-    public function getUserGroup()
+    public function getUserGroup(): int
     {
         return $this->userGroup;
     }
@@ -141,7 +141,7 @@ class ExtConf implements SingletonInterface
      */
     public function setUserGroup($userGroup)
     {
-        $this->userGroup = (int) $userGroup;
+        $this->userGroup = (int)$userGroup;
     }
 
     /**
@@ -149,7 +149,7 @@ class ExtConf implements SingletonInterface
      *
      * @return int
      */
-    public function getPoiCollectionPid()
+    public function getPoiCollectionPid(): int
     {
         return $this->poiCollectionPid;
     }
@@ -162,7 +162,7 @@ class ExtConf implements SingletonInterface
      */
     public function setPoiCollectionPid($poiCollectionPid)
     {
-        $this->poiCollectionPid = (int) $poiCollectionPid;
+        $this->poiCollectionPid = (int)$poiCollectionPid;
     }
 
     /**
@@ -170,7 +170,7 @@ class ExtConf implements SingletonInterface
      *
      * @return int
      */
-    public function getRootCategory()
+    public function getRootCategory(): int
     {
         return $this->rootCategory;
     }
@@ -183,7 +183,7 @@ class ExtConf implements SingletonInterface
      */
     public function setRootCategory($rootCategory)
     {
-        $this->rootCategory = (int) $rootCategory;
+        $this->rootCategory = (int)$rootCategory;
     }
 
     /**
@@ -193,7 +193,7 @@ class ExtConf implements SingletonInterface
      *
      * @return string
      */
-    public function getEmailFromAddress()
+    public function getEmailFromAddress(): string
     {
         if (empty($this->emailFromAddress)) {
             $senderMail = $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'];
@@ -217,7 +217,7 @@ class ExtConf implements SingletonInterface
      */
     public function setEmailFromAddress($emailFromAddress)
     {
-        $this->emailFromAddress = (string) $emailFromAddress;
+        $this->emailFromAddress = (string)$emailFromAddress;
     }
 
     /**
@@ -227,7 +227,7 @@ class ExtConf implements SingletonInterface
      *
      * @return string
      */
-    public function getEmailFromName()
+    public function getEmailFromName(): string
     {
         if (empty($this->emailFromName)) {
             $senderName = $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromName'];
@@ -249,7 +249,7 @@ class ExtConf implements SingletonInterface
      */
     public function setEmailFromName($emailFromName)
     {
-        $this->emailFromName = (string) $emailFromName;
+        $this->emailFromName = (string)$emailFromName;
     }
 
     /**
@@ -257,7 +257,7 @@ class ExtConf implements SingletonInterface
      *
      * @return string
      */
-    public function getEmailToAddress()
+    public function getEmailToAddress(): string
     {
         return $this->emailToAddress;
     }
@@ -270,7 +270,7 @@ class ExtConf implements SingletonInterface
      */
     public function setEmailToAddress($emailToAddress)
     {
-        $this->emailToAddress = (string) $emailToAddress;
+        $this->emailToAddress = (string)$emailToAddress;
     }
 
     /**
@@ -278,7 +278,7 @@ class ExtConf implements SingletonInterface
      *
      * @return string
      */
-    public function getEmailToName()
+    public function getEmailToName(): string
     {
         return $this->emailToName;
     }
@@ -291,6 +291,6 @@ class ExtConf implements SingletonInterface
      */
     public function setEmailToName($emailToName)
     {
-        $this->emailToName = (string) $emailToName;
+        $this->emailToName = (string)$emailToName;
     }
 }

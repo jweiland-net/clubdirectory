@@ -1,0 +1,11 @@
+config.tx_extbase {
+  persistence{
+    classes {
+      JWeiland\Clubdirectory\Domain\Model\Category {
+        mapping {
+          tableName = sys_category
+        }
+      }
+    }
+  }
+}

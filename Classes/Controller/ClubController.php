@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
 /*
- * This file is part of the TYPO3 CMS project.
+ * This file is part of the clubdirectory project.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -17,12 +17,14 @@ namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Clubdirectory\Property\TypeConverter\UploadMultipleFilesConverter;
 use JWeiland\Clubdirectory\Property\TypeConverter\UploadOneFileConverter;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -35,29 +37,22 @@ class ClubController extends AbstractController
     /**
      * action list.
      *
-     * @param string $letter Show only records starting with this letter
-     * @validate $letter String, StringLength(minimum=0,maximum=3)
+     * @param Search $search
      * @return void
      */
-    public function listAction($letter = null)
+    public function listAction(Search $search = null)
     {
-        if ($letter === null) {
-            if ($this->settings['category'] || $this->settings['district']) {
-                $clubs = $this->clubRepository->findByCategory(
-                    (int) $this->settings['category'],
-                    (int) $this->settings['district']
-                );
-            } else {
-                $clubs = $this->clubRepository->findAll();
+        if ($search instanceof Search) {
+            $clubs = $this->clubRepository->findBySearch($search);
+            if ($search->getCategory()) {
+                $this->view->assign('subCategories', $this->categoryRepository->getSubCategories($search->getCategory()));
             }
         } else {
-            $clubs = $this->clubRepository->findByStartingLetter(
-                $letter,
-                (int) $this->settings['category'],
-                (int) $this->settings['district']
-            );
+            $clubs = $this->clubRepository->findAll();
         }
         $this->view->assign('clubs', $clubs);
+        $this->view->assign('categories', $this->categoryRepository->getSubCategories());
+        $this->view->assign('search', $search);
         $this->view->assign('glossar', $this->getGlossar());
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
         $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());

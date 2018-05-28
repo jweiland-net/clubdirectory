@@ -3,7 +3,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
 /*
- * This file is part of the TYPO3 CMS project.
+ * This file is part of the clubdirectory project.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -18,6 +18,7 @@ namespace JWeiland\Clubdirectory\Controller;
 use JWeiland\Clubdirectory\Configuration\ExtConf;
 use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Domain\Repository\CategoryRepository;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
 use JWeiland\Maps2\Domain\Model\RadiusResult;
@@ -27,10 +28,10 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository;
 use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -177,6 +178,31 @@ class AbstractController extends ActionController
         if (empty($this->settings['pidOfDetailPage'])) {
             $this->settings['pidOfDetailPage'] = null;
         }
+        if ($this->arguments->hasArgument('search')) {
+            $this->arguments->getArgument('search')
+                ->getPropertyMappingConfiguration()
+                ->allowProperties(
+                    'searchWord',
+                    'letter',
+                    'category',
+                    'subCategory'
+                );
+        }
+    }
+
+    /**
+     * Initializes the view before invoking an action method.
+     *
+     * Override this method to solve assign variables common for all actions
+     * or prepare the view in another way before the action is called.
+     *
+     * @param ViewInterface $view The view to be initialized
+     * @return void
+     */
+    protected function initializeView(ViewInterface $view)
+    {
+        $this->view->assign('data', $this->configurationManager->getContentObject()->data);
+        $this->view->assign('extConf', $this->extConf);
     }
 
     /**
