@@ -3,7 +3,7 @@
 		<f:for each="{glossar}" as="hasLink" key="letter">
 			<li>
 				<f:if condition="{hasLink}">
-					<f:then><f:link.action title="{letter}" action="search" arguments="{letter: letter}"><span>{letter}</span></f:link.action></f:then>
+					<f:then><f:link.action title="{letter}" action="search" arguments="{search: {letter: letter}}"><span>{letter}</span></f:link.action></f:then>
 					<f:else><span>{letter}</span></f:else>
 				</f:if>
 			</li>
