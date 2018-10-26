@@ -8,7 +8,6 @@ return [
         'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
         'default_sortby' => 'ORDER BY title',
-
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -19,7 +18,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime'
         ],
-        'searchFields' => 'title,activity,contact_person,email,website,members,club_home,description,user,logo,images,facebook,twitter,google,tags,',
+        'searchFields' => 'title,activity,contact_person,email,description,user,tags',
         'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_club.gif'
     ],
     'interface' => [
@@ -27,7 +26,7 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, sort_title,
+            'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, sort_title,
             activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo,
             images, facebook, twitter, google, tags, district, addresses,
             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
@@ -53,9 +52,9 @@ return [
                         'LLL:EXT:lang/locallang_general.xlf:LGL.allLanguages',
                         -1,
                         'flags-multiple'
-                    ]
+                    ],
                 ],
-                'default' => 0
+                'default' => 0,
             ]
         ],
         'l10n_parent' => [
@@ -66,11 +65,11 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['', 0]
+                    ['', 0],
                 ],
                 'foreign_table' => 'tx_clubdirectory_domain_model_club',
                 'foreign_table_where' => 'AND tx_clubdirectory_domain_model_club.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_club.sys_language_uid IN (-1,0)',
-                'default' => 0
+                'default' => 0,
             ]
         ],
         'l10n_diffsource' => [
@@ -104,9 +103,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 13,
                 'eval' => 'datetime',
-                'renderType' => 'inputDateTime',
                 'default' => 0
             ],
             'l10n_mode' => 'exclude',
@@ -117,9 +116,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 13,
                 'eval' => 'datetime',
-                'renderType' => 'inputDateTime',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
@@ -220,25 +219,17 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 15,
-                'eval' => 'trim',
-                'wizards' => [
-                    'RTE' => [
-                        'icon' => 'actions-wizard-rte',
-                        'notNewRecords' => 1,
-                        'RTEonly' => 1,
-                        'module' => 'wizard_rte',
-                        'title' => 'LLL:EXT:cms/locallang_ttc.xlf:bodytext.W.RTE',
-                        'type' => 'script'
-                    ]
-                ]
+                'softref' => 'typolink_tag,images,email[subst],url',
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'default',
             ],
-            'defaultExtras' => 'richtext:rte_transform[flag=rte_enabled|mode=ts]'
         ],
         'fe_users' => [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.feUsers',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'fe_users',
                 'foreign_table_where' => 'AND FIND_IN_SET(###PAGE_TSCONFIG_ID###, fe_users.usergroup) ORDER BY fe_users.username',
                 'foreign_sortby' => 'sorting',
@@ -321,6 +312,7 @@ return [
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.district',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'foreign_table' => 'tx_clubdirectory_domain_model_district',
                 'foreign_table_where' => 'ORDER BY tx_clubdirectory_domain_model_district.district',
                 'items' => [

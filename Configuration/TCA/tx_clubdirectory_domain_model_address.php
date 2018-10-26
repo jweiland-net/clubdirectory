@@ -8,7 +8,6 @@ return [
         'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
         'default_sortby' => 'ORDER BY title',
-
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -23,11 +22,11 @@ return [
         'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_address.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, street, house_number, zip, city, telephone, fax, barrier_free, tx_maps2_uid'
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, street, house_number, zip, city, telephone, fax, barrier_free'
     ],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, street, house_number, zip, city, telephone, fax, barrier_free, tx_maps2_uid,
+            'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, street, house_number, zip, city, telephone, fax, barrier_free,
             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
         ]
@@ -63,11 +62,11 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['', 0]
+                    ['', 0],
                 ],
                 'foreign_table' => 'tx_clubdirectory_domain_model_address',
                 'foreign_table_where' => 'AND tx_clubdirectory_domain_model_address.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_address.sys_language_uid IN (-1,0)',
-                'default' => 0
+                'default' => 0,
             ]
         ],
         'l10n_diffsource' => [
@@ -101,9 +100,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 13,
                 'eval' => 'datetime',
-                'renderType' => 'inputDateTime',
                 'default' => 0
             ],
             'l10n_mode' => 'exclude',
@@ -114,9 +113,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 13,
                 'eval' => 'datetime',
-                'renderType' => 'inputDateTime',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
@@ -130,6 +129,7 @@ return [
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.title',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     ['LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.title.organizationAddress', 'organizationAddress'],
                     ['LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.title.postAddress', 'postAddress'],
@@ -200,26 +200,6 @@ return [
             'config' => [
                 'type' => 'check',
                 'default' => 0
-            ]
-        ],
-        'tx_maps2_uid' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:maps2/Resources/Private/Language/locallang_db.xlf:tx_maps2_uid',
-            'config' => [
-                'type' => 'group',
-                'internal_type' => 'db',
-                'allowed' => 'tx_maps2_domain_model_poicollection',
-                'prepend_tname' => false,
-                'size' => 1,
-                'maxitems' => 1,
-                'wizards' => [
-                    'suggest' => [
-                        'type' => 'suggest',
-                        'default' => [
-                            'searchWholePhrase' => true
-                        ]
-                    ]
-                ]
             ]
         ],
         'club' => [

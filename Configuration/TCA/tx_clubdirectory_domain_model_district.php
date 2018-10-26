@@ -8,7 +8,6 @@ return [
         'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
         'default_sortby' => 'ORDER BY district',
-
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
         'transOrigPointerField' => 'l10n_parent',
@@ -27,7 +26,7 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, district,
+            'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, district,
             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
         ]
@@ -63,7 +62,7 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['', 0]
+                    ['', 0],
                 ],
                 'foreign_table' => 'tx_clubdirectory_domain_model_district',
                 'foreign_table_where' => 'AND tx_clubdirectory_domain_model_district.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_district.sys_language_uid IN (-1,0)',
@@ -101,9 +100,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 13,
                 'eval' => 'datetime',
-                'renderType' => 'inputDateTime',
                 'default' => 0
             ],
             'l10n_mode' => 'exclude',
@@ -114,9 +113,9 @@ return [
             'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
             'config' => [
                 'type' => 'input',
+                'renderType' => 'inputDateTime',
                 'size' => 13,
                 'eval' => 'datetime',
-                'renderType' => 'inputDateTime',
                 'default' => 0,
                 'range' => [
                     'upper' => mktime(0, 0, 0, 1, 1, 2038)
