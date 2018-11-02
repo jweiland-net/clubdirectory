@@ -22,7 +22,7 @@ use JWeiland\Clubdirectory\Domain\Repository\CategoryRepository;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
 use JWeiland\Maps2\Domain\Model\RadiusResult;
-use JWeiland\Maps2\Utility\GeocodeUtility;
+use JWeiland\Maps2\Service\GoogleMapsService;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -75,9 +75,9 @@ class AbstractController extends ActionController
     /**
      * GeocodeUtility
      *
-     * @var GeocodeUtility
+     * @var GoogleMapsService
      */
-    protected $geocodeUtility;
+    protected $googleMapsService;
     /**
      * extConf.
      *
@@ -145,14 +145,14 @@ class AbstractController extends ActionController
     }
 
     /**
-     * inject geocodeUtility
+     * inject googleMapsService
      *
-     * @param GeocodeUtility $geocodeUtility
+     * @param GoogleMapsService $googleMapsService
      * @return void
      */
-    public function injectGeocodeUtility(GeocodeUtility $geocodeUtility)
+    public function injectGoogleMapsService(GoogleMapsService $googleMapsService)
     {
-        $this->geocodeUtility = $geocodeUtility;
+        $this->googleMapsService = $googleMapsService;
     }
 
     /**
@@ -317,20 +317,15 @@ class AbstractController extends ActionController
         foreach ($club->getAddresses() as $address) {
             // add a new poi record if not set already
             if ($address->getTxMaps2Uid() === null && $address->getZip() && $address->getCity()) {
-                $results = $this->geocodeUtility->findPositionByAddress($address->getAddress());
-                if ($results instanceof ObjectStorage && $results->count()) {
-                    $results->rewind();
-                    /** @var RadiusResult $result */
-                    $result = $results->current();
+                $radiusResult = $this->googleMapsService->getFirstFoundPositionByAddress($address->getAddress());
+                if ($radiusResult instanceof RadiusResult) {
                     /** @var PoiCollection $poi */
                     $poi = $this->objectManager->get(PoiCollection::class);
                     $poi->setCollectionType('Point');
-                    $poi->setTitle($result->getFormattedAddress());
-                    $poi->setAddress($result->getFormattedAddress());
-                    $poi->setLatitude($result->getGeometry()->getLocation()->getLatitude());
-                    $poi->setLongitude($result->getGeometry()->getLocation()->getLongitude());
-                    $poi->setLatitudeOrig($result->getGeometry()->getLocation()->getLatitude());
-                    $poi->setLongitudeOrig($result->getGeometry()->getLocation()->getLongitude());
+                    $poi->setTitle($radiusResult->getFormattedAddress());
+                    $poi->setAddress($radiusResult->getFormattedAddress());
+                    $poi->setLatitude($radiusResult->getGeometry()->getLocation()->getLatitude());
+                    $poi->setLongitude($radiusResult->getGeometry()->getLocation()->getLongitude());
                     $address->setTxMaps2Uid($poi);
                 }
             }
