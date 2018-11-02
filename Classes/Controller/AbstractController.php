@@ -73,7 +73,7 @@ class AbstractController extends ActionController
      */
     protected $session;
     /**
-     * GeocodeUtility
+     * GoogleMapsService
      *
      * @var GoogleMapsService
      */
