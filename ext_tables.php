@@ -11,22 +11,20 @@ call_user_func(function($extKey) {
         'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.title'
     );
 
-    if (TYPO3_MODE === 'BE') {
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-            'JWeiland.' . $extKey,
-            'web',    // Make module a submodule of 'web'
-            'club',    // Submodule key
-            '',    // Position
-            [
-                'Export' => 'index'
-            ],
-            [
-                'access' => 'user,group',
-                'icon' => 'EXT:' . $extKey . '/ext_icon.gif',
-                'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_export.xlf'
-            ]
-        );
-    }
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
+        'JWeiland.' . $extKey,
+        'web',    // Make module a submodule of 'web'
+        'club',    // Submodule key
+        '',    // Position
+        [
+            'Export' => 'index'
+        ],
+        [
+            'access' => 'user,group',
+            'icon' => 'EXT:' . $extKey . '/ext_icon.gif',
+            'labels' => 'LLL:EXT:' . $extKey . '/Resources/Private/Language/locallang_export.xlf'
+        ]
+    );
 
     // load tt_content to $TCA array and add flexform
     $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($extKey);
@@ -54,14 +52,12 @@ call_user_func(function($extKey) {
         'tx_clubdirectory_domain_model_address',
         'EXT:clubdirectory/Resources/Private/Language/locallang_csh_tx_clubdirectory_domain_model_address.xlf'
     );
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_clubdirectory_domain_model_address');
 
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_clubdirectory_domain_model_address');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_clubdirectory_domain_model_district');
 
     $extConf = unserialize($extKey);
     $tsConfig = [];
-    $tsConfig[] = 'ext.clubdirectory.pid = '.(int) $extConf['poiCollectionPid'];
-
     $tsConfig[] = 'TCEFORM.tx_clubdirectory_domain_model_club.categories.PAGE_TSCONFIG_ID = '
         . (int) $extConf['rootCategory'];
 
@@ -70,5 +66,4 @@ call_user_func(function($extKey) {
     // following line was not used in current system. So it should not crash somewhere else.
     $tsConfig[] = 'TCEFORM.tt_content.pi_flexform.PAGE_TSCONFIG_ID = '.(int) $extConf['rootCategory'];
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(implode(LF, $tsConfig));
-
 }, $_EXTKEY);
