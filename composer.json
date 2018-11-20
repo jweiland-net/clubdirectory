@@ -19,7 +19,7 @@
     },
     "require": {
       "typo3/cms-core": ">=8.7.0,<8.8",
-      "jweiland/maps2": "~4.1"
+      "jweiland/maps2": "^4.2"
     },
     "require-dev": {
       "phpunit/phpunit": "~4.8.0"
