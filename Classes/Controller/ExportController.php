@@ -65,7 +65,7 @@ class ExportController extends ActionController
         $this->createDirectoryStructure();
         $this->removePreviousExports();
 
-        $exportFile = PATH_site . $this->exportPath.$this->exportFile;
+        $exportFile = PATH_site . $this->exportPath . $this->exportFile;
         $fp = \fopen($exportFile, 'wb');
         foreach ($this->clubRepository->findAllForExport() as $row) {
             \fputcsv($fp, $row, ';', '\'');
