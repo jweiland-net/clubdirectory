@@ -48,8 +48,8 @@ class Cities
         $rows = $this->database->exec_SELECTgetRows(
             'city',
             'tx_clubdirectory_domain_model_address',
-            '1=1 '.
-            BackendUtility::BEenableFields('tx_clubdirectory_domain_model_address').
+            '1=1 ' .
+            BackendUtility::BEenableFields('tx_clubdirectory_domain_model_address') .
             BackendUtility::deleteClause('tx_clubdirectory_domain_model_address'),
             'city',
             'city'

@@ -20,9 +20,9 @@ use JWeiland\Clubdirectory\Domain\Model\Search;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Class ClubRepository
@@ -221,8 +221,8 @@ class ClubRepository extends Repository
 			FROM tx_clubdirectory_domain_model_club
 			JOIN sys_category_record_mm ON sys_category_record_mm.uid_foreign = tx_clubdirectory_domain_model_club.uid
 			WHERE ' .$where .
-            BackendUtility::BEenableFields('tx_clubdirectory_domain_model_club').
-            BackendUtility::deleteClause('tx_clubdirectory_domain_model_club').'
+            BackendUtility::BEenableFields('tx_clubdirectory_domain_model_club') .
+            BackendUtility::deleteClause('tx_clubdirectory_domain_model_club') . '
 			GROUP BY letter
 			ORDER by letter;
 		')->execute(true);
@@ -254,15 +254,15 @@ class ClubRepository extends Repository
         }
 
         $logicalOrConstraints = [
-            $query->like('title', '%'.$searchWord.'%'),
-            $query->like('sortTitle', '%'.$searchWord.'%'),
-            $query->like('addresses.street', '%'.$longStreetSearch.'%'),
-            $query->like('addresses.street', '%'.$smallStreetSearch.'%'),
-            $query->like('addresses.zip', '%'.$searchWord.'%'),
-            $query->like('addresses.city', '%'.$searchWord.'%'),
-            $query->like('contactPerson', '%'.$searchWord.'%'),
-            $query->like('description', '%'.$searchWord.'%'),
-            $query->like('tags', '%'.$searchWord.'%')
+            $query->like('title', '%' . $searchWord . '%'),
+            $query->like('sortTitle', '%' . $searchWord . '%'),
+            $query->like('addresses.street', '%' . $longStreetSearch . '%'),
+            $query->like('addresses.street', '%' . $smallStreetSearch . '%'),
+            $query->like('addresses.zip', '%' . $searchWord . '%'),
+            $query->like('addresses.city', '%' . $searchWord . '%'),
+            $query->like('contactPerson', '%' . $searchWord . '%'),
+            $query->like('description', '%' . $searchWord . '%'),
+            $query->like('tags', '%' . $searchWord . '%')
         ];
 
         return $query->logicalOr($logicalOrConstraints);

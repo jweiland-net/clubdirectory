@@ -15,14 +15,14 @@ namespace JWeiland\Clubdirectory\Property\TypeConverter;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -148,7 +148,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             // check if uploaded file returns an error
             if (!$uploadedFile['error'] === 0) {
                 return new Error(
-                    LocalizationUtility::translate('error.upload', 'clubdirectory').$uploadedFile['error'],
+                    LocalizationUtility::translate('error.upload', 'clubdirectory') . $uploadedFile['error'],
                     1396957314
                 );
             }

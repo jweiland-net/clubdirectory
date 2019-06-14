@@ -285,6 +285,6 @@ class Address extends AbstractEntity
      */
     public function getAddress(): string
     {
-        return $this->getStreet() . ' ' . $this->getHouseNumber() . ', '.$this->getZip() . ' ' . $this->getCity();
+        return $this->getStreet() . ' ' . $this->getHouseNumber() . ', ' . $this->getZip() . ' ' . $this->getCity();
     }
 }

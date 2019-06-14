@@ -24,7 +24,6 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -232,7 +231,7 @@ class ClubController extends AbstractController
         // because f:form has created addresses.0-3 already, and numbered paths have a higher priority
         for ($i = 0; $i < 3; ++$i) {
             $this->arguments->getArgument('club')->getPropertyMappingConfiguration()
-                ->forProperty('addresses.'.$i)->allowProperties('txMaps2Uid')
+                ->forProperty('addresses.' . $i)->allowProperties('txMaps2Uid')
                 ->forProperty('txMaps2Uid')->allowProperties('latitude', 'longitude', '__identity');
             $this->arguments->getArgument('club')
                 ->getPropertyMappingConfiguration()
