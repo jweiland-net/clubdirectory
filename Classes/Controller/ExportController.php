@@ -21,8 +21,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * Class ExportController
- *
- * @package JWeiland\Clubdirectory\Controller
  */
 class ExportController extends ActionController
 {

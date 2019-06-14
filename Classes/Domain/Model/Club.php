@@ -21,8 +21,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Class Club
- *
- * @package JWeiland\Clubdirectory\Domain\Model
  */
 class Club extends AbstractEntity
 {

@@ -26,8 +26,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class UploadOneFileConverter
- *
- * @package JWeiland\Clubdirectory\Property\TypeConverter
  */
 class UploadOneFileConverter extends AbstractTypeConverter
 {

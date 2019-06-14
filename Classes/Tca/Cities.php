@@ -20,8 +20,6 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
 
 /**
  * Class Cities
- *
- * @package JWeiland\Clubdirectory\Tca
  */
 class Cities
 {
