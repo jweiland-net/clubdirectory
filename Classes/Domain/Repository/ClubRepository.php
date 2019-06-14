@@ -26,8 +26,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Class ClubRepository
- *
- * @package JWeiland\Clubdirectory\Domain\Repository
  */
 class ClubRepository extends Repository
 {

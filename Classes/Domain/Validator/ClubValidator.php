@@ -23,8 +23,6 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
  * Class ClubValidator
- *
- * @package JWeiland\Clubdirectory\Domain\Validator
  */
 class ClubValidator extends AbstractValidator
 {

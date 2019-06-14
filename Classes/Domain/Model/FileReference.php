@@ -17,8 +17,6 @@ namespace JWeiland\Clubdirectory\Domain\Model;
 
 /**
  * Class FileReference
- *
- * @package JWeiland\Clubdirectory\Domain\Model
  */
 class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
 {

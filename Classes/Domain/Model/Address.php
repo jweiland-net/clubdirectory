@@ -20,8 +20,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * Class Address
- *
- * @package JWeiland\Clubdirectory\Domain\Model
  */
 class Address extends AbstractEntity
 {

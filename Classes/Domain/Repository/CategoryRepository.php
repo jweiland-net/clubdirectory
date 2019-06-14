@@ -23,8 +23,6 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Class CategoryRepository
- *
- * @package JWeiland\Clubdirectory\Domain\Repository
  */
 class CategoryRepository extends Repository
 {

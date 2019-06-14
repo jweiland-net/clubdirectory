@@ -27,8 +27,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class UploadMultipleFilesConverter
- *
- * @package JWeiland\Clubdirectory\Property\TypeConverter
  */
 class UploadMultipleFilesConverter extends AbstractTypeConverter
 {

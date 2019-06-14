@@ -17,8 +17,6 @@ namespace JWeiland\Clubdirectory\Domain\Model;
 
 /**
  * Class Category
- *
- * @package JWeiland\Clubdirectory\Domain\Model
  */
 class Category extends \TYPO3\CMS\Extbase\Domain\Model\Category
 {

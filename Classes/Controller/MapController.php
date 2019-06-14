@@ -21,8 +21,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Class MapController
- *
- * @package JWeiland\Clubdirectory\Controller
  */
 class MapController extends AbstractController
 {
