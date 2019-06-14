@@ -96,7 +96,11 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
 
         $additionalIdentityProperties = $this->viewHelperVariableContainer->get(FormViewHelper::class, 'additionalIdentityProperties');
         $additionalIdentityProperties[$this->getFormObjectName()] = $this->renderHiddenIdentityField($this->arguments['object'], $this->getFormObjectName());
-        $this->viewHelperVariableContainer->addOrUpdate(FormViewHelper::class, 'additionalIdentityProperties', $additionalIdentityProperties);
+        $this->viewHelperVariableContainer->addOrUpdate(
+            FormViewHelper::class,
+            'additionalIdentityProperties',
+            $additionalIdentityProperties
+        );
 
         $this->restoreFormObjectInViewHelperVariableContainer();
         $this->restoreFormObjectNameInViewHelperVariableContainer();
@@ -131,7 +135,11 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
             'formObjectName'
         );
         $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObjectName');
-        $this->viewHelperVariableContainer->add(FormViewHelper::class, 'formObjectName', $this->getFormObjectName());
+        $this->viewHelperVariableContainer->add(
+            FormViewHelper::class,
+            'formObjectName',
+            $this->getFormObjectName()
+        );
     }
 
     /**
@@ -186,7 +194,8 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
         $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObject');
         $this->viewHelperVariableContainer->add(
             FormViewHelper::class,
-            'formObject', $this->backupViewHelperVariableContainer['formObject']
+            'formObject',
+            $this->backupViewHelperVariableContainer['formObject']
         );
     }
 }

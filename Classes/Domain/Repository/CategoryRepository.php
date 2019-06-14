@@ -16,7 +16,6 @@ namespace JWeiland\Clubdirectory\Domain\Repository;
  */
 
 use JWeiland\Clubdirectory\Configuration\ExtConf;
-use JWeiland\Clubdirectory\Domain\Model\Search;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
