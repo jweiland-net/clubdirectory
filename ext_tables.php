@@ -3,7 +3,7 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-call_user_func(function($extConf) {
+call_user_func(function ($extConf) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
         'JWeiland.clubdirectory',
         'web',    // Make module a submodule of 'web'

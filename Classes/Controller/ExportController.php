@@ -65,7 +65,7 @@ class ExportController extends ActionController
         $this->createDirectoryStructure();
         $this->removePreviousExports();
 
-        $exportFile = PATH_site.$this->exportPath.$this->exportFile;
+        $exportFile = PATH_site . $this->exportPath.$this->exportFile;
         $fp = \fopen($exportFile, 'wb');
         foreach ($this->clubRepository->findAllForExport() as $row) {
             \fputcsv($fp, $row, ';', '\'');
@@ -80,8 +80,8 @@ class ExportController extends ActionController
      */
     protected function createDirectoryStructure()
     {
-        if (!\is_dir(PATH_site.$this->exportPath)) {
-            GeneralUtility::mkdir_deep(PATH_site.$this->exportPath);
+        if (!\is_dir(PATH_site . $this->exportPath)) {
+            GeneralUtility::mkdir_deep(PATH_site . $this->exportPath);
         }
     }
 
@@ -92,7 +92,7 @@ class ExportController extends ActionController
      */
     protected function removePreviousExports()
     {
-        $exportFile = PATH_site.$this->exportPath.$this->exportFile;
+        $exportFile = PATH_site . $this->exportPath . $this->exportFile;
         if (\is_file($exportFile)) {
             \unlink($exportFile); // only to be sure
         }

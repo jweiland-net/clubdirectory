@@ -127,7 +127,9 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
     protected function addFormObjectNameToViewHelperVariableContainer()
     {
         $this->backupViewHelperVariableContainer['formObjectName'] = $this->viewHelperVariableContainer->get(
-            FormViewHelper::class, 'formObjectName');
+            FormViewHelper::class,
+            'formObjectName'
+        );
         $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObjectName');
         $this->viewHelperVariableContainer->add(FormViewHelper::class, 'formObjectName', $this->getFormObjectName());
     }
@@ -137,7 +139,12 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
      */
     protected function getFormObjectName()
     {
-        return $this->backupViewHelperVariableContainer['formObjectName'].'['.$this->arguments['parentProperty'].']['.$this->objectPositionInParentCollection.']';
+        return sprintf(
+            '%s[%s][%s]',
+            $this->backupViewHelperVariableContainer['formObjectName'],
+            $this->arguments['parentProperty'],
+            $this->objectPositionInParentCollection
+        );
     }
 
     /**
@@ -146,7 +153,11 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
     protected function restoreFormObjectNameInViewHelperVariableContainer()
     {
         $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObjectName');
-        $this->viewHelperVariableContainer->add(FormViewHelper::class, 'formObjectName', $this->backupViewHelperVariableContainer['formObjectName']);
+        $this->viewHelperVariableContainer->add(
+            FormViewHelper::class,
+            'formObjectName',
+            $this->backupViewHelperVariableContainer['formObjectName']
+        );
     }
 
     /**
@@ -156,9 +167,15 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
     protected function addFormObjectToViewHelperVariableContainer()
     {
         $this->backupViewHelperVariableContainer['formObject'] = $this->viewHelperVariableContainer->get(
-            FormViewHelper::class, 'formObject');
+            FormViewHelper::class,
+            'formObject'
+        );
         $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObject');
-        $this->viewHelperVariableContainer->add(FormViewHelper::class, 'formObject', $this->arguments['object']);
+        $this->viewHelperVariableContainer->add(
+            FormViewHelper::class,
+            'formObject',
+            $this->arguments['object']
+        );
     }
 
     /**
@@ -167,6 +184,9 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
     protected function restoreFormObjectInViewHelperVariableContainer()
     {
         $this->viewHelperVariableContainer->remove(FormViewHelper::class, 'formObject');
-        $this->viewHelperVariableContainer->add(FormViewHelper::class, 'formObject', $this->backupViewHelperVariableContainer['formObject']);
+        $this->viewHelperVariableContainer->add(
+            FormViewHelper::class,
+            'formObject', $this->backupViewHelperVariableContainer['formObject']
+        );
     }
 }

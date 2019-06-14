@@ -114,7 +114,7 @@ class UploadOneFileConverter extends AbstractTypeConverter
         // check if uploaded file returns an error
         if ($source['error'] !== 0) {
             return new Error(
-                LocalizationUtility::translate('error.upload', 'clubdirectory').$source['error'],
+                LocalizationUtility::translate('error.upload', 'clubdirectory') . $source['error'],
                 1396957314
             );
         }

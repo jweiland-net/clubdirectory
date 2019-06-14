@@ -71,11 +71,11 @@ class MapController extends AbstractController
                 ->allowProperties('latitude', 'longitude', '__identity');
             $this->arguments->getArgument('club')
                 ->getPropertyMappingConfiguration()
-                ->allowModificationForSubProperty('addresses.'.$i);
+                ->allowModificationForSubProperty('addresses.' . $i);
 
             $this->arguments->getArgument('club')
                 ->getPropertyMappingConfiguration()
-                ->allowModificationForSubProperty('addresses.'.$i.'.txMaps2Uid');
+                ->allowModificationForSubProperty('addresses.' . $i . '.txMaps2Uid');
         }
     }
 
@@ -140,11 +140,11 @@ class MapController extends AbstractController
 
         for ($i = 0; $i < 3; ++$i) {
             $this->arguments->getArgument('club')->getPropertyMappingConfiguration()
-                ->forProperty('addresses.'.$i)->allowProperties('txMaps2Uid')
+                ->forProperty('addresses.' . $i)->allowProperties('txMaps2Uid')
                 ->forProperty('txMaps2Uid')->allowProperties('latitude', 'longitude', '__identity');
             $this->arguments->getArgument('club')
                 ->getPropertyMappingConfiguration()
-                ->allowModificationForSubProperty('addresses.'.$i.'.txMaps2Uid');
+                ->allowModificationForSubProperty('addresses.' . $i . '.txMaps2Uid');
         }
     }
 
