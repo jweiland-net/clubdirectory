@@ -15,6 +15,7 @@ namespace JWeiland\Clubdirectory\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -25,159 +26,114 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class Club extends AbstractEntity
 {
     /**
-     * Hidden.
-     *
      * @var bool
      */
     protected $hidden = false;
 
     /**
-     * Title.
-     *
      * @var string
      * @validate NotEmpty
      */
     protected $title = '';
 
     /**
-     * Title.
-     *
      * @var string
      * @validate NotEmpty
      */
     protected $sortTitle = '';
 
     /**
-     * Activity.
-     *
      * @var string
      */
     protected $activity = '';
 
     /**
-     * Contact person.
-     *
      * @var string
      */
     protected $contactPerson = '';
 
     /**
-     * Contact Times.
-     *
      * @var string
      */
     protected $contactTimes = '';
 
     /**
-     * Email.
-     *
      * @var string
      * @validate EmailAddress
      */
     protected $email = '';
 
     /**
-     * Website.
-     *
      * @var string
      */
     protected $website = '';
 
     /**
-     * Members.
-     *
      * @var string
      */
     protected $members = '';
 
     /**
-     * Club home.
-     *
      * @var string
      */
     protected $clubHome = '';
 
     /**
-     * Description.
-     *
      * @var string
      */
     protected $description = '';
 
     /**
-     * FeUsers.
-     *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FrontendUser>
      */
     protected $feUsers;
 
     /**
-     * Logo.
-     *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
      */
     protected $logo;
 
     /**
-     * Images.
-     *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      */
     protected $images;
 
     /**
-     * Facebook.
-     *
      * @var string
      */
     protected $facebook = '';
 
     /**
-     * Twitter.
-     *
      * @var string
      */
     protected $twitter = '';
 
     /**
-     * Google+.
-     *
      * @var string
      */
     protected $google = '';
 
     /**
-     * tags.
-     *
      * @var string
      */
     protected $tags = '';
 
     /**
-     * District.
-     *
      * @var \JWeiland\Clubdirectory\Domain\Model\District
      */
     protected $district;
 
     /**
-     * addresses.
-     *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWeiland\Clubdirectory\Domain\Model\Address>
      */
     protected $addresses;
 
     /**
-     * categories.
-     *
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
      * @lazy
      */
     protected $categories;
 
-    /**
-     * Constructor of this object.
-     */
     public function __construct()
     {
         $this->feUsers = new ObjectStorage();
@@ -187,9 +143,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Returns the hidden.
-     *
-     * @return bool $hidden
+     * @return bool
      */
     public function getHidden(): bool
     {
@@ -197,20 +151,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the hidden.
-     *
      * @param bool $hidden
-     * @return void
      */
-    public function setHidden($hidden)
+    public function setHidden(bool $hidden)
     {
-        $this->hidden = (boolean) $hidden;
+        $this->hidden = $hidden;
     }
 
     /**
-     * Returns the title.
-     *
-     * @return string $title
+     * @return string
      */
     public function getTitle(): string
     {
@@ -218,20 +167,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the title.
-     *
      * @param string $title
-     * @return void
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
-        $this->title = (string) $title;
+        $this->title = $title;
     }
 
     /**
-     * Returns the sortTitle.
-     *
-     * @return string $sortTitle
+     * @return string
      */
     public function getSortTitle(): string
     {
@@ -239,20 +183,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the sortTitle.
-     *
      * @param string $sortTitle
-     * @return void
      */
-    public function setSortTitle($sortTitle)
+    public function setSortTitle(string $sortTitle)
     {
-        $this->sortTitle = (string) $sortTitle;
+        $this->sortTitle = $sortTitle;
     }
 
     /**
-     * Returns the activity.
-     *
-     * @return string $activity
+     * @return string
      */
     public function getActivity(): string
     {
@@ -260,20 +199,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the activity.
-     *
      * @param string $activity
-     * @return void
      */
-    public function setActivity($activity)
+    public function setActivity(string $activity)
     {
-        $this->activity = (string) $activity;
+        $this->activity = $activity;
     }
 
     /**
-     * Returns the contactPerson.
-     *
-     * @return string $contactPerson
+     * @return string
      */
     public function getContactPerson(): string
     {
@@ -281,20 +215,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the contactPerson.
-     *
      * @param string $contactPerson
-     * @return void
      */
-    public function setContactPerson($contactPerson)
+    public function setContactPerson(string $contactPerson)
     {
-        $this->contactPerson = (string) $contactPerson;
+        $this->contactPerson = $contactPerson;
     }
 
     /**
-     * Returns the contactTimes.
-     *
-     * @return string $contactTimes
+     * @return string
      */
     public function getContactTimes(): string
     {
@@ -302,20 +231,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the contactTimes.
-     *
      * @param string $contactTimes
-     * @return void
      */
-    public function setContactTimes($contactTimes)
+    public function setContactTimes(string $contactTimes)
     {
-        $this->contactTimes = (string) $contactTimes;
+        $this->contactTimes = $contactTimes;
     }
 
     /**
-     * Returns the email.
-     *
-     * @return string $email
+     * @return string
      */
     public function getEmail(): string
     {
@@ -323,20 +247,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the email.
-     *
      * @param string $email
-     * @return void
      */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
-        $this->email = (string) $email;
+        $this->email = $email;
     }
 
     /**
-     * Returns the website.
-     *
-     * @return string $website
+     * @return string
      */
     public function getWebsite(): string
     {
@@ -344,20 +263,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the website.
-     *
      * @param string $website
-     * @return void
      */
-    public function setWebsite($website)
+    public function setWebsite(string $website)
     {
-        $this->website = (string) $website;
+        $this->website = $website;
     }
 
     /**
-     * Returns the members.
-     *
-     * @return string $members
+     * @return string
      */
     public function getMembers(): string
     {
@@ -365,20 +279,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the members.
-     *
      * @param string $members
-     * @return void
      */
-    public function setMembers($members)
+    public function setMembers(string $members)
     {
-        $this->members = (string) $members;
+        $this->members = $members;
     }
 
     /**
-     * Returns the clubHome.
-     *
-     * @return string $clubHome
+     * @return string
      */
     public function getClubHome(): string
     {
@@ -386,20 +295,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the clubHome.
-     *
      * @param string $clubHome
-     * @return void
      */
-    public function setClubHome($clubHome)
+    public function setClubHome(string $clubHome)
     {
-        $this->clubHome = (string) $clubHome;
+        $this->clubHome = $clubHome;
     }
 
     /**
-     * Returns the description.
-     *
-     * @return string $description
+     * @return string
      */
     public function getDescription(): string
     {
@@ -407,21 +311,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the description.
-     *
      * @param string $description
-     * @return void
      */
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
-        $this->description = (string) $description;
+        $this->description = $description;
     }
 
     /**
-     * Adds a feUser.
-     *
      * @param FrontendUser $feUser
-     * @return void
      */
     public function addFeUser(FrontendUser $feUser)
     {
@@ -429,10 +327,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Removes a feUser.
-     *
      * @param FrontendUser $feUser
-     * @return void
      */
     public function removeFeUser(FrontendUser $feUser)
     {
@@ -440,9 +335,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Returns the feUsers.
-     *
-     * @return ObjectStorage $feUsers
+     * @return ObjectStorage
      */
     public function getFeUsers(): ObjectStorage
     {
@@ -450,20 +343,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the feUsers.
-     *
      * @param ObjectStorage $feUsers
-     * @return void
      */
-    public function setFeUser(ObjectStorage $feUsers)
+    public function setFeUsers(ObjectStorage $feUsers)
     {
         $this->feUsers = $feUsers;
     }
 
     /**
-     * Returns the logo.
-     *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference|null $logo
+     * @return FileReference|null
      */
     public function getLogo()
     {
@@ -471,10 +359,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the logo.
-     *
      * @param FileReference $logo
-     * @return void
      */
     public function setLogo(FileReference $logo = null)
     {
@@ -482,9 +367,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Returns the images.
-     *
-     * @return ObjectStorage|array $images
+     * @return array
      */
     public function getImages()
     {
@@ -497,10 +380,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the images.
-     *
      * @param ObjectStorage $images
-     * @return void
      */
     public function setImages(ObjectStorage $images)
     {
@@ -508,9 +388,23 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Returns the facebook.
-     *
-     * @return string $facebook
+     * @param FileReference $image
+     */
+    public function addImage(FileReference $image)
+    {
+        $this->images->attach($image);
+    }
+
+    /**
+     * @param FileReference $image
+     */
+    public function removeImage(FileReference $image)
+    {
+        $this->images->detach($image);
+    }
+
+    /**
+     * @return string
      */
     public function getFacebook(): string
     {
@@ -518,20 +412,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the facebook.
-     *
      * @param string $facebook
-     * @return void
      */
-    public function setFacebook($facebook)
+    public function setFacebook(string $facebook)
     {
-        $this->facebook = (string) $facebook;
+        $this->facebook = $facebook;
     }
 
     /**
-     * Returns the twitter.
-     *
-     * @return string $twitter
+     * @return string
      */
     public function getTwitter(): string
     {
@@ -539,20 +428,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the twitter.
-     *
      * @param string $twitter
-     * @return void
      */
-    public function setTwitter($twitter)
+    public function setTwitter(string $twitter)
     {
-        $this->twitter = (string) $twitter;
+        $this->twitter = $twitter;
     }
 
     /**
-     * Returns the google.
-     *
-     * @return string $google
+     * @return string
      */
     public function getGoogle(): string
     {
@@ -560,20 +444,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the google.
-     *
      * @param string $google
-     * @return void
      */
-    public function setGoogle($google)
+    public function setGoogle(string $google)
     {
-        $this->google = (string) $google;
+        $this->google = $google;
     }
 
     /**
-     * Returns the tags.
-     *
-     * @return string $tags
+     * @return string
      */
     public function getTags(): string
     {
@@ -581,20 +460,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the tags.
-     *
      * @param string $tags
-     * @return void
      */
-    public function setTags($tags)
+    public function setTags(string $tags)
     {
         $this->tags = $tags;
     }
 
     /**
-     * Returns the district.
-     *
-     * @return District $district
+     * @return District
      */
     public function getDistrict()
     {
@@ -602,10 +476,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the district.
-     *
      * @param District $district
-     * @return void
      */
     public function setDistrict(District $district)
     {
@@ -613,9 +484,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Returns the addresses.
-     *
-     * @return ObjectStorage $addresses
+     * @return ObjectStorage
      */
     public function getAddresses(): ObjectStorage
     {
@@ -623,10 +492,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the addresses.
-     *
      * @param ObjectStorage $addresses
-     * @return void
      */
     public function setAddresses(ObjectStorage $addresses)
     {
@@ -634,10 +500,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * add a new address.
-     *
      * @param Address $address
-     * @return void
      */
     public function addAddress(Address $address)
     {
@@ -645,10 +508,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * remove an address.
-     *
      * @param Address $address
-     * @return void
      */
     public function removeAddress(Address $address)
     {
@@ -656,9 +516,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Returns the categories.
-     *
-     * @return ObjectStorage $categories
+     * @return ObjectStorage
      */
     public function getCategories(): ObjectStorage
     {
@@ -666,13 +524,26 @@ class Club extends AbstractEntity
     }
 
     /**
-     * Sets the categories.
-     *
      * @param ObjectStorage $categories
-     * @return void
      */
     public function setCategories(ObjectStorage $categories)
     {
         $this->categories = $categories;
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function addCategory(Category $category)
+    {
+        $this->categories->attach($category);
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function removeCategory(Category $category)
+    {
+        $this->categories->detach($category);
     }
 }

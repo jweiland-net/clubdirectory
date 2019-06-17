@@ -24,74 +24,54 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Address extends AbstractEntity
 {
     /**
-     * Title.
-     *
      * @var string
      * @validate NotEmpty
      */
     protected $title = 'organizationAddress';
 
     /**
-     * Street.
-     *
      * @var string
      */
     protected $street = '';
 
     /**
-     * House number.
-     *
      * @var string
      */
     protected $houseNumber = '';
 
     /**
-     * Zip.
-     *
      * @var string
      * @validate RegularExpression(regularExpression='/^[0-9]{4,5}$/')
      */
     protected $zip = '';
 
     /**
-     * City.
-     *
      * @var string
      */
     protected $city = '';
 
     /**
-     * Telephone.
-     *
      * @var string
      */
     protected $telephone = '';
 
     /**
-     * Fax.
-     *
      * @var string
      */
     protected $fax = '';
 
     /**
-     * Barrier-free.
-     *
      * @var bool
      */
     protected $barrierFree = false;
 
     /**
-     * Map.
-     *
      * @var \JWeiland\Maps2\Domain\Model\PoiCollection
      */
     protected $txMaps2Uid;
 
     /**
-     * Returns the title.
-     *
-     * @return string $title
+     * @return string
      */
     public function getTitle(): string
     {
@@ -99,20 +79,15 @@ class Address extends AbstractEntity
     }
 
     /**
-     * Sets the title.
-     *
      * @param string $title
-     * @return void
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
-        $this->title = (string) $title;
+        $this->title = $title;
     }
 
     /**
-     * Returns the street.
-     *
-     * @return string $street
+     * @return string
      */
     public function getStreet(): string
     {
@@ -120,20 +95,15 @@ class Address extends AbstractEntity
     }
 
     /**
-     * Sets the street.
-     *
      * @param string $street
-     * @return void
      */
-    public function setStreet($street)
+    public function setStreet(string $street)
     {
-        $this->street = (string) $street;
+        $this->street = $street;
     }
 
     /**
-     * Returns the houseNumber.
-     *
-     * @return string $houseNumber
+     * @return string
      */
     public function getHouseNumber(): string
     {
@@ -141,20 +111,15 @@ class Address extends AbstractEntity
     }
 
     /**
-     * Sets the houseNumber.
-     *
      * @param string $houseNumber
-     * @return void
      */
-    public function setHouseNumber($houseNumber)
+    public function setHouseNumber(string $houseNumber)
     {
-        $this->houseNumber = (string) $houseNumber;
+        $this->houseNumber = $houseNumber;
     }
 
     /**
-     * Returns the zip.
-     *
-     * @return string $zip
+     * @return string
      */
     public function getZip(): string
     {
@@ -162,20 +127,15 @@ class Address extends AbstractEntity
     }
 
     /**
-     * Sets the zip.
-     *
      * @param string $zip
-     * @return void
      */
-    public function setZip($zip)
+    public function setZip(string $zip)
     {
-        $this->zip = (string) $zip;
+        $this->zip = $zip;
     }
 
     /**
-     * Returns the city.
-     *
-     * @return string $city
+     * @return string
      */
     public function getCity(): string
     {
@@ -183,20 +143,15 @@ class Address extends AbstractEntity
     }
 
     /**
-     * Sets the city.
-     *
      * @param string $city
-     * @return void
      */
-    public function setCity($city)
+    public function setCity(string $city)
     {
         $this->city = (string) $city;
     }
 
     /**
-     * Returns the telephone.
-     *
-     * @return string $telephone
+     * @return string
      */
     public function getTelephone(): string
     {
@@ -204,19 +159,14 @@ class Address extends AbstractEntity
     }
 
     /**
-     * Sets the telephone.
-     *
      * @param string $telephone
-     * @return void
      */
-    public function setTelephone($telephone)
+    public function setTelephone(string $telephone)
     {
-        $this->telephone = (string) $telephone;
+        $this->telephone = $telephone;
     }
 
     /**
-     * Returns the fax.
-     *
      * @return string $fax
      */
     public function getFax(): string
@@ -225,20 +175,15 @@ class Address extends AbstractEntity
     }
 
     /**
-     * Sets the fax.
-     *
      * @param string $fax
-     * @return void
      */
-    public function setFax($fax)
+    public function setFax(string $fax)
     {
-        $this->fax = (string) $fax;
+        $this->fax = $fax;
     }
 
     /**
-     * Returns the barrierFree.
-     *
-     * @return bool $barrierFree
+     * @return bool
      */
     public function getBarrierFree(): bool
     {
@@ -246,20 +191,15 @@ class Address extends AbstractEntity
     }
 
     /**
-     * Sets the barrierFree.
-     *
      * @param bool $barrierFree
-     * @return void
      */
-    public function setBarrierFree($barrierFree)
+    public function setBarrierFree(bool $barrierFree)
     {
-        $this->barrierFree = (boolean) $barrierFree;
+        $this->barrierFree = $barrierFree;
     }
 
     /**
-     * Returns the txMaps2Uid.
-     *
-     * @return PoiCollection|null $txMaps2Uid
+     * @return PoiCollection|null
      */
     public function getTxMaps2Uid()
     {
@@ -267,10 +207,7 @@ class Address extends AbstractEntity
     }
 
     /**
-     * Sets the txMaps2Uid.
-     *
      * @param PoiCollection $txMaps2Uid
-     * @return void
      */
     public function setTxMaps2Uid(PoiCollection $txMaps2Uid = null)
     {

@@ -54,9 +54,7 @@ class Search
     protected $direction = QueryInterface::ORDER_ASCENDING;
 
     /**
-     * Returns the letter
-     *
-     * @return string $letter
+     * @return string
      */
     public function getLetter(): string
     {
@@ -64,21 +62,15 @@ class Search
     }
 
     /**
-     * Sets the letter
-     *
      * @param string $letter
-     *
-     * @return void
      */
     public function setLetter(string $letter)
     {
-        $this->letter = (string)$letter;
+        $this->letter = $letter;
     }
 
     /**
-     * Returns the searchWord
-     *
-     * @return string $searchWord
+     * @return string
      */
     public function getSearchWord(): string
     {
@@ -86,43 +78,31 @@ class Search
     }
 
     /**
-     * Sets the searchWord
-     *
      * @param string $searchWord
-     *
-     * @return void
      */
     public function setSearchWord(string $searchWord)
     {
-        $this->searchWord = (string)$searchWord;
+        $this->searchWord = $searchWord;
     }
 
     /**
-     * Returns the category
-     *
-     * @return int $category
+     * @return int
      */
-    public function getCategory()
+    public function getCategory(): int
     {
         return $this->category;
     }
 
     /**
-     * Sets the category
-     *
      * @param int $category
-     *
-     * @return void
      */
-    public function setCategory($category)
+    public function setCategory(int $category)
     {
-        $this->category = (int)$category;
+        $this->category = $category;
     }
 
     /**
-     * Returns the subCategory
-     *
-     * @return int $subCategory
+     * @return int
      */
     public function getSubCategory()
     {
@@ -130,21 +110,15 @@ class Search
     }
 
     /**
-     * Sets the subCategory
-     *
      * @param int $subCategory
-     *
-     * @return void
      */
-    public function setSubCategory($subCategory)
+    public function setSubCategory(int $subCategory)
     {
-        $this->subCategory = (int)$subCategory;
+        $this->subCategory = $subCategory;
     }
 
     /**
-     * Returns the orderBy
-     *
-     * @return string $orderBy
+     * @return string
      */
     public function getOrderBy()
     {
@@ -152,21 +126,15 @@ class Search
     }
 
     /**
-     * Sets the orderBy
-     *
      * @param string $orderBy
-     *
-     * @return void
      */
-    public function setOrderBy($orderBy)
+    public function setOrderBy(string $orderBy)
     {
-        $this->orderBy = (string)$orderBy;
+        $this->orderBy = $orderBy;
     }
 
     /**
-     * Returns the direction
-     *
-     * @return string $direction
+     * @return string
      */
     public function getDirection()
     {
@@ -174,15 +142,11 @@ class Search
     }
 
     /**
-     * Sets the direction
-     *
      * @param string $direction
-     *
-     * @return void
      */
-    public function setDirection($direction)
+    public function setDirection(string $direction)
     {
-        $this->direction = (string)$direction;
+        $this->direction = $direction;
     }
 
     /**
