@@ -194,38 +194,45 @@ class ClubController extends AbstractController
     {
         $this->registerClubFromRequest('club');
 
-        $argument = $this->request->getArgument('club');
-        /** @var \JWeiland\Clubdirectory\Domain\Model\Club $club */
-        $club = $this->clubRepository->findByIdentifier($argument['__identity']);
-        /** @var UploadOneFileConverter $oneFileTypeConverter */
-        $oneFileTypeConverter = $this->objectManager->get(
-            UploadOneFileConverter::class
-        );
-        $this->arguments->getArgument('club')
-            ->getPropertyMappingConfiguration()
-            ->forProperty('logo')
-            ->setTypeConverter($oneFileTypeConverter)
-            ->setTypeConverterOptions(
-                UploadOneFileConverter::class,
-                [
-                    'IMAGE' => $club->getLogo()
-                ]
-            );
+        if ($this->request->hasArgument('club')) {
+            // remove empty category selection to prevent mapping problems
+            /** @var array $argument */
+            $argument = $this->request->getArgument('club');
+            if (empty($argument['categories'])) {
+                unset($argument['categories']);
+                $this->request->setArgument('club', $argument);
+            }
 
-        /** @var UploadMultipleFilesConverter $multipleFilesTypeConverter */
-        $multipleFilesTypeConverter = $this->objectManager->get(
-            UploadMultipleFilesConverter::class
-        );
-        $this->arguments->getArgument('club')
-            ->getPropertyMappingConfiguration()
-            ->forProperty('images')
-            ->setTypeConverter($multipleFilesTypeConverter)
-            ->setTypeConverterOptions(
-                UploadMultipleFilesConverter::class,
-                [
-                    'IMAGES' => $club->getImages()
-                ]
+            /** @var Club $club */
+            $club = $this->clubRepository->findByIdentifier($argument['__identity']);
+
+            $oneFileTypeConverter = $this->objectManager->get(UploadOneFileConverter::class);
+            $this->arguments->getArgument('club')
+                ->getPropertyMappingConfiguration()
+                ->forProperty('logo')
+                ->setTypeConverter($oneFileTypeConverter)
+                ->setTypeConverterOptions(
+                    UploadOneFileConverter::class,
+                    [
+                        'IMAGE' => $club->getLogo()
+                    ]
+                );
+
+            /** @var UploadMultipleFilesConverter $multipleFilesTypeConverter */
+            $multipleFilesTypeConverter = $this->objectManager->get(
+                UploadMultipleFilesConverter::class
             );
+            $this->arguments->getArgument('club')
+                ->getPropertyMappingConfiguration()
+                ->forProperty('images')
+                ->setTypeConverter($multipleFilesTypeConverter)
+                ->setTypeConverterOptions(
+                    UploadMultipleFilesConverter::class,
+                    [
+                        'IMAGES' => $club->getImages()
+                    ]
+                );
+        }
 
         // we can't work with addresses.* here,
         // because f:form has created addresses.0-3 already, and numbered paths have a higher priority
