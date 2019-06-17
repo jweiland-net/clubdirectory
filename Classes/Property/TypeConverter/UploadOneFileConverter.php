@@ -15,9 +15,9 @@ namespace JWeiland\Clubdirectory\Property\TypeConverter;
  * The TYPO3 project - inspiring people to share!
  */
 
-use JWeiland\Clubdirectory\Domain\Model\FileReference;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
