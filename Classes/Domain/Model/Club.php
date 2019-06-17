@@ -129,7 +129,7 @@ class Club extends AbstractEntity
     protected $addresses;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWeiland\Clubdirectory\Domain\Model\Category>
      * @lazy
      */
     protected $categories;
@@ -484,7 +484,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * @return ObjectStorage
+     * @return ObjectStorage|Address[]
      */
     public function getAddresses(): ObjectStorage
     {
