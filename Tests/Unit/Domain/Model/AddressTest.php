@@ -15,27 +15,21 @@ namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
  */
 
 use JWeiland\Clubdirectory\Domain\Model\Address;
-use JWeiland\Clubdirectory\Domain\Model\Category;
-use JWeiland\Clubdirectory\Domain\Model\Club;
-use JWeiland\Clubdirectory\Domain\Model\District;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
- * Test case for model Club
+ * Test case for model Address
  */
-class ClubTest extends UnitTestCase
+class AddressTest extends UnitTestCase
 {
     /**
-     * @var Club
+     * @var Address
      */
     protected $subject;
 
     public function setUp()
     {
-        $this->subject = new Club();
+        $this->subject = new Address();
     }
 
     public function tearDown()
@@ -46,49 +40,10 @@ class ClubTest extends UnitTestCase
     /**
      * @test
      */
-    public function getHiddenInitiallyReturnsFalse()
-    {
-        $this->assertFalse(
-            $this->subject->getHidden()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setHiddenSetsHidden()
-    {
-        $this->subject->setHidden(true);
-        $this->assertTrue(
-            $this->subject->getHidden()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setHiddenWithStringReturnsTrue()
-    {
-        $this->subject->setHidden('foo bar');
-        $this->assertTrue($this->subject->getHidden());
-    }
-
-    /**
-     * @test
-     */
-    public function setHiddenWithZeroReturnsFalse()
-    {
-        $this->subject->setHidden(0);
-        $this->assertFalse($this->subject->getHidden());
-    }
-
-    /**
-     * @test
-     */
-    public function getTitleInitiallyReturnsEmptyString()
+    public function getTitleInitiallyReturnsOrganizationAddress()
     {
         $this->assertSame(
-            '',
+            'organizationAddress',
             $this->subject->getTitle()
         );
     }
@@ -127,850 +82,291 @@ class ClubTest extends UnitTestCase
     /**
      * @test
      */
-    public function getSortTitleInitiallyReturnsEmptyString()
+    public function getStreetInitiallyReturnsEmptyString()
     {
         $this->assertSame(
             '',
-            $this->subject->getSortTitle()
+            $this->subject->getStreet()
         );
     }
 
     /**
      * @test
      */
-    public function setSortTitleSetsSortTitle()
+    public function setStreetSetsStreet()
     {
-        $this->subject->setSortTitle('foo bar');
+        $this->subject->setStreet('foo bar');
 
         $this->assertSame(
             'foo bar',
-            $this->subject->getSortTitle()
+            $this->subject->getStreet()
         );
     }
 
     /**
      * @test
      */
-    public function setSortTitleWithIntegerResultsInString()
+    public function setStreetWithIntegerResultsInString()
     {
-        $this->subject->setSortTitle(123);
-        $this->assertSame('123', $this->subject->getSortTitle());
+        $this->subject->setStreet(123);
+        $this->assertSame('123', $this->subject->getStreet());
     }
 
     /**
      * @test
      */
-    public function setSortTitleWithBooleanResultsInString()
+    public function setStreetWithBooleanResultsInString()
     {
-        $this->subject->setSortTitle(true);
-        $this->assertSame('1', $this->subject->getSortTitle());
+        $this->subject->setStreet(true);
+        $this->assertSame('1', $this->subject->getStreet());
     }
 
     /**
      * @test
      */
-    public function getActivityInitiallyReturnsEmptyString()
+    public function getHouseNumberInitiallyReturnsEmptyString()
     {
         $this->assertSame(
             '',
-            $this->subject->getActivity()
+            $this->subject->getHouseNumber()
         );
     }
 
     /**
      * @test
      */
-    public function setActivitySetsActivity()
+    public function setHouseNumberSetsHouseNumber()
     {
-        $this->subject->setActivity('foo bar');
+        $this->subject->setHouseNumber('foo bar');
 
         $this->assertSame(
             'foo bar',
-            $this->subject->getActivity()
+            $this->subject->getHouseNumber()
         );
     }
 
     /**
      * @test
      */
-    public function setActivityWithIntegerResultsInString()
+    public function setHouseNumberWithIntegerResultsInString()
     {
-        $this->subject->setActivity(123);
-        $this->assertSame('123', $this->subject->getActivity());
+        $this->subject->setHouseNumber(123);
+        $this->assertSame('123', $this->subject->getHouseNumber());
     }
 
     /**
      * @test
      */
-    public function setActivityWithBooleanResultsInString()
+    public function setHouseNumberWithBooleanResultsInString()
     {
-        $this->subject->setActivity(true);
-        $this->assertSame('1', $this->subject->getActivity());
+        $this->subject->setHouseNumber(true);
+        $this->assertSame('1', $this->subject->getHouseNumber());
     }
 
     /**
      * @test
      */
-    public function getContactPersonInitiallyReturnsEmptyString()
+    public function getZipInitiallyReturnsEmptyString()
     {
         $this->assertSame(
             '',
-            $this->subject->getContactPerson()
+            $this->subject->getZip()
         );
     }
 
     /**
      * @test
      */
-    public function setContactPersonSetsContactPerson()
+    public function setZipSetsZip()
     {
-        $this->subject->setContactPerson('foo bar');
+        $this->subject->setZip('foo bar');
 
         $this->assertSame(
             'foo bar',
-            $this->subject->getContactPerson()
+            $this->subject->getZip()
         );
     }
 
     /**
      * @test
      */
-    public function setContactPersonWithIntegerResultsInString()
+    public function setZipWithIntegerResultsInString()
     {
-        $this->subject->setContactPerson(123);
-        $this->assertSame('123', $this->subject->getContactPerson());
+        $this->subject->setZip(123);
+        $this->assertSame('123', $this->subject->getZip());
     }
 
     /**
      * @test
      */
-    public function setContactPersonWithBooleanResultsInString()
+    public function setZipWithBooleanResultsInString()
     {
-        $this->subject->setContactPerson(true);
-        $this->assertSame('1', $this->subject->getContactPerson());
+        $this->subject->setZip(true);
+        $this->assertSame('1', $this->subject->getZip());
     }
 
     /**
      * @test
      */
-    public function getContactTimesInitiallyReturnsEmptyString()
+    public function getCityInitiallyReturnsEmptyString()
     {
         $this->assertSame(
             '',
-            $this->subject->getContactTimes()
+            $this->subject->getCity()
         );
     }
 
     /**
      * @test
      */
-    public function setContactTimesSetsContactTimes()
+    public function setCitySetsCity()
     {
-        $this->subject->setContactTimes('foo bar');
+        $this->subject->setCity('foo bar');
 
         $this->assertSame(
             'foo bar',
-            $this->subject->getContactTimes()
+            $this->subject->getCity()
         );
     }
 
     /**
      * @test
      */
-    public function setContactTimesWithIntegerResultsInString()
+    public function setCityWithIntegerResultsInString()
     {
-        $this->subject->setContactTimes(123);
-        $this->assertSame('123', $this->subject->getContactTimes());
+        $this->subject->setCity(123);
+        $this->assertSame('123', $this->subject->getCity());
     }
 
     /**
      * @test
      */
-    public function setContactTimesWithBooleanResultsInString()
+    public function setCityWithBooleanResultsInString()
     {
-        $this->subject->setContactTimes(true);
-        $this->assertSame('1', $this->subject->getContactTimes());
+        $this->subject->setCity(true);
+        $this->assertSame('1', $this->subject->getCity());
     }
 
     /**
      * @test
      */
-    public function getEmailInitiallyReturnsEmptyString()
+    public function getTelephoneInitiallyReturnsEmptyString()
     {
         $this->assertSame(
             '',
-            $this->subject->getEmail()
+            $this->subject->getTelephone()
         );
     }
 
     /**
      * @test
      */
-    public function setEmailSetsEmail()
+    public function setTelephoneSetsTelephone()
     {
-        $this->subject->setEmail('foo bar');
+        $this->subject->setTelephone('foo bar');
 
         $this->assertSame(
             'foo bar',
-            $this->subject->getEmail()
+            $this->subject->getTelephone()
         );
     }
 
     /**
      * @test
      */
-    public function setEmailWithIntegerResultsInString()
+    public function setTelephoneWithIntegerResultsInString()
     {
-        $this->subject->setEmail(123);
-        $this->assertSame('123', $this->subject->getEmail());
+        $this->subject->setTelephone(123);
+        $this->assertSame('123', $this->subject->getTelephone());
     }
 
     /**
      * @test
      */
-    public function setEmailWithBooleanResultsInString()
+    public function setTelephoneWithBooleanResultsInString()
     {
-        $this->subject->setEmail(true);
-        $this->assertSame('1', $this->subject->getEmail());
+        $this->subject->setTelephone(true);
+        $this->assertSame('1', $this->subject->getTelephone());
     }
 
     /**
      * @test
      */
-    public function getWebsiteInitiallyReturnsEmptyString()
+    public function getFaxInitiallyReturnsEmptyString()
     {
         $this->assertSame(
             '',
-            $this->subject->getWebsite()
+            $this->subject->getFax()
         );
     }
 
     /**
      * @test
      */
-    public function setWebsiteSetsWebsite()
+    public function setFaxSetsFax()
     {
-        $this->subject->setWebsite('foo bar');
+        $this->subject->setFax('foo bar');
 
         $this->assertSame(
             'foo bar',
-            $this->subject->getWebsite()
+            $this->subject->getFax()
         );
     }
 
     /**
      * @test
      */
-    public function setWebsiteWithIntegerResultsInString()
+    public function setFaxWithIntegerResultsInString()
     {
-        $this->subject->setWebsite(123);
-        $this->assertSame('123', $this->subject->getWebsite());
+        $this->subject->setFax(123);
+        $this->assertSame('123', $this->subject->getFax());
     }
 
     /**
      * @test
      */
-    public function setWebsiteWithBooleanResultsInString()
+    public function setFaxWithBooleanResultsInString()
     {
-        $this->subject->setWebsite(true);
-        $this->assertSame('1', $this->subject->getWebsite());
+        $this->subject->setFax(true);
+        $this->assertSame('1', $this->subject->getFax());
     }
 
     /**
      * @test
      */
-    public function getMembersInitiallyReturnsEmptyString()
+    public function getBarrierFreeInitiallyReturnsFalse()
     {
-        $this->assertSame(
-            '',
-            $this->subject->getMembers()
+        $this->assertFalse(
+            $this->subject->getBarrierFree()
         );
     }
 
     /**
      * @test
      */
-    public function setMembersSetsMembers()
+    public function setBarrierFreeSetsBarrierFree()
     {
-        $this->subject->setMembers('foo bar');
-
-        $this->assertSame(
-            'foo bar',
-            $this->subject->getMembers()
+        $this->subject->setBarrierFree(true);
+        $this->assertTrue(
+            $this->subject->getBarrierFree()
         );
     }
 
     /**
      * @test
      */
-    public function setMembersWithIntegerResultsInString()
+    public function setBarrierFreeWithStringReturnsTrue()
     {
-        $this->subject->setMembers(123);
-        $this->assertSame('123', $this->subject->getMembers());
+        $this->subject->setBarrierFree('foo bar');
+        $this->assertTrue($this->subject->getBarrierFree());
     }
 
     /**
      * @test
      */
-    public function setMembersWithBooleanResultsInString()
+    public function setBarrierFreeWithZeroReturnsFalse()
     {
-        $this->subject->setMembers(true);
-        $this->assertSame('1', $this->subject->getMembers());
-    }
-
-    /**
-     * @test
-     */
-    public function getClubHomeInitiallyReturnsEmptyString()
-    {
-        $this->assertSame(
-            '',
-            $this->subject->getClubHome()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setClubHomeSetsClubHome()
-    {
-        $this->subject->setClubHome('foo bar');
-
-        $this->assertSame(
-            'foo bar',
-            $this->subject->getClubHome()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setClubHomeWithIntegerResultsInString()
-    {
-        $this->subject->setClubHome(123);
-        $this->assertSame('123', $this->subject->getClubHome());
-    }
-
-    /**
-     * @test
-     */
-    public function setClubHomeWithBooleanResultsInString()
-    {
-        $this->subject->setClubHome(true);
-        $this->assertSame('1', $this->subject->getClubHome());
-    }
-
-    /**
-     * @test
-     */
-    public function getDescriptionInitiallyReturnsEmptyString()
-    {
-        $this->assertSame(
-            '',
-            $this->subject->getDescription()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setDescriptionSetsDescription()
-    {
-        $this->subject->setDescription('foo bar');
-
-        $this->assertSame(
-            'foo bar',
-            $this->subject->getDescription()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setDescriptionWithIntegerResultsInString()
-    {
-        $this->subject->setDescription(123);
-        $this->assertSame('123', $this->subject->getDescription());
-    }
-
-    /**
-     * @test
-     */
-    public function setDescriptionWithBooleanResultsInString()
-    {
-        $this->subject->setDescription(true);
-        $this->assertSame('1', $this->subject->getDescription());
-    }
-
-    /**
-     * @test
-     */
-    public function getFeUsersInitiallyReturnsObjectStorage()
-    {
-        $this->assertEquals(
-            new ObjectStorage(),
-            $this->subject->getFeUsers()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setFeUsersSetsFeUsers()
-    {
-        $object = new FrontendUser();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-        $this->subject->setFeUsers($objectStorage);
-
-        $this->assertSame(
-            $objectStorage,
-            $this->subject->getFeUsers()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function addFrontendUserAddsOneFrontendUser()
-    {
-        $objectStorage = new ObjectStorage();
-        $this->subject->setFeUsers($objectStorage);
-
-        $object = new FrontendUser();
-        $this->subject->addFeUser($object);
-
-        $objectStorage->attach($object);
-
-        $this->assertSame(
-            $objectStorage,
-            $this->subject->getFeUsers()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function removeFrontendUserRemovesOneFrontendUser()
-    {
-        $object = new FrontendUser();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-        $this->subject->setFeUsers($objectStorage);
-
-        $this->subject->removeFeUser($object);
-        $objectStorage->detach($object);
-
-        $this->assertSame(
-            $objectStorage,
-            $this->subject->getFeUsers()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getLogoInitiallyReturnsNull()
-    {
-        $this->assertNull($this->subject->getLogo());
-    }
-
-    /**
-     * @test
-     */
-    public function setLogoSetsLogo()
-    {
-        $instance = new FileReference();
-        $this->subject->setLogo($instance);
-
-        $this->assertSame(
-            $instance,
-            $this->subject->getLogo()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getImagesInitiallyReturnsArray()
-    {
-        $this->assertEquals(
-            [],
-            $this->subject->getImages()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setImagesSetsImages()
-    {
-        $object = new FileReference();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-        $this->subject->setImages($objectStorage);
-
-        $this->assertSame(
-            [$object],
-            $this->subject->getImages()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function addImageAddsOneImage()
-    {
-        $objectStorage = new ObjectStorage();
-        $this->subject->setImages($objectStorage);
-
-        $object = new FileReference();
-        $this->subject->addImage($object);
-
-        $objectStorage->attach($object);
-
-        $this->assertSame(
-            [$object],
-            $this->subject->getImages()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function removeImageRemovesOneImage()
-    {
-        $object = new FileReference();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-        $this->subject->setImages($objectStorage);
-
-        $this->subject->removeImage($object);
-        $objectStorage->detach($object);
-
-        $this->assertSame(
-            [],
-            $this->subject->getImages()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getFacebookInitiallyReturnsEmptyString()
-    {
-        $this->assertSame(
-            '',
-            $this->subject->getFacebook()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setFacebookSetsFacebook()
-    {
-        $this->subject->setFacebook('foo bar');
-
-        $this->assertSame(
-            'foo bar',
-            $this->subject->getFacebook()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setFacebookWithIntegerResultsInString()
-    {
-        $this->subject->setFacebook(123);
-        $this->assertSame('123', $this->subject->getFacebook());
-    }
-
-    /**
-     * @test
-     */
-    public function setFacebookWithBooleanResultsInString()
-    {
-        $this->subject->setFacebook(true);
-        $this->assertSame('1', $this->subject->getFacebook());
-    }
-
-    /**
-     * @test
-     */
-    public function getTwitterInitiallyReturnsEmptyString()
-    {
-        $this->assertSame(
-            '',
-            $this->subject->getTwitter()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setTwitterSetsTwitter()
-    {
-        $this->subject->setTwitter('foo bar');
-
-        $this->assertSame(
-            'foo bar',
-            $this->subject->getTwitter()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setTwitterWithIntegerResultsInString()
-    {
-        $this->subject->setTwitter(123);
-        $this->assertSame('123', $this->subject->getTwitter());
-    }
-
-    /**
-     * @test
-     */
-    public function setTwitterWithBooleanResultsInString()
-    {
-        $this->subject->setTwitter(true);
-        $this->assertSame('1', $this->subject->getTwitter());
-    }
-
-    /**
-     * @test
-     */
-    public function getGoogleInitiallyReturnsEmptyString()
-    {
-        $this->assertSame(
-            '',
-            $this->subject->getGoogle()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setGoogleSetsGoogle()
-    {
-        $this->subject->setGoogle('foo bar');
-
-        $this->assertSame(
-            'foo bar',
-            $this->subject->getGoogle()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setGoogleWithIntegerResultsInString()
-    {
-        $this->subject->setGoogle(123);
-        $this->assertSame('123', $this->subject->getGoogle());
-    }
-
-    /**
-     * @test
-     */
-    public function setGoogleWithBooleanResultsInString()
-    {
-        $this->subject->setGoogle(true);
-        $this->assertSame('1', $this->subject->getGoogle());
-    }
-
-    /**
-     * @test
-     */
-    public function getTagsInitiallyReturnsEmptyString()
-    {
-        $this->assertSame(
-            '',
-            $this->subject->getTags()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setTagsSetsTags()
-    {
-        $this->subject->setTags('foo bar');
-
-        $this->assertSame(
-            'foo bar',
-            $this->subject->getTags()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setTagsWithIntegerResultsInString()
-    {
-        $this->subject->setTags(123);
-        $this->assertSame('123', $this->subject->getTags());
-    }
-
-    /**
-     * @test
-     */
-    public function setTagsWithBooleanResultsInString()
-    {
-        $this->subject->setTags(true);
-        $this->assertSame('1', $this->subject->getTags());
-    }
-
-    /**
-     * @test
-     */
-    public function getDistrictInitiallyReturnsNull()
-    {
-        $this->assertNull($this->subject->getDistrict());
-    }
-
-    /**
-     * @test
-     */
-    public function setDistrictSetsDistrict()
-    {
-        $instance = new District();
-        $this->subject->setDistrict($instance);
-
-        $this->assertSame(
-            $instance,
-            $this->subject->getDistrict()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getAddressesInitiallyReturnsObjectStorage()
-    {
-        $this->assertEquals(
-            new ObjectStorage(),
-            $this->subject->getAddresses()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setAddressesSetsAddresses()
-    {
-        $object = new Address();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-        $this->subject->setAddresses($objectStorage);
-
-        $this->assertSame(
-            $objectStorage,
-            $this->subject->getAddresses()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function addAddressAddsOneAddress()
-    {
-        $objectStorage = new ObjectStorage();
-        $this->subject->setAddresses($objectStorage);
-
-        $object = new Address();
-        $this->subject->addAddress($object);
-
-        $objectStorage->attach($object);
-
-        $this->assertSame(
-            $objectStorage,
-            $this->subject->getAddresses()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function removeAddressRemovesOneAddress()
-    {
-        $object = new Address();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-        $this->subject->setAddresses($objectStorage);
-
-        $this->subject->removeAddress($object);
-        $objectStorage->detach($object);
-
-        $this->assertSame(
-            $objectStorage,
-            $this->subject->getAddresses()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getCategoriesInitiallyReturnsObjectStorage()
-    {
-        $this->assertEquals(
-            new ObjectStorage(),
-            $this->subject->getCategories()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setCategoriesSetsCategories()
-    {
-        $object = new Category();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-        $this->subject->setCategories($objectStorage);
-
-        $this->assertSame(
-            $objectStorage,
-            $this->subject->getCategories()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function addCategoryAddsOneCategory()
-    {
-        $objectStorage = new ObjectStorage();
-        $this->subject->setCategories($objectStorage);
-
-        $object = new Category();
-        $this->subject->addCategory($object);
-
-        $objectStorage->attach($object);
-
-        $this->assertSame(
-            $objectStorage,
-            $this->subject->getCategories()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function removeCategoryRemovesOneCategory()
-    {
-        $object = new Category();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-        $this->subject->setCategories($objectStorage);
-
-        $this->subject->removeCategory($object);
-        $objectStorage->detach($object);
-
-        $this->assertSame(
-            $objectStorage,
-            $this->subject->getCategories()
-        );
+        $this->subject->setBarrierFree(0);
+        $this->assertFalse($this->subject->getBarrierFree());
     }
 }

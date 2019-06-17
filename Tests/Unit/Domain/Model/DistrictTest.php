@@ -14,22 +14,22 @@ namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
-use JWeiland\Clubdirectory\Domain\Model\Category;
+use JWeiland\Clubdirectory\Domain\Model\District;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 /**
- * Test case for model Category
+ * Test case for model District
  */
-class CategoryTest extends UnitTestCase
+class DistrictTest extends UnitTestCase
 {
     /**
-     * @var Category
+     * @var District
      */
     protected $subject;
 
     public function setUp()
     {
-        $this->subject = new Category();
+        $this->subject = new District();
     }
 
     public function tearDown()
@@ -40,42 +40,42 @@ class CategoryTest extends UnitTestCase
     /**
      * @test
      */
-    public function getIconInitiallyReturnsEmptyString()
+    public function getDistrictInitiallyReturnsEmptyString()
     {
         $this->assertSame(
             '',
-            $this->subject->getIcon()
+            $this->subject->getDistrict()
         );
     }
 
     /**
      * @test
      */
-    public function setIconSetsIcon()
+    public function setDistrictSetsDistrict()
     {
-        $this->subject->setIcon('foo bar');
+        $this->subject->setDistrict('foo bar');
 
         $this->assertSame(
             'foo bar',
-            $this->subject->getIcon()
+            $this->subject->getDistrict()
         );
     }
 
     /**
      * @test
      */
-    public function setIconWithIntegerResultsInString()
+    public function setDistrictWithIntegerResultsInString()
     {
-        $this->subject->setIcon(123);
-        $this->assertSame('123', $this->subject->getIcon());
+        $this->subject->setDistrict(123);
+        $this->assertSame('123', $this->subject->getDistrict());
     }
 
     /**
      * @test
      */
-    public function setIconWithBooleanResultsInString()
+    public function setDistrictWithBooleanResultsInString()
     {
-        $this->subject->setIcon(true);
-        $this->assertSame('1', $this->subject->getIcon());
+        $this->subject->setDistrict(true);
+        $this->assertSame('1', $this->subject->getDistrict());
     }
 }
