@@ -21,8 +21,9 @@ use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Repository\CategoryRepository;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
-use JWeiland\Maps2\Domain\Model\RadiusResult;
-use JWeiland\Maps2\Service\GoogleMapsService;
+use JWeiland\Maps2\Domain\Model\Position;
+use JWeiland\Maps2\Domain\Repository\PoiCollectionRepository;
+use JWeiland\Maps2\Service\MapService;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -42,45 +43,35 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class AbstractController extends ActionController
 {
     /**
-     * clubRepository.
-     *
      * @var ClubRepository
      */
     protected $clubRepository;
+
     /**
-     * feUserRepository.
-     *
      * @var FrontendUserRepository
      */
     protected $feUserRepository;
+
     /**
-     * categoryRepository.
-     *
      * @var CategoryRepository
      */
     protected $categoryRepository;
+
     /**
-     * persistenceManager.
-     *
      * @var PersistenceManager
      */
     protected $persistenceManager;
+
     /**
      * @var Session
      */
     protected $session;
+
     /**
-     * GoogleMapsService
-     *
-     * @var GoogleMapsService
-     */
-    protected $googleMapsService;
-    /**
-     * extConf.
-     *
      * @var ExtConf
      */
     protected $extConf;
+
     /**
      * @var string
      */
@@ -90,7 +81,6 @@ class AbstractController extends ActionController
      * inject clubRepository
      *
      * @param ClubRepository $clubRepository
-     * @return void
      */
     public function injectClubRepository(ClubRepository $clubRepository)
     {
@@ -101,7 +91,6 @@ class AbstractController extends ActionController
      * inject frontendUserRepository
      *
      * @param FrontendUserRepository $feUserRepository
-     * @return void
      */
     public function injectFeUserRepository(FrontendUserRepository $feUserRepository)
     {
@@ -112,7 +101,6 @@ class AbstractController extends ActionController
      * inject categoryRepository
      *
      * @param CategoryRepository $categoryRepository
-     * @return void
      */
     public function injectCategoryRepository(CategoryRepository $categoryRepository)
     {
@@ -123,7 +111,6 @@ class AbstractController extends ActionController
      * inject persistenceManager
      *
      * @param PersistenceManager $persistenceManager
-     * @return void
      */
     public function injectPersistenceManager(PersistenceManager $persistenceManager)
     {
@@ -134,7 +121,6 @@ class AbstractController extends ActionController
      * inject session
      *
      * @param Session $session
-     * @return void
      */
     public function injectSession(Session $session)
     {
@@ -142,21 +128,9 @@ class AbstractController extends ActionController
     }
 
     /**
-     * inject googleMapsService
-     *
-     * @param GoogleMapsService $googleMapsService
-     * @return void
-     */
-    public function injectGoogleMapsService(GoogleMapsService $googleMapsService)
-    {
-        $this->googleMapsService = $googleMapsService;
-    }
-
-    /**
      * inject extConf
      *
      * @param ExtConf $extConf
-     * @return void
      */
     public function injectExtConf(ExtConf $extConf)
     {
@@ -165,8 +139,6 @@ class AbstractController extends ActionController
 
     /**
      * Pre processing of all actions.
-     *
-     * @return void
      */
     public function initializeAction()
     {
@@ -194,7 +166,6 @@ class AbstractController extends ActionController
      * or prepare the view in another way before the action is called.
      *
      * @param ViewInterface $view The view to be initialized
-     * @return void
      */
     protected function initializeView(ViewInterface $view)
     {
@@ -207,7 +178,7 @@ class AbstractController extends ActionController
      *
      * @param string $subjectKey
      * @param Club $club
-     * @return int The amound of email receivers
+     * @return int The amount of email receivers
      */
     public function sendMail($subjectKey, Club $club)
     {
@@ -262,7 +233,6 @@ class AbstractController extends ActionController
      * This is a workaround to help controller actions to find (hidden) posts.
      *
      * @param $argumentName
-     * @return void
      */
     protected function registerClubFromRequest($argumentName)
     {
@@ -306,24 +276,26 @@ class AbstractController extends ActionController
      * If no poi record was connected with address try to create one.
      *
      * @param Club $club
-     * @return void
      */
     protected function addMapRecordIfPossible(Club $club)
     {
-        /** @var Address $address */
+        $mapService = GeneralUtility::makeInstance(MapService::class);
+        $poiCollectionRepository = $this->objectManager->get(PoiCollectionRepository::class);
         foreach ($club->getAddresses() as $address) {
-            // add a new poi record if not set already
+            // add a new poi record if empty
             if ($address->getTxMaps2Uid() === null && $address->getZip() && $address->getCity()) {
-                $radiusResult = $this->googleMapsService->getFirstFoundPositionByAddress($address->getAddress());
-                if ($radiusResult instanceof RadiusResult) {
-                    /** @var PoiCollection $poi */
-                    $poi = $this->objectManager->get(PoiCollection::class);
-                    $poi->setCollectionType('Point');
-                    $poi->setTitle($radiusResult->getFormattedAddress());
-                    $poi->setAddress($radiusResult->getFormattedAddress());
-                    $poi->setLatitude($radiusResult->getGeometry()->getLocation()->getLatitude());
-                    $poi->setLongitude($radiusResult->getGeometry()->getLocation()->getLongitude());
-                    $address->setTxMaps2Uid($poi);
+                $position = $mapService->getFirstFoundPositionByAddress($address->getAddress());
+                if ($position instanceof Position) {
+                    $poiCollectionUid = $mapService->createNewPoiCollection(
+                        $this->extConf->getPoiCollectionPid(),
+                        $position,
+                        [
+                            'title' => $position->getFormattedAddress()
+                        ]
+                    );
+                    /** @var PoiCollection $poiCollection */
+                    $poiCollection = $poiCollectionRepository->findByIdentifier($poiCollectionUid);
+                    $address->setTxMaps2Uid($poiCollection);
                 }
             }
         }
