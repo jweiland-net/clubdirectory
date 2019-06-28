@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 namespace JWeiland\Clubdirectory\Configuration;
 
 /*
@@ -23,69 +23,52 @@ use TYPO3\CMS\Core\SingletonInterface;
 class ExtConf implements SingletonInterface
 {
     /**
-     * fallback icon path
-     *
      * @var string
      */
     protected $fallbackIconPath = '';
 
     /**
-     * usergroup which is allowed to create new clubs.
-     *
      * @var int
      */
     protected $userGroup = 0;
 
     /**
-     * pid of poi collection.
-     *
      * @var int
      */
     protected $poiCollectionPid = 0;
 
     /**
-     * root category.
-     *
      * @var int
      */
     protected $rootCategory = 0;
 
     /**
-     * email from address.
-     *
      * @var string
      */
     protected $emailFromAddress = '';
 
     /**
-     * email from name.
-     *
      * @var string
      */
     protected $emailFromName = '';
 
     /**
-     * email to address.
-     *
      * @var string
      */
     protected $emailToAddress = '';
 
     /**
-     * email to name.
-     *
      * @var string
      */
     protected $emailToName = '';
 
-    /**
-     * constructor of this class
-     * This method reads the global configuration and calls the setter methods.
-     */
     public function __construct()
     {
         // get global configuration
-        $extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['clubdirectory']);
+        $extConf = unserialize(
+            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['clubdirectory'],
+            ['allowed_classes' => false]
+        );
         if (is_array($extConf) && count($extConf)) {
             // call setter method foreach configuration entry
             foreach ($extConf as $key => $value) {
@@ -98,8 +81,6 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * Gets FallbackIconPath
-     *
      * @return string
      */
     public function getFallbackIconPath(): string
@@ -111,10 +92,7 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * Sets FallbackIconPath
-     *
      * @param string $fallbackIconPath
-     * @return void
      */
     public function setFallbackIconPath(string $fallbackIconPath)
     {
@@ -122,8 +100,6 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * getter for userGroup.
-     *
      * @return int
      */
     public function getUserGroup(): int
@@ -132,10 +108,7 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * setter for userGroup.
-     *
      * @param int $userGroup
-     * @return void
      */
     public function setUserGroup($userGroup)
     {
@@ -143,8 +116,6 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * getter for poiCollectionPid.
-     *
      * @return int
      */
     public function getPoiCollectionPid(): int
@@ -153,10 +124,7 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * setter for poiCollectionPid.
-     *
      * @param int $poiCollectionPid
-     * @return void
      */
     public function setPoiCollectionPid($poiCollectionPid)
     {
@@ -164,8 +132,6 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * getter for rootCategory.
-     *
      * @return int
      */
     public function getRootCategory(): int
@@ -174,10 +140,7 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * setter for rootCategory.
-     *
      * @param int $rootCategory
-     * @return void
      */
     public function setRootCategory($rootCategory)
     {
@@ -185,11 +148,8 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * getter for email from address.
-     *
-     * @throws \Exception
-     *
      * @return string
+     * @throws \Exception
      */
     public function getEmailFromAddress(): string
     {
@@ -208,22 +168,16 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * setter for email from address.
-     *
      * @param string $emailFromAddress
-     * @return void
      */
-    public function setEmailFromAddress($emailFromAddress)
+    public function setEmailFromAddress(string $emailFromAddress)
     {
-        $this->emailFromAddress = (string)$emailFromAddress;
+        $this->emailFromAddress = $emailFromAddress;
     }
 
     /**
-     * getter for email from name.
-     *
-     * @throws \Exception
-     *
      * @return string
+     * @throws \Exception
      */
     public function getEmailFromName(): string
     {
@@ -240,19 +194,14 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * setter for emailFromName.
-     *
      * @param string $emailFromName
-     * @return void
      */
-    public function setEmailFromName($emailFromName)
+    public function setEmailFromName(string $emailFromName)
     {
-        $this->emailFromName = (string)$emailFromName;
+        $this->emailFromName = $emailFromName;
     }
 
     /**
-     * getter for email to address.
-     *
      * @return string
      */
     public function getEmailToAddress(): string
@@ -261,19 +210,14 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * setter for email to address.
-     *
      * @param string $emailToAddress
-     * @return void
      */
-    public function setEmailToAddress($emailToAddress)
+    public function setEmailToAddress(string $emailToAddress)
     {
-        $this->emailToAddress = (string)$emailToAddress;
+        $this->emailToAddress = $emailToAddress;
     }
 
     /**
-     * getter for email to name.
-     *
      * @return string
      */
     public function getEmailToName(): string
@@ -282,12 +226,9 @@ class ExtConf implements SingletonInterface
     }
 
     /**
-     * setter for emailToName.
-     *
      * @param string $emailToName
-     * @return void
      */
-    public function setEmailToName($emailToName)
+    public function setEmailToName(string $emailToName)
     {
         $this->emailToName = (string)$emailToName;
     }
