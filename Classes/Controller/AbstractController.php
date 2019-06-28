@@ -38,7 +38,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Class AbstractController
+ * Abstract controller with useful methods for all other classes
  */
 class AbstractController extends ActionController
 {

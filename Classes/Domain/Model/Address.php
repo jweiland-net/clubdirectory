@@ -19,7 +19,7 @@ use JWeiland\Maps2\Domain\Model\PoiCollection;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * Class Address
+ * Domain model which represents an Address
  */
 class Address extends AbstractEntity
 {

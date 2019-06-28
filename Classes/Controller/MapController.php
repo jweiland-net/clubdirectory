@@ -20,7 +20,7 @@ use JWeiland\Clubdirectory\Domain\Model\Club;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Class MapController
+ * Controller to edit map records. Just after saving a club.
  */
 class MapController extends AbstractController
 {

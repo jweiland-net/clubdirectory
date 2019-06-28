@@ -16,10 +16,11 @@ namespace JWeiland\Clubdirectory\Domain\Model;
  */
 
 /**
- * Class Category
+ * Domain model for categories.
  *
- * I know that the icon-property is part of extbase, but there is no ext_tables.sql nor
- * a TCA entry for that property. So maybe this property may be thrown away in future.
+ * As TYPO3 does not come with TCA nor with a SQL entry, it is not save
+ * to use the icon setter/getter of extbase. Maybe they will be removed
+ * in future.
  */
 class Category extends \TYPO3\CMS\Extbase\Domain\Model\Category
 {
@@ -31,12 +32,14 @@ class Category extends \TYPO3\CMS\Extbase\Domain\Model\Category
     /**
      * @return string
      */
-    public function getIcon(): string
+    public function getIcon()
     {
         return $this->icon;
     }
 
     /**
+     * Sets the icon
+     *
      * @param string $icon
      */
     public function setIcon($icon)
