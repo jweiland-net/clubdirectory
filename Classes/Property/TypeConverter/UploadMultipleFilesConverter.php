@@ -26,7 +26,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Class UploadMultipleFilesConverter
+ * Converter to upload multiple images for one property
  */
 class UploadMultipleFilesConverter extends AbstractTypeConverter
 {

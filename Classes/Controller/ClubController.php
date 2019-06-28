@@ -27,7 +27,7 @@ use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Class ClubController
+ * Controller to list, show and edit clubs
  */
 class ClubController extends AbstractController
 {

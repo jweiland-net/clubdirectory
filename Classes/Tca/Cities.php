@@ -19,7 +19,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 
 /**
- * Class Cities
+ * Add city names to selectbox in TCA of backend
  */
 class Cities
 {

@@ -18,7 +18,7 @@ namespace JWeiland\Clubdirectory\Configuration;
 use TYPO3\CMS\Core\SingletonInterface;
 
 /**
- * Class ExtConf
+ * Class, which contains the configuration from ExtensionManager
  */
 class ExtConf implements SingletonInterface
 {

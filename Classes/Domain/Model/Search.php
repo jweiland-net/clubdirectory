@@ -19,7 +19,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Class Search
+ * Not really a domain model, but a helpful class to simplify our club search
  */
 class Search
 {

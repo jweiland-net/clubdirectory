@@ -22,7 +22,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
- * Class ClubValidator
+ * We use the domain based validator to check against at least one address
+ * and remove empty addresses.
  */
 class ClubValidator extends AbstractValidator
 {

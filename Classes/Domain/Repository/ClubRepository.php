@@ -25,7 +25,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Class ClubRepository
+ * Repository to get and search for clubs
  */
 class ClubRepository extends Repository
 {
