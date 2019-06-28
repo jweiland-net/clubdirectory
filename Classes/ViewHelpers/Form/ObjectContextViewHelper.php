@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 namespace JWeiland\Clubdirectory\ViewHelpers\Form;
 
 /***************************************************************
@@ -60,8 +60,6 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
 
     /**
      * Initialize arguments.
-     *
-     * @api
      */
     public function initializeArguments()
     {
@@ -75,10 +73,9 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
      *
      * @throws \OutOfBoundsException
      * @throws \InvalidArgumentException
-     *
      * @return string rendered form
      */
-    public function render()
+    public function render(): string
     {
         if (!$this->viewHelperVariableContainer->exists(FormViewHelper::class, 'formObjectName')) {
             throw new \OutOfBoundsException('The ObjectContextViewHelper may not be used outside the object acessor mode of a form viewhelper.', 1379072385);
@@ -108,10 +105,7 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
         return $content;
     }
 
-    /**
-     * @return int
-     */
-    protected function detectObjectPositionInParentCollection()
+    protected function detectObjectPositionInParentCollection(): int
     {
         $formObject = $this->viewHelperVariableContainer->get(FormViewHelper::class, 'formObject');
         $collection = ObjectAccess::getProperty($formObject, $this->arguments['parentProperty']);
@@ -142,10 +136,7 @@ class ObjectContextViewHelper extends AbstractFormViewHelper
         );
     }
 
-    /**
-     * @return string
-     */
-    protected function getFormObjectName()
+    protected function getFormObjectName(): string
     {
         return sprintf(
             '%s[%s][%s]',
