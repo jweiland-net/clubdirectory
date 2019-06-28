@@ -1,4 +1,4 @@
-<f:if condition="{club.images->f:count()}">
+<f:if condition="{club.images}">
 	<div class="{f:if(condition: '{club.images->f:count()}==1', then: 'flexslider', else: '')}">
 		<ul class="slides">
 			<f:for each="{club.images}" as="image" iteration="iterator">
