@@ -21,7 +21,7 @@
 <div class="grid_11 floatleft marginbottom"><h1>{club.title}</h1></div>
 <div class="grid_12 clearer clearfix">
 	<div class="grid_6 floatleft">
-		<f:if condition="{club.images->f:count()}">
+		<f:if condition="{club.images}">
 			<figure class="gridright marginbottom2">
 				<f:render partial="Club/Images" arguments="{club: club}" />
 			</figure>
