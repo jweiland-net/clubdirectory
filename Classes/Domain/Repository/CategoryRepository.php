@@ -35,8 +35,8 @@ class CategoryRepository extends Repository
     /**
      * Get sub categories of a given category UID
      *
-     * @param int $categoryUId
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @param int $categoryUid
+     * @return QueryResultInterface
      */
     public function getSubCategories(int $categoryUid = 0): QueryResultInterface
     {
