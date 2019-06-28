@@ -27,8 +27,6 @@ class MapController extends AbstractController
     /**
      * initialize action new
      * hidden record throws an exception. Thats why I check it here before calling newAction.
-     *
-     * @return void
      */
     public function initializeNewAction()
     {
@@ -36,11 +34,7 @@ class MapController extends AbstractController
     }
 
     /**
-     * action new.
-     *
      * @param Club $club
-     *
-     * @return void
      */
     public function newAction(Club $club)
     {
@@ -50,8 +44,6 @@ class MapController extends AbstractController
     /**
      * initialize action create
      * hidden record throws an exception. Thats why I check it here before calling createAction.
-     *
-     * @return void
      */
     public function initializeCreateAction()
     {
@@ -80,10 +72,7 @@ class MapController extends AbstractController
     }
 
     /**
-     * action create.
-     *
      * @param Club $club
-     * @return void
      */
     public function createAction(Club $club)
     {
@@ -98,10 +87,7 @@ class MapController extends AbstractController
     }
 
     /**
-     * action edit.
-     *
      * @param Club $club
-     * @return void
      */
     public function editAction(Club $club)
     {
@@ -116,17 +102,13 @@ class MapController extends AbstractController
         $this->view->assign('addressTitles', $this->getAddressTitles());
     }
 
-    /**
-     * initialized update action.
-     *
-     * @return void
-     */
     public function initializeUpdateAction()
     {
         // register hidden object
-        $postVars = $this->request->getArgument('club');
-        $object = $this->clubRepository->findHiddenEntryByUid($postVars['__identity']);
-        $this->session->registerObject($object, $postVars['__identity']);
+        /** @var array $club */
+        $club = $this->request->getArgument('club');
+        $object = $this->clubRepository->findHiddenEntryByUid($club['__identity']);
+        $this->session->registerObject($object, $club['__identity']);
 
         // we can't work with addresses.* here, because f:form has created addresses.0-3 already,
         // and numbered paths have a higher priority
@@ -149,10 +131,7 @@ class MapController extends AbstractController
     }
 
     /**
-     * action update.
-     *
      * @param Club $club
-     * @return void
      */
     public function updateAction(Club $club)
     {
@@ -164,9 +143,7 @@ class MapController extends AbstractController
     }
 
     /**
-     * $search isn't a domainmodel, so we have to do htmlspecialchars on our own.
-     *
-     * @return void
+     * $search isn't a domain model, so we have to do htmlspecialchars on our own.
      */
     public function initializeSearchAction()
     {
@@ -177,12 +154,9 @@ class MapController extends AbstractController
     }
 
     /**
-     * search show.
-     *
      * @param string $search
-     * @return void
      */
-    public function searchAction($search)
+    public function searchAction(string $search)
     {
         $clubs = $this->clubRepository->searchClubs($search);
         $this->view->assign('search', $search);

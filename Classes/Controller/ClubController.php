@@ -31,11 +31,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class ClubController extends AbstractController
 {
-    /**
-     * action list.
-     *
-     * @return void
-     */
     public function listAction()
     {
         $this->view->assign('clubs', $this->clubRepository->findAll());
@@ -45,11 +40,6 @@ class ClubController extends AbstractController
         $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
 
-    /**
-     * action listMyClubs.
-     *
-     * @return void
-     */
     public function listMyClubsAction()
     {
         $clubs = $this->clubRepository->findByFeUser((int) $GLOBALS['TSFE']->fe_user->user['uid']);
@@ -59,10 +49,7 @@ class ClubController extends AbstractController
     }
 
     /**
-     * action show.
-     *
      * @param Club $club
-     * @return void
      */
     public function showAction(Club $club)
     {
@@ -81,11 +68,6 @@ class ClubController extends AbstractController
         $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
 
-    /**
-     * action new.
-     *
-     * @return void
-     */
     public function newAction()
     {
         $this->deleteUploadedFilesOnValidationErrors('club');
@@ -107,11 +89,6 @@ class ClubController extends AbstractController
         $this->view->assign('addressTitles', $this->getAddressTitles());
     }
 
-    /**
-     * initialized create action
-     *
-     * @return void
-     */
     public function initializeCreateAction()
     {
         /** @var UploadOneFileConverter $oneFileTypeConverter */
@@ -134,10 +111,7 @@ class ClubController extends AbstractController
     }
 
     /**
-     * action create.
-     *
      * @param Club $club
-     * @return void
      */
     public function createAction(Club $club)
     {
@@ -156,21 +130,13 @@ class ClubController extends AbstractController
         }
     }
 
-    /**
-     * initialized edit action.
-     *
-     * @return void
-     */
     public function initializeEditAction()
     {
         $this->registerClubFromRequest('club');
     }
 
     /**
-     * action edit.
-     *
      * @param Club $club
-     * @return void
      */
     public function editAction(Club $club)
     {
@@ -185,11 +151,6 @@ class ClubController extends AbstractController
         $this->view->assign('addressTitles', $this->getAddressTitles());
     }
 
-    /**
-     * initialized update action.
-     *
-     * @return void
-     */
     public function initializeUpdateAction()
     {
         $this->registerClubFromRequest('club');
@@ -247,10 +208,7 @@ class ClubController extends AbstractController
     }
 
     /**
-     * action update.
-     *
      * @param Club $club
-     * @return void
      */
     public function updateAction(Club $club)
     {
@@ -263,10 +221,7 @@ class ClubController extends AbstractController
     }
 
     /**
-     * search show.
-     *
      * @param Search $search
-     * @return void
      */
     public function searchAction(Search $search = null)
     {

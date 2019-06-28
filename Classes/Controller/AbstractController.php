@@ -78,8 +78,6 @@ class AbstractController extends ActionController
     protected $letters = '0-9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
 
     /**
-     * inject clubRepository
-     *
      * @param ClubRepository $clubRepository
      */
     public function injectClubRepository(ClubRepository $clubRepository)
@@ -88,8 +86,6 @@ class AbstractController extends ActionController
     }
 
     /**
-     * inject frontendUserRepository
-     *
      * @param FrontendUserRepository $feUserRepository
      */
     public function injectFeUserRepository(FrontendUserRepository $feUserRepository)
@@ -98,8 +94,6 @@ class AbstractController extends ActionController
     }
 
     /**
-     * inject categoryRepository
-     *
      * @param CategoryRepository $categoryRepository
      */
     public function injectCategoryRepository(CategoryRepository $categoryRepository)
@@ -108,8 +102,6 @@ class AbstractController extends ActionController
     }
 
     /**
-     * inject persistenceManager
-     *
      * @param PersistenceManager $persistenceManager
      */
     public function injectPersistenceManager(PersistenceManager $persistenceManager)
@@ -118,8 +110,6 @@ class AbstractController extends ActionController
     }
 
     /**
-     * inject session
-     *
      * @param Session $session
      */
     public function injectSession(Session $session)
@@ -128,8 +118,6 @@ class AbstractController extends ActionController
     }
 
     /**
-     * inject extConf
-     *
      * @param ExtConf $extConf
      */
     public function injectExtConf(ExtConf $extConf)
@@ -174,13 +162,13 @@ class AbstractController extends ActionController
     }
 
     /**
-     * send email on new/update.
+     * Send email on new/update.
      *
      * @param string $subjectKey
      * @param Club $club
      * @return int The amount of email receivers
      */
-    public function sendMail($subjectKey, Club $club)
+    public function sendMail(string $subjectKey, Club $club): int
     {
         $this->view->assign('club', $club);
         /** @var MailMessage $mail */
@@ -194,11 +182,11 @@ class AbstractController extends ActionController
     }
 
     /**
-     * get an array with letters as keys for the glossar.
+     * Get an array with letters as keys for the glossar.
      *
      * @return array Array with starting letters as keys
      */
-    protected function getGlossar()
+    protected function getGlossar(): array
     {
         $glossar = [];
         if ($this->settings['category']) {
@@ -232,26 +220,26 @@ class AbstractController extends ActionController
     /**
      * This is a workaround to help controller actions to find (hidden) posts.
      *
-     * @param $argumentName
+     * @param string $argumentName
      */
-    protected function registerClubFromRequest($argumentName)
+    protected function registerClubFromRequest(string $argumentName)
     {
         $argument = $this->request->getArgument($argumentName);
         if (\is_array($argument)) {
             // get club from form ($_POST)
-            $club = $this->clubRepository->findHiddenEntryByUid($argument['__identity']);
+            $club = $this->clubRepository->findHiddenEntryByUid((int)$argument['__identity']);
         } elseif (\is_object($argument)) {
             // get club from domain model
             $club = $argument;
         } else {
             // get club from UID
-            $club = $this->clubRepository->findHiddenEntryByUid($argument);
+            $club = $this->clubRepository->findHiddenEntryByUid((int)$argument);
         }
         $this->session->registerObject($club, $club->getUid());
     }
 
     /**
-     * get titles for select box in address records form.
+     * Get titles for select box in address records form.
      *
      * @return array Array containing all allowed address titles
      */
@@ -310,9 +298,8 @@ class AbstractController extends ActionController
      * data is re-evaluated when the user changes something.
      *
      * @return string
-     * @api
      */
-    protected function errorAction()
+    protected function errorAction(): string
     {
         $this->clearCacheOnError();
         /* @var Argument $argument */
@@ -353,9 +340,8 @@ class AbstractController extends ActionController
      * But, if an error occurs we have to remove them.
      *
      * @param string $argument
-     * @return void
      */
-    protected function deleteUploadedFilesOnValidationErrors($argument)
+    protected function deleteUploadedFilesOnValidationErrors(string $argument)
     {
         if ($this->getControllerContext()->getRequest()->hasArgument($argument)) {
             /** @var Club $club */
