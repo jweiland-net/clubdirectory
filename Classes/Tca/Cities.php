@@ -15,8 +15,8 @@ namespace JWeiland\Clubdirectory\Tca;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Add city names to selectbox in TCA of backend
@@ -24,43 +24,37 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
 class Cities
 {
     /**
-     * @var DatabaseConnection
-     */
-    protected $database;
-
-    /**
-     * initializes the DB connection.
-     */
-    protected function init()
-    {
-        $this->database = $GLOBALS['TYPO3_DB'];
-    }
-
-    /**
-     * add cities to select box.
+     * Add cities to select box.
      *
      * @param array $parentArray
      */
     public function addCityItems(array $parentArray)
     {
-        $this->init();
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_address');
+        $addresses = $queryBuilder
+            ->select('city')
+            ->from('tx_clubdirectory_domain_model_address')
+            ->groupBy('city')
+            ->orderBy('city', 'ASC')
+            ->execute()
+            ->fetchAll();
 
-        $rows = $this->database->exec_SELECTgetRows(
-            'city',
-            'tx_clubdirectory_domain_model_address',
-            '1=1 ' .
-            BackendUtility::BEenableFields('tx_clubdirectory_domain_model_address') .
-            BackendUtility::deleteClause('tx_clubdirectory_domain_model_address'),
-            'city',
-            'city'
-        );
-
-        foreach ($rows as $row) {
+        foreach ($addresses as $address) {
             $item = [];
-            $item[0] = $row['city'];
-            $item[1] = $row['city'];
+            $item[0] = $address['city'];
+            $item[1] = $address['city'];
             $item[2] = null;
             $parentArray['items'][] = $item;
         }
+    }
+
+    /**
+     * Get TYPO3s Connection Pool
+     *
+     * @return ConnectionPool
+     */
+    protected function getConnectionPool(): ConnectionPool
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }
