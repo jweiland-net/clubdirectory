@@ -59,9 +59,9 @@ class ClubRepository extends Repository
      * Find clubs
      *
      * @param Search|null $search
-     * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface|array
+     * @return QueryResultInterface
      */
-    public function findBySearch(Search $search)
+    public function findBySearch(Search $search = null): QueryResultInterface
     {
         $query = $this->createQuery();
         $constraints = [];
@@ -118,9 +118,9 @@ class ClubRepository extends Repository
      *
      * @param int $category
      * @param int $district
-     * @return QueryResultInterface|array
+     * @return QueryResultInterface
      */
-    public function findByCategory($category, $district = 0)
+    public function findByCategory(int $category, int $district = 0): QueryResultInterface
     {
         $query = $this->createQuery();
 
@@ -139,12 +139,12 @@ class ClubRepository extends Repository
     }
 
     /**
-     * find all records by feUser.
+     * Find all records by feUser.
      *
      * @param int $feUser
-     * @return QueryResultInterface|array
+     * @return QueryResultInterface
      */
-    public function findByFeUser($feUser)
+    public function findByFeUser(int $feUser): QueryResultInterface
     {
         $query = $this->createQuery();
 
@@ -152,14 +152,14 @@ class ClubRepository extends Repository
     }
 
     /**
-     * find all records starting with given letter.
+     * Find all records starting with given letter.
      *
      * @param string $letter
      * @param int $category
      * @param int $district
-     * @return QueryResultInterface|array
+     * @return QueryResultInterface
      */
-    public function findByStartingLetter($letter, $category = 0, $district = 0)
+    public function findByStartingLetter(string $letter, int $category = 0, int $district = 0): QueryResultInterface
     {
         $query = $this->createQuery();
 
@@ -199,7 +199,7 @@ class ClubRepository extends Repository
     }
 
     /**
-     * get an array with available starting letters.
+     * Get an array with available starting letters.
      *
      * @param int $category
      * @return array
@@ -235,7 +235,7 @@ class ClubRepository extends Repository
      * @param string $searchWord
      * @return OrInterface
      */
-    protected function getConstraintForSearchWord(QueryInterface $query, string $searchWord)
+    protected function getConstraintForSearchWord(QueryInterface $query, string $searchWord): OrInterface
     {
         // strtolower is not UTF-8 compatible
         $longStreetSearch = $searchWord;
@@ -269,22 +269,24 @@ class ClubRepository extends Repository
     }
 
     /**
-     * find hidden entry by uid.
+     * Find hidden entry by uid.
      *
      * @param int $clubUid
-     * @return Club|object
+     * @return Club
      */
-    public function findHiddenEntryByUid($clubUid)
+    public function findHiddenEntryByUid(int $clubUid)
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(true);
         $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
 
-        return $query->matching($query->equals('uid', (int) $clubUid))->execute()->getFirst();
+        /** @var Club $club */
+        $club = $query->matching($query->equals('uid', (int) $clubUid))->execute()->getFirst();
+        return $club;
     }
 
     /**
-     * find all clubs to export them via CSV
+     * Find all clubs to export them via CSV
      * only for BE.
      *
      * @return array
