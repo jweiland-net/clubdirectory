@@ -41,7 +41,6 @@ class ClubValidator extends AbstractValidator
      * If at least one error occurred, the result is FALSE.
      *
      * @param mixed $value The value that should be validated
-     *
      * @return bool TRUE if the value is valid, FALSE if an error occurred
      */
     public function isValid($value): bool
@@ -62,7 +61,6 @@ class ClubValidator extends AbstractValidator
      * But it's bad to add these empty addresses into DB. So we remove empty addresses here.
      *
      * @param Club $club
-     * @return void
      */
     protected function removeEmptyAddresses(Club $club)
     {
