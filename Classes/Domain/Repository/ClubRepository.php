@@ -17,7 +17,6 @@ namespace JWeiland\Clubdirectory\Domain\Repository;
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
