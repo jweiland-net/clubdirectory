@@ -54,7 +54,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      * inject fileFactory
      *
      * @param ResourceFactory $fileFactory
-     * @return void
      */
     public function injectFileFactory(ResourceFactory $fileFactory)
     {
@@ -68,8 +67,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      * @param string $targetType the type to convert to.
      *
      * @return bool TRUE if this TypeConverter can convert from $source to $targetType, FALSE otherwise.
-     *
-     * @api
      */
     public function canConvertFrom($source, $targetType): bool
     {
@@ -201,7 +198,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      * upload file and get a file reference object.
      *
      * @param array  $source
-     *
      * @return FileReference|object
      */
     protected function getExtbaseFileReference($source)
@@ -217,7 +213,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      * upload file and get a file reference object.
      *
      * @param array $source
-     *
      * @return \TYPO3\CMS\Core\Resource\FileReference
      */
     protected function getCoreFileReference(array $source): \TYPO3\CMS\Core\Resource\FileReference
