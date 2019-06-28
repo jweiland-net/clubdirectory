@@ -19,7 +19,10 @@ use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Charset\CharsetConverter;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -45,10 +48,7 @@ class ClubRepository extends Repository
     protected $charsetConverter;
 
     /**
-     * inject charsetConverter
-     *
      * @param CharsetConverter $charsetConverter
-     * @return void
      */
     public function injectCharsetConverter(CharsetConverter $charsetConverter)
     {
@@ -114,7 +114,7 @@ class ClubRepository extends Repository
     }
 
     /**
-     * find all records by category.
+     * Find all records by category.
      *
      * @param int $category
      * @param int $district
@@ -206,26 +206,45 @@ class ClubRepository extends Repository
      */
     public function getStartingLetters(int $category = 0): array
     {
+        /** @var Query $query */
         $query = $this->createQuery();
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');
+        $queryBuilder
+            ->selectLiteral('UPPER(LEFT(sort_title, 1)) as letter')
+            ->from('tx_clubdirectory_domain_model_club', 'c')
+            ->add('groupBy', 'letter')
+            ->add('orderBy', 'letter ASC');
 
         if ($category) {
-            $where = 'sys_category_record_mm.uid_local=' . $category
-                . ' AND tablenames = \'tx_clubdirectory_domain_model_club\''
-                . ' AND fieldname = \'categories\'';
-        } else {
-            $where = '1=1';
+            $queryBuilder
+                ->leftJoin(
+                    'c',
+                    'sys_category_record_mm',
+                    'mm',
+                    (string)$queryBuilder->expr()->andX(
+                        $queryBuilder->expr()->eq(
+                            'mm.tablenames',
+                            $queryBuilder->createNamedParameter('tx_clubdirectory_domain_model_club', \PDO::PARAM_STR)
+                        ),
+                        $queryBuilder->expr()->eq(
+                            'mm.fieldname',
+                            $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                        ),
+                        $queryBuilder->expr()->eq(
+                            'mm.uid_foreign',
+                            $queryBuilder->quoteIdentifier('c.uid')
+                        )
+                    )
+                )
+                ->andWhere(
+                    $queryBuilder->expr()->eq(
+                        'mm.uid_local',
+                        $queryBuilder->createNamedParameter($category, \PDO::PARAM_INT)
+                    )
+                );
         }
 
-        return $query->statement('
-			SELECT UPPER(LEFT(sort_title, 1)) as letter
-			FROM tx_clubdirectory_domain_model_club
-			JOIN sys_category_record_mm ON sys_category_record_mm.uid_foreign = tx_clubdirectory_domain_model_club.uid
-			WHERE ' . $where .
-            BackendUtility::BEenableFields('tx_clubdirectory_domain_model_club') .
-            BackendUtility::deleteClause('tx_clubdirectory_domain_model_club') . '
-			GROUP BY letter
-			ORDER by letter;
-		')->execute(true);
+        return $query->statement($queryBuilder)->execute(true);
     }
 
     /**
@@ -319,5 +338,15 @@ class ClubRepository extends Repository
         }
 
         return $clubs;
+    }
+
+    /**
+     * Get TYPO3s Connection Pool
+     *
+     * @return ConnectionPool
+     */
+    protected function getConnectionPool(): ConnectionPool
+    {
+        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }
