@@ -104,7 +104,7 @@ class Search
     /**
      * @return int
      */
-    public function getSubCategory()
+    public function getSubCategory(): int
     {
         return $this->subCategory;
     }
@@ -120,7 +120,7 @@ class Search
     /**
      * @return string
      */
-    public function getOrderBy()
+    public function getOrderBy(): string
     {
         return $this->orderBy;
     }
@@ -136,7 +136,7 @@ class Search
     /**
      * @return string
      */
-    public function getDirection()
+    public function getDirection(): string
     {
         return $this->direction;
     }
@@ -155,7 +155,7 @@ class Search
      *
      * @return array
      */
-    public function getFieldNames()
+    public function getFieldNames(): array
     {
         return [
             0 => [
@@ -175,7 +175,7 @@ class Search
      *
      * @return array
      */
-    public function getDirections()
+    public function getDirections(): array
     {
         return [
             0 => [
