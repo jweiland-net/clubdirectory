@@ -23,6 +23,7 @@ use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
 use JWeiland\Maps2\Domain\Model\Position;
 use JWeiland\Maps2\Domain\Repository\PoiCollectionRepository;
+use JWeiland\Maps2\Service\GeoCodeService;
 use JWeiland\Maps2\Service\MapService;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -267,12 +268,13 @@ class AbstractController extends ActionController
      */
     protected function addMapRecordIfPossible(Club $club)
     {
+        $geocodeService = GeneralUtility::makeInstance(GeoCodeService::class);
         $mapService = GeneralUtility::makeInstance(MapService::class);
         $poiCollectionRepository = $this->objectManager->get(PoiCollectionRepository::class);
         foreach ($club->getAddresses() as $address) {
             // add a new poi record if empty
             if ($address->getTxMaps2Uid() === null && $address->getZip() && $address->getCity()) {
-                $position = $mapService->getFirstFoundPositionByAddress($address->getAddress());
+                $position = $geocodeService->getFirstFoundPositionByAddress($address->getAddress());
                 if ($position instanceof Position) {
                     $poiCollectionUid = $mapService->createNewPoiCollection(
                         $this->extConf->getPoiCollectionPid(),
