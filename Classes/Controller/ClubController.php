@@ -33,7 +33,10 @@ class ClubController extends AbstractController
 {
     public function listAction()
     {
-        $this->view->assign('clubs', $this->clubRepository->findAll());
+        $this->view->assign(
+            'clubs',
+            $this->clubRepository->findByCategory((int)$this->settings['category'], (int)$this->settings['district'])
+        );
         $this->view->assign('categories', $this->categoryRepository->getSubCategories());
         $this->view->assign('glossar', $this->getGlossar());
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
