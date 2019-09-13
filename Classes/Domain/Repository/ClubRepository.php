@@ -113,7 +113,7 @@ class ClubRepository extends Repository
     }
 
     /**
-     * Find all records by category.
+     * Find all records by category and district.
      *
      * @param int $category
      * @param int $district
@@ -201,9 +201,10 @@ class ClubRepository extends Repository
      * Get an array with available starting letters.
      *
      * @param int $category
+     * @param int $district
      * @return array
      */
-    public function getStartingLetters(int $category = 0): array
+    public function getStartingLetters(int $category = 0, int $district = 0): array
     {
         /** @var Query $query */
         $query = $this->createQuery();
@@ -241,6 +242,9 @@ class ClubRepository extends Repository
                         $queryBuilder->createNamedParameter($category, \PDO::PARAM_INT)
                     )
                 );
+        }
+        if ($district) {
+            $queryBuilder->andWhere($queryBuilder->expr()->eq('c.district', $district));
         }
 
         return $query->statement($queryBuilder)->execute(true);
