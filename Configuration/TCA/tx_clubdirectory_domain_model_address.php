@@ -18,7 +18,7 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime'
         ],
-        'searchFields' => 'title,street,house_number,zip,city,telephone,fax',
+        'searchFields' => 'title, street, zip, city, telephone, fax',
         'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_address.gif'
     ],
     'interface' => [
@@ -26,12 +26,19 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, street, house_number, zip, city, telephone, fax, barrier_free,
+            'showitem' => '--palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.language;language,
+             --palette--;;titleAndHidden, 
+             --palette--;;address, --palette--;;location, --palette--;;contact, barrier_free,
             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
         ]
     ],
     'palettes' => [
+        'language' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource'],
+        'titleAndHidden' => ['showitem' => 'title, hidden'],
+        'address' => ['showitem' => 'street, house_number'],
+        'location' => ['showitem' => 'zip, city'],
+        'contact' => ['showitem' => 'telephone, fax'],
         'access' => [
             'showitem' => 'starttime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:starttime_formlabel,endtime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:endtime_formlabel',
         ]
