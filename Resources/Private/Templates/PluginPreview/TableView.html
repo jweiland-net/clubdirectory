@@ -1,0 +1,30 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>Config</th>
+		<th>Value</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td><strong>Plugin</strong></td>
+		<td>Club Directory</td>
+	</tr>
+	<f:if condition="{pi_flexform_transformed.settings.category}">
+		<tr>
+			<td><strong>Show category</strong></td>
+			<td>{pi_flexform_transformed.settings.category}</td>
+		</tr>
+	</f:if>
+	<f:if condition="{pi_flexform_transformed.settings.district}">
+		<tr>
+			<td><strong>Show district</strong></td>
+			<td>{pi_flexform_transformed.settings.district}</td>
+		</tr>
+	</f:if>
+	</tbody>
+</table>
+</html>

@@ -8,9 +8,13 @@
 				<target>Icon</target>
 			</trans-unit>
 
-			<trans-unit id="plugin.title">
+			<trans-unit id="plugin.clubdirectory.title">
 				<source>Club Directory</source>
 				<target>Vereinsverzeichnis</target>
+			</trans-unit>
+			<trans-unit id="plugin.clubdirectory.description">
+				<source>Shows a list of club entries. Above all entries you will see an A-Z navigation to jump directly to an entry.</source>
+				<target>Zeigt ein Vereinsverzeichnis an. Über dem Vereinsverzeichnis wird eine A-Z Navigation eingeblendet, von der aus gewünschte Einträge direkt erreicht werden können.</target>
 			</trans-unit>
 
 			<trans-unit id="clubdirectory.tabs.media">
