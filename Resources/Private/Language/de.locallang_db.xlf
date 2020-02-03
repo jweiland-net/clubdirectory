@@ -3,7 +3,6 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory">
 		<header/>
 		<body>
-
 			<trans-unit id="sys_category.icon" xml:space="preserve">
 				<source>Icon</source>
 				<target>Icon</target>
@@ -14,9 +13,26 @@
 				<target>Vereinsverzeichnis</target>
 			</trans-unit>
 
-			<trans-unit id="tabs.category">
-				<source>Category</source>
-				<target>Kategorie</target>
+			<trans-unit id="clubdirectory.tabs.media">
+				<source>Media</source>
+				<target>Medien</target>
+			</trans-unit>
+			<trans-unit id="clubdirectory.tabs.social_media">
+				<source>Social Media</source>
+				<target>Soziale Medien</target>
+			</trans-unit>
+
+			<trans-unit id="clubdirectory.palettes.language">
+				<source>Language Settings</source>
+				<target>Spracheinstellungen</target>
+			</trans-unit>
+			<trans-unit id="clubdirectory.palettes.contact">
+				<source>Contact</source>
+				<target>Kontakt</target>
+			</trans-unit>
+			<trans-unit id="clubdirectory.palettes.location">
+				<source>Location</source>
+				<target>Standort</target>
 			</trans-unit>
 
 			<trans-unit id="tx_clubdirectory_domain_model_club">
@@ -161,7 +177,6 @@
 				<source>District</source>
 				<target>Stadtteil</target>
 			</trans-unit>
-
 		</body>
 	</file>
 </xliff>
