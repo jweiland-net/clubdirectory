@@ -80,8 +80,8 @@
 				<target>Beschreibung</target>
 			</trans-unit>
 			<trans-unit id="tx_clubdirectory_domain_model_club.feUsers">
-				<source>Frontend User</source>
-				<target>Bearbeitung durch Frontend-User</target>
+				<source>Assign Frontend Users</source>
+				<target>Frontend Benutzer zuweisen</target>
 			</trans-unit>
 			<trans-unit id="tx_clubdirectory_domain_model_club.logo">
 				<source>Logo</source>

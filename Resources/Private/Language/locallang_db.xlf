@@ -62,7 +62,7 @@
 				<source>Description</source>
 			</trans-unit>
 			<trans-unit id="tx_clubdirectory_domain_model_club.feUsers">
-				<source>Frontend User</source>
+				<source>Assign Frontend Users</source>
 			</trans-unit>
 			<trans-unit id="tx_clubdirectory_domain_model_club.logo">
 				<source>Logo</source>
