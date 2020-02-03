@@ -1,4 +1,6 @@
-{namespace club=JWeiland\Clubdirectory\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			xmlns:club="http://typo3.org/ns/JWeiland/Clubdirectory/ViewHelpers"
+			data-namespace-typo3-fluid="true">
 
 <f:render partial="Club/Field" arguments="{field: 'title', type: 'text', mandatory: 'yes'}" />
 <f:render partial="Club/Field" arguments="{field: 'sortTitle', type: 'text', mandatory: 'yes'}" />
@@ -36,3 +38,4 @@
 <div id="dialogHint" title="{f:translate(key: 'hint')}">
 	<p>{settings.textForHint}</p>
 </div>
+</html>

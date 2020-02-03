@@ -1,4 +1,6 @@
-{namespace maps2=JWeiland\Maps2\ViewHelpers}
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			xmlns:maps2="http://typo3.org/ns/JWeiland/Maps2/ViewHelpers"
+			data-namespace-typo3-fluid="true">
 
 <div class="powermail_fieldwrap">
 	<label for="title_{index}" class="powermail_label"><f:translate key="tx_clubdirectory_domain_model_address.title" /></label>
@@ -43,3 +45,4 @@
 		<maps2:widget.editPoi property="txMaps2Uid" poiCollection="{address.txMaps2Uid}" override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
 	</div>
 </f:if>
+</html>

@@ -1,6 +1,10 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+			data-namespace-typo3-fluid="true">
+
 <f:if condition="{club.logo}"><f:image image="{club.logo}" alt="Logo" /></f:if>
 <f:form.upload property="logo" id="logo" class="powermail_field powermail_file" />
 <div class="powermail_check_inner csc-frame-rulerAfter clearer margintop">
 	<f:form.checkbox name="club[logo][rights]" class="powermail_field powermail_check" value="1" />
 	<f:translate key="rightsMessage" />
 </div>
+</html>
