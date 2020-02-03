@@ -19,6 +19,22 @@ call_user_func(function () {
         ]
     );
 
+    // Register SVG Icon Identifier
+    $svgIcons = [
+        'ext-clubdirectory-wizard-icon' => 'plugin_wizard.svg',
+    ];
+    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    foreach ($svgIcons as $identifier => $fileName) {
+        $iconRegistry->registerIcon(
+            $identifier,
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            ['source' => 'EXT:clubdirectory/Resources/Public/Icons/' . $fileName]
+        );
+    }
+
+    // add clubdirectory plugin to new element wizard
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:clubdirectory/Configuration/TSconfig/ContentElementWizard.txt">');
+
     /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
     $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
     // update poiCollection record while saving club records

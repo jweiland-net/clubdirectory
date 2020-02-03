@@ -7,8 +7,11 @@
 				<source>Icon</source>
 			</trans-unit>
 
-			<trans-unit id="plugin.title">
+			<trans-unit id="plugin.clubdirectory.title">
 				<source>Club Directory</source>
+			</trans-unit>
+			<trans-unit id="plugin.clubdirectory.description">
+				<source>Shows a list of club entries. Above all entries you will see an A-Z navigation to jump directly to an entry.</source>
 			</trans-unit>
 
 			<trans-unit id="clubdirectory.tabs.media">
