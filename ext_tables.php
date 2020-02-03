@@ -27,6 +27,10 @@ call_user_func(function ($extConf) {
         'tx_clubdirectory_domain_model_address',
         'EXT:clubdirectory/Resources/Private/Language/locallang_csh_tx_clubdirectory_domain_model_address.xlf'
     );
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
+        'tx_clubdirectory_domain_model_district',
+        'EXT:clubdirectory/Resources/Private/Language/locallang_csh_tx_clubdirectory_domain_model_district.xlf'
+    );
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_clubdirectory_domain_model_club');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_clubdirectory_domain_model_address');
