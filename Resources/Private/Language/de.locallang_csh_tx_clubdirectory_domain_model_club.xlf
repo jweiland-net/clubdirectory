@@ -5,60 +5,79 @@
 		<body>
 			<trans-unit id="title.description">
 				<source>The title will be used as main header in detail view</source>
+				<target>Der Titel wird als Hauptüberschrift auf der Detailansicht verwendet.</target>
 			</trans-unit>
 			<trans-unit id="sort_title.description">
 				<source>This title will be used to sort clubs in list view. Normally you should never see that value in FE.</source>
+				<target>Nach diesem Titel wird intern sortiert. Im Normalfall sieht man diesen Titel nicht im Frontend.</target>
 			</trans-unit>
 			<trans-unit id="activity.description">
 				<source>Describe something about what your club offers</source>
+				<target>Was bietet der Verein an?</target>
 			</trans-unit>
 			<trans-unit id="contact_person.description">
 				<source>The name of the person who should be contacted in case of any questions</source>
+				<target>Wer ist der Ansprechpartner für Fragen bzgl. dem Verein?</target>
 			</trans-unit>
 			<trans-unit id="contact_times.description">
 				<source>In which time frame(s) an interested person can call/visit the club's contact person</source>
+				<target>Zu welchen Zeiten ist der Ansprechpartner am besten zu erreichen?</target>
 			</trans-unit>
 			<trans-unit id="email.description">
 				<source>Which email address can be used to contact the club?</source>
+				<target>Über welche Email Adresse ist der Verein am besten zu erreichen?</target>
 			</trans-unit>
 			<trans-unit id="website.description">
 				<source>The website of this club to find more information.</source>
+				<target>Geben Sie hier die offizielle Webseite des Vereins an.</target>
 			</trans-unit>
 			<trans-unit id="members.description">
 				<source>How many members does this club currently have?</source>
+				<target>Wie viele aktive Mitglieder hat der Verein?</target>
 			</trans-unit>
 			<trans-unit id="club_home.description">
 				<source>The city/location where this club in located</source>
+				<target>Die Stadt oder Ort, wo sich der Verein befindet.</target>
 			</trans-unit>
 			<trans-unit id="description.description">
 				<source>A more detailed description of this club</source>
+				<target>Hier kann eine detailliertere Beschreibung des Vereins hinterlegt werden.</target>
 			</trans-unit>
 			<trans-unit id="fe_users.description">
 				<source>Define one or more FE Users, who is allowed to edit this club in FE.</source>
+				<target>Tragen Sie hier die FE-Benutzer ein, die diesen Verein über das FE bearbeiten dürfen.</target>
 			</trans-unit>
 			<trans-unit id="logo.description">
 				<source>You can define exactly one logo to this club</source>
+				<target>Fügen Sie dem Verein ein Logo hinzu.</target>
 			</trans-unit>
 			<trans-unit id="images.description">
 				<source>Assign some additional images, if you want</source>
+				<target>Bei Bedarf können Sie hier noch weitere Vereinsbilder hinzufügen.</target>
 			</trans-unit>
 			<trans-unit id="facebook.description">
 				<source>Set Facebook URL of this club</source>
+				<target>Tragen Sie hier die Facebook URL des Vereins ein</target>
 			</trans-unit>
 			<trans-unit id="twitter.description">
 				<source>Set Twitter URL of this club</source>
+				<target>Tragen Sie hier die Twitter URL des Vereins ein</target>
 			</trans-unit>
 			<trans-unit id="google.description">
 				<source>Set Google Plus URL of this club</source>
+				<target>Tragen Sie hier die Google Plus URL des Vereins ein</target>
 			</trans-unit>
 			<trans-unit id="tags.description">
 				<source>You can add some tags. That way this club will be found, if someone uses that tag in search.</source>
+				<target>Weisen Sie ein paar Schlagworte zu. Wenn das Schlagwort in die Suche eingetragen wird, wird auch dieser Verein mit aufgeführt.</target>
 			</trans-unit>
 			<trans-unit id="district.description">
 				<source>Many cities are separated into districts. You can assign this club to such a district.</source>
+				<target>Viele Städt sind in Stadtteile oder anderweitige Bereich aufgeteilt. Weisen Sie den Verein einem Stadtteil zu.</target>
 			</trans-unit>
 			<trans-unit id="addresses.description">
 				<source>Assign one or more addresses</source>
+				<target>Hier können Sie mehrere Vereinsadressen zuweisen</target>
 			</trans-unit>
 		</body>
 	</file>

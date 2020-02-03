@@ -5,15 +5,19 @@
 		<body>
 			<trans-unit id="title.description">
 				<source>Which kind of address it belongs to?</source>
+				<target>Geben Sie den Typ der Adresse an.</target>
 			</trans-unit>
 			<trans-unit id="street.description">
 				<source>Type in the street name. Do not enter the house number.</source>
+				<target>Trage den Straßennamen ein, jedoch ohne Hausnummer.</target>
 			</trans-unit>
 			<trans-unit id="house_number.description">
 				<source>Just the house number</source>
+				<target>Nur die Hausnummer</target>
 			</trans-unit>
 			<trans-unit id="barrier_free.description">
 				<source>Does this address has a barrier free entry?</source>
+				<target>Hat diese Adresse einen behindertengerechten Eingang?</target>
 			</trans-unit>
 		</body>
 	</file>
