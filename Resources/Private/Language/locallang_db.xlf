@@ -88,9 +88,6 @@
 			<trans-unit id="tx_clubdirectory_domain_model_club.addresses">
 				<source>Addresses</source>
 			</trans-unit>
-			<trans-unit id="tx_clubdirectory_domain_model_club.categories">
-				<source>Categories</source>
-			</trans-unit>
 
 			<trans-unit id="tx_clubdirectory_domain_model_address">
 				<source>Address</source>

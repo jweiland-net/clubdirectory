@@ -115,10 +115,6 @@
 				<source>Addresses</source>
 				<target>Adressen</target>
 			</trans-unit>
-			<trans-unit id="tx_clubdirectory_domain_model_club.categories">
-				<source>Categories</source>
-				<target>Kategorien</target>
-			</trans-unit>
 
 			<trans-unit id="tx_clubdirectory_domain_model_address">
 				<source>Address</source>
