@@ -332,8 +332,9 @@ return [
                 'foreign_table' => 'tx_clubdirectory_domain_model_district',
                 'foreign_table_where' => 'ORDER BY tx_clubdirectory_domain_model_district.district',
                 'items' => [
-                    ['', '']
+                    ['', 0]
                 ],
+                'default' => 0,
                 'minitems' => 0,
                 'maxitems' => 1
             ]
