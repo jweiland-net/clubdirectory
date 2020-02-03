@@ -11,8 +11,21 @@
 				<source>Club Directory</source>
 			</trans-unit>
 
-			<trans-unit id="tabs.category">
-				<source>Category</source>
+			<trans-unit id="clubdirectory.tabs.media">
+				<source>Media</source>
+			</trans-unit>
+			<trans-unit id="clubdirectory.tabs.social_media">
+				<source>Social Media</source>
+			</trans-unit>
+
+			<trans-unit id="clubdirectory.palettes.language">
+				<source>Language Settings</source>
+			</trans-unit>
+			<trans-unit id="clubdirectory.palettes.contact">
+				<source>Contact</source>
+			</trans-unit>
+			<trans-unit id="clubdirectory.palettes.location">
+				<source>Location</source>
 			</trans-unit>
 
 			<trans-unit id="tx_clubdirectory_domain_model_club">
@@ -122,7 +135,6 @@
 			<trans-unit id="tx_clubdirectory_domain_model_district.district">
 				<source>District</source>
 			</trans-unit>
-
 		</body>
 	</file>
 </xliff>

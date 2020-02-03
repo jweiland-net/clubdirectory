@@ -26,14 +26,25 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, sort_title,
-            activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo,
-            images, facebook, twitter, google, tags, district, addresses,
-            --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
+            'showitem' => '--palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.language;language,
+             --palette--;;titleAndHidden,
+             members, description, activity, contact_times, 
+             --palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.contact;contact,
+             --palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.location;location,
+             fe_users,
+             --div--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.tabs.media,
+             logo, images,
+             --div--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.tabs.social_media,
+             facebook, twitter, google, tags,
+             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
+             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
         ]
     ],
     'palettes' => [
+        'language' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource'],
+        'titleAndHidden' => ['showitem' => 'title, hidden, --linebreak--, sort_title'],
+        'contact' => ['showitem' => 'contact_person, --linebreak--, email, website'],
+        'location' => ['showitem' => 'club_home, district, --linebreak--, addresses'],
         'access' => [
             'showitem' => 'starttime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:starttime_formlabel,endtime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:endtime_formlabel',
         ]
