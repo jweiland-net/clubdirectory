@@ -13,5 +13,5 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['clubdirector
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'JWeiland.clubdirectory',
     'Clubdirectory',
-    'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.title'
+    'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.clubdirectory.title'
 );
