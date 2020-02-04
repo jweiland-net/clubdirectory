@@ -4,13 +4,19 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-	<f:flashMessages/>
+	<f:flashMessages />
 
-	<div class="grid_8 floatleft">
-		<f:render partial="Club/Search" arguments="{search: search}" />
-		<f:render partial="Club/Glossar" arguments="{glossar: glossar}" />
-		<f:render partial="Club/List" arguments="{fallbackIconPath: fallbackIconPath, clubs: clubs}" />
-	</div>
-	<f:render partial="Club/InsertEditLinks" arguments="{allowedUserGroup: allowedUserGroup}" />
+	<f:link.action action="list" pageUid="{settings.pidOfListPage}" title="{f:translate(key: 'backToList')}">
+		{f:translate(key: 'backToList')}
+	</f:link.action>
+
+	<f:if condition="{clubs}">
+		<f:then>
+			<f:render partial="Club/List" arguments="{fallbackIconPath: fallbackIconPath, clubs: clubs}" />
+		</f:then>
+		<f:else>
+			<div class="noResults">{f:translate(key: "noResults")}</div>
+		</f:else>
+	</f:if>
 </f:section>
 </html>

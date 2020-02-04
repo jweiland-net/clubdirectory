@@ -4,20 +4,17 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-	<f:flashMessages/>
+	<f:flashMessages />
 
-	<f:render partial="FormErrors" arguments="{object:Club}"/>
+	<f:render partial="FormErrors" arguments="{object:Club}" />
 
 	<f:form action="create" enctype="multipart/form-data" name="club" object="{club}" class="extform withinfo">
-		<legend class="powermail_legend">
-			<f:translate key="newEntry"/>
-		</legend>
-		<div class="floatright clearfix marginbottom">
-			<f:cObject typoscriptObjectPath="lib.feformdocumentation"/>
-		</div>
+		<legend class="powermail_legend">{f:translate(key: "newEntry")}</legend>
+
 		<f:render partial="Club/FormFields" arguments="{_all}" />
+
 		<div class="powermail_fieldwrap powermail_fieldwrap_submit">
-			<f:form.submit class="powermail_submit" value="{f:translate(key: 'create')}"/>
+			<f:form.submit class="powermail_submit" value="{f:translate(key: 'create')}" />
 		</div>
 	</f:form>
 </f:section>

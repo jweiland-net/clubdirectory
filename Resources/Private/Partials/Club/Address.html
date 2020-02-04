@@ -3,30 +3,49 @@
 
 <f:for each="{club.addresses}" as="address">
 	<dl>
-		<dt>
-			<f:translate key="tx_clubdirectory_domain_model_address.title.{address.title}"/>:
-		</dt>
 		<dd>
-		{club.title}<br/>
-		{address.street} {address.houseNumber}<br />
-		{address.zip} {address.city}
-		</dd>
-	</dl>
-	<dl class="extdl clearfix rulerafter">
-		<dd class="grid_8 floatleft noborder">
-			<f:if condition="{address.telephone}">
-				<span aria-hidden="true" class="icon-phone_pf"></span>{address.telephone}
-			</f:if>
-			<f:if condition="{address.fax}">
-				<br/><span aria-hidden="true" class="icon-fax_pf"></span>{address.fax}
-			</f:if>
-		</dd>
-		<dd class="grid_4 floatleft noborder">
-			<figure>
-				<f:link.action title="<f:translate key='mapview'/>" action="show" controller="PoiCollection" extensionName="maps2" pluginName="maps2" pageUid="{settings.pidOfMaps2Plugin}" arguments="{poiCollection: address.txMaps2Uid}">
-					<f:image class="floatright" src="EXT:clubdirecotry/Resources/Public/Icons/thumbmaps.png" alt="{f:translate(key: 'altTextMapImg')}"/>
-				</f:link.action>
-			</figure>
+			<div class="media">
+				<figure class="figure">
+					<f:link.action title="{f:translate(key: 'mapview')}"
+												 action="show"
+												 controller="PoiCollection"
+												 extensionName="maps2"
+												 pluginName="maps2"
+												 pageUid="{settings.pidOfMaps2Plugin}"
+												 arguments="{poiCollection: address.txMaps2Uid}">
+						<f:image class="mr-3"
+										 src="EXT:clubdirectory/Resources/Public/Icons/thumbmaps.png"
+										 alt="{f:translate(key: 'altTextMapImg')}" />
+					</f:link.action>
+				</figure>
+
+				<div class="media-body">
+					<h5 class="mt-0">{f:translate(key: "tx_clubdirectory_domain_model_address.title.{address.title}")}:</h5>
+					<p>
+						{club.title}<br>
+						{address.street} {address.houseNumber}<br>
+						{address.zip} {address.city}
+					</p>
+					<f:if condition="{address.telephone}">
+						<div>
+							<svg class="bi bi-phone" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M13 3H7a1 1 0 00-1 1v11a1 1 0 001 1h6a1 1 0 001-1V4a1 1 0 00-1-1zM7 2a2 2 0 00-2 2v11a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7z" clip-rule="evenodd"></path>
+								<path fill-rule="evenodd" d="M10 15a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
+							</svg>
+							{address.telephone}
+						</div>
+					</f:if>
+					<f:if condition="{address.fax}">
+						<div>
+							<svg class="bi bi-inbox" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M5.81 6.063A1.5 1.5 0 016.98 5.5h6.04a1.5 1.5 0 011.17.563l3.7 4.625a.5.5 0 11-.78.624l-3.7-4.624a.5.5 0 00-.39-.188H6.98a.5.5 0 00-.39.188l-3.7 4.624a.5.5 0 11-.78-.624l3.7-4.625z" clip-rule="evenodd"></path>
+								<path fill-rule="evenodd" d="M2.125 10.67a.5.5 0 01.375-.17H8a.5.5 0 01.5.5 1.5 1.5 0 003 0 .5.5 0 01.5-.5h5.5a.5.5 0 01.496.562l-.39 3.124a1.5 1.5 0 01-1.489 1.314H3.883a1.5 1.5 0 01-1.489-1.314l-.39-3.124a.5.5 0 01.121-.393zm.941.83l.32 2.562a.5.5 0 00.497.438h12.234a.5.5 0 00.496-.438l.32-2.562H12.45a2.5 2.5 0 01-4.9 0H3.066z" clip-rule="evenodd"></path>
+							</svg>
+							{address.fax}
+						</div>
+					</f:if>
+				</div>
+			</div>
 		</dd>
 	</dl>
 </f:for>
