@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
 /*
@@ -22,6 +22,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -317,24 +318,21 @@ class ClubRepository extends Repository
     {
         $clubs = [];
         $clubs[] = ['Title', 'Email', 'Street', 'HouseNumber', 'Zip', 'City', 'Tel'];
+        /** @var ObjectStorage|Club[] $clubObjects */
         $clubObjects = $this->findAll();
         if ($clubObjects->count()) {
-            /** @var \JWeiland\Clubdirectory\Domain\Model\Club $club */
             foreach ($clubObjects as $club) {
-                if ($club->getAddresses()->count()) {
-                    /** @var \JWeiland\Clubdirectory\Domain\Model\Address $address */
-                    foreach ($club->getAddresses() as $address) {
-                        if ($address->getTitle() === 'postAddress') {
-                            $clubs[] = [
-                                $club->getTitle(),
-                                $club->getEmail(),
-                                $address->getStreet(),
-                                $address->getHouseNumber(),
-                                $address->getZip(),
-                                $address->getCity(),
-                                $address->getTelephone()
-                            ];
-                        }
+                foreach ($club->getAddresses() as $address) {
+                    if ($address->getTitle() === 'postAddress') {
+                        $clubs[] = [
+                            $club->getTitle(),
+                            $club->getEmail(),
+                            $address->getStreet(),
+                            $address->getHouseNumber(),
+                            $address->getZip(),
+                            $address->getCity(),
+                            $address->getTelephone()
+                        ];
                     }
                 }
             }
