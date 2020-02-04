@@ -1,3 +1,7 @@
+page.includeJSFooter {
+  clubdirectory = EXT:clubdirectory/Resources/Public/JavaScript/script.js
+}
+
 plugin.tx_clubdirectory {
   view {
     templateRootPaths {
@@ -22,12 +26,30 @@ plugin.tx_clubdirectory {
     pidOfDetailPage = {$plugin.tx_clubdirectory.settings.pidOfDetailPage}
     list {
       image {
-        width = 50c
-        height= 50c
-        minWidth = 50
-        maxWidth = 50
-        minHeight = 50
-        maxHeight = 50
+        width = 64c
+        height= 64c
+        minWidth = 64
+        maxWidth = 64
+        minHeight = 64
+        maxHeight = 64
+      }
+    }
+    show {
+      logo {
+        width = 100c
+        height= 100c
+        minWidth = 100
+        maxWidth = 100
+        minHeight = 100
+        maxHeight = 100
+      }
+      image {
+        width = 320c
+        height= 280c
+        minWidth = 320
+        maxWidth = 320
+        minHeight = 280
+        maxHeight = 280
       }
     }
     pageBrowser {
