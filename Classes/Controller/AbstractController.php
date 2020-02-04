@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace JWeiland\Clubdirectory\Controller;
 
 /*
@@ -20,6 +20,8 @@ use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Repository\CategoryRepository;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
+use JWeiland\Clubdirectory\Property\TypeConverter\UploadMultipleFilesConverter;
+use JWeiland\Clubdirectory\Property\TypeConverter\UploadOneFileConverter;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
 use JWeiland\Maps2\Domain\Model\Position;
 use JWeiland\Maps2\Domain\Repository\PoiCollectionRepository;
@@ -33,9 +35,10 @@ use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
+use TYPO3\CMS\Extbase\Mvc\Controller\MvcPropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
+use TYPO3\CMS\Extbase\Property\TypeConverterInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -57,11 +60,6 @@ class AbstractController extends ActionController
      * @var CategoryRepository
      */
     protected $categoryRepository;
-
-    /**
-     * @var PersistenceManager
-     */
-    protected $persistenceManager;
 
     /**
      * @var Session
@@ -100,14 +98,6 @@ class AbstractController extends ActionController
     public function injectCategoryRepository(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
-    }
-
-    /**
-     * @param PersistenceManager $persistenceManager
-     */
-    public function injectPersistenceManager(PersistenceManager $persistenceManager)
-    {
-        $this->persistenceManager = $persistenceManager;
     }
 
     /**
@@ -299,11 +289,11 @@ class AbstractController extends ActionController
      *
      * @return string
      */
-    protected function errorAction(): string
+    /*protected function errorAction(): string
     {
         $this->clearCacheOnError();
         /* @var Argument $argument */
-        $preparedArguments = [];
+        /*$preparedArguments = [];
         foreach ($this->arguments as $argument) {
             $preparedArguments[$argument->getName()] = $argument->getValue();
         }
@@ -333,6 +323,103 @@ class AbstractController extends ActionController
         ) . '->' . $this->actionMethodName . '().' . \PHP_EOL;
 
         return $message;
+    }*/
+
+    /**
+     * Currently only "logo" and "images" are allowed properties.
+     *
+     * @param string $property
+     * @param MvcPropertyMappingConfiguration $propertyMappingConfigurationForClub
+     * @param mixed $converterOptionValue
+     */
+    protected function assignMediaTypeConverter(
+        string $property,
+        MvcPropertyMappingConfiguration $propertyMappingConfigurationForClub,
+        $converterOptionValue = null
+    ) {
+        if ($property === 'logo') {
+            $className = UploadOneFileConverter::class;
+            $converterOptionName = 'IMAGE';
+        } elseif ($property === 'images') {
+            $className = UploadMultipleFilesConverter::class;
+            $converterOptionName = 'IMAGES';
+        } else {
+            return;
+        }
+
+        /** @var TypeConverterInterface $typeConverter */
+        $typeConverter = $this->objectManager->get($className);
+        $propertyMappingConfigurationForMediaFiles = $propertyMappingConfigurationForClub
+            ->forProperty($property)
+            ->setTypeConverter($typeConverter);
+
+        if (!empty($converterOptionValue)) {
+            // Do not use setTypeConverterOptions() as this will remove all existing options
+            $propertyMappingConfigurationForMediaFiles->setTypeConverterOption(
+                $className,
+                $converterOptionName,
+                $converterOptionValue
+            );
+        }
+    }
+
+    /**
+     * Sometimes Extbase tries to map an empty value like 0 to UID 0.
+     * As there is no record with UID 0 a Mapping Error occurs.
+     * To prevent that, we remove these kind of properties out of request directly.
+     *
+     * @param string $property
+     * @param array $requestArgument
+     */
+    protected function removeEmptyPropertyFromRequest(string $property, array &$requestArgument)
+    {
+        if (empty($requestArgument[$property])) {
+            unset($requestArgument[$property]);
+            $this->request->setArgument('club', $requestArgument);
+        }
+    }
+
+    /**
+     * As we have a Checkbox in Address Model, we have to fill
+     * Club with the maximum of Address Models to prevent Rendering Errors.
+     *
+     * Never put that into Club Model as we don't want all these empty addresses in DB.
+     * So this Method will only correct the rendering of frontend.
+     *
+     * @param Club $club
+     */
+    protected function fillAddressesUpToMaximum(Club $club)
+    {
+        for ($i = \count($club->getAddresses()); $i < 3; ++$i) {
+            $club->addAddress(GeneralUtility::makeInstance(Address::class));
+        }
+    }
+
+    /**
+     * Remove empty addresses from request before Property Mapping starts,
+     * to prevent inserting empty addresses into DB
+     *
+     * @param array $requestArgument
+     */
+    protected function removeEmptyAddressesFromRequest(array &$requestArgument)
+    {
+        if (isset($requestArgument['addresses']) && is_array($requestArgument['addresses'])) {
+            foreach ($requestArgument['addresses'] as $key => $address) {
+                // Only remove addresses which were not persisted before.
+                // We will remove persisted addresses later on in editAction()
+                if (
+                    !isset($address['__identity'])
+                    && empty($address['street'])
+                    && empty($address['house_number'])
+                    && empty($address['zip'])
+                    && empty($address['city'])
+                ) {
+                    unset($requestArgument['addresses'][$key]);
+                }
+            }
+        }
+
+        $this->request->setArgument('club', $requestArgument);
     }
 
     /**

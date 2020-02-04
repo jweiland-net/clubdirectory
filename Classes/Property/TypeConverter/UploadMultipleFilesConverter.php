@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace JWeiland\Clubdirectory\Property\TypeConverter;
 
 /*
@@ -115,7 +115,8 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         array $convertedChildProperties = [],
         PropertyMappingConfigurationInterface $configuration = null
     ) {
-        $alreadyPersistedImages = null;
+        /** @var array|\TYPO3\CMS\Extbase\Domain\Model\FileReference[] $alreadyPersistedImages */
+        $alreadyPersistedImages = [];
 
         if ($configuration) {
             $alreadyPersistedImages = $configuration->getConfigurationValue(
@@ -125,23 +126,23 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         }
         $originalSource = $source;
         foreach ($originalSource as $key => $uploadedFile) {
-            // check if $source contains an uploaded file. 4 = no file uploaded
-            if ($uploadedFile['error'] === 4
-                ||! isset(
-                    $uploadedFile['error'],
-                    $uploadedFile['name'],
-                    $uploadedFile['size'],
-                    $uploadedFile['tmp_name'],
-                    $uploadedFile['type']
-                )
-            ) {
-                if ($alreadyPersistedImages[$key] !== null) {
+            // If file is not valid use file from persisted record
+            if (!$this->isValidUploadFile($uploadedFile)) {
+                if (isset($uploadedFile['delete']) && $uploadedFile['delete'] === '1') {
+                    // Delete sys_file, delete reference
+                    $this->deleteFile($alreadyPersistedImages[$key]);
+                    $alreadyPersistedImages->detach($alreadyPersistedImages[$key]);
+                    unset($source[$key]);
+                } elseif ($alreadyPersistedImages[$key] !== null) {
+                    // Take image from persisted record
                     $source[$key] = $alreadyPersistedImages[$key];
                 } else {
+                    // Remove empty upload file array from source
                     unset($source[$key]);
                 }
                 continue;
             }
+
             // check if uploaded file returns an error
             if (!$uploadedFile['error'] === 0) {
                 return new Error(
@@ -149,6 +150,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                     1396957314
                 );
             }
+
             // now we have a valid uploaded file. Check if user has rights to upload this file
             if (!isset($uploadedFile['rights']) || empty($uploadedFile['rights'])) {
                 return new Error(
@@ -156,6 +158,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                     1397464390
                 );
             }
+
             // check if file extension is allowed
             $fileParts = GeneralUtility::split_fileref($uploadedFile['name']);
             if (!GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], $fileParts['fileext'])) {
@@ -170,12 +173,8 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                     1402981282
                 );
             }
-            // OK...we have a valid file and the user has the rights. It's time to check, if an old file can be deleted
-            if ($alreadyPersistedImages[$key] instanceof FileReference) {
-                /** @var \TYPO3\CMS\Extbase\Domain\Model\FileReference $oldFile */
-                $oldFile = $alreadyPersistedImages[$key];
-                $oldFile->getOriginalResource()->getOriginalFile()->delete();
-            }
+
+            $this->deleteFile($alreadyPersistedImages[$key]);
         }
 
         // I will do two foreach here. First: everything must be OK, before files will be uploaded
@@ -195,9 +194,55 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     }
 
     /**
+     * Check, if we have a valid uploaded file
+     * Error = 4: No file uploaded
+     *
+     * @param array $uploadedFile
+     * @return bool
+     */
+    protected function isValidUploadFile(array $uploadedFile): bool
+    {
+        if ($uploadedFile['error'] === 4) {
+            return false;
+        } elseif (!isset(
+            $uploadedFile['error'],
+            $uploadedFile['name'],
+            $uploadedFile['size'],
+            $uploadedFile['tmp_name'],
+            $uploadedFile['type']
+        )) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * If file is in our own upload folder we can delete it from filesystem and sys_file table.
+     *
+     * @param FileReference|null $fileReference
+     */
+    protected function deleteFile(\TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference = null)
+    {
+        if ($fileReference !== null) {
+            $fileReference = $fileReference->getOriginalResource();
+
+            if (
+                $fileReference->getParentFolder()->getName() === 'tx_clubdirectory'
+                && $fileReference->getParentFolder()->getParentFolder()->getName() === 'uploads'
+            ) {
+                try {
+                    $fileReference->getOriginalFile()->delete();
+                } catch (\Exception $exception) {
+                    // Do nothing. File already deleted or not found
+                }
+            }
+        }
+    }
+
+    /**
      * upload file and get a file reference object.
      *
-     * @param array  $source
+     * @param array $source
      * @return FileReference|object
      */
     protected function getExtbaseFileReference($source)

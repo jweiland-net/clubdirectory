@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace JWeiland\Clubdirectory\Domain\Model;
 
 /*
@@ -125,6 +125,7 @@ class Club extends AbstractEntity
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWeiland\Clubdirectory\Domain\Model\Address>
+     * @cascade remove
      */
     protected $addresses;
 
@@ -335,7 +336,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * @return ObjectStorage
+     * @return ObjectStorage|\TYPO3\CMS\Extbase\Domain\Model\FrontendUser
      */
     public function getFeUsers(): ObjectStorage
     {
@@ -348,6 +349,23 @@ class Club extends AbstractEntity
     public function setFeUsers(ObjectStorage $feUsers)
     {
         $this->feUsers = $feUsers;
+    }
+
+    public function getCurrentUserCanEditClub(): bool
+    {
+        $currentUserCanEditThisClub = false;
+        if (
+            is_array($GLOBALS['TSFE']->fe_user->user)
+            && $this->getFeUsers()->count()
+        ) {
+            foreach ($this->getFeUsers() as $feUser) {
+                if ($feUser->getUid() === (int)$GLOBALS['TSFE']->fe_user->user['uid']) {
+                    $currentUserCanEditThisClub = true;
+                    break;
+                }
+            }
+        }
+        return $currentUserCanEditThisClub;
     }
 
     /**
@@ -367,9 +385,9 @@ class Club extends AbstractEntity
     }
 
     /**
-     * @return array
+     * @return array|\TYPO3\CMS\Core\Resource\FileReference[]
      */
-    public function getImages()
+    public function getImages(): array
     {
         $references = [];
         foreach ($this->images as $image) {
@@ -377,6 +395,14 @@ class Club extends AbstractEntity
         }
 
         return $references;
+    }
+
+    /**
+     * @return ObjectStorage|\TYPO3\CMS\Core\Resource\FileReference[]
+     */
+    public function getOriginalImages(): ObjectStorage
+    {
+        return $this->images;
     }
 
     /**
@@ -484,11 +510,15 @@ class Club extends AbstractEntity
     }
 
     /**
-     * @return ObjectStorage|Address[]
+     * @return array|Address[]
      */
-    public function getAddresses(): ObjectStorage
+    public function getAddresses(): array
     {
-        return $this->addresses;
+        $addresses = [];
+        foreach ($this->addresses as $address) {
+            $addresses[] = $address;
+        }
+        return $addresses;
     }
 
     /**
