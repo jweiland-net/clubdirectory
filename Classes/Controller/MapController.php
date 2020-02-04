@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace JWeiland\Clubdirectory\Controller;
 
 /*
@@ -91,12 +91,6 @@ class MapController extends AbstractController
      */
     public function editAction(Club $club)
     {
-        // this is something very terrible of extbase
-        // because of the checkboxes in address records we have to add all 3 addresses. Filled or not filled.
-        for ($i = \count($club->getAddresses()); $i < 3; ++$i) {
-            $club->getAddresses()->attach(new Address());
-        }
-
         $this->view->assign('club', $club);
         $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
         $this->view->assign('addressTitles', $this->getAddressTitles());
@@ -104,11 +98,7 @@ class MapController extends AbstractController
 
     public function initializeUpdateAction()
     {
-        // register hidden object
-        /** @var array $club */
-        $club = $this->request->getArgument('club');
-        $object = $this->clubRepository->findHiddenEntryByUid($club['__identity']);
-        $this->session->registerObject($object, $club['__identity']);
+        $this->registerClubFromRequest('club');
 
         // we can't work with addresses.* here, because f:form has created addresses.0-3 already,
         // and numbered paths have a higher priority

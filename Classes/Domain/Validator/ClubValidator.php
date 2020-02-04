@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 namespace JWeiland\Clubdirectory\Domain\Validator;
 
 /*
@@ -40,38 +40,34 @@ class ClubValidator extends AbstractValidator
      *
      * If at least one error occurred, the result is FALSE.
      *
-     * @param mixed $value The value that should be validated
+     * @param Club $value The value that should be validated
      * @return bool TRUE if the value is valid, FALSE if an error occurred
      */
     public function isValid($value): bool
     {
-        /* @var $value Club */
         $this->removeEmptyAddresses($value);
-        $addresses = $value->getAddresses();
-        if (\is_object($addresses) && $addresses instanceof \Countable && $addresses->count() === 0) {
-            $this->addError('You have forgotten to set at lease one address', 1399904889);
+        if (empty($value->getAddresses())) {
+            $this->addError('You have forgotten to set at least one address', 1399904889);
             return false;
         }
-
         return true;
     }
 
     /**
-     * For our form we have to add all 3 addresses. Filled or not filled.
-     * But it's bad to add these empty addresses into DB. So we remove empty addresses here.
+     * If a customer has assigned less than 3 addresses to a club,
+     * we have to remove these empty addresses before saving to DB.
      *
      * @param Club $club
      */
     protected function removeEmptyAddresses(Club $club)
     {
-        /** @var ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        /** @var Address $emptyAddress */
-        $emptyAddress = $objectManager->get(Address::class);
-        $addresses = clone $club->getAddresses();
-        /** @var Address $address */
-        foreach ($addresses as $address) {
-            if ($address === $emptyAddress) {
+        foreach ($club->getAddresses() as $address) {
+            if (
+                empty($address->getStreet())
+                && empty($address->getHouseNumber())
+                && empty($address->getZip())
+                && empty($address->getCity())
+            ) {
                 $club->removeAddress($address);
             }
         }
