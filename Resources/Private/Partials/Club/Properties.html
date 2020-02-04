@@ -1,66 +1,135 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 			data-namespace-typo3-fluid="true">
 
-<div class="thumbnail grid_1 floatleft">
-	<figure class="marginbottom gridrightstd">
-		<f:if condition="{club.logo}">
-			<f:then>
-				<f:image src="{club.logo.originalResource.publicUrl}" alt="{club.title}" />
-			</f:then>
-			<f:else>
-				<f:if condition="{club.categories -> f:count()}">
-					<f:for each="{club.categories}" as="category" iteration="iterator">
-						<f:if condition="{iterator.isFirst}">
-							<f:if condition="{fallbackIconPath} && {category.icon}">
-								<f:image src="{fallbackIconPath}{category.icon}" alt="{club.title}" />
-							</f:if>
-						</f:if>
-					</f:for>
-				</f:if>
-			</f:else>
-		</f:if>
-	</figure>
-</div>
-<div class="grid_11 floatleft marginbottom"><h1>{club.title}</h1></div>
-<div class="grid_12 clearer clearfix">
-	<div class="grid_6 floatleft">
-		<f:if condition="{club.images}">
-			<figure class="gridright marginbottom2">
-				<f:render partial="Club/Images" arguments="{club: club}" />
-			</figure>
-		</f:if>
+<div class="media mb-3">
+	<f:if condition="{club.logo}">
+		<f:image src="{club.logo.originalResource.publicUrl}"
+						 class="mr-3"
+						 alt="{club.title}"
+						 width="{settings.show.logo.width}"
+						 height="{settings.show.logo.height}"
+						 minWidth="{settings.show.logo.minWidth}"
+						 maxWidth="{settings.show.logo.maxWidth}"
+						 minHeight="{settings.show.logo.minHeight}"
+						 maxHeight="{settings.show.logo.maxHeight}"
+		/>
+	</f:if>
+	<div class="media-body">
+		<h2 class="mt-0">{club.title}</h2>
 		<f:if condition="{club.activity}">
-			<div class="gridright marginbottom">{club.activity -> f:format.html(parseFuncTSPath:'lib.parseFunc') -> f:format.nl2br()}</div>
+			<p class="lead">
+				{club.activity -> f:format.html(parseFuncTSPath: 'lib.parseFunc') -> f:format.nl2br()}
+			</p>
 		</f:if>
-		<f:if condition="{club.description}">
-			<div class="gridright marginbottom"><f:format.html>{club.description}</f:format.html></div>
-		</f:if>
-		&nbsp;
-	</div>
-	<div class="grid_6 floatleft">
-		<div class="gridleft clearfix rulerbefore4">
-			<f:render partial="Club/Address" arguments="{club: club}"/>
-			<dl class="extdl">
-				<f:if condition="{club.district.district}">
-					<dd><strong><f:translate key="tx_clubdirectory_domain_model_club.district"/>:</strong> {club.district.district}</dd>
-				</f:if>
-				<f:if condition="{club.email}">
-					<dd><span aria-hidden="true" class="icon-email"></span>
-						<f:link.email class="email" title="{club.email}" email="{club.email}"><f:translate key="tx_clubdirectory_domain_model_club.email"/></f:link.email></dd>
-				</f:if>
-				<f:if condition="{club.website}">
-					<dd><span aria-hidden="true" class="icon-earth"></span><f:link.external title="{club.website}" uri="{club.website}" target="_blank"><f:translate key="tx_clubdirectory_domain_model_club.website"/></f:link.external></dd>
-				</f:if>
-				<f:render partial="Club/SingleLine" arguments="{field: 'contactPerson', value: club.contactPerson}"/>
-				<f:if condition="{club.contactTimes}">
-					<dt><f:translate key="tx_clubdirectory_domain_model_club.contactTimes"/>:</dt>
-						<dd>{club.contactTimes -> f:format.html(parseFuncTSPath: 'lib.parseFunc') -> f:format.nl2br()}</dd>
-				</f:if>
-				<f:render partial="Club/SingleLine" arguments="{field: 'members', value: club.members}"/>
-				<f:render partial="Club/SingleLine" arguments="{field: 'clubHome', value: club.clubHome}"/>
-			</dl>
-			<f:render partial="Club/Social.html" arguments="{club: club}"/>
-		</div>
 	</div>
 </div>
+
+<f:if condition="{club.images}">
+	<f:render section="renderImages" arguments="{club: club}" />
+</f:if>
+
+<f:if condition="{club.description}">
+	<p>
+		<f:format.html>{club.description}</f:format.html>
+	</p>
+</f:if>
+
+<div>
+	<f:render partial="Club/Address" arguments="{club: club}" />
+
+	<f:if condition="{club.email}">
+		<div>
+			<svg class="bi bi-envelope" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M16 5H4a1 1 0 00-1 1v8a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1zM4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z" clip-rule="evenodd"></path>
+				<path fill-rule="evenodd" d="M2.071 6.243a.5.5 0 01.686-.172L10 10.417l7.243-4.346a.5.5 0 11.514.858L10 11.583 2.243 6.93a.5.5 0 01-.172-.686z" clip-rule="evenodd"></path>
+			</svg>
+			<f:link.email title="{club.email}" email="{club.email}">
+				{f:translate(key: "tx_clubdirectory_domain_model_club.email")}
+			</f:link.email>
+		</div>
+	</f:if>
+	<f:if condition="{club.website}">
+		<div>
+			<svg class="bi bi-house" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M9.646 3.146a.5.5 0 01.708 0l6 6a.5.5 0 01.146.354v7a.5.5 0 01-.5.5h-4.5a.5.5 0 01-.5-.5v-4H9v4a.5.5 0 01-.5.5H4a.5.5 0 01-.5-.5v-7a.5.5 0 01.146-.354l6-6zM4.5 9.707V16H8v-4a.5.5 0 01.5-.5h3a.5.5 0 01.5.5v4h3.5V9.707l-5.5-5.5-5.5 5.5z" clip-rule="evenodd"></path>
+				<path fill-rule="evenodd" d="M15 4.5V8l-2-2V4.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5z" clip-rule="evenodd"></path>
+			</svg>
+			<f:link.external title="{club.website}"
+											 uri="{club.website}"
+											 target="_blank">
+				{f:translate(key: "tx_clubdirectory_domain_model_club.website")}
+			</f:link.external>
+		</div>
+	</f:if>
+
+	<f:render section="renderSocialElement" arguments="{uri: club.facebook, transKey: 'facebook'}" />
+	<f:render section="renderSocialElement" arguments="{uri: club.twitter, transKey: 'twitter'}" />
+	<f:render section="renderSocialElement" arguments="{uri: club.google, transKey: 'google'}" />
+
+	<dl>
+		<f:if condition="{club.district.district}">
+			<dt>{f:translate(key: "tx_clubdirectory_domain_model_club.district")}:</dt>
+			<dd>{club.district.district}</dd>
+		</f:if>
+
+		<f:render section="renderProperty" arguments="{transKey: 'contactPerson', value: club.contactPerson}" />
+
+		<f:if condition="{club.contactTimes}">
+			<dt>{f:translate(key: "tx_clubdirectory_domain_model_club.contactTimes")}:</dt>
+			<dd>{club.contactTimes -> f:format.html(parseFuncTSPath: 'lib.parseFunc') -> f:format.nl2br()}</dd>
+		</f:if>
+
+		<f:render section="renderProperty" arguments="{transKey: 'members', value: club.members}" />
+		<f:render section="renderProperty" arguments="{transKey: 'clubHome', value: club.clubHome}" />
+	</dl>
+</div>
+
+<f:section name="renderImages">
+	<div class="card-deck">
+		<f:for each="{club.images}" as="extbaseResource" iteration="iterator">
+			<f:variable name="image" value="{extbaseResource.originalResource}" />
+			<div class="card">
+				<f:image image="{image}"
+								 alt="{image.alternative}"
+								 width="{settings.show.image.width}"
+								 height="{settings.show.image.height}"
+				/>
+				<f:if condition="{image.title} || {image.description}">
+					<div class="card-body">
+						<f:if condition="{image.title}">
+							<h5 class="card-title">{image.title}</h5>
+						</f:if>
+						<f:if condition="{image.description}">
+							<p class="card-text">{image.description}</p>
+						</f:if>
+					</div>
+				</f:if>
+			</div>
+		</f:for>
+	</div>
+</f:section>
+
+<f:section name="renderProperty">
+	<f:if condition="{value}">
+		<f:if condition="{transKey}">
+			<dt>{f:translate(key: "tx_clubdirectory_domain_model_club.{transKey}")}</dt>
+		</f:if>
+		<dd>{value}</dd>
+	</f:if>
+</f:section>
+
+<f:section name="renderSocialElement">
+	<f:if condition="{uri}">
+		<div>
+			<svg class="bi bi-cloud" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M6.887 9.2l-.964-.165A2.5 2.5 0 105.5 14h10a1.5 1.5 0 00.237-2.982l-1.038-.164.216-1.028a4 4 0 10-7.843-1.587l-.185.96zm9.084.341a5 5 0 00-9.88-1.492A3.5 3.5 0 105.5 15h9.999a2.5 2.5 0 00.394-4.968c.033-.16.06-.324.077-.49z" clip-rule="evenodd"></path>
+			</svg>
+			<f:link.external target="_blank"
+											 uri="{uri}"
+											 title="{f:translate(key: transKey)}">
+				{f:translate(key: transKey)}
+			</f:link.external>
+		</div>
+	</f:if>
+</f:section>
 </html>

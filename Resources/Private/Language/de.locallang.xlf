@@ -3,7 +3,6 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory">
 		<header/>
 		<body>
-
 			<trans-unit id="tx_clubdirectory_domain_model_club">
 				<source>Club</source>
 				<target>Verein</target>
@@ -167,6 +166,10 @@
 				<source>Descending</source>
 				<target>Absteigend</target>
 			</trans-unit>
+			<trans-unit id="all">
+				<source>All</source>
+				<target>Alle</target>
+			</trans-unit>
 			<trans-unit id="new">
 				<source>New record</source>
 				<target>Neuer Eintrag</target>
@@ -178,6 +181,10 @@
 			<trans-unit id="newEntry">
 				<source>Insert new Club</source>
 				<target>Neuen Verein anlegen</target>
+			</trans-unit>
+			<trans-unit id="backToList">
+				<source>Back to list view</source>
+				<target>Zurück zur Listenansicht</target>
 			</trans-unit>
 			<trans-unit id="listMyClubs">
 				<source>List my Clubs</source>
@@ -198,6 +205,14 @@
 			<trans-unit id="clubUpdated">
 				<source>Club updated</source>
 				<target>Der Verein wurde bearbeitet</target>
+			</trans-unit>
+			<trans-unit id="deleteLogo">
+				<source>Delete Logo</source>
+				<target>Logo entfernen</target>
+			</trans-unit>
+			<trans-unit id="deleteImage">
+				<source>Delete Image</source>
+				<target>Bild entfernen</target>
 			</trans-unit>
 			<trans-unit id="rightsMessage">
 				<source>I give all rights of this image to city Pforzheim</source>

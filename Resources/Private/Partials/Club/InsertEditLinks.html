@@ -2,19 +2,17 @@
 			data-namespace-typo3-fluid="true">
 
 <f:security.ifHasRole role="{allowedUserGroup}">
-	<aside class="floatleft grid_4" role="complementary">
-		<div class="gridleft">
-			<p class="align-right info-box">
-				<f:link.action class="new" action="new" pageUid="{settings.pidOfDetailPage}" title="{f:translate(key: 'newEntry')}">
-					<span><f:translate key="newEntry"/></span><span aria-hidden="true" class="icon-arrowright"></span>
-				</f:link.action>
-			</p>
-			<p class="align-right info-box">
-				<f:link.action class="listMyClubs" action="listMyClubs" pageUid="{settings.pidOfDetailPage}" title="{f:translate(key: 'listMyClubs')}">
-					<span><f:translate key="listMyClubs"/></span><span aria-hidden="true" class="icon-arrowright"></span>
-				</f:link.action>
-			</p>
-		</div>
-	</aside>
+	<div>
+		<p>
+			<f:link.action class="new" action="new" pageUid="{settings.pidOfDetailPage}" title="{f:translate(key: 'newEntry')}">
+				<span>{f:translate(key: "newEntry")}</span>
+			</f:link.action>
+		</p>
+		<p>
+			<f:link.action class="listMyClubs" action="listMyClubs" pageUid="{settings.pidOfDetailPage}" title="{f:translate(key: 'listMyClubs')}">
+				<span>{f:translate(key: "listMyClubs")}</span>
+			</f:link.action>
+		</p>
+	</div>
 </f:security.ifHasRole>
 </html>

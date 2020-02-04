@@ -4,19 +4,27 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-	<f:flashMessages/>
-
-	<div class="row">
-		<div class="col-md-8">
-			<f:render partial="Club/Search" arguments="{search: search}" />
-			<f:render partial="Club/Glossar" arguments="{glossar: glossar}" />
-			<f:render partial="Club/List" arguments="{fallbackIconPath: fallbackIconPath, clubs: clubs}" />
-		</div>
-		<div class="col-md-4">
-			<f:render partial="Club/Filter" arguments="{search: search, categories: categories, subCategories: subCategories}" />
-		</div>
-	</div>
+	<f:flashMessages />
 
 	<f:render partial="Club/InsertEditLinks" arguments="{allowedUserGroup: allowedUserGroup}" />
+	<f:render partial="Club/Search" arguments="{search: search}" />
+	<f:render partial="Club/Filter" arguments="{search: search, categories: categories, subCategories: subCategories}" />
+
+	<f:if condition="{settings.showGlossar}">
+		<f:render partial="Club/Glossar" arguments="{glossar: glossar}" />
+	</f:if>
+
+	<f:if condition="{clubs}">
+		<f:then>
+			<f:widget.paginate objects="{clubs}"
+												 as="paginatedClubs"
+												 configuration="{addQueryStringMethod: 'POST,GET', itemsPerPage: settings.pageBrowser.itemsPerPage, insertAbove: settings.pageBrowser.insertAbove, insertBelow: settings.pageBrowser.insertBelow, maximumNumberOfLinks: settings.pageBrowser.maximumNumberOfLinks}">
+				<f:render partial="Club/List" arguments="{fallbackIconPath: fallbackIconPath, clubs: paginatedClubs}" />
+			</f:widget.paginate>
+		</f:then>
+		<f:else>
+			<div class="noResults">{f:translate(key: "noResults")}</div>
+		</f:else>
+	</f:if>
 </f:section>
 </html>
