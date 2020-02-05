@@ -285,52 +285,6 @@ class AbstractController extends ActionController
     }
 
     /**
-     * A special action which is called if the originally intended action could
-     * not be called, for example if the arguments were not valid.
-     * The default implementation sets a flash message, request errors and forwards back
-     * to the originating action. This is suitable for most actions dealing with form input.
-     * We clear the page cache by default on an error as well, as we need to make sure the
-     * data is re-evaluated when the user changes something.
-     *
-     * @return string
-     */
-    /*protected function errorAction(): string
-    {
-        $this->clearCacheOnError();
-        /* @var Argument $argument */
-        /*$preparedArguments = [];
-        foreach ($this->arguments as $argument) {
-            $preparedArguments[$argument->getName()] = $argument->getValue();
-        }
-        $errorFlashMessage = $this->getErrorFlashMessage();
-        if ($errorFlashMessage !== false) {
-            $errorFlashMessageObject = new FlashMessage(
-                $errorFlashMessage,
-                '',
-                FlashMessage::ERROR
-            );
-            $this->controllerContext->getFlashMessageQueue()->enqueue($errorFlashMessageObject);
-        }
-        $referringRequest = $this->request->getReferringRequest();
-        if ($referringRequest !== null) {
-            $originalRequest = clone $this->request;
-            $this->request->setOriginalRequest($originalRequest);
-            $this->request->setOriginalRequestMappingResults($this->arguments->getValidationResults());
-            $this->forward(
-                $referringRequest->getControllerActionName(),
-                $referringRequest->getControllerName(),
-                $referringRequest->getControllerExtensionName(),
-                $preparedArguments
-            );
-        }
-        $message = 'An error occurred while trying to call ' . \get_class(
-            $this
-        ) . '->' . $this->actionMethodName . '().' . \PHP_EOL;
-
-        return $message;
-    }*/
-
-    /**
      * Currently only "logo" and "images" are allowed properties.
      *
      * @param string $property
