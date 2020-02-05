@@ -9,7 +9,7 @@ Users Manual
 
 Target group: **Editors**
 
-#. Select a page where you want to insert glossary2
+#. Select a page where you want to insert clubdirectory
 
 #. Insert a new content element of type: `Insert Plugin`
 

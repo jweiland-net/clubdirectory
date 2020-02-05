@@ -7,7 +7,7 @@
 Contribute
 ==========
 
-Contribution to glossary2 is very welcome.
+Contribution to clubdirectory is very welcome.
 
 If you wish to contribute, please follow these conventions:
 

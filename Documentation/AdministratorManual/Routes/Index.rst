@@ -11,33 +11,35 @@ Example Configuration
 .. code-block:: none
 
    routeEnhancers:
-     Glossary2Plugin:
+     ClubdirectoryGlossary2Plugin:
        type: Extbase
-       extension: Glossary2
-       plugin: Glossary
+       extension: Clubdirectory
+       plugin: clubdirectory
        routes:
          -
-           routePath: '/first-glossary-page'
-           _controller: 'Glossary::list'
+           routePath: '/first-club-page'
+           _controller: 'Club::list'
          -
-           routePath: '/glossary-page-{page}'
-           _controller: 'Glossary::list'
+           routePath: '/club-page-{page}'
+           _controller: 'Club::list'
            _arguments:
              page: '@widget_0/currentPage'
          -
-           routePath: '/glossary-by-letter/{letter}'
-           _controller: 'Glossary::list'
-         -
-           routePath: '/show/{glossary_title}'
-           _controller: 'Glossary::show'
+           routePath: '/club-by-letter/{letter}'
+           _controller: 'Club::search'
            _arguments:
-             glossary_title: glossary
+             letter: 'search/letter'
+         -
+           routePath: '/show/{club_title}'
+           _controller: 'Club::show'
+           _arguments:
+             club_title: club
        requirements:
          letter: '^(0-9|[a-z])$'
          glossary_title: '^[a-zA-Z0-9]+\-[0-9]+$'
-       defaultController: 'Glossary::list'
+       defaultController: 'Club::list'
        aspects:
-         glossary_title:
+         club_title:
            type: PersistedAliasMapper
-           tableName: tx_glossary2_domain_model_glossary
+           tableName: tx_clubdirectory_domain_model_club
            routeFieldName: path_segment
