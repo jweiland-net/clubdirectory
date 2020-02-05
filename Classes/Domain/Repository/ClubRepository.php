@@ -94,22 +94,22 @@ class ClubRepository extends Repository
             } elseif ($search->getCategory()) {
                 $constraints[] = $query->contains('categories', $search->getCategory());
             }
+        }
 
-            // set ordering
-            if (in_array($search->getOrderBy(), ['title', 'sortTitle'], true)) {
-                if (!in_array($search->getDirection(), [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING], true)) {
-                    $search->setDirection(QueryInterface::ORDER_ASCENDING);
-                }
-                $query->setOrderings([
-                    $search->getOrderBy() => $search->getDirection()
-                ]);
+        // set ordering
+        if (in_array($search->getOrderBy(), ['title', 'sortTitle'], true)) {
+            if (!in_array($search->getDirection(), [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING], true)) {
+                $search->setDirection(QueryInterface::ORDER_ASCENDING);
             }
+            $query->setOrderings([
+                $search->getOrderBy() => $search->getDirection()
+            ]);
         }
 
         if (!empty($constraints)) {
             return $query->matching($query->logicalAnd($constraints))->execute();
         } else {
-            return $this->findAll();
+            return $query->execute();
         }
     }
 
