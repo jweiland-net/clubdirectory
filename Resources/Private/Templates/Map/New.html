@@ -8,24 +8,21 @@
 	<f:render partial="FormErrors" arguments="{object: Club}"/>
 
 	<f:form action="create" name="club" object="{club}" enctype="multipart/form-data">
-		<f:if condition="{club.addresses}">
-			<f:then>
-				<f:for each="{club.addresses}" as="address" iteration="iterator">
-					<input type="hidden" name="tx_clubdirectory_clubdirectory[club][addresses][{iterator.index}][__identity]" value="{address.uid}" />
-					<dl>
-						<dt>{f:translate(key: 'tx_clubdirectory_domain_model_address.title.{address.title}')}:</dt>
-						<dd>
-							{club.title}<br/>
-							{address.street} {address.houseNumber}<br />
-							{address.zip} {address.city}
-						</dd>
-					</dl>
-					<maps2:widget.editPoi property="addresses.{iterator.index}.txMaps2Uid" poiCollection="{company.txMaps2Uid}" override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
-				</f:for>
-			</f:then>
-			<f:else><div>Sie haben keine Adresse angegeben</div></f:else>
-		</f:if>
-		<f:form.submit class="powermail_submit" value="{f:translate(key: 'create')}" />
+		<f:for each="{club.addresses}" as="address" key="index">
+			<dl>
+				<dt>{f:translate(key: 'tx_clubdirectory_domain_model_address.title.{address.title}')}:</dt>
+				<dd>
+					{club.title}<br>
+					{address.street} {address.houseNumber}<br>
+					{address.zip} {address.city}
+				</dd>
+			</dl>
+
+			<maps2:widget.editPoi property="addresses.{index}.txMaps2Uid"
+														poiCollection="{address.txMaps2Uid}"
+														override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
+		</f:for>
+		<f:form.submit value="{f:translate(key: 'create')}" />
 	</f:form>
 </f:section>
 </html>

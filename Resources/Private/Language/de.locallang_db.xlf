@@ -168,6 +168,10 @@
 				<source>Barrier Free</source>
 				<target>Barrierefreier Zugang</target>
 			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_address.club">
+				<source>Related Club</source>
+				<target>Verknüpfter Verein</target>
+			</trans-unit>
 
 			<trans-unit id="tx_clubdirectory_domain_model_district">
 				<source>District (clubs)</source>
