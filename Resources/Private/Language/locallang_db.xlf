@@ -40,6 +40,9 @@
 			<trans-unit id="tx_clubdirectory_domain_model_club.sortTitle">
 				<source>Title to sort by</source>
 			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.path_segment">
+				<source>Segment for URL</source>
+			</trans-unit>
 			<trans-unit id="tx_clubdirectory_domain_model_club.activity">
 				<source>Activity</source>
 			</trans-unit>

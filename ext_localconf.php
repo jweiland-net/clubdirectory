@@ -35,6 +35,10 @@ call_user_func(function () {
     // add clubdirectory plugin to new element wizard
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:clubdirectory/Configuration/TSconfig/ContentElementWizard.txt">');
 
+    if (version_compare(TYPO3_branch, '9.4', '>=')) {
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['clubdirectoryUpdateSlug'] = \JWeiland\Clubdirectory\Updater\ClubdirectorySlugUpdater::class;
+    }
+
     /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
     $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
     // update poiCollection record while saving club records

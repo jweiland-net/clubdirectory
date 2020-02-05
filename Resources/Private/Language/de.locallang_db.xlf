@@ -51,6 +51,10 @@
 				<source>Title to sort by</source>
 				<target>Titel nach dem sortiert werden soll</target>
 			</trans-unit>
+			<trans-unit id="tx_clubdirectory_domain_model_club.path_segment">
+				<source>Segment for URL</source>
+				<target>Abschnitt für URL</target>
+			</trans-unit>
 			<trans-unit id="tx_clubdirectory_domain_model_club.activity">
 				<source>Activity</source>
 				<target>Vereinstätigkeit</target>
