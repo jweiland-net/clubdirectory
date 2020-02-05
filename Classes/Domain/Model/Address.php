@@ -67,6 +67,7 @@ class Address extends AbstractEntity
 
     /**
      * @var \JWeiland\Maps2\Domain\Model\PoiCollection
+     * @cascade remove
      */
     protected $txMaps2Uid;
 
