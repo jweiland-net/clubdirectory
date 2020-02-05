@@ -64,17 +64,17 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
      */
     public function getIdentifier(): string
     {
-        return 'glossary2UpdateSlug';
+        return 'clubdirectoryUpdateSlug';
     }
 
     public function getTitle(): string
     {
-        return 'Update Slug of glossary2 records';
+        return 'Update Slug of clubdirectory records';
     }
 
     public function getDescription(): string
     {
-        return 'Update empty slug column "path_segment" of glossary2 records with an URI compatible version of the title';
+        return 'Update empty slug column "path_segment" of clubdirectory records with an URI compatible version of the title';
     }
 
     public function updateNecessary(): bool
