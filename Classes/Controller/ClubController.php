@@ -135,23 +135,11 @@ class ClubController extends AbstractController
             ->getArgument('club')
             ->getPropertyMappingConfiguration();
 
-        /** @var Club $persistedClub */
         // Needed to get the previously stored logo and images
+        /** @var Club $persistedClub */
         $persistedClub = $this->clubRepository->findByIdentifier($requestArgument['__identity']);
         $this->assignMediaTypeConverter('logo', $clubMappingConfiguration, $persistedClub->getLogo());
         $this->assignMediaTypeConverter('images', $clubMappingConfiguration, $persistedClub->getOriginalImages());
-
-        // we can't work with addresses.* here,
-        // because f:form has created addresses.0-3 already, and numbered paths have a higher priority
-        /*for ($i = 0; $i < 3; ++$i) {
-            $clubMappingConfiguration
-                ->forProperty('addresses.' . $i)
-                ->allowProperties('txMaps2Uid')
-                ->forProperty('txMaps2Uid')
-                ->allowProperties('latitude', 'longitude', '__identity');
-            $clubMappingConfiguration
-                ->allowModificationForSubProperty('addresses.' . $i . '.txMaps2Uid');
-        }*/
     }
 
     /**
