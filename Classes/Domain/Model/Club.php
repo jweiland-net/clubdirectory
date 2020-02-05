@@ -522,6 +522,14 @@ class Club extends AbstractEntity
     }
 
     /**
+     * @return ObjectStorage|Address[]
+     */
+    public function getOriginalAddresses(): ObjectStorage
+    {
+        return $this->addresses;
+    }
+
+    /**
      * @param ObjectStorage $addresses
      */
     public function setAddresses(ObjectStorage $addresses)
