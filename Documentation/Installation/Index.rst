@@ -16,7 +16,7 @@ The extension needs to be installed like any other extension of TYPO3 CMS:
 
 #. Switch over to `Get Extensions`
 
-#. Search for `glossary2`
+#. Search for `clubdirectory`
 
 #. Install extension
 

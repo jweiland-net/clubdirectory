@@ -13,7 +13,7 @@ Extension Name
 .. only:: html
 
    :Classification:
-      glossary2
+      clubdirectory
 
    :Version:
       |release|
@@ -22,7 +22,7 @@ Extension Name
       en
 
    :Description:
-      Manual covering TYPO3 extension glossary2
+      Manual covering TYPO3 extension clubdirectory
 
    :Keywords:
       glossary, a-z, navigation
