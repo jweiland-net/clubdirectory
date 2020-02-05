@@ -259,7 +259,7 @@ class AbstractController extends ActionController
         $geocodeService = GeneralUtility::makeInstance(GeoCodeService::class);
         $mapService = GeneralUtility::makeInstance(MapService::class);
         $poiCollectionRepository = $this->objectManager->get(PoiCollectionRepository::class);
-        foreach ($club->getAddresses() as $address) {
+        foreach ($club->getOriginalAddresses() as $address) {
             // add a new poi record if empty
             if ($address->getTxMaps2Uid() === null && $address->getZip() && $address->getCity()) {
                 $position = $geocodeService->getFirstFoundPositionByAddress($address->getAddress());
@@ -268,7 +268,12 @@ class AbstractController extends ActionController
                         $this->extConf->getPoiCollectionPid(),
                         $position,
                         [
-                            'title' => $position->getFormattedAddress()
+                            'title' => sprintf(
+                                '%s (%d) - %s',
+                                $club->getTitle(),
+                                $club->getUid(),
+                                $address->getTitle()
+                            )
                         ]
                     );
                     /** @var PoiCollection $poiCollection */
