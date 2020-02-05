@@ -187,4 +187,17 @@ class ClubController extends AbstractController
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
         $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
+
+    /**
+     * @param int $club
+     */
+    public function activateAction(int $club)
+    {
+        /** @var Club $clubObject */
+        $clubObject = $this->clubRepository->findHiddenEntryByUid($club);
+        $clubObject->setHidden(false);
+        $this->clubRepository->update($clubObject);
+        $this->addFlashMessage(LocalizationUtility::translate('clubActivated', 'clubdirectory'));
+        $this->redirect('list', 'Club');
+    }
 }

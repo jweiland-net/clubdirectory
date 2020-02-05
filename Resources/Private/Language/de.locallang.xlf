@@ -206,6 +206,10 @@
 				<source>Club updated</source>
 				<target>Der Verein wurde bearbeitet</target>
 			</trans-unit>
+			<trans-unit id="clubActivated">
+				<source>The club was activated and is now visible in frontend</source>
+				<target>Der Verein wurde aktiviert und ist nun im Frontend sichtbar</target>
+			</trans-unit>
 			<trans-unit id="deleteLogo">
 				<source>Delete Logo</source>
 				<target>Logo entfernen</target>
@@ -307,9 +311,37 @@
 				<source>A new record was created</source>
 				<target>Vereinsverzeichnis – Ein neuer Datensatz wurde angelegt</target>
 			</trans-unit>
+			<trans-unit id="email.body.create">
+				<source>A new record of type club was created. Following you see the entered data.</source>
+				<target>Ein neuer Vereinsdatensatz wurde angegelegt. Im Folgenden sehen Sie die eingetragenen Daten.</target>
+			</trans-unit>
 			<trans-unit id="email.subject.update">
 				<source>A record was updated</source>
 				<target>Vereinsverzeichnis – Ein Datensatz wurde bearbeitet</target>
+			</trans-unit>
+			<trans-unit id="email.body.update">
+				<source>A record of type club was edited. Following you see its properties.</source>
+				<target>Ein Vereinsdatensatz wurde bearbeitet. Im Folgenden sehen Sie die seine Eigenschaften.</target>
+			</trans-unit>
+			<trans-unit id="email.salutation">
+				<source>Hello</source>
+				<target>Hallo</target>
+			</trans-unit>
+			<trans-unit id="email.editRecord">
+				<source>Edit record</source>
+				<target>Datensatz bearbeiten</target>
+			</trans-unit>
+			<trans-unit id="email.activateRecord">
+				<source>Activate record</source>
+				<target>Datensatz freischalten</target>
+			</trans-unit>
+			<trans-unit id="email.property">
+				<source>Property</source>
+				<target>Eigenschaft</target>
+			</trans-unit>
+			<trans-unit id="email.value">
+				<source>Value</source>
+				<target>Wert</target>
 			</trans-unit>
 
 			<trans-unit id="error.upload">

@@ -9,12 +9,12 @@ call_user_func(function () {
         'JWeiland.clubdirectory',
         'Clubdirectory',
         [
-            'Club' => 'list, listMyClubs, show, new, create, edit, update, search',
+            'Club' => 'list, listMyClubs, show, new, create, edit, update, search, activate',
             'Map' => 'new, create, edit, update'
         ],
         // non-cacheable actions
         [
-            'Club' => 'create, update, search',
+            'Club' => 'create, update, search, activate',
             'Map' => 'create, update'
         ]
     );

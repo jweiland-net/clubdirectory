@@ -102,10 +102,9 @@ class UploadOneFileConverter extends AbstractTypeConverter
                 // Delete sys_file, delete reference
                 $this->deleteFile($alreadyPersistedImage);
                 return null;
-            } elseif ($alreadyPersistedImage !== null) {
-                // Take image from persisted record
-                return $alreadyPersistedImage;
             }
+            // Take image from persisted record. Can also be NULL
+            return $alreadyPersistedImage;
         }
 
         // check if uploaded file returns an error
