@@ -156,6 +156,9 @@
 			<trans-unit id="clubUpdated">
 				<source>Club updated</source>
 			</trans-unit>
+			<trans-unit id="clubActivated">
+				<source>The club was activated and is now visible in frontend</source>
+			</trans-unit>
 			<trans-unit id="deleteLogo">
 				<source>Delete Logo</source>
 				<target>Logo entfernen</target>
@@ -234,8 +237,29 @@
 			<trans-unit id="email.subject.create">
 				<source>A new record was created</source>
 			</trans-unit>
+			<trans-unit id="email.body.create">
+				<source>A new record of type club was created. Following you see the entered data.</source>
+			</trans-unit>
 			<trans-unit id="email.subject.update">
 				<source>A record was updated</source>
+			</trans-unit>
+			<trans-unit id="email.body.update">
+				<source>A record of type club was edited. Following you see its properties.</source>
+			</trans-unit>
+			<trans-unit id="email.salutation">
+				<source>Hello</source>
+			</trans-unit>
+			<trans-unit id="email.editRecord">
+				<source>Edit record</source>
+			</trans-unit>
+			<trans-unit id="email.activateRecord">
+				<source>Activate record</source>
+			</trans-unit>
+			<trans-unit id="email.property">
+				<source>Property</source>
+			</trans-unit>
+			<trans-unit id="email.value">
+				<source>Value</source>
 			</trans-unit>
 
 			<trans-unit id="error.upload">
