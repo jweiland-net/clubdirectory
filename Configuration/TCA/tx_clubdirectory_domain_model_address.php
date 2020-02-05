@@ -3,6 +3,7 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address',
         'label' => 'title',
+        'label_userFunc' => \JWeiland\Clubdirectory\UserFunc\AltLabelForAddressTableUserFunc::class . '->setAddressLabel',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -22,13 +23,13 @@ return [
         'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_address.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, street, house_number, zip, city, telephone, fax, barrier_free'
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, street, house_number, zip, city, telephone, fax, barrier_free, club'
     ],
     'types' => [
         '1' => [
             'showitem' => '--palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.language;language,
              --palette--;;titleAndHidden, 
-             --palette--;;address, --palette--;;location, --palette--;;contact, barrier_free,
+             --palette--;;address, --palette--;;location, --palette--;;contact, barrier_free, club,
             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
         ]
@@ -226,8 +227,14 @@ return [
             ]
         ],
         'club' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address.club',
             'config' => [
-                'type' => 'passthrough'
+                'type' => 'select',
+                'renderType' => 'selectSingle',
+                'foreign_table' => 'tx_clubdirectory_domain_model_club',
+                'default' => 0,
+                'readOnly' => true
             ]
         ]
     ]
