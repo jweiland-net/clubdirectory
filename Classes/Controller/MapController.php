@@ -15,7 +15,6 @@ namespace JWeiland\Clubdirectory\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
-use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -25,50 +24,24 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class MapController extends AbstractController
 {
     /**
-     * initialize action new
-     * hidden record throws an exception. Thats why I check it here before calling newAction.
+     * We are using int to prevent calling any Validator
+     *
+     * @param int $club
      */
-    public function initializeNewAction()
+    public function newAction(int $club)
     {
-        $this->registerClubFromRequest('club');
+        $this->view->assign(
+            'club',
+            $this->clubRepository->findHiddenEntryByUid($club)
+        );
     }
 
     /**
-     * @param Club $club
-     */
-    public function newAction(Club $club)
-    {
-        $this->view->assign('club', $club);
-    }
-
-    /**
-     * initialize action create
-     * hidden record throws an exception. Thats why I check it here before calling createAction.
+     * Club is a hidden record. So register it in session object
      */
     public function initializeCreateAction()
     {
         $this->registerClubFromRequest('club');
-
-        // we can't work with addresses.* here, because f:form has created addresses.0-3 already,
-        // and numbered paths have a higher priority
-        //$this->arguments->getArgument('club')->getPropertyMappingConfiguration()->allowModificationForSubProperty('addresses');
-        for ($i = 0; $i < 3; ++$i) {
-            $this->arguments->getArgument('club')->getPropertyMappingConfiguration()
-                ->allowProperties('addresses')
-                ->forProperty('addresses')
-                ->allowProperties($i)
-                ->forProperty($i)
-                ->allowProperties('txMaps2Uid')
-                ->forProperty('txMaps2Uid')
-                ->allowProperties('latitude', 'longitude', '__identity');
-            $this->arguments->getArgument('club')
-                ->getPropertyMappingConfiguration()
-                ->allowModificationForSubProperty('addresses.' . $i);
-
-            $this->arguments->getArgument('club')
-                ->getPropertyMappingConfiguration()
-                ->allowModificationForSubProperty('addresses.' . $i . '.txMaps2Uid');
-        }
     }
 
     /**
