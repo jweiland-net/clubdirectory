@@ -225,10 +225,10 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function getOrderByInitiallyReturnsEmptyString()
+    public function getOrderByInitiallyReturnsSortTitle()
     {
         $this->assertSame(
-            '',
+            'sortTitle',
             $this->subject->getOrderBy()
         );
     }

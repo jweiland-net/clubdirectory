@@ -34,7 +34,9 @@ class AddressTest extends UnitTestCase
 
     public function tearDown()
     {
-        unset($this->subject);
+        unset(
+            $this->subject
+        );
     }
 
     /**
