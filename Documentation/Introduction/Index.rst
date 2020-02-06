@@ -13,7 +13,5 @@ Introduction
 What does it do?
 ================
 
-With clubdirectory you can build your own little glossary for your TYPO3 website. It comes with a list and a
-configurable detail view. Above the list view we implemented a A-Z navigation to jump directly
-to glossary entries which will start with your clicked starting letter.
-
+With clubdirectory you can manage, list and show all clubs of your town. Further we have
+added a form for your FE users to register their new club or edit them.

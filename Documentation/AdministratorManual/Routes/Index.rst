@@ -36,7 +36,7 @@ Example Configuration
              club_title: club
        requirements:
          letter: '^(0-9|[a-z])$'
-         glossary_title: '^[a-zA-Z0-9]+\-[0-9]+$'
+         club_title: '^[a-zA-Z0-9]+\-[0-9]+$'
        defaultController: 'Club::list'
        aspects:
          club_title:
