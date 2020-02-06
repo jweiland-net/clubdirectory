@@ -1,5 +1,5 @@
 <?php
-namespace JWeiland\Clubdirectory\Tests\Unit\Helper;
+namespace JWeiland\Clubdirectory\Tests\Unit\Hook;
 
 /*
  * This file is part of the clubdirectory project.
