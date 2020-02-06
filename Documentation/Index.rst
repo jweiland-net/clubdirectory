@@ -25,10 +25,10 @@ Extension Name
       Manual covering TYPO3 extension clubdirectory
 
    :Keywords:
-      glossary, a-z, navigation
+      club, clubdirectory, glossary
 
    :Copyright:
-      2013-2019
+      2013-2020
 
    :Author:
       Stefan Froemken

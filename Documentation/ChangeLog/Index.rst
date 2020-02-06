@@ -9,22 +9,30 @@ ChangeLog
 
 **Version 3.0.0**
 
-- Changed all templates. They are using bootstrap classes now by default
-- Add SignalSlot to GlossaryRepository to modify Extbase Query
-- Removed SwitchableControllerActions from FlexForm. Please start UpdateWizard.
-- Add option to enable/disable the A-Z links on top
-- Add option to add/remove an ALL-Link in front of A-Z link list.
-- Removed action method showWithoutGlossar from Controller.
-- Moved ext_icon to new location in Public/Icons
-- Add Icon for glossary table
-- Little code refactorings like removing @return void
-- Update documentation
-
-**Version 2.2.0**
-
-- Add documentation
-- Add new ext_icon as SVG
-
-**Version 2.1.1**
-
-Now you can add cropping, alt and title information to images
+- Set default values of relations to 0 in TCA and FlexForm
+- Better ordering of TCA columns
+- CleanUp Translations
+- Add configuration for newContentElementWizard
+- Add CSH
+- Wrap all templates into new HTML namespace declaration
+- Add possibility to delete images from FE
+- Move JS include from Controller into TS Setup
+- Code CleanUps like correct strict type declaration
+- Set return value of getAddresses, getImages and getLogo to array in Club Model
+- Add edit/activate links into create/update mails
+- Complete reworked Fluid-Templating incl. Bootstrap
+- Set default ordering in Search class, so you can see it in FE, too
+- Allow sorting of all records in ClubRepository
+- Generate better label for address and poi-collection records
+- Remove address record, if club was deleted
+- Remove poi-collection, if address was deleted
+- Remove many PropertyMappingConfiguration for tx_maps2_uid
+- Add and Update Documentation
+- Add column path_segment for better slugs incl. UpdateWizard
+- Simplify address record handling. Remove all theses for loops
+- Better implementation with maps2
+- Use club as int in many actions, to prevent calling Validation
+- Redirect to listMyClubs instead of list after editing a club
+- Add club as readOnly to address records for a better overview
+- Set width and height for logo and image in TS setup
+- Remove form.objectContext ViewHelper

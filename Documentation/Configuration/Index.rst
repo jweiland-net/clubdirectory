@@ -16,14 +16,14 @@ Give a minimal example or a typical example.
 Minimal Example
 ===============
 
-- It is necessary to include static template `Glossary 2 (clubdirectory)`
+- It is necessary to include static template `Clubdirectory (clubdirectory)`
 
 We prefer to set a Storage PID with help of TypoScript Constants:
 
 .. code-block:: none
 
    plugin.tx_clubdirectory.persistence {
-      # Define Storage PID where glossary records are located
+      # Define Storage PID where club records are located
       storagePid = 4
    }
 
@@ -37,10 +37,10 @@ TypoScript Setup Reference
    =========================== ===================================== ======================= ====================
    Property                    Data type                             :ref:`t3tsref:stdwrap`  Default
    =========================== ===================================== ======================= ====================
-   pidOfDetailPage_            Comma separated list of page UIDs     no
-   letters_                    Comma separated list of letters       no                      0-9, A-Z
-   show_                       Array
+   pidOfMaps2Plugin_           int                                   no                      null
+   pidOfDetailPage_            Comma separated list of page UIDs     no                      null
    list_                       Array
+   show_                       Array
    pageBrowser_                Array
    =========================== ===================================== ======================= ====================
 
@@ -55,6 +55,16 @@ Property details
       :depth: 1
 
 
+.. _pidOfMaps2Plugin:
+
+pidOfMaps2Plugin
+----------------
+
+Example: plugin.tx_clubdirectory.settings.pidOfMaps2Plugin = 24
+
+In our templates we link to this page, to show a detailed vaie of the location on a map.
+
+
 .. _pidOfDetailPage:
 
 pidOfDetailPage
@@ -62,34 +72,8 @@ pidOfDetailPage
 
 Example: plugin.tx_clubdirectory.settings.pidOfDetailPage = 4
 
-Here you can add one or a comma separated list of Storage PIDs where your glossary
+Here you can add one or a comma separated list of Storage PIDs where your club
 records are located.
-
-
-.. _letters:
-
-letters
--------
-
-Default: 0-9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
-
-Example: plugin.tx_clubdirectory.settings.letters = 0-9,A,E,I,O,U
-
-This is a list of allowed entries within the A-Z navigation above the glossary list in frontend.
-0-9 is a special entry which can not be divided into single representations.
-
-
-.. _list:
-
-list
-----
-
-Default: 200c for width and height
-
-Example: plugin.tx_clubdirectory.settings.list.image.width = 150c
-
-Currently not implemented in Template, but if you want, you can use this
-setting to show one or more images with a defined width and height.
 
 
 .. _show:
@@ -97,12 +81,25 @@ setting to show one or more images with a defined width and height.
 show
 ----
 
-Default: 80c for width and height
+Default: 64c for width and height
 
 Example: plugin.tx_clubdirectory.settings.show.image.width = 120c
 
 If you want, you can use this setting to show one or more images
-with a defined width and height.
+with a defined width and height in detail view.
+
+
+.. _list:
+
+list
+----
+
+Default: 100c for width and height of images and logo
+
+Example: plugin.tx_clubdirectory.settings.list.logo.width = 150c
+Example: plugin.tx_clubdirectory.settings.list.image.width = 150c
+
+You can use this setting to show one or more images with a defined width and height in list view.
 
 
 .. _pageBrowser:
@@ -119,18 +116,18 @@ Example: plugin.tx_clubdirectory.settings.pageBrowser.maximumNumberOfLinks = 5
 
 **itemsPerPage**
 
-Reduce result of glossary records to this value for a page
+Reduce result of club records to this value for a page
 
 **insertAbove**
 
-Insert page browser above list of glossary records
+Insert page browser above list of club records
 
 **insertBelow**
 
-Insert page browser below list of glossary records. I remember a bug in TYPO3 CMS. So I can not guarantee
+Insert page browser below list of club records. I remember a bug in TYPO3 CMS. So I can not guarantee
 that this option will work.
 
 **maximumNumberOfLinks**
 
-If you have many glossary records it makes sense to reduce the amount of pages in page browser to a fixed maximum
+If you have many club records it makes sense to reduce the amount of pages in page browser to a fixed maximum
 value. Instead of 1, 2, 3, 4, 5, 6, 7, 8 you will get 1, 2, 3...8, 9 if you have configured this option to 5.
