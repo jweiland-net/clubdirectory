@@ -100,6 +100,7 @@ class UpdateMaps2RecordHookTest extends AbstractUnitTestCase
         $this->subject->postUpdatePoiCollection(
             'tx_maps2_domain_model_poicollection',
             64893,
+            'tx_clubdirectory_domain_model_address',
             $addressRecord,
             []
         );

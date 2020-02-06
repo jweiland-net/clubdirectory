@@ -40,7 +40,9 @@ class ClubTest extends UnitTestCase
 
     public function tearDown()
     {
-        unset($this->subject);
+        unset(
+            $this->subject
+        );
     }
 
     /**
@@ -847,11 +849,22 @@ class ClubTest extends UnitTestCase
     /**
      * @test
      */
-    public function getAddressesInitiallyReturnsObjectStorage()
+    public function getAddressesInitiallyReturnsArray()
+    {
+        $this->assertEquals(
+            [],
+            $this->subject->getAddresses()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getOriginalAddressesInitiallyReturnsObjectStorage()
     {
         $this->assertEquals(
             new ObjectStorage(),
-            $this->subject->getAddresses()
+            $this->subject->getOriginalAddresses()
         );
     }
 
@@ -867,7 +880,7 @@ class ClubTest extends UnitTestCase
 
         $this->assertSame(
             $objectStorage,
-            $this->subject->getAddresses()
+            $this->subject->getOriginalAddresses()
         );
     }
 
@@ -886,7 +899,7 @@ class ClubTest extends UnitTestCase
 
         $this->assertSame(
             $objectStorage,
-            $this->subject->getAddresses()
+            $this->subject->getOriginalAddresses()
         );
     }
 
@@ -905,7 +918,7 @@ class ClubTest extends UnitTestCase
 
         $this->assertSame(
             $objectStorage,
-            $this->subject->getAddresses()
+            $this->subject->getOriginalAddresses()
         );
     }
 
