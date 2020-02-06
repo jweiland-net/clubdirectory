@@ -15,10 +15,7 @@ namespace JWeiland\Clubdirectory\Domain\Validator;
  * The TYPO3 project - inspiring people to share!
  */
 
-use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
