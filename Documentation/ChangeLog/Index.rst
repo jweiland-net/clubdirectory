@@ -36,3 +36,4 @@ ChangeLog
 - Add club as readOnly to address records for a better overview
 - Set width and height for logo and image in TS setup
 - Remove form.objectContext ViewHelper
+- Remove migration code from TYPO3 6.2
