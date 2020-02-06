@@ -45,9 +45,7 @@ install:
   - >
     composer config minimum-stability dev;
     composer config prefer-stable true;
-  - while true; do echo "..."; sleep 60; done &
   - composer require typo3/minimal=$TYPO3_VERSION
-  - kill %1
   - mkdir -p .Build/public/typo3conf/ext/
   - if [ ! -L .Build/public/typo3conf/ext/clubdirectory ]; then ln -snvf ../../../../. .Build/public/typo3conf/ext/clubdirectory; fi
   - echo 'date.timezone = "Europe/Paris"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
@@ -55,6 +53,15 @@ install:
   - export TYPO3_PATH_ROOT=$PWD/.Build/public
 
 script:
+  - >
+    if [ -d "Tests/Unit" ]; then
+      echo;
+      echo "Running unit tests";
+      echo;
+      echo;
+      .Build/bin/phpunit --color --bootstrap .Build/vendor/nimut/testing-framework/res/Configuration/UnitTestsBootstrap.php Tests/Unit/;
+    fi
+
   - >
     echo;
     echo "Running parallel";
@@ -67,4 +74,4 @@ script:
     echo "Running PHP Coding Standards Fixer checks";
     echo;
     echo;
-    .Build/bin/php-cs-fixer fix --config=Build/.php_cs.php --dry-run --using-cache=no -v --diff;
+    .Build/bin/php-cs-fixer fix Classes --config=Build/.php_cs.php --dry-run --using-cache=no -v --diff;
