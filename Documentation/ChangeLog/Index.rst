@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+**Version 3.0.2**
+
+- Replace ext icon and all tables icons
+- Use correct address label, if title is of type array
+- [PERFORMANCE] Use group instead of select type for all l10n_parent columns in TCA
+
 **Version 3.0.1**
 
 - Do not change label of address records, if shown as inline in club record
