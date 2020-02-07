@@ -24,12 +24,17 @@ class AltLabelForAddressTableUserFunc
 {
     public function setAddressLabel(array &$parameters = [])
     {
-        $club = BackendUtility::getRecord('tx_clubdirectory_domain_model_club', $parameters['row']['club']);
-        $parameters['title'] = sprintf(
-            '%s (%d) - %s',
-            $club['title'],
-            $club['uid'],
-            $parameters['row']['title']
-        );
+        // Column "club" can be empty, if hidden by an Integrator or if shown as inline in club record
+        if (isset($parameters['row']['club']) && !empty($parameters['row']['club'])) {
+            $club = BackendUtility::getRecord('tx_clubdirectory_domain_model_club', $parameters['row']['club']);
+            if (isset($parameters['row']['title']) && !empty($parameters['row']['title'])) {
+                $parameters['title'] = sprintf(
+                    '%s (%d) - %s',
+                    $club['title'],
+                    $club['uid'],
+                    $parameters['row']['title']
+                );
+            }
+        }
     }
 }
