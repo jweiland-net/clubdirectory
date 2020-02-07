@@ -59,23 +59,16 @@ return [
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => true,
+            'exclude' => false,
             'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'items' => [
-                    ['', 0],
-                ],
-                'foreign_table' => 'tx_clubdirectory_domain_model_district',
-                'foreign_table_where' => 'AND tx_clubdirectory_domain_model_district.pid=###CURRENT_PID### AND tx_clubdirectory_domain_model_district.sys_language_uid IN (-1,0)',
-                'fieldWizard' => [
-                    'selectIcons' => [
-                        'disabled' => true,
-                    ],
-                ],
-                'default' => 0,
-            ]
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_clubdirectory_domain_model_district',
+                'size' => 1,
+                'maxitems' => 1,
+                'minitems' => 0,
+            ],
         ],
         'l10n_diffsource' => [
             'config' => [
