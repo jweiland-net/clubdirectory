@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 3.0.1**
+
+- Do not change label of address records, if shown as inline in club record
+
 **Version 3.0.0**
 
 - Set default values of relations to 0 in TCA and FlexForm
