@@ -24,6 +24,9 @@ class AltLabelForAddressTableUserFunc
 {
     public function setAddressLabel(array &$parameters = [])
     {
+        // Set title as a fallback. It was cleared by TYPO3 just before this UserFunc was called.
+        $parameters['title'] = is_array($parameters['row']['title']) ? $parameters['row']['title'][0] : $parameters['row']['title'];
+
         // Column "club" can be empty, if hidden by an Integrator or if shown as inline in club record
         if (isset($parameters['row']['club']) && !empty($parameters['row']['club'])) {
             $club = BackendUtility::getRecord('tx_clubdirectory_domain_model_club', $parameters['row']['club']);
@@ -32,7 +35,7 @@ class AltLabelForAddressTableUserFunc
                     '%s (%d) - %s',
                     $club['title'],
                     $club['uid'],
-                    $parameters['row']['title']
+                    $parameters['title']
                 );
             }
         }
