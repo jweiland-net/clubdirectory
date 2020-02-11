@@ -277,6 +277,11 @@ class AbstractController extends ActionController
                     /** @var PoiCollection $poiCollection */
                     $poiCollection = $poiCollectionRepository->findByIdentifier($poiCollectionUid);
                     $address->setTxMaps2Uid($poiCollection);
+                } else {
+                    foreach ($geocodeService->getErrors() as $error) {
+                        $this->addFlashMessage($error->getMessage(), $error->getTitle(), $error->getSeverity());
+                        $this->errorAction();
+                    }
                 }
             }
         }
