@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 3.0.3**
+
+- Show error, if address was not found and redirect to previous action
+
 **Version 3.0.2**
 
 - Replace ext icon and all tables icons
