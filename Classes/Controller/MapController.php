@@ -24,7 +24,7 @@ class MapController extends AbstractController
      *
      * @param int $club
      */
-    public function newAction(int $club)
+    public function newAction(int $club): void
     {
         $this->view->assign(
             'club',
@@ -35,7 +35,7 @@ class MapController extends AbstractController
     /**
      * Club is a hidden record. So register it in session object
      */
-    public function initializeCreateAction()
+    public function initializeCreateAction(): void
     {
         $this->registerClubFromRequest('club');
     }
@@ -43,7 +43,7 @@ class MapController extends AbstractController
     /**
      * @param Club $club
      */
-    public function createAction(Club $club)
+    public function createAction(Club $club): void
     {
         if ($GLOBALS['TSFE']->fe_user->user['uid']) {
             $this->sendMail('create', $club);
@@ -58,14 +58,14 @@ class MapController extends AbstractController
     /**
      * @param Club $club
      */
-    public function editAction(Club $club)
+    public function editAction(Club $club): void
     {
         $this->view->assign('club', $club);
         $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
         $this->view->assign('addressTitles', $this->getAddressTitles());
     }
 
-    public function initializeUpdateAction()
+    public function initializeUpdateAction(): void
     {
         $this->registerClubFromRequest('club');
 
@@ -92,7 +92,7 @@ class MapController extends AbstractController
     /**
      * @param Club $club
      */
-    public function updateAction(Club $club)
+    public function updateAction(Club $club): void
     {
         $this->addMapRecordIfPossible($club);
         $this->clubRepository->update($club);
@@ -104,7 +104,7 @@ class MapController extends AbstractController
     /**
      * $search isn't a domain model, so we have to do htmlspecialchars on our own.
      */
-    public function initializeSearchAction()
+    public function initializeSearchAction(): void
     {
         if ($this->request->hasArgument('search')) {
             $search = \htmlspecialchars($this->request->getArgument('search'));
@@ -115,7 +115,7 @@ class MapController extends AbstractController
     /**
      * @param string $search
      */
-    public function searchAction(string $search)
+    public function searchAction(string $search): void
     {
         $clubs = $this->clubRepository->searchClubs($search);
         $this->view->assign('search', $search);

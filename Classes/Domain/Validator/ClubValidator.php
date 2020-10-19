@@ -52,7 +52,7 @@ class ClubValidator extends AbstractValidator
      *
      * @param Club $club
      */
-    protected function removeEmptyAddresses(Club $club)
+    protected function removeEmptyAddresses(Club $club): void
     {
         foreach ($club->getAddresses() as $address) {
             if (

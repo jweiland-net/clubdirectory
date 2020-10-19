@@ -20,14 +20,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class UpdateMaps2RecordHook
 {
-    /**
-     * @param string $poiCollectionTableName
-     * @param int $poiCollectionUid
-     * @param string $foreignTableName
-     * @param array $foreignLocationRecord
-     * @param array $options
-     */
-    public function postUpdatePoiCollection(string $poiCollectionTableName, int $poiCollectionUid, string $foreignTableName, array $foreignLocationRecord, array $options)
+    public function postUpdatePoiCollection(string $poiCollectionTableName, int $poiCollectionUid, string $foreignTableName, array $foreignLocationRecord, array $options): void
     {
         // execute update only, if club column is filled. Else POI collection will be filled with title of address
         // before this SignalSlot was called.
@@ -54,12 +47,6 @@ class UpdateMaps2RecordHook
         }
     }
 
-    /**
-     * Get club (parent record of address) record
-     *
-     * @param int $clubUid
-     * @return array
-     */
     protected function getClubRecord(int $clubUid): array
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');
@@ -81,12 +68,7 @@ class UpdateMaps2RecordHook
         return $club;
     }
 
-    /**
-     * Get TYPO3s Connection Pool
-     *
-     * @return ConnectionPool
-     */
-    protected function getConnectionPool()
+    protected function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);
     }

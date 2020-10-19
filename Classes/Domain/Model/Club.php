@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -28,13 +29,13 @@ class Club extends AbstractEntity
 
     /**
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $title = '';
 
     /**
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $sortTitle = '';
 
@@ -55,7 +56,7 @@ class Club extends AbstractEntity
 
     /**
      * @var string
-     * @validate EmailAddress
+     * @Extbase\Validate("EmailAddress")
      */
     protected $email = '';
 
@@ -121,7 +122,7 @@ class Club extends AbstractEntity
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWeiland\Clubdirectory\Domain\Model\Address>
-     * @cascade remove
+     * @Extbase\ORM\Cascade("remove")
      */
     protected $addresses;
 
@@ -139,212 +140,134 @@ class Club extends AbstractEntity
         $this->categories = new ObjectStorage();
     }
 
-    /**
-     * @return bool
-     */
     public function getHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @param bool $hidden
-     */
-    public function setHidden(bool $hidden)
+    public function setHidden(bool $hidden): void
     {
         $this->hidden = $hidden;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
     public function getSortTitle(): string
     {
         return $this->sortTitle;
     }
 
-    /**
-     * @param string $sortTitle
-     */
-    public function setSortTitle(string $sortTitle)
+    public function setSortTitle(string $sortTitle): void
     {
         $this->sortTitle = $sortTitle;
     }
 
-    /**
-     * @return string
-     */
     public function getActivity(): string
     {
         return $this->activity;
     }
 
-    /**
-     * @param string $activity
-     */
-    public function setActivity(string $activity)
+    public function setActivity(string $activity): void
     {
         $this->activity = $activity;
     }
 
-    /**
-     * @return string
-     */
     public function getContactPerson(): string
     {
         return $this->contactPerson;
     }
 
-    /**
-     * @param string $contactPerson
-     */
-    public function setContactPerson(string $contactPerson)
+    public function setContactPerson(string $contactPerson): void
     {
         $this->contactPerson = $contactPerson;
     }
 
-    /**
-     * @return string
-     */
     public function getContactTimes(): string
     {
         return $this->contactTimes;
     }
 
-    /**
-     * @param string $contactTimes
-     */
-    public function setContactTimes(string $contactTimes)
+    public function setContactTimes(string $contactTimes): void
     {
         $this->contactTimes = $contactTimes;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string
-     */
     public function getWebsite(): string
     {
         return $this->website;
     }
 
-    /**
-     * @param string $website
-     */
-    public function setWebsite(string $website)
+    public function setWebsite(string $website): void
     {
         $this->website = $website;
     }
 
-    /**
-     * @return string
-     */
     public function getMembers(): string
     {
         return $this->members;
     }
 
-    /**
-     * @param string $members
-     */
-    public function setMembers(string $members)
+    public function setMembers(string $members): void
     {
         $this->members = $members;
     }
 
-    /**
-     * @return string
-     */
     public function getClubHome(): string
     {
         return $this->clubHome;
     }
 
-    /**
-     * @param string $clubHome
-     */
-    public function setClubHome(string $clubHome)
+    public function setClubHome(string $clubHome): void
     {
         $this->clubHome = $clubHome;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @param FrontendUser $feUser
-     */
-    public function addFeUser(FrontendUser $feUser)
-    {
-        $this->feUsers->attach($feUser);
-    }
-
-    /**
-     * @param FrontendUser $feUser
-     */
-    public function removeFeUser(FrontendUser $feUser)
-    {
-        $this->feUsers->detach($feUser);
-    }
-
-    /**
-     * @return ObjectStorage|\TYPO3\CMS\Extbase\Domain\Model\FrontendUser
-     */
     public function getFeUsers(): ObjectStorage
     {
         return $this->feUsers;
     }
 
-    /**
-     * @param ObjectStorage $feUsers
-     */
-    public function setFeUsers(ObjectStorage $feUsers)
+    public function setFeUsers(ObjectStorage $feUsers): void
     {
         $this->feUsers = $feUsers;
+    }
+
+    public function addFeUser(FrontendUser $feUser): void
+    {
+        $this->feUsers->attach($feUser);
+    }
+
+    public function removeFeUser(FrontendUser $feUser): void
+    {
+        $this->feUsers->detach($feUser);
     }
 
     public function getCurrentUserCanEditClub(): bool
@@ -364,18 +287,12 @@ class Club extends AbstractEntity
         return $currentUserCanEditThisClub;
     }
 
-    /**
-     * @return FileReference|null
-     */
-    public function getLogo()
+    public function getLogo(): ?FileReference
     {
         return $this->logo;
     }
 
-    /**
-     * @param FileReference $logo
-     */
-    public function setLogo(FileReference $logo = null)
+    public function setLogo(?FileReference $logo): void
     {
         $this->logo = $logo;
     }
@@ -401,106 +318,67 @@ class Club extends AbstractEntity
         return $this->images;
     }
 
-    /**
-     * @param ObjectStorage $images
-     */
-    public function setImages(ObjectStorage $images)
+    public function setImages(ObjectStorage $images): void
     {
         $this->images = $images;
     }
 
-    /**
-     * @param FileReference $image
-     */
-    public function addImage(FileReference $image)
+    public function addImage(FileReference $image): void
     {
         $this->images->attach($image);
     }
 
-    /**
-     * @param FileReference $image
-     */
-    public function removeImage(FileReference $image)
+    public function removeImage(FileReference $image): void
     {
         $this->images->detach($image);
     }
 
-    /**
-     * @return string
-     */
     public function getFacebook(): string
     {
         return $this->facebook;
     }
 
-    /**
-     * @param string $facebook
-     */
-    public function setFacebook(string $facebook)
+    public function setFacebook(string $facebook): void
     {
         $this->facebook = $facebook;
     }
 
-    /**
-     * @return string
-     */
     public function getTwitter(): string
     {
         return $this->twitter;
     }
 
-    /**
-     * @param string $twitter
-     */
-    public function setTwitter(string $twitter)
+    public function setTwitter(string $twitter): void
     {
         $this->twitter = $twitter;
     }
 
-    /**
-     * @return string
-     */
     public function getGoogle(): string
     {
         return $this->google;
     }
 
-    /**
-     * @param string $google
-     */
-    public function setGoogle(string $google)
+    public function setGoogle(string $google): void
     {
         $this->google = $google;
     }
 
-    /**
-     * @return string
-     */
     public function getTags(): string
     {
         return $this->tags;
     }
 
-    /**
-     * @param string $tags
-     */
-    public function setTags(string $tags)
+    public function setTags(string $tags): void
     {
         $this->tags = $tags;
     }
 
-    /**
-     * @return District
-     */
-    public function getDistrict()
+    public function getDistrict(): District
     {
         return $this->district;
     }
 
-    /**
-     * @param District $district
-     */
-    public function setDistrict(District $district)
+    public function setDistrict(District $district): void
     {
         $this->district = $district;
     }
@@ -525,58 +403,37 @@ class Club extends AbstractEntity
         return $this->addresses;
     }
 
-    /**
-     * @param ObjectStorage $addresses
-     */
-    public function setAddresses(ObjectStorage $addresses)
+    public function setAddresses(ObjectStorage $addresses): void
     {
         $this->addresses = $addresses;
     }
 
-    /**
-     * @param Address $address
-     */
-    public function addAddress(Address $address)
+    public function addAddress(Address $address): void
     {
         $this->addresses->attach($address);
     }
 
-    /**
-     * @param Address $address
-     */
-    public function removeAddress(Address $address)
+    public function removeAddress(Address $address): void
     {
         $this->addresses->detach($address);
     }
 
-    /**
-     * @return ObjectStorage
-     */
     public function getCategories(): ObjectStorage
     {
         return $this->categories;
     }
 
-    /**
-     * @param ObjectStorage $categories
-     */
-    public function setCategories(ObjectStorage $categories)
+    public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
     }
 
-    /**
-     * @param Category $category
-     */
-    public function addCategory(Category $category)
+    public function addCategory(Category $category): void
     {
         $this->categories->attach($category);
     }
 
-    /**
-     * @param Category $category
-     */
-    public function removeCategory(Category $category)
+    public function removeCategory(Category $category): void
     {
         $this->categories->detach($category);
     }

@@ -22,7 +22,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class ClubController extends AbstractController
 {
-    public function listAction()
+    public function listAction(): void
     {
         $this->view->assign(
             'clubs',
@@ -35,7 +35,7 @@ class ClubController extends AbstractController
         $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
 
-    public function listMyClubsAction()
+    public function listMyClubsAction(): void
     {
         $clubs = $this->clubRepository->findByFeUser((int) $GLOBALS['TSFE']->fe_user->user['uid']);
         $this->view->assign('clubs', $clubs);
@@ -48,14 +48,14 @@ class ClubController extends AbstractController
      *
      * @param int $club
      */
-    public function showAction(int $club)
+    public function showAction(int $club): void
     {
         $clubObject = $this->clubRepository->findByIdentifier($club);
         $this->view->assign('club', $clubObject);
         $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
 
-    public function newAction()
+    public function newAction(): void
     {
         $this->deleteUploadedFilesOnValidationErrors('club');
         $club = $this->objectManager->get(Club::class);
@@ -66,7 +66,7 @@ class ClubController extends AbstractController
         $this->view->assign('addressTitles', $this->getAddressTitles());
     }
 
-    public function initializeCreateAction()
+    public function initializeCreateAction(): void
     {
         $clubMappingConfiguration = $this->arguments
             ->getArgument('club')
@@ -79,7 +79,7 @@ class ClubController extends AbstractController
     /**
      * @param Club $club
      */
-    public function createAction(Club $club)
+    public function createAction(Club $club): void
     {
         if ($GLOBALS['TSFE']->fe_user->user['uid']) {
             /** @var FrontendUser $feUser */
@@ -98,7 +98,7 @@ class ClubController extends AbstractController
         }
     }
 
-    public function initializeEditAction()
+    public function initializeEditAction(): void
     {
         $this->registerClubFromRequest('club');
     }
@@ -108,7 +108,7 @@ class ClubController extends AbstractController
      *
      * @param int $club
      */
-    public function editAction(int $club)
+    public function editAction(int $club): void
     {
         /** @var Club $clubObject */
         $clubObject = $this->clubRepository->findByIdentifier($club);
@@ -118,7 +118,7 @@ class ClubController extends AbstractController
         $this->view->assign('addressTitles', $this->getAddressTitles());
     }
 
-    public function initializeUpdateAction()
+    public function initializeUpdateAction(): void
     {
         if (!$this->request->hasArgument('club')) {
             return;
@@ -141,7 +141,7 @@ class ClubController extends AbstractController
     /**
      * @param Club $club
      */
-    public function updateAction(Club $club)
+    public function updateAction(Club $club): void
     {
         $this->addMapRecordIfPossible($club);
         $this->clubRepository->update($club);
@@ -152,9 +152,9 @@ class ClubController extends AbstractController
     }
 
     /**
-     * @param Search $search
+     * @param Search|null $search
      */
-    public function searchAction(Search $search = null)
+    public function searchAction(?Search $search): void
     {
         if ($search instanceof Search) {
             $clubs = $this->clubRepository->findBySearch($search);
@@ -175,7 +175,7 @@ class ClubController extends AbstractController
     /**
      * @param int $club
      */
-    public function activateAction(int $club)
+    public function activateAction(int $club): void
     {
         /** @var Club $clubObject */
         $clubObject = $this->clubRepository->findHiddenEntryByUid($club);

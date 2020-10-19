@@ -46,12 +46,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      */
     protected $fileFactory;
 
-    /**
-     * inject fileFactory
-     *
-     * @param ResourceFactory $fileFactory
-     */
-    public function injectFileFactory(ResourceFactory $fileFactory)
+    public function injectFileFactory(ResourceFactory $fileFactory): void
     {
         $this->fileFactory = $fileFactory;
     }
@@ -217,7 +212,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      *
      * @param FileReference|null $fileReference
      */
-    protected function deleteFile(\TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference = null)
+    protected function deleteFile(\TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference = null): void
     {
         if ($fileReference !== null) {
             $fileReference = $fileReference->getOriginalResource();
@@ -241,9 +236,8 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      * @param array $source
      * @return FileReference|object
      */
-    protected function getExtbaseFileReference($source)
+    protected function getExtbaseFileReference(array $source): FileReference
     {
-        /** @var $reference \TYPO3\CMS\Extbase\Domain\Model\FileReference */
         $extbaseFileReference = $this->objectManager->get(FileReference::class);
         $extbaseFileReference->setOriginalResource($this->getCoreFileReference($source));
 

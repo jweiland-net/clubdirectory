@@ -49,98 +49,62 @@ class Search
      */
     protected $direction = QueryInterface::ORDER_ASCENDING;
 
-    /**
-     * @return string
-     */
     public function getLetter(): string
     {
         return $this->letter;
     }
 
-    /**
-     * @param string $letter
-     */
-    public function setLetter(string $letter)
+    public function setLetter(string $letter): void
     {
         $this->letter = $letter;
     }
 
-    /**
-     * @return string
-     */
     public function getSearchWord(): string
     {
         return $this->searchWord;
     }
 
-    /**
-     * @param string $searchWord
-     */
-    public function setSearchWord(string $searchWord)
+    public function setSearchWord(string $searchWord): void
     {
         $this->searchWord = $searchWord;
     }
 
-    /**
-     * @return int
-     */
     public function getCategory(): int
     {
         return $this->category;
     }
 
-    /**
-     * @param int $category
-     */
-    public function setCategory(int $category)
+    public function setCategory(int $category): void
     {
         $this->category = $category;
     }
 
-    /**
-     * @return int
-     */
     public function getSubCategory(): int
     {
         return $this->subCategory;
     }
 
-    /**
-     * @param int $subCategory
-     */
-    public function setSubCategory(int $subCategory)
+    public function setSubCategory(int $subCategory): void
     {
         $this->subCategory = $subCategory;
     }
 
-    /**
-     * @return string
-     */
     public function getOrderBy(): string
     {
         return $this->orderBy;
     }
 
-    /**
-     * @param string $orderBy
-     */
-    public function setOrderBy(string $orderBy)
+    public function setOrderBy(string $orderBy): void
     {
         $this->orderBy = $orderBy;
     }
 
-    /**
-     * @return string
-     */
     public function getDirection(): string
     {
         return $this->direction;
     }
 
-    /**
-     * @param string $direction
-     */
-    public function setDirection(string $direction)
+    public function setDirection(string $direction): void
     {
         $this->direction = $direction;
     }

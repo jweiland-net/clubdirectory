@@ -24,7 +24,7 @@ class Cities
      *
      * @param array $parentArray
      */
-    public function addCityItems(array $parentArray)
+    public function addCityItems(array $parentArray): void
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_address');
         $addresses = $queryBuilder
@@ -44,11 +44,6 @@ class Cities
         }
     }
 
-    /**
-     * Get TYPO3s Connection Pool
-     *
-     * @return ConnectionPool
-     */
     protected function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);
