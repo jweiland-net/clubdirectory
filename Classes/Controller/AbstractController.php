@@ -125,9 +125,9 @@ class AbstractController extends ActionController
      *
      * @param string $subjectKey
      * @param Club $club
-     * @return int The amount of email receivers
+     * @return bool
      */
-    public function sendMail(string $subjectKey, Club $club): int
+    public function sendMail(string $subjectKey, Club $club): bool
     {
         $this->view->assign('club', $club);
         /** @var MailMessage $mail */
@@ -135,9 +135,13 @@ class AbstractController extends ActionController
         $mail->setFrom($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName());
         $mail->setTo($this->extConf->getEmailToAddress(), $this->extConf->getEmailToName());
         $mail->setSubject(LocalizationUtility::translate('email.subject.' . $subjectKey, 'clubdirectory'));
-        $mail->setBody($this->view->render(), 'text/html');
+        if (version_compare(TYPO3_branch, '10.0', '>=')) {
+            $mail->html($this->view->render());
+        } else {
+            $mail->setBody($this->view->render(), 'text/html');
+        }
 
-        return $mail->send();
+        return (bool)$mail->send();
     }
 
     /**
