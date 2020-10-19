@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Model;
 
 use JWeiland\Maps2\Domain\Model\PoiCollection;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
@@ -21,7 +22,7 @@ class Address extends AbstractEntity
 {
     /**
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $title = 'organizationAddress';
 
@@ -38,6 +39,7 @@ class Address extends AbstractEntity
     /**
      * @var string
      * @validate RegularExpression(regularExpression='/^[0-9]{4,5}$/')
+     * @Extbase\Validate("RegularExpression", options={"regularExpression": "/^[0-9]{4,5}$/"})
      */
     protected $zip = '';
 
@@ -63,150 +65,96 @@ class Address extends AbstractEntity
 
     /**
      * @var \JWeiland\Maps2\Domain\Model\PoiCollection
-     * @cascade remove
+     * @Extbase\ORM\Cascade("remove")
      */
     protected $txMaps2Uid;
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
     public function getStreet(): string
     {
         return $this->street;
     }
 
-    /**
-     * @param string $street
-     */
-    public function setStreet(string $street)
+    public function setStreet(string $street): void
     {
         $this->street = $street;
     }
 
-    /**
-     * @return string
-     */
     public function getHouseNumber(): string
     {
         return $this->houseNumber;
     }
 
-    /**
-     * @param string $houseNumber
-     */
-    public function setHouseNumber(string $houseNumber)
+    public function setHouseNumber(string $houseNumber): void
     {
         $this->houseNumber = $houseNumber;
     }
 
-    /**
-     * @return string
-     */
     public function getZip(): string
     {
         return $this->zip;
     }
 
-    /**
-     * @param string $zip
-     */
-    public function setZip(string $zip)
+    public function setZip(string $zip): void
     {
         $this->zip = $zip;
     }
 
-    /**
-     * @return string
-     */
     public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * @param string $city
-     */
-    public function setCity(string $city)
+    public function setCity(string $city): void
     {
-        $this->city = (string) $city;
+        $this->city = $city;
     }
 
-    /**
-     * @return string
-     */
     public function getTelephone(): string
     {
         return $this->telephone;
     }
 
-    /**
-     * @param string $telephone
-     */
-    public function setTelephone(string $telephone)
+    public function setTelephone(string $telephone): void
     {
         $this->telephone = $telephone;
     }
 
-    /**
-     * @return string $fax
-     */
     public function getFax(): string
     {
         return $this->fax;
     }
 
-    /**
-     * @param string $fax
-     */
-    public function setFax(string $fax)
+    public function setFax(string $fax): void
     {
         $this->fax = $fax;
     }
 
-    /**
-     * @return bool
-     */
     public function getBarrierFree(): bool
     {
         return $this->barrierFree;
     }
 
-    /**
-     * @param bool $barrierFree
-     */
-    public function setBarrierFree(bool $barrierFree)
+    public function setBarrierFree(bool $barrierFree): void
     {
         $this->barrierFree = $barrierFree;
     }
 
-    /**
-     * @return PoiCollection|null
-     */
-    public function getTxMaps2Uid()
+    public function getTxMaps2Uid(): ?PoiCollection
     {
         return $this->txMaps2Uid;
     }
 
-    /**
-     * @param PoiCollection $txMaps2Uid
-     */
-    public function setTxMaps2Uid(PoiCollection $txMaps2Uid = null)
+    public function setTxMaps2Uid(?PoiCollection $txMaps2Uid): void
     {
         $this->txMaps2Uid = $txMaps2Uid;
     }

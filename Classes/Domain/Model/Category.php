@@ -25,21 +25,13 @@ class Category extends \TYPO3\CMS\Extbase\Domain\Model\Category
      */
     protected $icon = '';
 
-    /**
-     * @return string
-     */
-    public function getIcon()
+    public function getIcon(): string
     {
         return $this->icon;
     }
 
-    /**
-     * Sets the icon
-     *
-     * @param string $icon
-     */
-    public function setIcon($icon)
+    public function setIcon(string $icon)
     {
-        $this->icon = (string)$icon;
+        $this->icon = $icon;
     }
 }

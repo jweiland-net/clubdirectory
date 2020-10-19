@@ -203,11 +203,6 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
         ];
     }
 
-    /**
-     * Get TYPO3s Connection Pool
-     *
-     * @return ConnectionPool
-     */
     protected function getConnectionPool(): ConnectionPool
     {
         return GeneralUtility::makeInstance(ConnectionPool::class);

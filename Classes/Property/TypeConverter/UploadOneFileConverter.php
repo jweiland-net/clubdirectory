@@ -45,10 +45,7 @@ class UploadOneFileConverter extends AbstractTypeConverter
      */
     protected $fileFactory;
 
-    /**
-     * @param ResourceFactory $fileFactory
-     */
-    public function injectFileFactory(ResourceFactory $fileFactory)
+    public function injectFileFactory(ResourceFactory $fileFactory): void
     {
         $this->fileFactory = $fileFactory;
     }
@@ -165,7 +162,7 @@ class UploadOneFileConverter extends AbstractTypeConverter
      *
      * @param FileReference|null $fileReference
      */
-    protected function deleteFile(\TYPO3\CMS\Extbase\Domain\Model\FileReference $fileReference = null)
+    protected function deleteFile(?FileReference $fileReference)
     {
         if ($fileReference !== null) {
             $fileReference = $fileReference->getOriginalResource();
@@ -187,11 +184,10 @@ class UploadOneFileConverter extends AbstractTypeConverter
      * upload file and get a file reference object.
      *
      * @param array  $source
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference|object
+     * @return FileReference
      */
-    protected function getExtbaseFileReference($source)
+    protected function getExtbaseFileReference(array $source): FileReference
     {
-        /** @var $reference \TYPO3\CMS\Extbase\Domain\Model\FileReference */
         $extbaseFileReference = $this->objectManager->get(FileReference::class);
         $extbaseFileReference->setOriginalResource($this->getCoreFileReference($source));
 

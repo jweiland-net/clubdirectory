@@ -40,15 +40,12 @@ class ExportController extends ActionController
      */
     protected $clubRepository;
 
-    /**
-     * @param ClubRepository $clubRepository
-     */
-    public function injectClubRepository(ClubRepository $clubRepository)
+    public function injectClubRepository(ClubRepository $clubRepository): void
     {
         $this->clubRepository = $clubRepository;
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->createDirectoryStructure();
         $this->removePreviousExports();
@@ -64,7 +61,7 @@ class ExportController extends ActionController
     /**
      * check directory and create directory structure if not already created.
      */
-    protected function createDirectoryStructure()
+    protected function createDirectoryStructure(): void
     {
         if (!\is_dir(PATH_site . $this->exportPath)) {
             GeneralUtility::mkdir_deep(PATH_site . $this->exportPath);
@@ -74,7 +71,7 @@ class ExportController extends ActionController
     /**
      * Remove previously created exports.
      */
-    protected function removePreviousExports()
+    protected function removePreviousExports(): void
     {
         $exportFile = PATH_site . $this->exportPath . $this->exportFile;
         if (\is_file($exportFile)) {

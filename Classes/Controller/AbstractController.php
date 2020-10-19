@@ -70,50 +70,32 @@ class AbstractController extends ActionController
      */
     protected $letters = '0-9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
 
-    /**
-     * @param ClubRepository $clubRepository
-     */
-    public function injectClubRepository(ClubRepository $clubRepository)
+    public function injectClubRepository(ClubRepository $clubRepository): void
     {
         $this->clubRepository = $clubRepository;
     }
 
-    /**
-     * @param FrontendUserRepository $feUserRepository
-     */
-    public function injectFeUserRepository(FrontendUserRepository $feUserRepository)
+    public function injectFeUserRepository(FrontendUserRepository $feUserRepository): void
     {
         $this->feUserRepository = $feUserRepository;
     }
 
-    /**
-     * @param CategoryRepository $categoryRepository
-     */
-    public function injectCategoryRepository(CategoryRepository $categoryRepository)
+    public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {
         $this->categoryRepository = $categoryRepository;
     }
 
-    /**
-     * @param Session $session
-     */
-    public function injectSession(Session $session)
+    public function injectSession(Session $session): void
     {
         $this->session = $session;
     }
 
-    /**
-     * @param ExtConf $extConf
-     */
-    public function injectExtConf(ExtConf $extConf)
+    public function injectExtConf(ExtConf $extConf): void
     {
         $this->extConf = $extConf;
     }
 
-    /**
-     * Pre processing of all actions.
-     */
-    public function initializeAction()
+    public function initializeAction(): void
     {
         // if this value was not set, then it will be filled with 0
         // but that is not good, because UriBuilder accepts 0 as pid, so it's better to set it to NULL
@@ -132,18 +114,10 @@ class AbstractController extends ActionController
         }
     }
 
-    /**
-     * Initializes the view before invoking an action method.
-     *
-     * Override this method to solve assign variables common for all actions
-     * or prepare the view in another way before the action is called.
-     *
-     * @param ViewInterface $view The view to be initialized
-     */
-    protected function initializeView(ViewInterface $view)
+    protected function initializeView(ViewInterface $view): void
     {
-        $this->view->assign('data', $this->configurationManager->getContentObject()->data);
-        $this->view->assign('extConf', $this->extConf);
+        $view->assign('data', $this->configurationManager->getContentObject()->data);
+        $view->assign('extConf', $this->extConf);
     }
 
     /**
@@ -205,7 +179,7 @@ class AbstractController extends ActionController
      *
      * @param string $argumentName
      */
-    protected function registerClubFromRequest(string $argumentName)
+    protected function registerClubFromRequest(string $argumentName): void
     {
         $argument = $this->request->getArgument($argumentName);
         if (\is_array($argument)) {
@@ -248,7 +222,7 @@ class AbstractController extends ActionController
      *
      * @param Club $club
      */
-    protected function addMapRecordIfPossible(Club $club)
+    protected function addMapRecordIfPossible(Club $club): void
     {
         $geocodeService = GeneralUtility::makeInstance(GeoCodeService::class);
         $mapService = GeneralUtility::makeInstance(MapService::class);
@@ -294,7 +268,7 @@ class AbstractController extends ActionController
         string $property,
         MvcPropertyMappingConfiguration $propertyMappingConfigurationForClub,
         $converterOptionValue = null
-    ) {
+    ): void {
         if ($property === 'logo') {
             $className = UploadOneFileConverter::class;
             $converterOptionName = 'IMAGE';
@@ -329,7 +303,7 @@ class AbstractController extends ActionController
      * @param string $property
      * @param array $requestArgument
      */
-    protected function removeEmptyPropertyFromRequest(string $property, array &$requestArgument)
+    protected function removeEmptyPropertyFromRequest(string $property, array &$requestArgument): void
     {
         if (empty($requestArgument[$property])) {
             unset($requestArgument[$property]);
@@ -346,7 +320,7 @@ class AbstractController extends ActionController
      *
      * @param Club $club
      */
-    protected function fillAddressesUpToMaximum(Club $club)
+    protected function fillAddressesUpToMaximum(Club $club): void
     {
         for ($i = \count($club->getAddresses()); $i < 3; ++$i) {
             $club->addAddress(GeneralUtility::makeInstance(Address::class));
@@ -359,7 +333,7 @@ class AbstractController extends ActionController
      *
      * @param array $requestArgument
      */
-    protected function removeEmptyAddressesFromRequest(array &$requestArgument)
+    protected function removeEmptyAddressesFromRequest(array &$requestArgument): void
     {
         if (isset($requestArgument['addresses']) && is_array($requestArgument['addresses'])) {
             foreach ($requestArgument['addresses'] as $key => $address) {
@@ -386,7 +360,7 @@ class AbstractController extends ActionController
      *
      * @param string $argument
      */
-    protected function deleteUploadedFilesOnValidationErrors(string $argument)
+    protected function deleteUploadedFilesOnValidationErrors(string $argument): void
     {
         if ($this->getControllerContext()->getRequest()->hasArgument($argument)) {
             /** @var Club $club */

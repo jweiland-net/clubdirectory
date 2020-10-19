@@ -11,7 +11,9 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Configuration;
 
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class, which contains the configuration from ExtensionManager
@@ -61,24 +63,18 @@ class ExtConf implements SingletonInterface
     public function __construct()
     {
         // get global configuration
-        $extConf = unserialize(
-            $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['clubdirectory'],
-            ['allowed_classes' => false]
-        );
+        $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('clubdirectory');
         if (is_array($extConf) && count($extConf)) {
             // call setter method foreach configuration entry
             foreach ($extConf as $key => $value) {
                 $methodName = 'set' . ucfirst($key);
                 if (method_exists($this, $methodName)) {
-                    $this->$methodName($value);
+                    $this->$methodName((string)$value);
                 }
             }
         }
     }
 
-    /**
-     * @return string
-     */
     public function getFallbackIconPath(): string
     {
         if (!$this->fallbackIconPath) {
@@ -87,66 +83,41 @@ class ExtConf implements SingletonInterface
         return $this->fallbackIconPath;
     }
 
-    /**
-     * @param string $fallbackIconPath
-     */
-    public function setFallbackIconPath(string $fallbackIconPath)
+    public function setFallbackIconPath(string $fallbackIconPath): void
     {
         $this->fallbackIconPath = $fallbackIconPath;
     }
 
-    /**
-     * @return int
-     */
     public function getUserGroup(): int
     {
         return $this->userGroup;
     }
 
-    /**
-     * @param int $userGroup
-     */
-    public function setUserGroup($userGroup)
+    public function setUserGroup(string $userGroup): void
     {
         $this->userGroup = (int)$userGroup;
     }
 
-    /**
-     * @return int
-     */
     public function getPoiCollectionPid(): int
     {
         return $this->poiCollectionPid;
     }
 
-    /**
-     * @param int $poiCollectionPid
-     */
-    public function setPoiCollectionPid($poiCollectionPid)
+    public function setPoiCollectionPid(string $poiCollectionPid): void
     {
         $this->poiCollectionPid = (int)$poiCollectionPid;
     }
 
-    /**
-     * @return int
-     */
     public function getRootCategory(): int
     {
         return $this->rootCategory;
     }
 
-    /**
-     * @param int $rootCategory
-     */
-    public function setRootCategory($rootCategory)
+    public function setRootCategory(string $rootCategory): void
     {
         $this->rootCategory = (int)$rootCategory;
     }
 
-    /**
-     * @return string
-     * @throws \Exception
-     */
     public function getEmailFromAddress(): string
     {
         if (empty($this->emailFromAddress)) {
@@ -163,18 +134,11 @@ class ExtConf implements SingletonInterface
         }
     }
 
-    /**
-     * @param string $emailFromAddress
-     */
-    public function setEmailFromAddress(string $emailFromAddress)
+    public function setEmailFromAddress(string $emailFromAddress): void
     {
         $this->emailFromAddress = $emailFromAddress;
     }
 
-    /**
-     * @return string
-     * @throws \Exception
-     */
     public function getEmailFromName(): string
     {
         if (empty($this->emailFromName)) {
@@ -189,43 +153,28 @@ class ExtConf implements SingletonInterface
         }
     }
 
-    /**
-     * @param string $emailFromName
-     */
-    public function setEmailFromName(string $emailFromName)
+    public function setEmailFromName(string $emailFromName): void
     {
         $this->emailFromName = $emailFromName;
     }
 
-    /**
-     * @return string
-     */
     public function getEmailToAddress(): string
     {
         return $this->emailToAddress;
     }
 
-    /**
-     * @param string $emailToAddress
-     */
     public function setEmailToAddress(string $emailToAddress)
     {
         $this->emailToAddress = $emailToAddress;
     }
 
-    /**
-     * @return string
-     */
     public function getEmailToName(): string
     {
         return $this->emailToName;
     }
 
-    /**
-     * @param string $emailToName
-     */
     public function setEmailToName(string $emailToName)
     {
-        $this->emailToName = (string)$emailToName;
+        $this->emailToName = $emailToName;
     }
 }

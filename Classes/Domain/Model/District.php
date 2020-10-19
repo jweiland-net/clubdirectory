@@ -20,22 +20,16 @@ class District extends AbstractEntity
 {
     /**
      * @var string
-     * @validate NotEmpty
+     * @Extbase\Validate("NotEmpty")
      */
     protected $district = '';
 
-    /**
-     * @return string $district
-     */
     public function getDistrict(): string
     {
         return $this->district;
     }
 
-    /**
-     * @param string $district
-     */
-    public function setDistrict(string $district)
+    public function setDistrict(string $district): void
     {
         $this->district = $district;
     }

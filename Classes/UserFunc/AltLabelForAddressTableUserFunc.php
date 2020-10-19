@@ -18,7 +18,7 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
  */
 class AltLabelForAddressTableUserFunc
 {
-    public function setAddressLabel(array &$parameters = [])
+    public function setAddressLabel(array &$parameters = []): void
     {
         // Set title as a fallback. It was cleared by TYPO3 just before this UserFunc was called.
         $parameters['title'] = is_array($parameters['row']['title']) ? $parameters['row']['title'][0] : $parameters['row']['title'];
