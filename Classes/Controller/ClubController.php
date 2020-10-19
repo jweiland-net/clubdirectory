@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -78,6 +79,7 @@ class ClubController extends AbstractController
 
     /**
      * @param Club $club
+     * @Extbase\Validate(param="club", validator="JWeiland\Clubdirectory\Domain\Validator\ClubValidator")
      */
     public function createAction(Club $club): void
     {
@@ -140,6 +142,7 @@ class ClubController extends AbstractController
 
     /**
      * @param Club $club
+     * @Extbase\Validate(param="club", validator="JWeiland\Clubdirectory\Domain\Validator\ClubValidator")
      */
     public function updateAction(Club $club): void
     {
