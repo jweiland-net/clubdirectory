@@ -15,6 +15,7 @@
 							<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:showGlossar</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>1</default>
 							</config>
 						</TCEforms>
@@ -24,6 +25,7 @@
 							<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:showAllLink</label>
 							<config>
 								<type>check</type>
+								<renderType>checkboxToggle</renderType>
 								<default>1</default>
 							</config>
 						</TCEforms>
@@ -31,8 +33,10 @@
 					<settings.category>
 						<TCEforms>
 							<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:category</label>
+							<description>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:category.description</description>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<foreign_table>sys_category</foreign_table>
 								<foreign_table_where>AND parent=###PAGE_TSCONFIG_ID### ORDER BY title</foreign_table_where>
 								<items type="array">
@@ -52,6 +56,7 @@
 							<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:district</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<foreign_table>tx_clubdirectory_domain_model_district</foreign_table>
 								<foreign_table_where>AND tx_clubdirectory_domain_model_district.district != "" ORDER BY district</foreign_table_where>
 								<items type="array">

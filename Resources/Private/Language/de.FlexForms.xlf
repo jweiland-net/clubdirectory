@@ -16,8 +16,12 @@
 				<target>Füge ALL Link ein</target>
 			</trans-unit>
 			<trans-unit id="category">
-				<source>Category: You can reduce categories with pageTSconfig: TCEFORM.tt_content.pi_flexform.PAGE_TSCONFIG_ID = xy</source>
-				<target>Kategorie: Sie können in pageTSconfig mit TCEFORM.tt_content.pi_flexform.PAGE_TSCONFIG_ID = xy eine übergeordnete Kategorie setzen, um diese Auflistung zu reduzieren.</target>
+				<source>Category</source>
+				<target>Kategorie</target>
+			</trans-unit>
+			<trans-unit id="category.description">
+				<source>You can reduce categories with pageTSconfig: TCEFORM.tt_content.pi_flexform.PAGE_TSCONFIG_ID = xy</source>
+				<target>Sie können in pageTSconfig mit TCEFORM.tt_content.pi_flexform.PAGE_TSCONFIG_ID = xy eine übergeordnete Kategorie setzen, um diese Auflistung zu reduzieren.</target>
 			</trans-unit>
 			<trans-unit id="allCategories">
 				<source>Show all categories</source>

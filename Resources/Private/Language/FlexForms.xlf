@@ -13,7 +13,10 @@
 				<source>Add ALL Link</source>
 			</trans-unit>
 			<trans-unit id="category">
-				<source>Category: You can reduce categories with pageTSconfig: TCEFORM.tt_content.pi_flexform.PAGE_TSCONFIG_ID = xy</source>
+				<source>Category</source>
+			</trans-unit>
+			<trans-unit id="category.description">
+				<source>You can reduce categories with pageTSconfig: TCEFORM.tt_content.pi_flexform.PAGE_TSCONFIG_ID = xy</source>
 			</trans-unit>
 			<trans-unit id="allCategories">
 				<source>Show all categories</source>
