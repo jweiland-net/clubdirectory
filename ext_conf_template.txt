@@ -1,5 +1,3 @@
-# cat=basic; type=string; label = LLL:EXT:clubdirectory/Resources/Private/Language/ExtConf.xlf:fallbackIconPath
-fallbackIconPath =
 # cat=basic; type=int+; label = LLL:EXT:clubdirectory/Resources/Private/Language/ExtConf.xlf:userGroup
 userGroup = 0
 # cat=basic; type=int+; label = LLL:EXT:clubdirectory/Resources/Private/Language/ExtConf.xlf:poiCollectionPid

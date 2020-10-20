@@ -19,7 +19,7 @@
 			<f:widget.paginate objects="{clubs}"
 												 as="paginatedClubs"
 												 configuration="{addQueryStringMethod: 'POST,GET', itemsPerPage: settings.pageBrowser.itemsPerPage, insertAbove: settings.pageBrowser.insertAbove, insertBelow: settings.pageBrowser.insertBelow, maximumNumberOfLinks: settings.pageBrowser.maximumNumberOfLinks}">
-				<f:render partial="Club/List" arguments="{fallbackIconPath: fallbackIconPath, clubs: paginatedClubs}" />
+				<f:render partial="Club/List" arguments="{clubs: paginatedClubs}" />
 			</f:widget.paginate>
 		</f:then>
 		<f:else>
