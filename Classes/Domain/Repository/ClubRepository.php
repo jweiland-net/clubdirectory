@@ -95,9 +95,8 @@ class ClubRepository extends Repository
 
         if (!empty($constraints)) {
             return $query->matching($query->logicalAnd($constraints))->execute();
-        } else {
-            return $query->execute();
         }
+        return $query->execute();
     }
 
     public function findByCategory(int $category, int $district = 0): QueryResultInterface
@@ -250,7 +249,7 @@ class ClubRepository extends Repository
         $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
 
         /** @var Club $club */
-        $club = $query->matching($query->equals('uid', (int) $clubUid))->execute()->getFirst();
+        $club = $query->matching($query->equals('uid', $clubUid))->execute()->getFirst();
         return $club;
     }
 

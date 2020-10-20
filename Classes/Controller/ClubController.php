@@ -38,7 +38,7 @@ class ClubController extends AbstractController
 
     public function listMyClubsAction(): void
     {
-        $clubs = $this->clubRepository->findByFeUser((int) $GLOBALS['TSFE']->fe_user->user['uid']);
+        $clubs = $this->clubRepository->findByFeUser((int)$GLOBALS['TSFE']->fe_user->user['uid']);
         $this->view->assign('clubs', $clubs);
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
         $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());

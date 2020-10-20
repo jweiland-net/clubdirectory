@@ -37,7 +37,7 @@ class DistrictTest extends UnitTestCase
      */
     public function getDistrictInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getDistrict()
         );
@@ -50,7 +50,7 @@ class DistrictTest extends UnitTestCase
     {
         $this->subject->setDistrict('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getDistrict()
         );
@@ -62,7 +62,7 @@ class DistrictTest extends UnitTestCase
     public function setDistrictWithIntegerResultsInString()
     {
         $this->subject->setDistrict(123);
-        $this->assertSame('123', $this->subject->getDistrict());
+        self::assertSame('123', $this->subject->getDistrict());
     }
 
     /**
@@ -71,6 +71,6 @@ class DistrictTest extends UnitTestCase
     public function setDistrictWithBooleanResultsInString()
     {
         $this->subject->setDistrict(true);
-        $this->assertSame('1', $this->subject->getDistrict());
+        self::assertSame('1', $this->subject->getDistrict());
     }
 }
