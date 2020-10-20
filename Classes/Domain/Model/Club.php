@@ -128,7 +128,7 @@ class Club extends AbstractEntity
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWeiland\Clubdirectory\Domain\Model\Category>
-     * @lazy
+     * @Extbase\ORM\Lazy
      */
     protected $categories;
 
