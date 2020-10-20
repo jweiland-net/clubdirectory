@@ -171,7 +171,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         // I will do two foreach here. First: everything must be OK, before files will be uploaded
 
         // upload file and add it to ObjectStorage
-        /** @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage $references */
         $references = $this->objectManager->get(ObjectStorage::class);
         foreach ($source as $uploadedFile) {
             if ($uploadedFile instanceof FileReference) {
