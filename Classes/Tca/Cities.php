@@ -27,15 +27,14 @@ class Cities
     public function addCityItems(array $parentArray): void
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_address');
-        $addresses = $queryBuilder
+        $statement = $queryBuilder
             ->select('city')
             ->from('tx_clubdirectory_domain_model_address')
             ->groupBy('city')
             ->orderBy('city', 'ASC')
-            ->execute()
-            ->fetchAll();
+            ->execute();
 
-        foreach ($addresses as $address) {
+        while ($address = $statement->fetch()) {
             $item = [];
             $item[0] = $address['city'];
             $item[1] = $address['city'];
