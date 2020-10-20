@@ -38,7 +38,6 @@ class Address extends AbstractEntity
 
     /**
      * @var string
-     * @validate RegularExpression(regularExpression='/^[0-9]{4,5}$/')
      * @Extbase\Validate("RegularExpression", options={"regularExpression": "/^[0-9]{4,5}$/"})
      */
     protected $zip = '';
