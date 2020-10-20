@@ -70,8 +70,8 @@ class ClubController extends AbstractController
             ->getArgument('club')
             ->getPropertyMappingConfiguration();
 
-        $this->assignMediaTypeConverter('logo', $clubMappingConfiguration);
-        $this->assignMediaTypeConverter('images', $clubMappingConfiguration);
+        $this->assignMediaTypeConverter('logo', $clubMappingConfiguration, null);
+        $this->assignMediaTypeConverter('images', $clubMappingConfiguration, null);
     }
 
     /**
