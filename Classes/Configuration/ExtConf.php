@@ -138,10 +138,13 @@ class ExtConf implements SingletonInterface
 
     public function getEmailToAddress(): string
     {
+        if (empty($this->emailToAddress)) {
+            throw new \Exception('You have forgotten to set a receiver email address in extension configuration of clubdirectory');
+        }
         return $this->emailToAddress;
     }
 
-    public function setEmailToAddress(string $emailToAddress)
+    public function setEmailToAddress(string $emailToAddress): void
     {
         $this->emailToAddress = $emailToAddress;
     }
@@ -151,7 +154,7 @@ class ExtConf implements SingletonInterface
         return $this->emailToName;
     }
 
-    public function setEmailToName(string $emailToName)
+    public function setEmailToName(string $emailToName): void
     {
         $this->emailToName = $emailToName;
     }

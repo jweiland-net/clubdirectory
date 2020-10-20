@@ -52,6 +52,9 @@ plugin.tx_clubdirectory {
         maxHeight = 280
       }
     }
+    new {
+      uploadFolder = 1:user_upload/tx_clubdirectory/
+    }
     pageBrowser {
       itemsPerPage = {$plugin.tx_clubdirectory.settings.pageBrowser.itemsPerPage}
       insertAbove = {$plugin.tx_clubdirectory.settings.pageBrowser.insertAbove}

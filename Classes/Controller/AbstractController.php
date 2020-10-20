@@ -271,7 +271,7 @@ class AbstractController extends ActionController
     protected function assignMediaTypeConverter(
         string $property,
         MvcPropertyMappingConfiguration $propertyMappingConfigurationForClub,
-        $converterOptionValue = null
+        $converterOptionValue
     ): void {
         if ($property === 'logo') {
             $className = UploadOneFileConverter::class;
@@ -288,6 +288,12 @@ class AbstractController extends ActionController
         $propertyMappingConfigurationForMediaFiles = $propertyMappingConfigurationForClub
             ->forProperty($property)
             ->setTypeConverter($typeConverter);
+
+        $propertyMappingConfigurationForMediaFiles->setTypeConverterOption(
+            $className,
+            'settings',
+            $this->settings
+        );
 
         if (!empty($converterOptionValue)) {
             // Do not use setTypeConverterOptions() as this will remove all existing options

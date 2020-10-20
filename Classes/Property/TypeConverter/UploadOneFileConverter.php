@@ -11,17 +11,20 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Property\TypeConverter;
 
+use TYPO3\CMS\Core\Resource\DuplicationBehavior;
+use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Error\Error;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
-/**
- * Converter to upload one single images for one property
+/*
+ * A for PropertyMapper to convert one file upload into an array
  */
 class UploadOneFileConverter extends AbstractTypeConverter
 {
@@ -41,22 +44,43 @@ class UploadOneFileConverter extends AbstractTypeConverter
     protected $priority = 2;
 
     /**
-     * @var ResourceFactory
+     * @var PropertyMappingConfigurationInterface
      */
-    protected $resourceFactory;
+    protected $converterConfiguration = [];
 
-    public function __construct(ResourceFactory $resourceFactory)
+    /**
+     * This implementation always returns TRUE for this method.
+     *
+     * @param mixed  $source     the source data
+     * @param string $targetType the type to convert to.
+     * @return bool true if this TypeConverter can convert from $source to $targetType, FALSE otherwise.
+     */
+    public function canConvertFrom($source, string $targetType): bool
     {
-        $this->resourceFactory = $resourceFactory;
+        // check if $source consists of uploaded files
+        foreach ($source as $uploadedFile) {
+            if (!isset(
+                $uploadedFile['error'],
+                $uploadedFile['name'],
+                $uploadedFile['size'],
+                $uploadedFile['tmp_name'],
+                $uploadedFile['type']
+            )) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function convertFrom(
         $source,
-        $targetType,
+        string $targetType,
         array $convertedChildProperties = [],
         PropertyMappingConfigurationInterface $configuration = null
     ) {
         $alreadyPersistedImage = null;
+        $this->converterConfiguration = $configuration;
 
         if ($configuration) {
             /** @var FileReference $alreadyPersistedImage */
@@ -84,13 +108,9 @@ class UploadOneFileConverter extends AbstractTypeConverter
                 1396957314
             );
         }
-        // now we have a valid uploaded file. Check if user has rights to upload this file
-        if (!isset($source['rights']) || empty($source['rights'])) {
-            return new Error(
-                LocalizationUtility::translate('error.uploadRights', 'clubdirectory'),
-                1397464390
-            );
-        }
+
+        // ToDo: Add rights check
+
         // check if file extension is allowed
         $fileParts = GeneralUtility::split_fileref($source['name']);
         if (!GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], $fileParts['fileext'])) {
@@ -159,38 +179,54 @@ class UploadOneFileConverter extends AbstractTypeConverter
     /**
      * upload file and get a file reference object.
      *
-     * @param array  $source
+     * @param array $source
      * @return FileReference
      */
     protected function getExtbaseFileReference(array $source): FileReference
     {
-        $extbaseFileReference = $this->objectManager->get(FileReference::class);
+        $extbaseFileReference = GeneralUtility::makeInstance(FileReference::class);
         $extbaseFileReference->setOriginalResource($this->getCoreFileReference($source));
 
         return $extbaseFileReference;
     }
 
     /**
-     * upload file and get a file reference object.
+     * Upload file and get a file reference object.
      *
      * @param array $source
      * @return \TYPO3\CMS\Core\Resource\FileReference
      */
     protected function getCoreFileReference(array $source): \TYPO3\CMS\Core\Resource\FileReference
     {
-        // Upload file
-        $uploadFolder = $this->resourceFactory->retrieveFileOrFolderObject('uploads/tx_clubdirectory/');
-        $uploadedFile = $uploadFolder->addUploadedFile(
-            $source,
-            \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME
-        );
+        $settings = $this->converterConfiguration->getConfigurationValue(
+            self::class,
+            'settings'
+        ) ?? [];
 
-        // Create Core FileReference
-        return $this->resourceFactory->createFileReferenceObject(
+        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
+        $uploadFolderIdentifier = $settings['new']['uploadFolder'] ?? '';
+
+        try {
+            $uploadFolder = $resourceFactory->getFolderObjectFromCombinedIdentifier($uploadFolderIdentifier);
+        } catch (FolderDoesNotExistException $e) {
+            [$storageUid, $identifier] = GeneralUtility::trimExplode(':', $uploadFolderIdentifier);
+            try {
+                $storage = $resourceFactory->getStorageObject($storageUid);
+            } catch (\InvalidArgumentException $e) {
+                $storage = $resourceFactory->getDefaultStorage();
+                $identifier = $uploadFolderIdentifier;
+            }
+            $uploadFolder = $storage->createFolder($identifier);
+        }
+
+        $uploadedFile = $uploadFolder->addUploadedFile($source, DuplicationBehavior::RENAME);
+
+        // create Core FileReference
+        return $resourceFactory->createFileReferenceObject(
             [
                 'uid_local' => $uploadedFile->getUid(),
-                'uid_foreign' => \uniqid('NEW_', true),
-                'uid' => \uniqid('NEW_', true)
+                'uid_foreign' => uniqid('NEW_'),
+                'uid' => uniqid('NEW_'),
             ]
         );
     }
