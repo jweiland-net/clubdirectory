@@ -373,7 +373,7 @@ class Club extends AbstractEntity
         $this->tags = $tags;
     }
 
-    public function getDistrict(): District
+    public function getDistrict(): ?District
     {
         return $this->district;
     }

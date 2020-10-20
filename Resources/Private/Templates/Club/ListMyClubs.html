@@ -12,7 +12,7 @@
 
 	<f:if condition="{clubs}">
 		<f:then>
-			<f:render partial="Club/List" arguments="{fallbackIconPath: fallbackIconPath, clubs: clubs}" />
+			<f:render partial="Club/List" arguments="{clubs: clubs}" />
 		</f:then>
 		<f:else>
 			<div class="noResults">{f:translate(key: "noResults")}</div>

@@ -21,11 +21,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ExtConf implements SingletonInterface
 {
     /**
-     * @var string
-     */
-    protected $fallbackIconPath = '';
-
-    /**
      * @var int
      */
     protected $userGroup = 0;
@@ -73,19 +68,6 @@ class ExtConf implements SingletonInterface
                 }
             }
         }
-    }
-
-    public function getFallbackIconPath(): string
-    {
-        if (!$this->fallbackIconPath) {
-            $this->fallbackIconPath = '/uploads/tx_clubdirectory/';
-        }
-        return $this->fallbackIconPath;
-    }
-
-    public function setFallbackIconPath(string $fallbackIconPath): void
-    {
-        $this->fallbackIconPath = $fallbackIconPath;
     }
 
     public function getUserGroup(): int

@@ -4,9 +4,6 @@
 		<header/>
 		<body>
 
-			<trans-unit id="fallbackIconPath" xml:space="preserve">
-				<source>Fallback icon path (Must exists and end with /"</source>
-			</trans-unit>
 			<trans-unit id="userGroup" xml:space="preserve">
 				<source>Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</source>
 			</trans-unit>

@@ -33,7 +33,6 @@ class ClubController extends AbstractController
         $this->view->assign('search', $this->objectManager->get(Search::class));
         $this->view->assign('glossar', $this->getGlossar());
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
-        $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
 
     public function listMyClubsAction(): void
@@ -41,7 +40,6 @@ class ClubController extends AbstractController
         $clubs = $this->clubRepository->findByFeUser((int)$GLOBALS['TSFE']->fe_user->user['uid']);
         $this->view->assign('clubs', $clubs);
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
-        $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
 
     /**
@@ -53,7 +51,6 @@ class ClubController extends AbstractController
     {
         $clubObject = $this->clubRepository->findByIdentifier($club);
         $this->view->assign('club', $clubObject);
-        $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
 
     public function newAction(): void
@@ -172,7 +169,6 @@ class ClubController extends AbstractController
         $this->view->assign('search', $search);
         $this->view->assign('glossar', $this->getGlossar());
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
-        $this->view->assign('fallbackIconPath', $this->extConf->getFallbackIconPath());
     }
 
     /**
