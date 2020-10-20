@@ -126,12 +126,10 @@ class ExtConf implements SingletonInterface
                 throw new \Exception(
                     'You have forgotten to set a sender email address in extension configuration or in install tool'
                 );
-            } else {
-                return $senderMail;
             }
-        } else {
-            return $this->emailFromAddress;
+            return $senderMail;
         }
+        return $this->emailFromAddress;
     }
 
     public function setEmailFromAddress(string $emailFromAddress): void
@@ -145,12 +143,10 @@ class ExtConf implements SingletonInterface
             $senderName = $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromName'];
             if (empty($senderName)) {
                 throw new \Exception('You have forgotten to set a sender name in extension configuration or in install tool');
-            } else {
-                return $senderName;
             }
-        } else {
-            return $this->emailFromName;
+            return $senderName;
         }
+        return $this->emailFromName;
     }
 
     public function setEmailFromName(string $emailFromName): void

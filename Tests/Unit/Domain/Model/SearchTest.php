@@ -38,7 +38,7 @@ class SearchTest extends UnitTestCase
      */
     public function getLetterInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getLetter()
         );
@@ -51,7 +51,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setLetter('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getLetter()
         );
@@ -63,7 +63,7 @@ class SearchTest extends UnitTestCase
     public function setLetterWithIntegerResultsInString()
     {
         $this->subject->setLetter(123);
-        $this->assertSame('123', $this->subject->getLetter());
+        self::assertSame('123', $this->subject->getLetter());
     }
 
     /**
@@ -72,7 +72,7 @@ class SearchTest extends UnitTestCase
     public function setLetterWithBooleanResultsInString()
     {
         $this->subject->setLetter(true);
-        $this->assertSame('1', $this->subject->getLetter());
+        self::assertSame('1', $this->subject->getLetter());
     }
 
     /**
@@ -80,7 +80,7 @@ class SearchTest extends UnitTestCase
      */
     public function getSearchWordInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getSearchWord()
         );
@@ -93,7 +93,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setSearchWord('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getSearchWord()
         );
@@ -105,7 +105,7 @@ class SearchTest extends UnitTestCase
     public function setSearchWordWithIntegerResultsInString()
     {
         $this->subject->setSearchWord(123);
-        $this->assertSame('123', $this->subject->getSearchWord());
+        self::assertSame('123', $this->subject->getSearchWord());
     }
 
     /**
@@ -114,7 +114,7 @@ class SearchTest extends UnitTestCase
     public function setSearchWordWithBooleanResultsInString()
     {
         $this->subject->setSearchWord(true);
-        $this->assertSame('1', $this->subject->getSearchWord());
+        self::assertSame('1', $this->subject->getSearchWord());
     }
 
     /**
@@ -122,7 +122,7 @@ class SearchTest extends UnitTestCase
      */
     public function getCategoryInitiallyReturnsZero()
     {
-        $this->assertSame(
+        self::assertSame(
             0,
             $this->subject->getCategory()
         );
@@ -135,7 +135,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setCategory(123456);
 
-        $this->assertSame(
+        self::assertSame(
             123456,
             $this->subject->getCategory()
         );
@@ -148,7 +148,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setCategory('123Test');
 
-        $this->assertSame(
+        self::assertSame(
             123,
             $this->subject->getCategory()
         );
@@ -161,7 +161,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setCategory(true);
 
-        $this->assertSame(
+        self::assertSame(
             1,
             $this->subject->getCategory()
         );
@@ -172,7 +172,7 @@ class SearchTest extends UnitTestCase
      */
     public function getSubCategoryInitiallyReturnsZero()
     {
-        $this->assertSame(
+        self::assertSame(
             0,
             $this->subject->getSubCategory()
         );
@@ -185,7 +185,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setSubCategory(123456);
 
-        $this->assertSame(
+        self::assertSame(
             123456,
             $this->subject->getSubCategory()
         );
@@ -198,7 +198,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setSubCategory('123Test');
 
-        $this->assertSame(
+        self::assertSame(
             123,
             $this->subject->getSubCategory()
         );
@@ -211,7 +211,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setSubCategory(true);
 
-        $this->assertSame(
+        self::assertSame(
             1,
             $this->subject->getSubCategory()
         );
@@ -222,7 +222,7 @@ class SearchTest extends UnitTestCase
      */
     public function getOrderByInitiallyReturnsSortTitle()
     {
-        $this->assertSame(
+        self::assertSame(
             'sortTitle',
             $this->subject->getOrderBy()
         );
@@ -235,7 +235,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setOrderBy('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getOrderBy()
         );
@@ -247,7 +247,7 @@ class SearchTest extends UnitTestCase
     public function setOrderByWithIntegerResultsInString()
     {
         $this->subject->setOrderBy(123);
-        $this->assertSame('123', $this->subject->getOrderBy());
+        self::assertSame('123', $this->subject->getOrderBy());
     }
 
     /**
@@ -256,7 +256,7 @@ class SearchTest extends UnitTestCase
     public function setOrderByWithBooleanResultsInString()
     {
         $this->subject->setOrderBy(true);
-        $this->assertSame('1', $this->subject->getOrderBy());
+        self::assertSame('1', $this->subject->getOrderBy());
     }
 
     /**
@@ -264,7 +264,7 @@ class SearchTest extends UnitTestCase
      */
     public function getDirectionInitiallyReturnsAscending()
     {
-        $this->assertSame(
+        self::assertSame(
             QueryInterface::ORDER_ASCENDING,
             $this->subject->getDirection()
         );
@@ -277,7 +277,7 @@ class SearchTest extends UnitTestCase
     {
         $this->subject->setDirection('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getDirection()
         );
@@ -289,7 +289,7 @@ class SearchTest extends UnitTestCase
     public function setDirectionWithIntegerResultsInString()
     {
         $this->subject->setDirection(123);
-        $this->assertSame('123', $this->subject->getDirection());
+        self::assertSame('123', $this->subject->getDirection());
     }
 
     /**
@@ -298,6 +298,6 @@ class SearchTest extends UnitTestCase
     public function setDirectionWithBooleanResultsInString()
     {
         $this->subject->setDirection(true);
-        $this->assertSame('1', $this->subject->getDirection());
+        self::assertSame('1', $this->subject->getDirection());
     }
 }

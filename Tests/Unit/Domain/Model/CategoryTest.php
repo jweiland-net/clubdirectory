@@ -37,7 +37,7 @@ class CategoryTest extends UnitTestCase
      */
     public function getIconInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getIcon()
         );
@@ -50,7 +50,7 @@ class CategoryTest extends UnitTestCase
     {
         $this->subject->setIcon('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getIcon()
         );
@@ -62,7 +62,7 @@ class CategoryTest extends UnitTestCase
     public function setIconWithIntegerResultsInString()
     {
         $this->subject->setIcon(123);
-        $this->assertSame('123', $this->subject->getIcon());
+        self::assertSame('123', $this->subject->getIcon());
     }
 
     /**
@@ -71,6 +71,6 @@ class CategoryTest extends UnitTestCase
     public function setIconWithBooleanResultsInString()
     {
         $this->subject->setIcon(true);
-        $this->assertSame('1', $this->subject->getIcon());
+        self::assertSame('1', $this->subject->getIcon());
     }
 }

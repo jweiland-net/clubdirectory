@@ -194,16 +194,15 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     {
         if ($uploadedFile['error'] === 4) {
             return false;
-        } elseif (!isset(
+        }
+
+        return isset(
             $uploadedFile['error'],
             $uploadedFile['name'],
             $uploadedFile['size'],
             $uploadedFile['tmp_name'],
             $uploadedFile['type']
-        )) {
-            return false;
-        }
-        return true;
+        );
     }
 
     /**

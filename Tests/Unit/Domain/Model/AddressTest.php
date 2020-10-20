@@ -39,7 +39,7 @@ class AddressTest extends UnitTestCase
      */
     public function getTitleInitiallyReturnsOrganizationAddress()
     {
-        $this->assertSame(
+        self::assertSame(
             'organizationAddress',
             $this->subject->getTitle()
         );
@@ -52,7 +52,7 @@ class AddressTest extends UnitTestCase
     {
         $this->subject->setTitle('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getTitle()
         );
@@ -64,7 +64,7 @@ class AddressTest extends UnitTestCase
     public function setTitleWithIntegerResultsInString()
     {
         $this->subject->setTitle(123);
-        $this->assertSame('123', $this->subject->getTitle());
+        self::assertSame('123', $this->subject->getTitle());
     }
 
     /**
@@ -73,7 +73,7 @@ class AddressTest extends UnitTestCase
     public function setTitleWithBooleanResultsInString()
     {
         $this->subject->setTitle(true);
-        $this->assertSame('1', $this->subject->getTitle());
+        self::assertSame('1', $this->subject->getTitle());
     }
 
     /**
@@ -81,7 +81,7 @@ class AddressTest extends UnitTestCase
      */
     public function getStreetInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getStreet()
         );
@@ -94,7 +94,7 @@ class AddressTest extends UnitTestCase
     {
         $this->subject->setStreet('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getStreet()
         );
@@ -106,7 +106,7 @@ class AddressTest extends UnitTestCase
     public function setStreetWithIntegerResultsInString()
     {
         $this->subject->setStreet(123);
-        $this->assertSame('123', $this->subject->getStreet());
+        self::assertSame('123', $this->subject->getStreet());
     }
 
     /**
@@ -115,7 +115,7 @@ class AddressTest extends UnitTestCase
     public function setStreetWithBooleanResultsInString()
     {
         $this->subject->setStreet(true);
-        $this->assertSame('1', $this->subject->getStreet());
+        self::assertSame('1', $this->subject->getStreet());
     }
 
     /**
@@ -123,7 +123,7 @@ class AddressTest extends UnitTestCase
      */
     public function getHouseNumberInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getHouseNumber()
         );
@@ -136,7 +136,7 @@ class AddressTest extends UnitTestCase
     {
         $this->subject->setHouseNumber('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getHouseNumber()
         );
@@ -148,7 +148,7 @@ class AddressTest extends UnitTestCase
     public function setHouseNumberWithIntegerResultsInString()
     {
         $this->subject->setHouseNumber(123);
-        $this->assertSame('123', $this->subject->getHouseNumber());
+        self::assertSame('123', $this->subject->getHouseNumber());
     }
 
     /**
@@ -157,7 +157,7 @@ class AddressTest extends UnitTestCase
     public function setHouseNumberWithBooleanResultsInString()
     {
         $this->subject->setHouseNumber(true);
-        $this->assertSame('1', $this->subject->getHouseNumber());
+        self::assertSame('1', $this->subject->getHouseNumber());
     }
 
     /**
@@ -165,7 +165,7 @@ class AddressTest extends UnitTestCase
      */
     public function getZipInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getZip()
         );
@@ -178,7 +178,7 @@ class AddressTest extends UnitTestCase
     {
         $this->subject->setZip('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getZip()
         );
@@ -190,7 +190,7 @@ class AddressTest extends UnitTestCase
     public function setZipWithIntegerResultsInString()
     {
         $this->subject->setZip(123);
-        $this->assertSame('123', $this->subject->getZip());
+        self::assertSame('123', $this->subject->getZip());
     }
 
     /**
@@ -199,7 +199,7 @@ class AddressTest extends UnitTestCase
     public function setZipWithBooleanResultsInString()
     {
         $this->subject->setZip(true);
-        $this->assertSame('1', $this->subject->getZip());
+        self::assertSame('1', $this->subject->getZip());
     }
 
     /**
@@ -207,7 +207,7 @@ class AddressTest extends UnitTestCase
      */
     public function getCityInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getCity()
         );
@@ -220,7 +220,7 @@ class AddressTest extends UnitTestCase
     {
         $this->subject->setCity('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getCity()
         );
@@ -232,7 +232,7 @@ class AddressTest extends UnitTestCase
     public function setCityWithIntegerResultsInString()
     {
         $this->subject->setCity(123);
-        $this->assertSame('123', $this->subject->getCity());
+        self::assertSame('123', $this->subject->getCity());
     }
 
     /**
@@ -241,7 +241,7 @@ class AddressTest extends UnitTestCase
     public function setCityWithBooleanResultsInString()
     {
         $this->subject->setCity(true);
-        $this->assertSame('1', $this->subject->getCity());
+        self::assertSame('1', $this->subject->getCity());
     }
 
     /**
@@ -249,7 +249,7 @@ class AddressTest extends UnitTestCase
      */
     public function getTelephoneInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getTelephone()
         );
@@ -262,7 +262,7 @@ class AddressTest extends UnitTestCase
     {
         $this->subject->setTelephone('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getTelephone()
         );
@@ -274,7 +274,7 @@ class AddressTest extends UnitTestCase
     public function setTelephoneWithIntegerResultsInString()
     {
         $this->subject->setTelephone(123);
-        $this->assertSame('123', $this->subject->getTelephone());
+        self::assertSame('123', $this->subject->getTelephone());
     }
 
     /**
@@ -283,7 +283,7 @@ class AddressTest extends UnitTestCase
     public function setTelephoneWithBooleanResultsInString()
     {
         $this->subject->setTelephone(true);
-        $this->assertSame('1', $this->subject->getTelephone());
+        self::assertSame('1', $this->subject->getTelephone());
     }
 
     /**
@@ -291,7 +291,7 @@ class AddressTest extends UnitTestCase
      */
     public function getFaxInitiallyReturnsEmptyString()
     {
-        $this->assertSame(
+        self::assertSame(
             '',
             $this->subject->getFax()
         );
@@ -304,7 +304,7 @@ class AddressTest extends UnitTestCase
     {
         $this->subject->setFax('foo bar');
 
-        $this->assertSame(
+        self::assertSame(
             'foo bar',
             $this->subject->getFax()
         );
@@ -316,7 +316,7 @@ class AddressTest extends UnitTestCase
     public function setFaxWithIntegerResultsInString()
     {
         $this->subject->setFax(123);
-        $this->assertSame('123', $this->subject->getFax());
+        self::assertSame('123', $this->subject->getFax());
     }
 
     /**
@@ -325,7 +325,7 @@ class AddressTest extends UnitTestCase
     public function setFaxWithBooleanResultsInString()
     {
         $this->subject->setFax(true);
-        $this->assertSame('1', $this->subject->getFax());
+        self::assertSame('1', $this->subject->getFax());
     }
 
     /**
@@ -333,7 +333,7 @@ class AddressTest extends UnitTestCase
      */
     public function getBarrierFreeInitiallyReturnsFalse()
     {
-        $this->assertFalse(
+        self::assertFalse(
             $this->subject->getBarrierFree()
         );
     }
@@ -344,7 +344,7 @@ class AddressTest extends UnitTestCase
     public function setBarrierFreeSetsBarrierFree()
     {
         $this->subject->setBarrierFree(true);
-        $this->assertTrue(
+        self::assertTrue(
             $this->subject->getBarrierFree()
         );
     }
@@ -355,7 +355,7 @@ class AddressTest extends UnitTestCase
     public function setBarrierFreeWithStringReturnsTrue()
     {
         $this->subject->setBarrierFree('foo bar');
-        $this->assertTrue($this->subject->getBarrierFree());
+        self::assertTrue($this->subject->getBarrierFree());
     }
 
     /**
@@ -364,6 +364,6 @@ class AddressTest extends UnitTestCase
     public function setBarrierFreeWithZeroReturnsFalse()
     {
         $this->subject->setBarrierFree(0);
-        $this->assertFalse($this->subject->getBarrierFree());
+        self::assertFalse($this->subject->getBarrierFree());
     }
 }
