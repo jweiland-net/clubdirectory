@@ -18,6 +18,7 @@ use JWeiland\Clubdirectory\Domain\Repository\CategoryRepository;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use JWeiland\Clubdirectory\Property\TypeConverter\UploadMultipleFilesConverter;
 use JWeiland\Clubdirectory\Property\TypeConverter\UploadOneFileConverter;
+use JWeiland\Glossary2\Service\GlossaryService;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
 use JWeiland\Maps2\Domain\Model\Position;
 use JWeiland\Maps2\Domain\Repository\PoiCollectionRepository;
@@ -56,6 +57,11 @@ class AbstractController extends ActionController
     protected $categoryRepository;
 
     /**
+     * @var GlossaryService
+     */
+    protected $glossaryService;
+
+    /**
      * @var Session
      */
     protected $session;
@@ -64,11 +70,6 @@ class AbstractController extends ActionController
      * @var ExtConf
      */
     protected $extConf;
-
-    /**
-     * @var string
-     */
-    protected $letters = '0-9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z';
 
     public function injectClubRepository(ClubRepository $clubRepository): void
     {
@@ -83,6 +84,11 @@ class AbstractController extends ActionController
     public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {
         $this->categoryRepository = $categoryRepository;
+    }
+
+    public function injectGlossaryService(GlossaryService $glossaryService): void
+    {
+        $this->glossaryService = $glossaryService;
     }
 
     public function injectSession(Session $session): void
@@ -120,6 +126,27 @@ class AbstractController extends ActionController
         $view->assign('extConf', $this->extConf);
     }
 
+    protected function addGlossarToView()
+    {
+        $this->view->assign(
+            'glossar',
+            $this->glossaryService->buildGlossary(
+                $this->clubRepository->getQueryBuilderToFindAllEntries(
+                    (int)$this->settings['category'],
+                    (int)$this->settings['district']
+                ),
+                [
+                    'settings' => $this->settings,
+                    'templatePath' => 'EXT:clubdirectory/Resources/Private/Templates/Glossary.html',
+                    'extensionName' => 'Clubdirectory',
+                    'pluginName' => 'Clubdirectory',
+                    'controllerName' => 'Club',
+                    'actionName' => 'search',
+                ]
+            )
+        );
+    }
+
     /**
      * Send email on new/update.
      *
@@ -142,40 +169,6 @@ class AbstractController extends ActionController
         }
 
         return (bool)$mail->send();
-    }
-
-    /**
-     * Get an array with letters as keys for the glossar.
-     *
-     * @return array Array with starting letters as keys
-     */
-    protected function getGlossar(): array
-    {
-        $glossar = [];
-        $availableLetters = $this->clubRepository->getStartingLetters(
-            (int)$this->settings['category'],
-            (int)$this->settings['district']
-        );
-        $possibleLetters = GeneralUtility::trimExplode(',', $this->letters);
-        // add all letters which we have found in DB
-        foreach ($availableLetters as $availableLetter) {
-            if (MathUtility::canBeInterpretedAsInteger($availableLetter['letter'])) {
-                $availableLetter['letter'] = '0-9';
-            }
-            // add only letters which are valid (do not add "§$%")
-            if (\in_array($availableLetter['letter'], $possibleLetters, true)) {
-                $glossar[$availableLetter['letter']] = true;
-            }
-        }
-        // add all valid letters which are not set/found by previous foreach
-        foreach ($possibleLetters as $possibleLetter) {
-            if (!\array_key_exists($possibleLetter, $glossar)) {
-                $glossar[$possibleLetter] = false;
-            }
-        }
-        \ksort($glossar, \SORT_STRING);
-
-        return $glossar;
     }
 
     /**
