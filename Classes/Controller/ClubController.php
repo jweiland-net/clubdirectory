@@ -31,8 +31,8 @@ class ClubController extends AbstractController
         );
         $this->view->assign('categories', $this->categoryRepository->getSubCategories());
         $this->view->assign('search', $this->objectManager->get(Search::class));
-        $this->view->assign('glossar', $this->getGlossar());
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
+        $this->addGlossarToView();
     }
 
     public function listMyClubsAction(): void
@@ -167,8 +167,8 @@ class ClubController extends AbstractController
         $this->view->assign('clubs', $clubs);
         $this->view->assign('categories', $this->categoryRepository->getSubCategories());
         $this->view->assign('search', $search);
-        $this->view->assign('glossar', $this->getGlossar());
         $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
+        $this->addGlossarToView();
     }
 
     /**
