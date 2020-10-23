@@ -14,7 +14,10 @@ namespace JWeiland\Clubdirectory\Domain\Repository;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use TYPO3\CMS\Core\Charset\CharsetConverter;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
@@ -163,16 +166,25 @@ class ClubRepository extends Repository
         return $query->execute();
     }
 
-    public function getStartingLetters(int $category = 0, int $district = 0): array
+    public function getQueryBuilderToFindAllEntries(int $category = 0, int $district = 0): QueryBuilder
     {
-        /** @var Query $query */
+        $table = 'tx_clubdirectory_domain_model_club';
         $query = $this->createQuery();
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($table);
+        $queryBuilder->setRestrictions(GeneralUtility::makeInstance(FrontendRestrictionContainer::class));
+
+        // Do not set any SELECT, ORDER BY, GROUP BY statement. It will be set by glossary2 API
         $queryBuilder
-            ->selectLiteral('UPPER(LEFT(sort_title, 1)) as letter')
-            ->from('tx_clubdirectory_domain_model_club', 'c')
-            ->add('groupBy', 'letter')
-            ->add('orderBy', 'letter ASC');
+            ->from($table, 'c')
+            ->where(
+                $queryBuilder->expr()->in(
+                    'pid',
+                    $queryBuilder->createNamedParameter(
+                        $query->getQuerySettings()->getStoragePageIds(),
+                        Connection::PARAM_INT_ARRAY
+                    )
+                )
+            );
 
         if ($category) {
             $queryBuilder
@@ -202,11 +214,12 @@ class ClubRepository extends Repository
                     )
                 );
         }
+
         if ($district) {
             $queryBuilder->andWhere($queryBuilder->expr()->eq('c.district', $district));
         }
 
-        return $query->statement($queryBuilder)->execute(true);
+        return $queryBuilder;
     }
 
     protected function getConstraintForSearchWord(QueryInterface $query, string $searchWord): OrInterface
