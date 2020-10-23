@@ -11,7 +11,7 @@
 	<f:render partial="Club/Filter" arguments="{search: search, categories: categories, subCategories: subCategories}" />
 
 	<f:if condition="{settings.showGlossar}">
-		<f:render partial="Club/Glossar" arguments="{glossar: glossar}" />
+		{glossar -> f:format.raw()}
 	</f:if>
 
 	<f:if condition="{clubs}">
