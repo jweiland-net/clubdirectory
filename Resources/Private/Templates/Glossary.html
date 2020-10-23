@@ -20,7 +20,7 @@
 		</f:if>
 
 		<f:render section="renderListEntry"
-							arguments="{letter: letter, options: options, cssClass: cssClass, ariaDisabled: ariaDisabled}" />
+							arguments="{letter: letter, cssClass: cssClass, ariaDisabled: ariaDisabled}" />
 	</f:for>
 </nav>
 
@@ -28,15 +28,15 @@
 	<f:if condition="{letter}">
 		<f:then>
 			<f:link.action
-							action="{options.actionName}"
+							action="search"
 							class="{cssClass}"
-							arguments="{letter: letter}"
+							arguments="{search: {letter: letter}}"
 							additionalAttributes="{aria-disabled: ariaDisabled}"
 			><f:format.case mode="upper">{letter}</f:format.case></f:link.action>
 		</f:then>
 		<f:else>
 			<f:link.action
-							action="{options.actionName}"
+							action="list"
 							class="{cssClass}"
 							additionalAttributes="{aria-disabled: ariaDisabled}"
 			>{f:translate(key: 'all')}</f:link.action>
