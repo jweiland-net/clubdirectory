@@ -65,7 +65,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 
     public function getTitle(): string
     {
-        return 'Update Slug of clubdirectory records';
+        return '[clubdirectory] Update Slug of clubdirectory records';
     }
 
     public function getDescription(): string
@@ -105,7 +105,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
         $recordsToUpdate = $queryBuilder
-            ->select('uid', 'title', 'path_segment')
+            ->select('uid', 'pid', 'title', 'path_segment')
             ->from($this->tableName)
             ->where(
                 $queryBuilder->expr()->orX(
@@ -128,7 +128,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
         $connection = $this->getConnectionPool()->getConnectionForTable($this->tableName);
         foreach ($recordsToUpdate as $recordToUpdate) {
             if ((string)$recordToUpdate['title'] !== '') {
-                $slug = $this->slugHelper->sanitize((string)$recordToUpdate['title']);
+                $slug = $this->slugHelper->generate($recordToUpdate, $recordToUpdate['pid']);
                 $connection->update(
                     $this->tableName,
                     [
