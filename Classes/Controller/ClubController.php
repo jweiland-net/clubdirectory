@@ -23,11 +23,18 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class ClubController extends AbstractController
 {
-    public function listAction(): void
+    /**
+     * @param string $letter
+     */
+    public function listAction(string $letter = ''): void
     {
         $this->view->assign(
             'clubs',
-            $this->clubRepository->findByCategory((int)$this->settings['category'], (int)$this->settings['district'])
+            $this->clubRepository->findFilteredBy(
+                (int)$this->settings['category'],
+                (int)$this->settings['district'],
+                $letter
+            )
         );
         $this->view->assign('categories', $this->categoryRepository->getSubCategories());
         $this->view->assign('search', $this->objectManager->get(Search::class));
@@ -154,7 +161,7 @@ class ClubController extends AbstractController
     /**
      * @param Search|null $search
      */
-    public function searchAction(?Search $search): void
+    public function searchAction(?Search $search = null): void
     {
         if ($search instanceof Search) {
             $clubs = $this->clubRepository->findBySearch($search);

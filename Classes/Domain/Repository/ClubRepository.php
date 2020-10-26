@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\Domain\Repository;
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
+use JWeiland\Glossary2\Service\GlossaryService;
 use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -50,32 +51,39 @@ class ClubRepository extends Repository
         $this->charsetConverter = $charsetConverter;
     }
 
+    public function findFilteredBy(int $category, int $district = 0, string $letter = ''): QueryResultInterface
+    {
+        $query = $this->createQuery();
+        $constraints = [];
+
+        if (!empty($category)) {
+            $constraints[] = $query->contains('categories', $category);
+        }
+
+        if ($district) {
+            $constraints[] = $query->equals('district', $district);
+        }
+
+        if ($letter) {
+            $glossaryService = GeneralUtility::makeInstance(GlossaryService::class);
+            $constraints[] = $glossaryService->getLetterConstraintForExtbaseQuery($query, 'sortTitle', $letter);
+        }
+
+        if (empty($constraints)) {
+            return $query->execute();
+        }
+
+        return $query->matching($query->logicalAnd($constraints))->execute();
+    }
+
     public function findBySearch(?Search $search): QueryResultInterface
     {
         $query = $this->createQuery();
         $constraints = [];
 
-        // if a searchWord is set, do not process other filtering methods
+        // If a searchWord is set, do not process other filtering methods
         if ($search->getSearchWord()) {
             $constraints[] = $this->getConstraintForSearchWord($query, $search->getSearchWord());
-        } elseif ($search->getLetter()) {
-            // if a letter is set, do not process other filtering methods
-            $constraintOr = [];
-            if ($search->getLetter() === '0-9') {
-                $constraintOr[] = $query->like('sortTitle', '0%');
-                $constraintOr[] = $query->like('sortTitle', '1%');
-                $constraintOr[] = $query->like('sortTitle', '2%');
-                $constraintOr[] = $query->like('sortTitle', '3%');
-                $constraintOr[] = $query->like('sortTitle', '4%');
-                $constraintOr[] = $query->like('sortTitle', '5%');
-                $constraintOr[] = $query->like('sortTitle', '6%');
-                $constraintOr[] = $query->like('sortTitle', '7%');
-                $constraintOr[] = $query->like('sortTitle', '8%');
-                $constraintOr[] = $query->like('sortTitle', '9%');
-            } else {
-                $constraintOr[] = $query->like('sortTitle', $search->getLetter() . '%');
-            }
-            $constraints[] = $query->logicalOr($constraintOr);
         } else {
             // add (Sub-)Category
             if ($search->getSubCategory()) {
@@ -85,7 +93,7 @@ class ClubRepository extends Repository
             }
         }
 
-        // set ordering
+        // Set ordering
         if (in_array($search->getOrderBy(), ['title', 'sortTitle'], true)) {
             if (!in_array($search->getDirection(), [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING], true)) {
                 $search->setDirection(QueryInterface::ORDER_ASCENDING);
@@ -101,68 +109,11 @@ class ClubRepository extends Repository
         return $query->execute();
     }
 
-    public function findByCategory(int $category, int $district = 0): QueryResultInterface
-    {
-        $query = $this->createQuery();
-
-        $constraints = [];
-        if (!empty($category)) {
-            $constraints[] = $query->contains('categories', $category);
-        }
-        if ($district) {
-            $constraints[] = $query->equals('district', $district);
-        }
-        if (empty($constraints)) {
-            return $query->execute();
-        }
-
-        return $query->matching($query->logicalAnd($constraints))->execute();
-    }
-
     public function findByFeUser(int $feUser): QueryResultInterface
     {
         $query = $this->createQuery();
 
         return $query->matching($query->contains('feUsers', $feUser))->execute();
-    }
-
-    public function findByStartingLetter(string $letter, int $category = 0, int $district = 0): QueryResultInterface
-    {
-        $query = $this->createQuery();
-
-        $constraintOr = [];
-        $constraintAnd = [];
-
-        if ($letter === '0-9') {
-            $constraintOr[] = $query->like('sortTitle', '0%');
-            $constraintOr[] = $query->like('sortTitle', '1%');
-            $constraintOr[] = $query->like('sortTitle', '2%');
-            $constraintOr[] = $query->like('sortTitle', '3%');
-            $constraintOr[] = $query->like('sortTitle', '4%');
-            $constraintOr[] = $query->like('sortTitle', '5%');
-            $constraintOr[] = $query->like('sortTitle', '6%');
-            $constraintOr[] = $query->like('sortTitle', '7%');
-            $constraintOr[] = $query->like('sortTitle', '8%');
-            $constraintOr[] = $query->like('sortTitle', '9%');
-        } else {
-            $constraintOr[] = $query->like('sortTitle', $letter . '%');
-        }
-
-        $constraintAnd[] = $query->logicalOr($constraintOr);
-
-        if ($category) {
-            $constraintAnd[] = $query->contains('categories', $category);
-        }
-
-        if ($district) {
-            $constraintAnd[] = $query->equals('district', $district);
-        }
-
-        if ($constraintAnd) {
-            return $query->matching($query->logicalAnd($constraintAnd))->execute();
-        }
-
-        return $query->execute();
     }
 
     public function getQueryBuilderToFindAllEntries(int $category = 0, int $district = 0): QueryBuilder

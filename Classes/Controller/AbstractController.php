@@ -136,11 +136,10 @@ class AbstractController extends ActionController
                 ),
                 [
                     'settings' => $this->settings,
-                    'templatePath' => 'EXT:clubdirectory/Resources/Private/Templates/Glossary.html',
                     'extensionName' => 'Clubdirectory',
                     'pluginName' => 'Clubdirectory',
                     'controllerName' => 'Club',
-                    'actionName' => 'search',
+                    'actionName' => 'list',
                 ]
             )
         );

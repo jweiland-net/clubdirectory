@@ -22,11 +22,6 @@ class Search
     /**
      * @var string
      */
-    protected $letter = '';
-
-    /**
-     * @var string
-     */
     protected $searchWord = '';
 
     /**
@@ -48,16 +43,6 @@ class Search
      * @var string
      */
     protected $direction = QueryInterface::ORDER_ASCENDING;
-
-    public function getLetter(): string
-    {
-        return $this->letter;
-    }
-
-    public function setLetter(string $letter): void
-    {
-        $this->letter = $letter;
-    }
 
     public function getSearchWord(): string
     {
