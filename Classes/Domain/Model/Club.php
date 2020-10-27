@@ -86,7 +86,7 @@ class Club extends AbstractEntity
     protected $feUsers;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
      */
     protected $logo;
 
@@ -135,6 +135,7 @@ class Club extends AbstractEntity
     public function __construct()
     {
         $this->feUsers = new ObjectStorage();
+        $this->logo = new ObjectStorage();
         $this->images = new ObjectStorage();
         $this->addresses = new ObjectStorage();
         $this->categories = new ObjectStorage();
@@ -287,12 +288,22 @@ class Club extends AbstractEntity
         return $currentUserCanEditThisClub;
     }
 
-    public function getLogo(): ?FileReference
+    public function getLogo(): array
+    {
+        $references = [];
+        foreach ($this->logo as $logo) {
+            $references[] = $logo;
+        }
+
+        return $references;
+    }
+
+    public function getOriginalLogo(): ObjectStorage
     {
         return $this->logo;
     }
 
-    public function setLogo(?FileReference $logo): void
+    public function setLogo(ObjectStorage $logo): void
     {
         $this->logo = $logo;
     }

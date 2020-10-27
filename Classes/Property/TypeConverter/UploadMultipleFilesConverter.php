@@ -13,6 +13,8 @@ namespace JWeiland\Clubdirectory\Property\TypeConverter;
 
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
+use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
+use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -41,6 +43,11 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      * @var int
      */
     protected $priority = 2;
+
+    /**
+     * @var Folder
+     */
+    protected $uploadFolder;
 
     /**
      * @var PropertyMappingConfigurationInterface
@@ -79,29 +86,37 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         PropertyMappingConfigurationInterface $configuration = null
     ) {
         $this->converterConfiguration = $configuration;
-        $alreadyPersistedImages = $this->converterConfiguration->getConfigurationValue(
+        $settings = $configuration->getConfigurationValue(
+            self::class,
+            'settings'
+        );
+        $alreadyPersistedImages = $configuration->getConfigurationValue(
             self::class,
             'IMAGES'
         );
+
+        $this->setUploadFolder($settings ?? []);
+
         $originalSource = $source;
         foreach ($originalSource as $key => $uploadedFile) {
-            // check if $source contains an uploaded file. 4 = no file uploaded
-            if (
-                !isset($uploadedFile['error']) ||
-                !isset($uploadedFile['name']) ||
-                !isset($uploadedFile['size']) ||
-                !isset($uploadedFile['tmp_name']) ||
-                !isset($uploadedFile['type']) ||
-                $uploadedFile['error'] === 4
-            ) {
-                if ($alreadyPersistedImages[$key] !== null) {
-                    $source[$key] = $alreadyPersistedImages[$key];
+            $alreadyPersistedImage = $this->getAlreadyPersistedFileReferenceByPosition(
+                $alreadyPersistedImages,
+                $key
+            );
+
+            // If no file was uploaded use the already persisted one
+            if (!$this->isValidUploadFile($uploadedFile)) {
+                if (isset($uploadedFile['delete']) && $uploadedFile['delete'] === '1') {
+                    $this->deleteFile($alreadyPersistedImage);
+                    unset($source[$key]);
+                } elseif ($alreadyPersistedImage instanceof FileReference) {
+                    $source[$key] = $alreadyPersistedImage;
                 } else {
                     unset($source[$key]);
                 }
                 continue;
             }
-            // check if uploaded file returns an error
+            // Check if uploaded file returns an error
             if (!$uploadedFile['error'] === 0) {
                 return new Error(
                     LocalizationUtility::translate('error.upload', 'clubdirectory') . $uploadedFile['error'],
@@ -109,7 +124,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                 );
             }
 
-            // check if file extension is allowed
+            // Check if file extension is allowed
             $fileParts = GeneralUtility::split_fileref($uploadedFile['name']);
             if (!GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], $fileParts['fileext'])) {
                 return new Error(
@@ -123,15 +138,9 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                     1402981282
                 );
             }
-
-            // OK...we have a valid file. It's time to check, if an old file can be deleted
-            if ($alreadyPersistedImages[$key] instanceof FileReference) {
-                $oldFile = $alreadyPersistedImages[$key];
-                $oldFile->getOriginalResource()->getOriginalFile()->delete();
-            }
         }
 
-        // upload file and add it to ObjectStorage
+        // Upload file and add it to ObjectStorage
         $references = GeneralUtility::makeInstance(ObjectStorage::class);
         foreach ($source as $uploadedFile) {
             if ($uploadedFile instanceof FileReference) {
@@ -142,6 +151,77 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         }
 
         return $references;
+    }
+
+    protected function getAlreadyPersistedFileReferenceByPosition(
+        ObjectStorage $alreadyPersistedFileReferences,
+        int $position
+    ): ?FileReference {
+        return $alreadyPersistedFileReferences->toArray()[$position] ?? null;
+    }
+
+    protected function setUploadFolder(array $settings)
+    {
+        $combinedUploadFolderIdentifier = $settings['new']['uploadFolder'] ?? '';
+        if ($combinedUploadFolderIdentifier === '') {
+            throw new \Exception(
+                'You have forgotten to set an Upload Folder in TypoScript for clubdirectory',
+                1603808777
+            );
+        }
+
+        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
+        try {
+            $uploadFolder = $resourceFactory->getObjectFromCombinedIdentifier($combinedUploadFolderIdentifier);
+        } catch (ResourceDoesNotExistException $exception) {
+            [$storageUid] = GeneralUtility::trimExplode(':', $combinedUploadFolderIdentifier);
+            $resourceStorage = $resourceFactory->getStorageObject((int)$storageUid);
+            $uploadFolder = $resourceStorage->createFolder($combinedUploadFolderIdentifier);
+        }
+
+        $this->uploadFolder = $uploadFolder;
+    }
+
+    /**
+     * Check, if we have a valid uploaded file
+     * Error = 4: No file uploaded
+     *
+     * @param array $uploadedFile
+     * @return bool
+     */
+    protected function isValidUploadFile(array $uploadedFile): bool
+    {
+        if ($uploadedFile['error'] === 4) {
+            return false;
+        }
+
+        return isset(
+            $uploadedFile['error'],
+            $uploadedFile['name'],
+            $uploadedFile['size'],
+            $uploadedFile['tmp_name'],
+            $uploadedFile['type']
+        );
+    }
+
+    /**
+     * If file is in our own upload folder we can delete it from filesystem and sys_file table.
+     *
+     * @param FileReference|null $fileReference
+     */
+    protected function deleteFile(?FileReference $fileReference)
+    {
+        if ($fileReference !== null) {
+            $fileReference = $fileReference->getOriginalResource();
+
+            if ($fileReference->getStorage()->isWithinFolder($this->uploadFolder, $fileReference)) {
+                try {
+                    $fileReference->getOriginalFile()->delete();
+                } catch (\Exception $exception) {
+                    // Do nothing. File already deleted or not found
+                }
+            }
+        }
     }
 
     /**

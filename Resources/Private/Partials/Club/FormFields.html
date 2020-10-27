@@ -26,8 +26,8 @@
 	<f:render section="renderLabel" arguments="{column: 'logo'}" />
 
 	<div class="media mb-3">
-		<f:if condition="{club.logo}">
-			<f:image image="{club.logo}"
+		<f:if condition="{club.logo.0}">
+			<f:image image="{club.logo.0}"
 							 class="mr-3"
 							 alt="{club.title}"
 							 width="{settings.list.image.width}"
@@ -36,13 +36,13 @@
 		</f:if>
 		<div class="media-body">
 			<div class="form-group">
-				<f:form.upload property="logo"
+				<f:form.upload property="logo.0"
 											 class="form-control-file"
 											 id="logo" />
 			</div>
-			<f:if condition="{club.logo}">
+			<f:if condition="{club.logo.0}">
 				<div class="form-group form-check">
-					<f:form.checkbox property="logo.delete"
+					<f:form.checkbox property="logo.0.delete"
 													 id="logoDelete"
 													 class="form-check-input"
 													 value="1" />
@@ -154,7 +154,7 @@
 	<div class="form-group">
 		<f:render section="renderLabel" arguments="{column: column, domain: domain}" />
 		<input type="hidden" name="tx_clubdirectory_clubdirectory[club][addresses][{index}][__identity]" value="{address.uid}" />
-		<maps2:widget.editPoi property="txMaps2Uid" poiCollection="{address.txMaps2Uid}" override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
+		<maps2:widget.editPoi property="addresses.{index}.txMaps2Uid" poiCollection="{address.txMaps2Uid}" override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
 		<f:render section="renderHelpMessage" arguments="{property: property}" />
 	</div>
 </f:section>
