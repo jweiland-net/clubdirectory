@@ -167,9 +167,6 @@
 				<source>Delete Image</source>
 				<target>Bild entfernen</target>
 			</trans-unit>
-			<trans-unit id="rightsMessage">
-				<source>I give all rights of this image to city Pforzheim</source>
-			</trans-unit>
 			<trans-unit id="hint">
 				<source>Hint</source>
 			</trans-unit>
@@ -228,7 +225,7 @@
 				<source>Enter further tags for the alphabetic list view.</source>
 			</trans-unit>
 			<trans-unit id="cshimages_0">
-				<source>Upload max. 5 image files (jpg,gif,png). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.Be sure to set the image rights. Otherwise the image will not be uploaded.</source>
+				<source>Upload max. 5 image files (jpg,gif,png). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
 			</trans-unit>
 			<trans-unit id="altTextMapImg">
 				<source>Map</source>
@@ -264,9 +261,6 @@
 
 			<trans-unit id="error.upload">
 				<source>Something went wrong with your uploaded files. Please try again. Error: </source>
-			</trans-unit>
-			<trans-unit id="error.uploadRights">
-				<source>You don\'t have checked the box for upload rights. So upload stops here</source>
 			</trans-unit>
 			<trans-unit id="error.fileExtension">
 				<source>You only can upload files with following file extensions: %1$s</source>

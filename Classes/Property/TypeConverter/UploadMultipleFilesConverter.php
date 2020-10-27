@@ -108,6 +108,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                     1396957314
                 );
             }
+
             // check if file extension is allowed
             $fileParts = GeneralUtility::split_fileref($uploadedFile['name']);
             if (!GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], $fileParts['fileext'])) {
@@ -122,14 +123,13 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                     1402981282
                 );
             }
-            // OK...we have a valid file and the user has the rights. It's time to check, if an old file can be deleted
+
+            // OK...we have a valid file. It's time to check, if an old file can be deleted
             if ($alreadyPersistedImages[$key] instanceof FileReference) {
                 $oldFile = $alreadyPersistedImages[$key];
                 $oldFile->getOriginalResource()->getOriginalFile()->delete();
             }
         }
-
-        // I will do two foreach here. First: everything must be OK, before files will be uploaded
 
         // upload file and add it to ObjectStorage
         $references = GeneralUtility::makeInstance(ObjectStorage::class);

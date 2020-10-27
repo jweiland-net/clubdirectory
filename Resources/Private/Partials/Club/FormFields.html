@@ -40,13 +40,6 @@
 											 class="form-control-file"
 											 id="logo" />
 			</div>
-			<div class="form-group form-check">
-				<f:form.checkbox property="logo.rights"
-												 id="logoRights"
-												 class="form-check-input"
-												 value="1" />
-				<label class="form-check-label" for="logoRights">{f:translate(key: "rightsMessage")}</label>
-			</div>
 			<f:if condition="{club.logo}">
 				<div class="form-group form-check">
 					<f:form.checkbox property="logo.delete"
@@ -86,15 +79,6 @@
 					<f:form.upload property="images.{globalIndex}"
 												 class="form-control-file"
 												 id="images_{globalIndex}" />
-				</div>
-				<div class="form-group form-check">
-					<f:form.checkbox property="images.{globalIndex}.rights"
-													 id="imageRights{globalIndex}"
-													 class="form-check-input"
-													 value="1" />
-					<label class="form-check-label" for="imageRights{globalIndex}">
-						{f:translate(key: "rightsMessage")}
-					</label>
 				</div>
 				<f:if condition="{currentImage}">
 					<div class="form-group form-check">
