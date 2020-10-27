@@ -17,7 +17,6 @@ use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Repository\CategoryRepository;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use JWeiland\Clubdirectory\Property\TypeConverter\UploadMultipleFilesConverter;
-use JWeiland\Clubdirectory\Property\TypeConverter\UploadOneFileConverter;
 use JWeiland\Glossary2\Service\GlossaryService;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
 use JWeiland\Maps2\Domain\Model\Position;
