@@ -107,8 +107,6 @@ class UploadOneFileConverter extends AbstractTypeConverter
             );
         }
 
-        // ToDo: Add rights check
-
         // check if file extension is allowed
         $fileParts = GeneralUtility::split_fileref($source['name']);
         if (!GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], $fileParts['fileext'])) {
