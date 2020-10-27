@@ -264,10 +264,7 @@ class AbstractController extends ActionController
         MvcPropertyMappingConfiguration $propertyMappingConfigurationForClub,
         $converterOptionValue
     ): void {
-        if ($property === 'logo') {
-            $className = UploadOneFileConverter::class;
-            $converterOptionName = 'IMAGE';
-        } elseif ($property === 'images') {
+        if ($property === 'logo' || $property === 'images') {
             $className = UploadMultipleFilesConverter::class;
             $converterOptionName = 'IMAGES';
         } else {
