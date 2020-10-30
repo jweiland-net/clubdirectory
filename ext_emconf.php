@@ -15,6 +15,8 @@ $EM_CONF[$_EXTKEY] = [
             'glossary2' => '4.0.0-0.0.0'
         ],
         'conflicts' => [],
-        'suggests' => []
+        'suggests' => [
+            'checkfaluploads' => ''
+        ]
     ]
 ];

@@ -11,17 +11,19 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Property\TypeConverter;
 
+use JWeiland\Checkfaluploads\Service\FalUploadService;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
-use TYPO3\CMS\Core\Resource\Exception\FolderDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Folder;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
+use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /*
@@ -55,6 +57,23 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     protected $converterConfiguration = [];
 
     /**
+     * @var Dispatcher
+     */
+    protected $signalSlotDispatcher;
+
+    /**
+     * Do not inject this property, as EXT:checkfaluploads may not be loaded
+     *
+     * @var FalUploadService
+     */
+    protected $falUploadService;
+
+    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
+    {
+        $this->signalSlotDispatcher = $signalSlotDispatcher;
+    }
+
+    /**
      * This implementation always returns TRUE for this method.
      *
      * @param mixed  $source     the source data
@@ -85,22 +104,11 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         array $convertedChildProperties = [],
         PropertyMappingConfigurationInterface $configuration = null
     ) {
-        $this->converterConfiguration = $configuration;
-        $settings = $configuration->getConfigurationValue(
-            self::class,
-            'settings'
-        );
-        $alreadyPersistedImages = $configuration->getConfigurationValue(
-            self::class,
-            'IMAGES'
-        );
-
-        $this->setUploadFolder($settings ?? []);
-
+        $this->initialize($configuration);
         $originalSource = $source;
         foreach ($originalSource as $key => $uploadedFile) {
             $alreadyPersistedImage = $this->getAlreadyPersistedFileReferenceByPosition(
-                $alreadyPersistedImages,
+                $this->getAlreadyPersistedImages(),
                 $key
             );
 
@@ -138,6 +146,15 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                     1402981282
                 );
             }
+
+            if (
+                ExtensionManagementUtility::isLoaded('checkfaluploads')
+                && $error = $this->getFalUploadService()->checkFile($uploadedFile)
+            ) {
+                return $error;
+            }
+
+            $this->emitPostCheckFileReference($source, $key, $alreadyPersistedImage, $uploadedFile);
         }
 
         // Upload file and add it to ObjectStorage
@@ -153,6 +170,30 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         return $references;
     }
 
+    protected function initialize(?PropertyMappingConfigurationInterface $configuration)
+    {
+        if ($configuration === null) {
+            throw new \Exception(
+                'Missing PropertyMapper configuration in UploadMultipleFilesConverter',
+                1604051720
+            );
+        }
+
+        $this->converterConfiguration = $configuration;
+
+        $this->setUploadFolder();
+    }
+
+    protected function getAlreadyPersistedImages(): ObjectStorage
+    {
+        $alreadyPersistedImages = $this->converterConfiguration->getConfigurationValue(
+            self::class,
+            'IMAGES'
+        );
+
+        return $alreadyPersistedImages instanceof ObjectStorage ? $alreadyPersistedImages : new ObjectStorage();
+    }
+
     protected function getAlreadyPersistedFileReferenceByPosition(
         ObjectStorage $alreadyPersistedFileReferences,
         int $position
@@ -160,9 +201,19 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         return $alreadyPersistedFileReferences->toArray()[$position] ?? null;
     }
 
-    protected function setUploadFolder(array $settings)
+    protected function getTypoScriptPluginSettings(): array
     {
-        $combinedUploadFolderIdentifier = $settings['new']['uploadFolder'] ?? '';
+        $settings = $this->converterConfiguration->getConfigurationValue(
+            self::class,
+            'settings'
+        );
+
+        return $settings ?? [];
+    }
+
+    protected function setUploadFolder()
+    {
+        $combinedUploadFolderIdentifier = $this->getTypoScriptPluginSettings()['new']['uploadFolder'] ?? '';
         if ($combinedUploadFolderIdentifier === '') {
             throw new \Exception(
                 'You have forgotten to set an Upload Folder in TypoScript for clubdirectory',
@@ -246,28 +297,8 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      */
     protected function getCoreFileReference(array $source): \TYPO3\CMS\Core\Resource\FileReference
     {
-        $settings = $this->converterConfiguration->getConfigurationValue(
-            self::class,
-            'settings'
-        ) ?? [];
-
         $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
-        $uploadFolderIdentifier = $settings['new']['uploadFolder'] ?? '';
-
-        try {
-            $uploadFolder = $resourceFactory->getFolderObjectFromCombinedIdentifier($uploadFolderIdentifier);
-        } catch (FolderDoesNotExistException $e) {
-            [$storageUid, $identifier] = GeneralUtility::trimExplode(':', $uploadFolderIdentifier);
-            try {
-                $storage = $resourceFactory->getStorageObject($storageUid);
-            } catch (\InvalidArgumentException $e) {
-                $storage = $resourceFactory->getDefaultStorage();
-                $identifier = $uploadFolderIdentifier;
-            }
-            $uploadFolder = $storage->createFolder($identifier);
-        }
-
-        $uploadedFile = $uploadFolder->addUploadedFile($source, DuplicationBehavior::RENAME);
+        $uploadedFile = $this->uploadFolder->addUploadedFile($source, DuplicationBehavior::RENAME);
 
         // create Core FileReference
         return $resourceFactory->createFileReferenceObject(
@@ -277,5 +308,26 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                 'uid' => uniqid('NEW_'),
             ]
         );
+    }
+
+    protected function emitPostCheckFileReference(
+        array $source,
+        int $key,
+        ?FileReference $alreadyPersistedImage,
+        array $uploadedFile
+    ): void {
+        $this->signalSlotDispatcher->dispatch(
+            self::class,
+            'postCheckFileReference',
+            [$source, $key, $alreadyPersistedImage, $uploadedFile]
+        );
+    }
+
+    protected function getFalUploadService(): FalUploadService
+    {
+        if ($this->falUploadService === null) {
+            $this->falUploadService = GeneralUtility::makeInstance(FalUploadService::class);
+        }
+        return $this->falUploadService;
     }
 }
