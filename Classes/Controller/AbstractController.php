@@ -350,28 +350,4 @@ class AbstractController extends ActionController
 
         $this->request->setArgument('club', $requestArgument);
     }
-
-    /**
-     * files will be uploaded in typeConverter automatically
-     * But, if an error occurs we have to remove them.
-     *
-     * @param string $argument
-     */
-    protected function deleteUploadedFilesOnValidationErrors(string $argument): void
-    {
-        if ($this->getControllerContext()->getRequest()->hasArgument($argument)) {
-            /** @var Club $club */
-            $club = $this->getControllerContext()->getRequest()->getArgument($argument);
-            // in case of realurl $argument can be set, but is empty
-            if ($club instanceof Club) {
-                $images = $club->getImages();
-                if (\count($images)) {
-                    /** @var FileReference $image */
-                    foreach ($images as $image) {
-                        $image->getOriginalResource()->getOriginalFile()->delete();
-                    }
-                }
-            }
-        }
-    }
 }
