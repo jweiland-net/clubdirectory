@@ -25,6 +25,7 @@ use JWeiland\Maps2\Service\GeoCodeService;
 use JWeiland\Maps2\Service\MapService;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\MvcPropertyMappingConfiguration;
@@ -348,5 +349,25 @@ class AbstractController extends ActionController
         }
 
         $this->request->setArgument('club', $requestArgument);
+    }
+    /**
+     * Files will be uploaded in typeConverter.
+     * But, if an error occurs we have to remove these files.
+     *
+     * @param string $argument
+     */
+    protected function deleteUploadedFilesOnValidationErrors(string $argument): void
+    {
+        if ($this->getControllerContext()->getRequest()->hasArgument($argument)) {
+            $club = $this->getControllerContext()->getRequest()->getArgument($argument);
+            if ($club instanceof Club) {
+                $images = $club->getImages();
+                if (!empty($images)) {
+                    foreach ($images as $image) {
+                        $image->getOriginalResource()->getOriginalFile()->delete();
+                    }
+                }
+            }
+        }
     }
 }
