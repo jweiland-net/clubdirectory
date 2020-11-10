@@ -288,6 +288,9 @@ class Club extends AbstractEntity
         return $currentUserCanEditThisClub;
     }
 
+    /**
+     * @return array|FileReference[]
+     */
     public function getLogo(): array
     {
         $references = [];
@@ -309,7 +312,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * @return array|\TYPO3\CMS\Core\Resource\FileReference[]
+     * @return array|FileReference[]
      */
     public function getImages(): array
     {

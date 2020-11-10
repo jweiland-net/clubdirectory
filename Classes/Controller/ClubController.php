@@ -62,6 +62,7 @@ class ClubController extends AbstractController
 
     public function newAction(): void
     {
+        $this->deleteUploadedFilesOnValidationErrors('club');
         $club = $this->objectManager->get(Club::class);
         $this->fillAddressesUpToMaximum($club);
 
