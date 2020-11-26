@@ -7,6 +7,22 @@
 ChangeLog
 =========
 
+**Version 4.0.0**
+
+- Add validator for club manually
+- Add Services.yaml
+- Add strict_types where possible
+- Use GitHub Actions
+- Better ImageFileConverter
+- Remove icon from sys_category
+- Rename ts files to typoscript
+- remove unused imports
+- Update PHP DocHeaders
+- Update requirement of maps2 to 8.0.0
+- Remove TYPO3 8 compatibility
+- Add TYPO3 10 compatibility
+- Add club getter to get first category
+
 **Version 3.0.3**
 
 - Show error, if address was not found and redirect to previous action
