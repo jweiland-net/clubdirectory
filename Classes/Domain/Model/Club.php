@@ -432,9 +432,18 @@ class Club extends AbstractEntity
         $this->addresses->detach($address);
     }
 
+    /**
+     * @return ObjectStorage|Category[]
+     */
     public function getCategories(): ObjectStorage
     {
         return $this->categories;
+    }
+
+    public function getFirstCategory(): ?Category
+    {
+        $this->categories->rewind();
+        return $this->categories->current();
     }
 
     public function setCategories(ObjectStorage $categories): void
