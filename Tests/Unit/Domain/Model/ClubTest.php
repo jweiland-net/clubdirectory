@@ -567,9 +567,33 @@ class ClubTest extends UnitTestCase
     /**
      * @test
      */
-    public function getLogoInitiallyReturnsNull()
+    public function getLogoInitiallyReturnsEmptyArray()
     {
-        self::assertNull($this->subject->getLogo());
+        self::assertSame(
+            [],
+            $this->subject->getLogo()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getFirstLogoInitiallyReturnsNull()
+    {
+        self::assertNull(
+            $this->subject->getFirstLogo()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getOriginalLogoInitiallyReturnsObjectStorage()
+    {
+        self::assertEquals(
+            new ObjectStorage(),
+            $this->subject->getOriginalLogo()
+        );
     }
 
     /**
@@ -577,12 +601,52 @@ class ClubTest extends UnitTestCase
      */
     public function setLogoSetsLogo()
     {
-        $instance = new FileReference();
-        $this->subject->setLogo($instance);
+        $object = new FileReference();
+        $objectStorage = new ObjectStorage();
+        $objectStorage->attach($object);
+        $this->subject->setLogo($objectStorage);
 
         self::assertSame(
-            $instance,
-            $this->subject->getLogo()
+            $objectStorage,
+            $this->subject->getOriginalLogo()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function addLogoAddsOneLogo()
+    {
+        $objectStorage = new ObjectStorage();
+        $this->subject->setLogo($objectStorage);
+
+        $object = new FileReference();
+        $this->subject->addLogo($object);
+
+        $objectStorage->attach($object);
+
+        self::assertSame(
+            $objectStorage,
+            $this->subject->getOriginalLogo()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function removeLogoRemovesOneLogo()
+    {
+        $object = new FileReference();
+        $objectStorage = new ObjectStorage();
+        $objectStorage->attach($object);
+        $this->subject->setLogo($objectStorage);
+
+        $this->subject->removeLogo($object);
+        $objectStorage->detach($object);
+
+        self::assertSame(
+            $objectStorage,
+            $this->subject->getOriginalLogo()
         );
     }
 

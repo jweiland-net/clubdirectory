@@ -289,16 +289,17 @@ class Club extends AbstractEntity
     }
 
     /**
-     * @return array|FileReference[]
+     * @return FileReference[]
      */
     public function getLogo(): array
     {
-        $references = [];
-        foreach ($this->logo as $logo) {
-            $references[] = $logo;
-        }
+        return $this->logo->toArray();
+    }
 
-        return $references;
+    public function getFirstLogo(): ?FileReference
+    {
+        $this->logo->rewind();
+        return $this->logo->current();
     }
 
     public function getOriginalLogo(): ObjectStorage
@@ -309,6 +310,16 @@ class Club extends AbstractEntity
     public function setLogo(ObjectStorage $logo): void
     {
         $this->logo = $logo;
+    }
+
+    public function addLogo(FileReference $logo): void
+    {
+        $this->logo->attach($logo);
+    }
+
+    public function removeLogo(FileReference $logo): void
+    {
+        $this->logo->detach($logo);
     }
 
     /**
