@@ -36,48 +36,6 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function getLetterInitiallyReturnsEmptyString()
-    {
-        self::assertSame(
-            '',
-            $this->subject->getLetter()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setLetterSetsLetter()
-    {
-        $this->subject->setLetter('foo bar');
-
-        self::assertSame(
-            'foo bar',
-            $this->subject->getLetter()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setLetterWithIntegerResultsInString()
-    {
-        $this->subject->setLetter(123);
-        self::assertSame('123', $this->subject->getLetter());
-    }
-
-    /**
-     * @test
-     */
-    public function setLetterWithBooleanResultsInString()
-    {
-        $this->subject->setLetter(true);
-        self::assertSame('1', $this->subject->getLetter());
-    }
-
-    /**
-     * @test
-     */
     public function getSearchWordInitiallyReturnsEmptyString()
     {
         self::assertSame(
