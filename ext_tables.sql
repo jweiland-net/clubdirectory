@@ -18,7 +18,7 @@ CREATE TABLE tx_clubdirectory_domain_model_club (
 	images int(11) DEFAULT '0' NOT NULL,
 	facebook varchar(255) DEFAULT '' NOT NULL,
 	twitter varchar(255) DEFAULT '' NOT NULL,
-	google varchar(255) DEFAULT '' NOT NULL,
+	instagram varchar(255) DEFAULT '' NOT NULL,
 	tags varchar(255) DEFAULT '' NOT NULL,
 	district int(11) unsigned DEFAULT '0',
 	addresses int(11) unsigned DEFAULT '0',

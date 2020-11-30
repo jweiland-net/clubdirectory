@@ -802,43 +802,43 @@ class ClubTest extends UnitTestCase
     /**
      * @test
      */
-    public function getGoogleInitiallyReturnsEmptyString()
+    public function getInstagramInitiallyReturnsEmptyString()
     {
         self::assertSame(
             '',
-            $this->subject->getGoogle()
+            $this->subject->getInstagram()
         );
     }
 
     /**
      * @test
      */
-    public function setGoogleSetsGoogle()
+    public function setInstagramSetsInstagram()
     {
-        $this->subject->setGoogle('foo bar');
+        $this->subject->setInstagram('foo bar');
 
         self::assertSame(
             'foo bar',
-            $this->subject->getGoogle()
+            $this->subject->getInstagram()
         );
     }
 
     /**
      * @test
      */
-    public function setGoogleWithIntegerResultsInString()
+    public function setInstagramWithIntegerResultsInString()
     {
-        $this->subject->setGoogle(123);
-        self::assertSame('123', $this->subject->getGoogle());
+        $this->subject->setInstagram(123);
+        self::assertSame('123', $this->subject->getInstagram());
     }
 
     /**
      * @test
      */
-    public function setGoogleWithBooleanResultsInString()
+    public function setInstagramWithBooleanResultsInString()
     {
-        $this->subject->setGoogle(true);
-        self::assertSame('1', $this->subject->getGoogle());
+        $this->subject->setInstagram(true);
+        self::assertSame('1', $this->subject->getInstagram());
     }
 
     /**
