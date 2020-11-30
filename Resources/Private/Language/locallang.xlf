@@ -51,8 +51,8 @@
 			<trans-unit id="tx_clubdirectory_domain_model_club.twitter">
 				<source>Twitter</source>
 			</trans-unit>
-			<trans-unit id="tx_clubdirectory_domain_model_club.google">
-				<source>Google+</source>
+			<trans-unit id="tx_clubdirectory_domain_model_club.instagram">
+				<source>Instagram</source>
 			</trans-unit>
 			<trans-unit id="tx_clubdirectory_domain_model_club.tags">
 				<source>Tags</source>
@@ -210,13 +210,13 @@
 				<source>Enter a further address type of the club with all address infos.</source>
 			</trans-unit>
 			<trans-unit id="cshfacebook">
-				<source>Enter a URL to facebook.</source>
+				<source>Enter URL to facebook.</source>
 			</trans-unit>
 			<trans-unit id="cshtwitter">
-				<source>Enter a URL to twitter.</source>
+				<source>Enter URL to twitter.</source>
 			</trans-unit>
-			<trans-unit id="cshgoogle">
-				<source>Enter a URL to google+.</source>
+			<trans-unit id="cshinstagram">
+				<source>Enter URL to Instagram.</source>
 			</trans-unit>
 			<trans-unit id="cshlogo">
 				<source>Upload the logo file (jpg,gif,png) in a square formatting.</source>
@@ -270,14 +270,14 @@
 				<source>Map View</source>
 			</trans-unit>
 
-			<trans-unit id="google">
-				<source>google+</source>
+			<trans-unit id="facebook">
+				<source>facebook</source>
 			</trans-unit>
 			<trans-unit id="twitter">
 				<source>twitter</source>
 			</trans-unit>
-			<trans-unit id="facebook">
-				<source>facebook</source>
+			<trans-unit id="instagram">
+				<source>Instagram</source>
 			</trans-unit>
 		</body>
 	</file>

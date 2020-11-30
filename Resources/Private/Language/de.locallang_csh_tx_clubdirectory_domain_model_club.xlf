@@ -63,9 +63,9 @@
 				<source>Set Twitter URL of this club</source>
 				<target>Tragen Sie hier die Twitter URL des Vereins ein</target>
 			</trans-unit>
-			<trans-unit id="google.description">
-				<source>Set Google Plus URL of this club</source>
-				<target>Tragen Sie hier die Google Plus URL des Vereins ein</target>
+			<trans-unit id="instagram.description">
+				<source>Set Instagram URL of this club</source>
+				<target>Tragen Sie hier die Instagram URL des Vereins ein</target>
 			</trans-unit>
 			<trans-unit id="tags.description">
 				<source>You can add some tags. That way this club will be found, if someone uses that tag in search.</source>

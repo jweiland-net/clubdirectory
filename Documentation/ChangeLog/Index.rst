@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 4.0.1**
+
+- Replace Google+ column with Instagram
+
 **Version 4.0.0**
 
 - Add validator for club manually

@@ -22,7 +22,7 @@ return [
         'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_club.svg'
     ],
     'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, sort_title, path_segment, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, google, tags, district, addresses'
+        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, sort_title, path_segment, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, instagram, tags, district, addresses'
     ],
     'types' => [
         '1' => [
@@ -35,7 +35,7 @@ return [
              --div--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.tabs.media,
              logo, images,
              --div--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.tabs.social_media,
-             facebook, twitter, google, tags,
+             facebook, twitter, instagram, tags,
              --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
              --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
         ]
@@ -328,9 +328,9 @@ return [
                 'eval' => 'trim'
             ]
         ],
-        'google' => [
+        'instagram' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.google',
+            'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.instagram',
             'config' => [
                 'type' => 'input',
                 'size' => 30,
