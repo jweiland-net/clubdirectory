@@ -166,15 +166,16 @@ return [
             ]
         ],
         'path_segment' => [
-            'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.path_segment',
+            'displayCond' => 'VERSION:IS:false',
             'config' => [
                 'type' => 'slug',
                 'size' => 50,
                 'generatorOptions' => [
                     'fields' => ['title'],
-                    // As pageSlug may contain slashes, we have to remove page slug
+                    // Do not add pageSlug, as we add pageSlug on our own in RouteEnhancer
                     'prefixParentPageSlug' => false,
+                    'fieldSeparator' => '-',
                     'replacements' => [
                         '/' => '-'
                     ],
