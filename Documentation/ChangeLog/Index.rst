@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 4.0.3**
+
+- Remove title from SVG Icons
+
 **Version 4.0.2**
 
 - Update requirement of maps2 to 9.3.0
