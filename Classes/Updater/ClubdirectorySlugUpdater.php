@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Updater;
 
+use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
@@ -35,21 +35,13 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
     protected $fieldName = 'path_segment';
 
     /**
-     * @var SlugHelper
+     * @var PathSegmentHelper
      */
-    protected $slugHelper;
+    protected $pathSegmentHelper;
 
-    public function __construct(SlugHelper $slugHelper = null)
+    public function __construct(PathSegmentHelper $pathSegmentHelper = null)
     {
-        if ($slugHelper === null) {
-            $slugHelper = GeneralUtility::makeInstance(
-                SlugHelper::class,
-                $this->tableName,
-                $this->fieldName,
-                $GLOBALS['TCA'][$this->tableName]['columns']['path_segment']['config']
-            );
-        }
-        $this->slugHelper = $slugHelper;
+        $this->pathSegmentHelper = $pathSegmentHelper ?? GeneralUtility::makeInstance(PathSegmentHelper::class);
     }
 
     /**
@@ -76,6 +68,9 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
     public function updateNecessary(): bool
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder->getRestrictions()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
         $amountOfRecordsWithEmptySlug = $queryBuilder
             ->count('*')
             ->from($this->tableName)
@@ -104,8 +99,11 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
     public function executeUpdate(): bool
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
-        $recordsToUpdate = $queryBuilder
-            ->select('uid', 'pid', 'title', 'path_segment')
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder->getRestrictions()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+
+        $statement = $queryBuilder
+            ->select('uid', 'pid', 'title')
             ->from($this->tableName)
             ->where(
                 $queryBuilder->expr()->orX(
@@ -118,23 +116,17 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
                     )
                 )
             )
-            ->execute()
-            ->fetchAll();
-
-        if ($recordsToUpdate === false) {
-            $recordsToUpdate = [];
-        }
+            ->execute();
 
         $connection = $this->getConnectionPool()->getConnectionForTable($this->tableName);
-        foreach ($recordsToUpdate as $recordToUpdate) {
+        while ($recordToUpdate = $statement->fetch()) {
             if ((string)$recordToUpdate['title'] !== '') {
-                $slug = $this->slugHelper->generate($recordToUpdate, $recordToUpdate['pid']);
                 $connection->update(
                     $this->tableName,
                     [
-                        $this->fieldName => $this->getUniqueValue(
-                            (int)$recordToUpdate['uid'],
-                            $slug
+                        $this->fieldName => $this->pathSegmentHelper->generatePathSegment(
+                            $recordToUpdate,
+                            (int)$recordToUpdate['pid']
                         )
                     ],
                     [
@@ -145,52 +137,6 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
         }
 
         return true;
-    }
-
-    /**
-     * @param int $uid
-     * @param string $slug
-     * @return string
-     */
-    protected function getUniqueValue(int $uid, string $slug): string
-    {
-        $statement = $this->getUniqueCountStatement($uid, $slug);
-        if ($statement->fetchColumn(0)) {
-            for ($counter = 1; $counter <= 100; $counter++) {
-                $newSlug = $slug . '-' . $counter;
-                $statement->bindValue(1, $newSlug);
-                $statement->execute();
-                if (!$statement->fetchColumn()) {
-                    break;
-                }
-            }
-        }
-
-        return $newSlug ?? $slug;
-    }
-
-    protected function getUniqueCountStatement(int $uid, string $slug)
-    {
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
-        $queryBuilder
-            ->getRestrictions()
-            ->removeAll()
-            ->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-
-        return $queryBuilder
-            ->count('uid')
-            ->from($this->tableName)
-            ->where(
-                $queryBuilder->expr()->eq(
-                    $this->fieldName,
-                    $queryBuilder->createPositionalParameter($slug, Connection::PARAM_STR)
-                ),
-                $queryBuilder->expr()->neq(
-                    'uid',
-                    $queryBuilder->createPositionalParameter($uid, Connection::PARAM_INT)
-                )
-            )
-            ->execute();
     }
 
     /**

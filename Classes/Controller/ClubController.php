@@ -13,6 +13,9 @@ namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
+use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
+use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
@@ -94,6 +97,11 @@ class ClubController extends AbstractController
             $club->setHidden(true);
             $this->addMapRecordIfPossible($club);
             $this->clubRepository->add($club);
+
+            $pathSegmentHelper = GeneralUtility::makeInstance(PathSegmentHelper::class);
+            $pathSegmentHelper->updatePathSegmentForClub($club);
+            $this->clubRepository->update($club);
+
             $persistenceManager = $this->objectManager->get(PersistenceManagerInterface::class);
             $persistenceManager->persistAll();
 
@@ -104,22 +112,26 @@ class ClubController extends AbstractController
         }
     }
 
-    public function initializeEditAction(): void
+    public function initializeEditAction()
     {
-        $this->registerClubFromRequest('club');
+        $hiddenObjectHelper = $this->objectManager->get(HiddenObjectHelper::class);
+        $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
+            $this->clubRepository,
+            $this->request,
+            'club'
+        );
     }
 
     /**
      * We are using int to prevent calling any Validator
      *
-     * @param int $club
+     * @param Club $club
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("club")
      */
-    public function editAction(int $club): void
+    public function editAction(Club $club): void
     {
-        /** @var Club $clubObject */
-        $clubObject = $this->clubRepository->findByIdentifier($club);
-        $this->fillAddressesUpToMaximum($clubObject);
-        $this->view->assign('club', $clubObject);
+        $this->fillAddressesUpToMaximum($club);
+        $this->view->assign('club', $club);
         $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
         $this->view->assign('addressTitles', $this->getAddressTitles());
     }
@@ -178,15 +190,23 @@ class ClubController extends AbstractController
         $this->addGlossarToView();
     }
 
-    /**
-     * @param int $club
-     */
-    public function activateAction(int $club): void
+    public function initializeActivateAction()
     {
-        /** @var Club $clubObject */
-        $clubObject = $this->clubRepository->findHiddenEntryByUid($club);
-        $clubObject->setHidden(false);
-        $this->clubRepository->update($clubObject);
+        $hiddenObjectHelper = $this->objectManager->get(HiddenObjectHelper::class);
+        $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
+            $this->clubRepository,
+            $this->request,
+            'club'
+        );
+    }
+
+    /**
+     * @param Club $club
+     */
+    public function activateAction(Club $club): void
+    {
+        $club->setHidden(false);
+        $this->clubRepository->update($club);
         $this->addFlashMessage(LocalizationUtility::translate('clubActivated', 'clubdirectory'));
         $this->redirect('list', 'Club');
     }

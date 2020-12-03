@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -19,25 +20,27 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class MapController extends AbstractController
 {
-    /**
-     * We are using int to prevent calling any Validator
-     *
-     * @param int $club
-     */
-    public function newAction(int $club): void
+    public function initializeAction(): void
     {
-        $this->view->assign(
-            'club',
-            $this->clubRepository->findHiddenEntryByUid($club)
+        parent::initializeAction();
+
+        $hiddenObjectHelper = $this->objectManager->get(HiddenObjectHelper::class);
+        $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
+            $this->clubRepository,
+            $this->request,
+            'club'
         );
     }
 
     /**
-     * Club is a hidden record. So register it in session object
+     * As club was already validated in ClubController create/update there can't be any errors. So ignore validation.
+     *
+     * @param Club $club
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("club")
      */
-    public function initializeCreateAction(): void
+    public function newAction(Club $club): void
     {
-        $this->registerClubFromRequest('club');
+        $this->view->assign('club', $club);
     }
 
     /**
@@ -57,36 +60,13 @@ class MapController extends AbstractController
 
     /**
      * @param Club $club
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("club")
      */
     public function editAction(Club $club): void
     {
         $this->view->assign('club', $club);
         $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
         $this->view->assign('addressTitles', $this->getAddressTitles());
-    }
-
-    public function initializeUpdateAction(): void
-    {
-        $this->registerClubFromRequest('club');
-
-        // we can't work with addresses.* here, because f:form has created addresses.0-3 already,
-        // and numbered paths have a higher priority
-        $this->arguments->getArgument('club')
-            ->getPropertyMappingConfiguration()
-            ->setTargetTypeForSubProperty('logo', 'array');
-
-        $this->arguments->getArgument('club')
-            ->getPropertyMappingConfiguration()
-            ->setTargetTypeForSubProperty('images', 'array');
-
-        for ($i = 0; $i < 3; ++$i) {
-            $this->arguments->getArgument('club')->getPropertyMappingConfiguration()
-                ->forProperty('addresses.' . $i)->allowProperties('txMaps2Uid')
-                ->forProperty('txMaps2Uid')->allowProperties('latitude', 'longitude', '__identity');
-            $this->arguments->getArgument('club')
-                ->getPropertyMappingConfiguration()
-                ->allowModificationForSubProperty('addresses.' . $i . '.txMaps2Uid');
-        }
     }
 
     /**
@@ -98,27 +78,6 @@ class MapController extends AbstractController
         $this->clubRepository->update($club);
         $this->sendMail('update', $club);
         $club->setHidden(true);
-        $this->redirect('edit', null, null, ['club' => $club]);
-    }
-
-    /**
-     * $search isn't a domain model, so we have to do htmlspecialchars on our own.
-     */
-    public function initializeSearchAction(): void
-    {
-        if ($this->request->hasArgument('search')) {
-            $search = \htmlspecialchars($this->request->getArgument('search'));
-            $this->request->setArgument('search', $search);
-        }
-    }
-
-    /**
-     * @param string $search
-     */
-    public function searchAction(string $search): void
-    {
-        $clubs = $this->clubRepository->searchClubs($search);
-        $this->view->assign('search', $search);
-        $this->view->assign('clubs', $clubs);
+        $this->redirect('list', 'Club', null, ['club' => $club]);
     }
 }

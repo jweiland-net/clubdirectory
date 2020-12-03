@@ -168,27 +168,6 @@ class AbstractController extends ActionController
     }
 
     /**
-     * This is a workaround to help controller actions to find (hidden) posts.
-     *
-     * @param string $argumentName
-     */
-    protected function registerClubFromRequest(string $argumentName): void
-    {
-        $argument = $this->request->getArgument($argumentName);
-        if (\is_array($argument)) {
-            // get club from form ($_POST)
-            $club = $this->clubRepository->findHiddenEntryByUid((int)$argument['__identity']);
-        } elseif (\is_object($argument)) {
-            // get club from domain model
-            $club = $argument;
-        } else {
-            // get club from UID
-            $club = $this->clubRepository->findHiddenEntryByUid((int)$argument);
-        }
-        $this->session->registerObject($club, $club->getUid());
-    }
-
-    /**
      * Get titles for select box in address records form.
      *
      * @return array Array containing all allowed address titles
