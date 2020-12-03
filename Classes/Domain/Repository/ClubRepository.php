@@ -29,7 +29,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 /**
  * Repository to get and search for clubs
  */
-class ClubRepository extends Repository
+class ClubRepository extends Repository implements HiddenRepositoryInterface
 {
     /**
      * @var array
@@ -205,15 +205,14 @@ class ClubRepository extends Repository
         return $query->logicalOr($logicalOrConstraints);
     }
 
-    public function findHiddenEntryByUid(int $clubUid): ?Club
+    public function findHiddenObject($value, string $property = 'uid'): ?object
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(true);
         $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
+        $query->getQuerySettings()->setRespectStoragePage(false);
 
-        /** @var Club $club */
-        $club = $query->matching($query->equals('uid', $clubUid))->execute()->getFirst();
-        return $club;
+        return $query->matching($query->equals($property, $value))->execute()->getFirst();
     }
 
     /**

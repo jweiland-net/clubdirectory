@@ -154,7 +154,10 @@
 	<div class="form-group">
 		<f:render section="renderLabel" arguments="{column: column, domain: domain}" />
 		<input type="hidden" name="tx_clubdirectory_clubdirectory[club][addresses][{index}][__identity]" value="{address.uid}" />
-		<maps2:widget.editPoi property="addresses.{index}.txMaps2Uid" poiCollection="{address.txMaps2Uid}" override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
+		<maps2:widget.editPoi property="addresses.{index}.txMaps2Uid"
+													title="{address.street} {address.houseNumber}, {address.zip}{address.city}"
+													poiCollection="{address.txMaps2Uid}"
+													override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
 		<f:render section="renderHelpMessage" arguments="{property: property}" />
 	</div>
 </f:section>

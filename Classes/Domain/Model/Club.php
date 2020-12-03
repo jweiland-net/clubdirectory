@@ -35,6 +35,11 @@ class Club extends AbstractEntity
 
     /**
      * @var string
+     */
+    protected $pathSegment = '';
+
+    /**
+     * @var string
      * @Extbase\Validate("NotEmpty")
      */
     protected $sortTitle = '';
@@ -159,6 +164,16 @@ class Club extends AbstractEntity
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    public function getPathSegment(): string
+    {
+        return $this->pathSegment;
+    }
+
+    public function setPathSegment(string $pathSegment): void
+    {
+        $this->pathSegment = $pathSegment;
     }
 
     public function getSortTitle(): string
@@ -470,5 +485,20 @@ class Club extends AbstractEntity
     public function removeCategory(Category $category): void
     {
         $this->categories->detach($category);
+    }
+
+    /**
+     * Helper method to build a baseRecord for path_segment
+     * Needed in PathSegmentHelper
+     *
+     * @return array
+     */
+    public function getBaseRecordForPathSegment(): array
+    {
+        return [
+            'uid' => $this->getUid(),
+            'pid' => $this->getPid(),
+            'title' => $this->getTitle()
+        ];
     }
 }

@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+**Version 4.0.2**
+
+- Update requirement of maps2 to 9.3.0
+- Add title attribute to editPoi VH
+- Store path_segment while frontend edit
+
 **Version 4.0.1**
 
 - Replace Google+ column with Instagram

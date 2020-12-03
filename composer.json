@@ -19,7 +19,7 @@
 	},
 	"require": {
 		"typo3/cms-core": "^9.5.20 || ^10.4.6",
-		"jweiland/maps2": ">=8.0.0",
+		"jweiland/maps2": ">=9.3.0",
 		"jweiland/glossary2": ">=4.0.0"
 	},
 	"require-dev": {
