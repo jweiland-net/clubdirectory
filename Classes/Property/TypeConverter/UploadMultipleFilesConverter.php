@@ -1,7 +1,6 @@
 <?php
 
-// Add strict_type while removing TYPO3 9 compatibility
-//declare(strict_types=1);
+declare(strict_types=1);
 
 /*
  * This file is part of the package jweiland/clubdirectory.
