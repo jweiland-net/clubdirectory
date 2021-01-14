@@ -28,12 +28,14 @@ class PathSegmentHelper
      */
     protected $slugHelper;
 
-    public function __construct(SlugHelper $slugHelper = null)
+    public function __construct(SlugHelper $slugHelper = null, array $generatorFields = [])
     {
         if ($slugHelper === null) {
-            // Add uid to slug, to prevent duplicates
             $config = $GLOBALS['TCA']['tx_clubdirectory_domain_model_club']['columns']['path_segment']['config'];
-            $config['generatorOptions']['fields'] = ['title', 'uid'];
+
+            if ($generatorFields) {
+                $config['generatorOptions']['fields'] = $generatorFields;
+            }
 
             $slugHelper = GeneralUtility::makeInstance(
                 SlugHelper::class,
