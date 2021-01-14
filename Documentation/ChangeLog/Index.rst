@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 4.0.4**
+
+- Only add uid to RouteEnhancer, if club was created over frontend
+
 **Version 4.0.3**
 
 - Remove title from SVG Icons
