@@ -6,3 +6,8 @@ services:
 
   JWeiland\Clubdirectory\:
     resource: '../Classes/*'
+
+  JWeiland\Clubdirectory\Helper\PathSegmentHelper:
+    public: true
+    arguments:
+      - null
