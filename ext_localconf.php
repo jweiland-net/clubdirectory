@@ -36,10 +36,8 @@ call_user_func(function () {
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:clubdirectory/Configuration/TSconfig/ContentElementWizard.txt">'
     );
 
-    if (version_compare(TYPO3_branch, '9.4', '>=')) {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['clubdirectoryUpdateSlug']
-            = \JWeiland\Clubdirectory\Updater\ClubdirectorySlugUpdater::class;
-    }
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['clubdirectoryUpdateSlug']
+        = \JWeiland\Clubdirectory\Updater\ClubdirectorySlugUpdater::class;
 
     /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
     $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(

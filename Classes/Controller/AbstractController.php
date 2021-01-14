@@ -158,11 +158,7 @@ class AbstractController extends ActionController
         $mail->setFrom($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName());
         $mail->setTo($this->extConf->getEmailToAddress(), $this->extConf->getEmailToName());
         $mail->setSubject(LocalizationUtility::translate('email.subject.' . $subjectKey, 'clubdirectory'));
-        if (version_compare(TYPO3_branch, '10.0', '>=')) {
-            $mail->html($this->view->render());
-        } else {
-            $mail->setBody($this->view->render(), 'text/html');
-        }
+        $mail->setBody($this->view->render(), 'text/html');
 
         return (bool)$mail->send();
     }

@@ -1,4 +1,3 @@
-# Remove that part while removing TYPO3 9 compatibility
 config.tx_extbase {
   persistence{
     classes {
