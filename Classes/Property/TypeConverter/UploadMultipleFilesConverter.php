@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Property\TypeConverter;
 
 use JWeiland\Checkfaluploads\Service\FalUploadService;
+use JWeiland\Clubdirectory\Event\PostCheckFileReferenceEvent;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
