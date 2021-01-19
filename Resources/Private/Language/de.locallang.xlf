@@ -226,6 +226,10 @@
 				<source>The title is mandatory</source>
 				<target>Der Titel ist ein Pflichtfeld und muss angegeben werden</target>
 			</trans-unit>
+			<trans-unit id="cshsortTitle">
+				<source>Give it a title to sort by</source>
+				<target>Geben Sie einen Titel an, nach dem sortiert werden soll</target>
+			</trans-unit>
 			<trans-unit id="cshcategories">
 				<source>Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</source>
 				<target>Bitte wählen Sie die Kategorie die zum Verein passt aus. Mehrfachauswahl mit gedrückter Steuerungstaste |Strg| </target>
