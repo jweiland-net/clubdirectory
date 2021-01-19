@@ -158,7 +158,7 @@ class ClubController extends AbstractController
 
         // Needed to get the previously stored logo and images
         /** @var Club $persistedClub */
-        $persistedClub = $this->clubRepository->findByIdentifier($requestArgument['__identity']);
+        $persistedClub = $this->clubRepository->findHiddenObject($requestArgument['__identity']);
         $this->assignMediaTypeConverter('logo', $clubMappingConfiguration, $persistedClub->getOriginalLogo());
         $this->assignMediaTypeConverter('images', $clubMappingConfiguration, $persistedClub->getOriginalImages());
     }
