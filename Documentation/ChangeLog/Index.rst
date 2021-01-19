@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+**Version 5.0.3**
+
+- Add translation for yes/no
+- Add barrier-free information into address partial
+
 **Version 5.0.2**
 
 - Add CSH for sortTitle in FE
