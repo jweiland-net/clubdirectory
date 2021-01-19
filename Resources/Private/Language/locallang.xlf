@@ -173,6 +173,9 @@
 			<trans-unit id="cshtitle">
 				<source>The title is mandatory</source>
 			</trans-unit>
+			<trans-unit id="cshsortTitle">
+				<source>Give it a title to sort by</source>
+			</trans-unit>
 			<trans-unit id="cshcategories">
 				<source>Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</source>
 			</trans-unit>
