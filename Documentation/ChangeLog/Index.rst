@@ -7,6 +7,19 @@
 ChangeLog
 =========
 
+**Version 5.0.2**
+
+- Add CSH for sortTitle in FE
+- Allow storing of hidden records for admins in FE
+
+**Version 5.0.1**
+
+- Use correct namespace for EventDispatcher
+
+**Version 5.0.0**
+
+- Remove TYPO3 9 compatibility
+
 **Version 4.0.4**
 
 - Only add uid to RouteEnhancer, if club was created over frontend
