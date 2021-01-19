@@ -24,7 +24,8 @@
 					<p>
 						{club.title}<br>
 						{address.street} {address.houseNumber}<br>
-						{address.zip} {address.city}
+						{address.zip} {address.city}<br>
+						{f:translate(key: 'tx_clubdirectory_domain_model_address.barrierFree')}: {f:if(condition: address.barrierFree, then: '{f:translate(key: \'yes\')}', else: '{f:translate(key: \'no\')}')}
 					</p>
 					<f:if condition="{address.telephone}">
 						<div>

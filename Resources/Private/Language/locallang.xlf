@@ -233,6 +233,12 @@
 			<trans-unit id="altTextMapImg">
 				<source>Map</source>
 			</trans-unit>
+			<trans-unit id="yes">
+				<source>Yes</source>
+			</trans-unit>
+			<trans-unit id="no">
+				<source>No</source>
+			</trans-unit>
 
 			<trans-unit id="email.subject.create">
 				<source>A new record was created</source>

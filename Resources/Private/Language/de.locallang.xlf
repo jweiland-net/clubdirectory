@@ -306,6 +306,14 @@
 				<source>Map</source>
 				<target>Karte</target>
 			</trans-unit>
+			<trans-unit id="yes">
+				<source>Yes</source>
+				<target>Ja</target>
+			</trans-unit>
+			<trans-unit id="no">
+				<source>No</source>
+				<target>Nein</target>
+			</trans-unit>
 
 			<trans-unit id="email.subject.create">
 				<source>A new record was created</source>
