@@ -7,6 +7,14 @@
 ChangeLog
 =========
 
+**Version 5.0.5**
+
+- Use traverse to disable cHash check in TS condition
+
+**Version 5.0.4**
+
+- Use unique instead of uniqueInSite for slug
+
 **Version 5.0.3**
 
 - Add translation for yes/no
