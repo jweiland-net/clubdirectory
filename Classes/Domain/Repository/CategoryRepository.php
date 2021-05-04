@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
 use JWeiland\Clubdirectory\Configuration\ExtConf;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -27,6 +29,12 @@ class CategoryRepository extends Repository
     protected $defaultOrderings = [
         'title' => QueryInterface::ORDER_ASCENDING
     ];
+
+    public function __construct(ObjectManagerInterface $objectManager)
+    {
+        parent::__construct($objectManager);
+        $this->objectType = Category::class;
+    }
 
     /**
      * Get sub categories of a given category UID

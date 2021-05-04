@@ -132,7 +132,7 @@ class Club extends AbstractEntity
     protected $addresses;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWeiland\Clubdirectory\Domain\Model\Category>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
      * @Extbase\ORM\Lazy
      */
     protected $categories;
@@ -459,14 +459,14 @@ class Club extends AbstractEntity
     }
 
     /**
-     * @return ObjectStorage|Category[]
+     * @return ObjectStorage|\TYPO3\CMS\Extbase\Domain\Model\Category[]
      */
     public function getCategories(): ObjectStorage
     {
         return $this->categories;
     }
 
-    public function getFirstCategory(): ?Category
+    public function getFirstCategory(): ?\TYPO3\CMS\Extbase\Domain\Model\Category
     {
         $this->categories->rewind();
         return $this->categories->current();
@@ -477,12 +477,12 @@ class Club extends AbstractEntity
         $this->categories = $categories;
     }
 
-    public function addCategory(Category $category): void
+    public function addCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $category): void
     {
         $this->categories->attach($category);
     }
 
-    public function removeCategory(Category $category): void
+    public function removeCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $category): void
     {
         $this->categories->detach($category);
     }
