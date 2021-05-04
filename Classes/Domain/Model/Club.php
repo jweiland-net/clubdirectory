@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -459,14 +460,14 @@ class Club extends AbstractEntity
     }
 
     /**
-     * @return ObjectStorage|\TYPO3\CMS\Extbase\Domain\Model\Category[]
+     * @return ObjectStorage|Category[]
      */
     public function getCategories(): ObjectStorage
     {
         return $this->categories;
     }
 
-    public function getFirstCategory(): ?\TYPO3\CMS\Extbase\Domain\Model\Category
+    public function getFirstCategory(): ?Category
     {
         $this->categories->rewind();
         return $this->categories->current();
@@ -477,12 +478,12 @@ class Club extends AbstractEntity
         $this->categories = $categories;
     }
 
-    public function addCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $category): void
+    public function addCategory(Category $category): void
     {
         $this->categories->attach($category);
     }
 
-    public function removeCategory(\TYPO3\CMS\Extbase\Domain\Model\Category $category): void
+    public function removeCategory(Category $category): void
     {
         $this->categories->detach($category);
     }
