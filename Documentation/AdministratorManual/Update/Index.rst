@@ -5,6 +5,11 @@ Updating
 
 If you update EXT:clubdirectory to a newer version, please read this section carefully!
 
+Update to Version 5.0.7
+-----------------------
+
+We have changed some method arguments, please flush cache in InstallTool
+
 Update to Version 3.0.0
 -----------------------
 

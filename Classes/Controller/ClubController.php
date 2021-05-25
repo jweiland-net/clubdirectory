@@ -98,14 +98,11 @@ class ClubController extends AbstractController
             $this->addMapRecordIfPossible($club);
             $this->clubRepository->add($club);
 
-            $pathSegmentHelper = GeneralUtility::makeInstance(
-                PathSegmentHelper::class,
-                null,
-                [
-                    'title',
-                    'uid'
-                ]
-            );
+            $pathSegmentHelper = GeneralUtility::makeInstance(PathSegmentHelper::class);
+            $pathSegmentHelper->setGeneratorFields([
+                'title',
+                'uid'
+            ]);
             $pathSegmentHelper->updatePathSegmentForClub($club);
             $this->clubRepository->update($club);
 

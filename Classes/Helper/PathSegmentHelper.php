@@ -24,37 +24,13 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 class PathSegmentHelper
 {
     /**
-     * @var SlugHelper
+     * @var array
      */
-    protected $slugHelper;
+    protected $generatorFields = [];
 
-    public function __construct(SlugHelper $slugHelper = null, array $generatorFields = [])
+    public function generatePathSegment(array $baseRecord, int $pid): string
     {
-        if ($slugHelper === null) {
-            $config = $GLOBALS['TCA']['tx_clubdirectory_domain_model_club']['columns']['path_segment']['config'];
-
-            if ($generatorFields) {
-                $config['generatorOptions']['fields'] = $generatorFields;
-            }
-
-            $slugHelper = GeneralUtility::makeInstance(
-                SlugHelper::class,
-                'tx_clubdirectory_domain_model_club',
-                'path_segment',
-                $config
-            );
-        }
-        $this->slugHelper = $slugHelper;
-    }
-
-    public function generatePathSegment(
-        array $baseRecord,
-        int $pid
-    ): string {
-        return $this->slugHelper->generate(
-            $baseRecord,
-            $pid
-        );
+        return $this->getSlugHelper()->generate($baseRecord, $pid);
     }
 
     public function updatePathSegmentForClub(Club $club): void
@@ -72,5 +48,26 @@ class PathSegmentHelper
                 $club->getPid()
             )
         );
+    }
+
+    protected function getSlugHelper(): SlugHelper
+    {
+        $config = $GLOBALS['TCA']['tx_clubdirectory_domain_model_club']['columns']['path_segment']['config'];
+
+        if ($this->generatorFields) {
+            $config['generatorOptions']['fields'] = $this->generatorFields;
+        }
+
+        return GeneralUtility::makeInstance(
+            SlugHelper::class,
+            'tx_clubdirectory_domain_model_club',
+            'path_segment',
+            $config
+        );
+    }
+
+    public function setGeneratorFields(array $generatorFields): void
+    {
+        $this->generatorFields = $generatorFields;
     }
 }
