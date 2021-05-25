@@ -7,6 +7,14 @@
 ChangeLog
 =========
 
+**Version 5.0.7**
+
+- Move SlugHelper from constructor argument into getSlugHelper()
+
+**Version 5.0.6**
+
+- Use Extbase Category
+
 **Version 5.0.5**
 
 - Use traverse to disable cHash check in TS condition
