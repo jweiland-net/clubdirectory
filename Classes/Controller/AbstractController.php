@@ -16,6 +16,9 @@ use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Repository\CategoryRepository;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
+use JWeiland\Clubdirectory\Event\PostProcessControllerActionEvent;
+use JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent;
+use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
 use JWeiland\Clubdirectory\Property\TypeConverter\UploadMultipleFilesConverter;
 use JWeiland\Glossary2\Service\GlossaryService;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
@@ -123,7 +126,7 @@ class AbstractController extends ActionController
         $view->assign('extConf', $this->extConf);
     }
 
-    protected function addGlossarToView()
+    protected function addGlossarToView(): void
     {
         $this->view->assign(
             'glossar',
@@ -344,4 +347,41 @@ class AbstractController extends ActionController
             }
         }
     }
+
+    protected function postProcessAndAssignFluidVariables(array $variables = []): void
+    {
+        /** @var PostProcessFluidVariablesEvent $event */
+        $event = $this->eventDispatcher->dispatch(
+            new PostProcessFluidVariablesEvent(
+                $this->request,
+                $this->settings,
+                $variables
+            )
+        );
+
+        $this->view->assignMultiple($event->getFluidVariables());
+    }
+
+    protected function postProcessControllerAction(?Club $club): void
+    {
+        $this->eventDispatcher->dispatch(
+            new PostProcessControllerActionEvent(
+                $this,
+                $club,
+                $this->settings
+            )
+        );
+    }
+
+    protected function preProcessControllerAction(): void
+    {
+        $this->eventDispatcher->dispatch(
+            new PreProcessControllerActionEvent(
+                $this->request,
+                $this->arguments,
+                $this->settings
+            )
+        );
+    }
+
 }

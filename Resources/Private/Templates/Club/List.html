@@ -16,11 +16,7 @@
 
 	<f:if condition="{clubs}">
 		<f:then>
-			<f:widget.paginate objects="{clubs}"
-												 as="paginatedClubs"
-												 configuration="{addQueryStringMethod: 'POST,GET', itemsPerPage: settings.pageBrowser.itemsPerPage, insertAbove: settings.pageBrowser.insertAbove, insertBelow: settings.pageBrowser.insertBelow, maximumNumberOfLinks: settings.pageBrowser.maximumNumberOfLinks}">
-				<f:render partial="Club/List" arguments="{clubs: paginatedClubs}" />
-			</f:widget.paginate>
+			<f:render partial="Club/List" arguments="{_all}" />
 		</f:then>
 		<f:else>
 			<div class="noResults">{f:translate(key: "noResults")}</div>
