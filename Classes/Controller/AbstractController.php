@@ -383,5 +383,4 @@ class AbstractController extends ActionController
             )
         );
     }
-
 }
