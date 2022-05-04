@@ -31,25 +31,26 @@ class ClubController extends AbstractController
      */
     public function listAction(string $letter = ''): void
     {
-        $this->view->assign(
-            'clubs',
-            $this->clubRepository->findFilteredBy(
+        $this->postProcessAndAssignFluidVariables([
+            'clubs' => $this->clubRepository->findFilteredBy(
                 (int)$this->settings['category'],
                 (int)$this->settings['district'],
                 $letter
-            )
-        );
-        $this->view->assign('categories', $this->categoryRepository->getSubCategories());
-        $this->view->assign('search', $this->objectManager->get(Search::class));
-        $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
+            ),
+            'categories' => $this->categoryRepository->getSubCategories(),
+            'search' => $this->objectManager->get(Search::class),
+            'allowedUserGroup' => $this->extConf->getUserGroup()
+        ]);
+
         $this->addGlossarToView();
     }
 
     public function listMyClubsAction(): void
     {
-        $clubs = $this->clubRepository->findByFeUser((int)$GLOBALS['TSFE']->fe_user->user['uid']);
-        $this->view->assign('clubs', $clubs);
-        $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
+        $this->postProcessAndAssignFluidVariables([
+            'clubs' => $this->clubRepository->findByFeUser((int)$GLOBALS['TSFE']->fe_user->user['uid']),
+            'allowedUserGroup' => $this->extConf->getUserGroup()
+        ]);
     }
 
     /**
@@ -59,8 +60,9 @@ class ClubController extends AbstractController
      */
     public function showAction(int $club): void
     {
-        $clubObject = $this->clubRepository->findByIdentifier($club);
-        $this->view->assign('club', $clubObject);
+        $this->postProcessAndAssignFluidVariables([
+            'club' => $this->clubRepository->findByIdentifier($club)
+        ]);
     }
 
     public function newAction(): void
@@ -69,9 +71,11 @@ class ClubController extends AbstractController
         $club = $this->objectManager->get(Club::class);
         $this->fillAddressesUpToMaximum($club);
 
-        $this->view->assign('club', $club);
-        $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
-        $this->view->assign('addressTitles', $this->getAddressTitles());
+        $this->postProcessAndAssignFluidVariables([
+            'club' => $club,
+            'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
+            'addressTitles' => $this->getAddressTitles()
+        ]);
     }
 
     public function initializeCreateAction(): void
@@ -135,9 +139,12 @@ class ClubController extends AbstractController
     public function editAction(Club $club): void
     {
         $this->fillAddressesUpToMaximum($club);
-        $this->view->assign('club', $club);
-        $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
-        $this->view->assign('addressTitles', $this->getAddressTitles());
+
+        $this->postProcessAndAssignFluidVariables([
+            'club' => $club,
+            'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
+            'addressTitles' => $this->getAddressTitles()
+        ]);
     }
 
     public function initializeUpdateAction(): void
@@ -187,10 +194,14 @@ class ClubController extends AbstractController
         } else {
             $clubs = $this->clubRepository->findAll();
         }
-        $this->view->assign('clubs', $clubs);
-        $this->view->assign('categories', $this->categoryRepository->getSubCategories());
-        $this->view->assign('search', $search);
-        $this->view->assign('allowedUserGroup', $this->extConf->getUserGroup());
+
+        $this->postProcessAndAssignFluidVariables([
+            'clubs' => $clubs,
+            'categories' => $this->categoryRepository->getSubCategories(),
+            'search' => $search,
+            'allowedUserGroup' => $this->extConf->getUserGroup()
+        ]);
+
         $this->addGlossarToView();
     }
 

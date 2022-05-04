@@ -11,3 +11,8 @@ services:
     public: true
     arguments:
       - null
+
+  JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener:
+    tags:
+    - name: event.listener
+      event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
