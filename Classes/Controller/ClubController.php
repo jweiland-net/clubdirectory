@@ -86,6 +86,8 @@ class ClubController extends AbstractController
 
         $this->assignMediaTypeConverter('logo', $clubMappingConfiguration, null);
         $this->assignMediaTypeConverter('images', $clubMappingConfiguration, null);
+
+        $this->preProcessControllerAction();
     }
 
     /**
@@ -128,6 +130,8 @@ class ClubController extends AbstractController
             $this->request,
             'club'
         );
+
+        $this->preProcessControllerAction();
     }
 
     /**
@@ -165,6 +169,8 @@ class ClubController extends AbstractController
         $persistedClub = $this->clubRepository->findHiddenObject($requestArgument['__identity']);
         $this->assignMediaTypeConverter('logo', $clubMappingConfiguration, $persistedClub->getOriginalLogo());
         $this->assignMediaTypeConverter('images', $clubMappingConfiguration, $persistedClub->getOriginalImages());
+
+        $this->preProcessControllerAction();
     }
 
     /**
@@ -179,6 +185,11 @@ class ClubController extends AbstractController
         $club->setHidden(true);
         $this->addFlashMessage(LocalizationUtility::translate('clubUpdated', 'clubdirectory'));
         $this->redirect('listMyClubs');
+    }
+
+    public function initializeSearchAction(): void
+    {
+        $this->preProcessControllerAction();
     }
 
     /**
@@ -213,6 +224,8 @@ class ClubController extends AbstractController
             $this->request,
             'club'
         );
+
+        $this->preProcessControllerAction();
     }
 
     /**

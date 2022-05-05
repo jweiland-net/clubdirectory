@@ -24,7 +24,8 @@ class AddPaginatorEventListener extends AbstractControllerEventListener
 
     protected $allowedControllerActions = [
         'Club' => [
-            'list'
+            'list',
+            'search'
         ]
     ];
 
