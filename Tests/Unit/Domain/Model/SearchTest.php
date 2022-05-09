@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the package jweiland/clubdirectory.
  *
@@ -23,12 +25,12 @@ class SearchTest extends UnitTestCase
      */
     protected $subject;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->subject = new Search();
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         unset($this->subject);
     }
@@ -36,7 +38,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function getSearchWordInitiallyReturnsEmptyString()
+    public function getSearchWordInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
             '',
@@ -47,7 +49,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function setSearchWordSetsSearchWord()
+    public function setSearchWordSetsSearchWord(): void
     {
         $this->subject->setSearchWord('foo bar');
 
@@ -60,25 +62,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function setSearchWordWithIntegerResultsInString()
-    {
-        $this->subject->setSearchWord(123);
-        self::assertSame('123', $this->subject->getSearchWord());
-    }
-
-    /**
-     * @test
-     */
-    public function setSearchWordWithBooleanResultsInString()
-    {
-        $this->subject->setSearchWord(true);
-        self::assertSame('1', $this->subject->getSearchWord());
-    }
-
-    /**
-     * @test
-     */
-    public function getCategoryInitiallyReturnsZero()
+    public function getCategoryInitiallyReturnsZero(): void
     {
         self::assertSame(
             0,
@@ -89,7 +73,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function setCategorySetsCategory()
+    public function setCategorySetsCategory(): void
     {
         $this->subject->setCategory(123456);
 
@@ -102,33 +86,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function setCategoryWithStringResultsInInteger()
-    {
-        $this->subject->setCategory('123Test');
-
-        self::assertSame(
-            123,
-            $this->subject->getCategory()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setCategoryWithBooleanResultsInInteger()
-    {
-        $this->subject->setCategory(true);
-
-        self::assertSame(
-            1,
-            $this->subject->getCategory()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getSubCategoryInitiallyReturnsZero()
+    public function getSubCategoryInitiallyReturnsZero(): void
     {
         self::assertSame(
             0,
@@ -139,7 +97,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function setSubCategorySetsSubCategory()
+    public function setSubCategorySetsSubCategory(): void
     {
         $this->subject->setSubCategory(123456);
 
@@ -152,33 +110,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function setSubCategoryWithStringResultsInInteger()
-    {
-        $this->subject->setSubCategory('123Test');
-
-        self::assertSame(
-            123,
-            $this->subject->getSubCategory()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setSubCategoryWithBooleanResultsInInteger()
-    {
-        $this->subject->setSubCategory(true);
-
-        self::assertSame(
-            1,
-            $this->subject->getSubCategory()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getOrderByInitiallyReturnsSortTitle()
+    public function getOrderByInitiallyReturnsSortTitle(): void
     {
         self::assertSame(
             'sortTitle',
@@ -189,7 +121,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function setOrderBySetsOrderBy()
+    public function setOrderBySetsOrderBy(): void
     {
         $this->subject->setOrderBy('foo bar');
 
@@ -202,25 +134,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function setOrderByWithIntegerResultsInString()
-    {
-        $this->subject->setOrderBy(123);
-        self::assertSame('123', $this->subject->getOrderBy());
-    }
-
-    /**
-     * @test
-     */
-    public function setOrderByWithBooleanResultsInString()
-    {
-        $this->subject->setOrderBy(true);
-        self::assertSame('1', $this->subject->getOrderBy());
-    }
-
-    /**
-     * @test
-     */
-    public function getDirectionInitiallyReturnsAscending()
+    public function getDirectionInitiallyReturnsAscending(): void
     {
         self::assertSame(
             QueryInterface::ORDER_ASCENDING,
@@ -231,7 +145,7 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function setDirectionSetsDirection()
+    public function setDirectionSetsDirection(): void
     {
         $this->subject->setDirection('foo bar');
 
@@ -239,23 +153,5 @@ class SearchTest extends UnitTestCase
             'foo bar',
             $this->subject->getDirection()
         );
-    }
-
-    /**
-     * @test
-     */
-    public function setDirectionWithIntegerResultsInString()
-    {
-        $this->subject->setDirection(123);
-        self::assertSame('123', $this->subject->getDirection());
-    }
-
-    /**
-     * @test
-     */
-    public function setDirectionWithBooleanResultsInString()
-    {
-        $this->subject->setDirection(true);
-        self::assertSame('1', $this->subject->getDirection());
     }
 }
