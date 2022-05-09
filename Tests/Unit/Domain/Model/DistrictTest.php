@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the package jweiland/clubdirectory.
  *
@@ -22,12 +24,12 @@ class DistrictTest extends UnitTestCase
      */
     protected $subject;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->subject = new District();
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         unset($this->subject);
     }
@@ -35,7 +37,7 @@ class DistrictTest extends UnitTestCase
     /**
      * @test
      */
-    public function getDistrictInitiallyReturnsEmptyString()
+    public function getDistrictInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
             '',
@@ -46,7 +48,7 @@ class DistrictTest extends UnitTestCase
     /**
      * @test
      */
-    public function setDistrictSetsDistrict()
+    public function setDistrictSetsDistrict(): void
     {
         $this->subject->setDistrict('foo bar');
 
@@ -54,23 +56,5 @@ class DistrictTest extends UnitTestCase
             'foo bar',
             $this->subject->getDistrict()
         );
-    }
-
-    /**
-     * @test
-     */
-    public function setDistrictWithIntegerResultsInString()
-    {
-        $this->subject->setDistrict(123);
-        self::assertSame('123', $this->subject->getDistrict());
-    }
-
-    /**
-     * @test
-     */
-    public function setDistrictWithBooleanResultsInString()
-    {
-        $this->subject->setDistrict(true);
-        self::assertSame('1', $this->subject->getDistrict());
     }
 }

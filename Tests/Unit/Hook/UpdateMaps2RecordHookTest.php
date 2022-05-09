@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the package jweiland/clubdirectory.
  *
@@ -30,7 +32,7 @@ class UpdateMaps2RecordHookTest extends AbstractUnitTestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->subject = new UpdateMaps2RecordHook();
     }
@@ -39,16 +41,19 @@ class UpdateMaps2RecordHookTest extends AbstractUnitTestCase
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
-        unset($this->subject);
+        unset(
+            $this->subject
+        );
+
         parent::tearDown();
     }
 
     /**
      * @test
      */
-    public function postUpdateWillSetTitleOfPoiCollectionToTitleOfClubRecord()
+    public function postUpdateWillSetTitleOfPoiCollectionToTitleOfClubRecord(): void
     {
         $this->buildAssertionForDatabaseWithReturnValue(
             'tx_clubdirectory_domain_model_club',
