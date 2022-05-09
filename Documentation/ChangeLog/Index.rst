@@ -7,6 +7,10 @@
 ChangeLog
 =========
 
+**Version 5.2.0**
+
+- Set dependency for glossary2 to 5.0.0
+
 **Version 5.0.7**
 
 - Move SlugHelper from constructor argument into getSlugHelper()
