@@ -20,16 +20,6 @@
 							</config>
 						</TCEforms>
 					</settings.showGlossar>
-					<settings.showAllLink>
-						<TCEforms>
-							<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:showAllLink</label>
-							<config>
-								<type>check</type>
-								<renderType>checkboxToggle</renderType>
-								<default>1</default>
-							</config>
-						</TCEforms>
-					</settings.showAllLink>
 					<settings.category>
 						<TCEforms>
 							<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:category</label>

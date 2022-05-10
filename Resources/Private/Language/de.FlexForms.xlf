@@ -11,10 +11,6 @@
 				<source>Show A-Z links</source>
 				<target>Zeige A-Z Links</target>
 			</trans-unit>
-			<trans-unit id="showAllLink">
-				<source>Add ALL Link</source>
-				<target>Füge ALL Link ein</target>
-			</trans-unit>
 			<trans-unit id="category">
 				<source>Category</source>
 				<target>Kategorie</target>

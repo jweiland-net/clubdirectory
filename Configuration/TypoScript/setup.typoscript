@@ -34,6 +34,7 @@ plugin.tx_clubdirectory {
         maxHeight = 64
       }
     }
+
     show {
       logo {
         width = 100c
@@ -52,9 +53,16 @@ plugin.tx_clubdirectory {
         maxHeight = 280
       }
     }
+
     new {
       uploadFolder = 1:user_upload/tx_clubdirectory/
     }
+
+    glossary {
+      mergeNumbers = 1
+      showAllLink = 1
+    }
+
     pageBrowser {
       itemsPerPage = {$plugin.tx_clubdirectory.settings.pageBrowser.itemsPerPage}
     }

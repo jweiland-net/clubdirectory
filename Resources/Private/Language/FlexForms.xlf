@@ -9,9 +9,6 @@
 			<trans-unit id="showGlossar">
 				<source>Show A-Z links</source>
 			</trans-unit>
-			<trans-unit id="showAllLink">
-				<source>Add ALL Link</source>
-			</trans-unit>
 			<trans-unit id="category">
 				<source>Category</source>
 			</trans-unit>
