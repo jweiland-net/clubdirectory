@@ -41,8 +41,6 @@ class ClubController extends AbstractController
             'search' => $this->objectManager->get(Search::class),
             'allowedUserGroup' => $this->extConf->getUserGroup()
         ]);
-
-        $this->addGlossarToView();
     }
 
     public function listMyClubsAction(): void
@@ -212,8 +210,6 @@ class ClubController extends AbstractController
             'search' => $search,
             'allowedUserGroup' => $this->extConf->getUserGroup()
         ]);
-
-        $this->addGlossarToView();
     }
 
     public function initializeActivateAction()

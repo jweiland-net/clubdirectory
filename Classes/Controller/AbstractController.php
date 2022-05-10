@@ -126,26 +126,6 @@ class AbstractController extends ActionController
         $view->assign('extConf', $this->extConf);
     }
 
-    protected function addGlossarToView(): void
-    {
-        $this->view->assign(
-            'glossar',
-            $this->glossaryService->buildGlossary(
-                $this->clubRepository->getQueryBuilderToFindAllEntries(
-                    (int)$this->settings['category'],
-                    (int)$this->settings['district']
-                ),
-                [
-                    'settings' => $this->settings,
-                    'extensionName' => 'Clubdirectory',
-                    'pluginName' => 'Clubdirectory',
-                    'controllerName' => 'Club',
-                    'actionName' => 'list',
-                ]
-            )
-        );
-    }
-
     /**
      * Send email on new/update.
      *
