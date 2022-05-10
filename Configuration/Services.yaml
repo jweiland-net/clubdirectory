@@ -17,6 +17,12 @@ services:
     - name: event.listener
       event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
 
+  JWeiland\Clubdirectory\EventListener\AddGlossaryEventListener:
+    tags:
+    - name: event.listener
+      event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
+      after: JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener
+
   JWeiland\Clubdirectory\EventListener\AllowSearchParameterEventListener:
     tags:
     - name: event.listener
