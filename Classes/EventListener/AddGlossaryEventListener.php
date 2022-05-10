@@ -11,9 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\EventListener;
 
-use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use JWeiland\Glossary2\Service\GlossaryService;
-use JWeiland\Clubdirectory\Domain\Repository\SchoolRepository;
+use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 
