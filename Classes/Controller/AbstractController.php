@@ -20,7 +20,6 @@ use JWeiland\Clubdirectory\Event\PostProcessControllerActionEvent;
 use JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent;
 use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
 use JWeiland\Clubdirectory\Property\TypeConverter\UploadMultipleFilesConverter;
-use JWeiland\Glossary2\Service\GlossaryService;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
 use JWeiland\Maps2\Domain\Model\Position;
 use JWeiland\Maps2\Domain\Repository\PoiCollectionRepository;
@@ -57,11 +56,6 @@ class AbstractController extends ActionController
     protected $categoryRepository;
 
     /**
-     * @var GlossaryService
-     */
-    protected $glossaryService;
-
-    /**
      * @var Session
      */
     protected $session;
@@ -84,11 +78,6 @@ class AbstractController extends ActionController
     public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {
         $this->categoryRepository = $categoryRepository;
-    }
-
-    public function injectGlossaryService(GlossaryService $glossaryService): void
-    {
-        $this->glossaryService = $glossaryService;
     }
 
     public function injectSession(Session $session): void
