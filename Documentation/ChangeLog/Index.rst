@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+**Version 5.2.1**
+
+- Add TS glossary options for GlossaryService
+- Remove GlossaryService from controller
+
 **Version 5.2.0**
 
 - Set dependency for glossary2 to 5.0.0
