@@ -31,7 +31,8 @@ class AddGlossaryEventListener extends AbstractControllerEventListener
 
     protected $allowedControllerActions = [
         'Club' => [
-            'list'
+            'list',
+            'search'
         ]
     ];
 
@@ -58,8 +59,8 @@ class AddGlossaryEventListener extends AbstractControllerEventListener
     {
         $options = [
             'extensionName' => 'clubdirectory',
-            'pluginName' => 'list',
-            'controllerName' => 'School',
+            'pluginName' => 'clubdirectory',
+            'controllerName' => 'Club',
             'column' => 'title',
             'settings' => $event->getSettings()
         ];
