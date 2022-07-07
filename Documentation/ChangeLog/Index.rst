@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+**Version 5.3.0**
+
+- Use our own FrontendUserRepo and model.
+- Move methods to get current user to new FrontendUSerRepo.
+
 **Version 5.2.1**
 
 - Add TS glossary options for GlossaryService

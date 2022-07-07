@@ -46,7 +46,7 @@ class ClubController extends AbstractController
     public function listMyClubsAction(): void
     {
         $this->postProcessAndAssignFluidVariables([
-            'clubs' => $this->clubRepository->findByFeUser((int)$GLOBALS['TSFE']->fe_user->user['uid']),
+            'clubs' => $this->clubRepository->findByFeUser($this->frontendUserRepository->getCurrentFrontendUserUid()),
             'allowedUserGroup' => $this->extConf->getUserGroup()
         ]);
     }
@@ -94,9 +94,11 @@ class ClubController extends AbstractController
      */
     public function createAction(Club $club): void
     {
-        if ($GLOBALS['TSFE']->fe_user->user['uid']) {
+        if ($this->frontendUserRepository->getCurrentFrontendUserRecord() !== []) {
             /** @var FrontendUser $feUser */
-            $feUser = $this->feUserRepository->findByUid($GLOBALS['TSFE']->fe_user->user['uid']);
+            $feUser = $this->frontendUserRepository->findByUid(
+                $this->frontendUserRepository->getCurrentFrontendUserUid()
+            );
             $club->addFeUser($feUser);
             $club->setHidden(true);
             $this->addMapRecordIfPossible($club);
