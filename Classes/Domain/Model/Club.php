@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Model;
 
+use JWeiland\Clubdirectory\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
@@ -290,12 +292,10 @@ class Club extends AbstractEntity
     public function getCurrentUserCanEditClub(): bool
     {
         $currentUserCanEditThisClub = false;
-        if (
-            is_array($GLOBALS['TSFE']->fe_user->user)
-            && $this->getFeUsers()->count()
-        ) {
+        $frontendUserRepository = GeneralUtility::makeInstance(FrontendUserRepository::class);
+        if ($frontendUserRepository->getCurrentFrontendUserRecord() !== []) {
             foreach ($this->getFeUsers() as $feUser) {
-                if ($feUser->getUid() === (int)$GLOBALS['TSFE']->fe_user->user['uid']) {
+                if ($feUser->getUid() === $frontendUserRepository->getCurrentFrontendUserUid()) {
                     $currentUserCanEditThisClub = true;
                     break;
                 }
