@@ -1,12 +1,14 @@
 .. include:: ../../Includes.txt
 
+
+======
 Routes
 ======
 
 With TYPO3 9 you have the possibility to configure RouteEnhancers
 
 Example Configuration
----------------------
+=====================
 
 .. code-block:: none
 

@@ -1,16 +1,25 @@
 .. include:: ../Includes.txt
 
 
-
 .. _installation:
 
-============
-Installation
-============
+=================
+Installation Type
+=================
 
-Target group: **Administrators**
+Composer
+========
 
-The extension needs to be installed like any other extension of TYPO3 CMS:
+You can install `clubdirectory` with following shell command:
+
+.. code-block:: bash
+
+   composer req jweiland/clubdirectory
+
+Extensionmanager
+""""""""""""""""
+
+If you want to install `clubdirectory` traditionally with Extensionmanager, follow these steps:
 
 #. Visit ExtensionManager
 
@@ -20,8 +29,11 @@ The extension needs to be installed like any other extension of TYPO3 CMS:
 
 #. Install extension
 
+DEV Version (GIT)
+"""""""""""""""""
 
-Next step
-=========
+You can install the latest DEV Version with following GIT command:
 
-:ref:`Configure extension <configuration>`.
+.. code-block:: bash
+
+   git clone https://github.com/jweiland-net/clubdirectory.git
