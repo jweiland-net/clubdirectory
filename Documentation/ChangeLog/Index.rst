@@ -13,6 +13,15 @@ ChangeLog
 - Move methods to get current user to new FrontendUSerRepo.
 - Remove column "sortTitle"
 - Deprecate getter/setter for sub-categories in search model
+- Update label for filter by
+- Do not show filter box, if a category was preset
+- Repair pageTSConfig for category fields
+- Remove DE translation. THX Crowdin
+- Add district as select field to search template
+- Remove hint how to configure categories in TCA form
+- Repair label of hidden field in TCA
+- Move activity behind title
+- Reduce field height of activity/times to 5 rows
 
 **Version 5.2.1**
 
