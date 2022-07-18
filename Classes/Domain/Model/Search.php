@@ -32,6 +32,11 @@ class Search
     /**
      * @var int
      */
+    protected $district = 0;
+
+    /**
+     * @var int
+     */
     protected $subCategory = 0;
 
     /**
@@ -62,6 +67,16 @@ class Search
     public function setCategory(int $category): void
     {
         $this->category = $category;
+    }
+
+    public function getDistrict(): int
+    {
+        return $this->district;
+    }
+
+    public function setDistrict(int $district): void
+    {
+        $this->district = $district;
     }
 
     public function getSubCategory(): int

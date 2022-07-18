@@ -117,8 +117,11 @@
 			<trans-unit id="noResults">
 				<source>No results found</source>
 			</trans-unit>
-			<trans-unit id="filterBy">
+			<trans-unit id="filterByCategory">
 				<source>Filter by category</source>
+			</trans-unit>
+			<trans-unit id="filterByDistrict">
+				<source>Filter by district</source>
 			</trans-unit>
 			<trans-unit id="sortDirection">
 				<source>Sort by</source>

@@ -3,14 +3,30 @@
 			data-namespace-typo3-fluid="true">
 
 <f:form action="search">
-	<f:if condition="{settings.category} > 0">
+	<f:if condition="{settings.category} == 0">
 		<div class="form-group">
-			<label>{f:translate(key: "filterBy")}:</label>
+			<label>{f:translate(key: "filterByCategory")}:</label>
 			<f:form.select class="form-control"
 										 name="search[category]"
 										 value="{search.category}"
 										 options="{categories}"
 										 optionLabelField="title"
+										 optionValueField="uid"
+										 prependOptionLabel=""
+										 prependOptionValue="0"
+										 sortByOptionLabel="1"
+										 additionalAttributes="{onChange: 'this.form.submit()'}" />
+		</div>
+	</f:if>
+
+	<f:if condition="{settings.district} == 0">
+		<div class="form-group">
+			<label>{f:translate(key: "filterByDistrict")}:</label>
+			<f:form.select class="form-control"
+										 name="search[district]"
+										 value="{search.district}"
+										 options="{districts}"
+										 optionLabelField="district"
 										 optionValueField="uid"
 										 prependOptionLabel=""
 										 prependOptionValue="0"

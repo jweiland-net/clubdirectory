@@ -84,11 +84,17 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         // If a searchWord is set, do not process other filtering methods
         if ($search->getSearchWord()) {
             $constraints[] = $this->getConstraintForSearchWord($query, $search->getSearchWord());
-        } elseif ($search->getSubCategory()) {
-            // @ToDo: getSubCategory is deprecated. Remove with next major release
-            $constraints[] = $query->contains('categories', $search->getSubCategory());
-        } elseif ($search->getCategory()) {
-            $constraints[] = $query->contains('categories', $search->getCategory());
+        } else {
+            if ($search->getSubCategory()) {
+                // @ToDo: getSubCategory is deprecated. Remove with next major release
+                $constraints[] = $query->contains('categories', $search->getSubCategory());
+            } elseif ($search->getCategory()) {
+                $constraints[] = $query->contains('categories', $search->getCategory());
+            }
+
+            if ($search->getDistrict()) {
+                $constraints[] = $query->contains('district', $search->getDistrict());
+            }
         }
 
         // Set ordering
@@ -100,6 +106,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             )) {
                 $search->setDirection(QueryInterface::ORDER_ASCENDING);
             }
+
             $query->setOrderings([
                 $search->getOrderBy() => $search->getDirection(),
             ]);

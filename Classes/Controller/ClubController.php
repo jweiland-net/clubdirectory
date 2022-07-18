@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
+use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
 use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -27,6 +28,16 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class ClubController extends AbstractController
 {
     /**
+     * @var DistrictRepository
+     */
+    protected $districtRepository;
+
+    public function injectDistrictRepository(DistrictRepository $districtRepository): void
+    {
+        $this->districtRepository = $districtRepository;
+    }
+
+    /**
      * @param string $letter
      */
     public function listAction(string $letter = ''): void
@@ -38,6 +49,7 @@ class ClubController extends AbstractController
                 $letter
             ),
             'categories' => $this->categoryRepository->getCategories(),
+            'districts' => $this->districtRepository->findAll(),
             'search' => $this->objectManager->get(Search::class),
             'allowedUserGroup' => $this->extConf->getUserGroup()
         ]);
@@ -122,7 +134,7 @@ class ClubController extends AbstractController
         }
     }
 
-    public function initializeEditAction()
+    public function initializeEditAction(): void
     {
         $hiddenObjectHelper = $this->objectManager->get(HiddenObjectHelper::class);
         $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
@@ -206,6 +218,7 @@ class ClubController extends AbstractController
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $clubs,
             'categories' => $this->categoryRepository->getCategories(),
+            'districts' => $this->districtRepository->findAll(),
             'search' => $search,
             'allowedUserGroup' => $this->extConf->getUserGroup()
         ]);
