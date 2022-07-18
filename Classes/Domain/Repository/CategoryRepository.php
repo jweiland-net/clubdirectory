@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
 use JWeiland\Clubdirectory\Configuration\ExtConf;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -27,30 +27,22 @@ class CategoryRepository extends Repository
      * @var array
      */
     protected $defaultOrderings = [
-        'title' => QueryInterface::ORDER_ASCENDING
+        'title' => QueryInterface::ORDER_ASCENDING,
     ];
 
-    public function __construct(ObjectManagerInterface $objectManager)
+    public function initializeObject(): void
     {
-        parent::__construct($objectManager);
         $this->objectType = Category::class;
     }
 
     /**
-     * Get sub categories of a given category UID
-     *
-     * @param int $categoryUid
-     * @return QueryResultInterface
+     * Get categories of configured root category
      */
-    public function getSubCategories(int $categoryUid = 0): QueryResultInterface
+    public function getCategories(): QueryResultInterface
     {
-        /** @var ExtConf $extConf */
-        $extConf = $this->objectManager->get(ExtConf::class);
-        if (!$categoryUid) {
-            $categoryUid = $extConf->getRootCategory();
-        }
+        $extConf = GeneralUtility::makeInstance(ExtConf::class);
 
         $query = $this->createQuery();
-        return $query->matching($query->equals('parent', $categoryUid))->execute();
+        return $query->matching($query->equals('parent', $extConf->getRootCategory()))->execute();
     }
 }

@@ -86,41 +86,6 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function getSubCategoryInitiallyReturnsZero(): void
-    {
-        self::assertSame(
-            0,
-            $this->subject->getSubCategory()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setSubCategorySetsSubCategory(): void
-    {
-        $this->subject->setSubCategory(123456);
-
-        self::assertSame(
-            123456,
-            $this->subject->getSubCategory()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getOrderByInitiallyReturnsSortTitle(): void
-    {
-        self::assertSame(
-            'sortTitle',
-            $this->subject->getOrderBy()
-        );
-    }
-
-    /**
-     * @test
-     */
     public function setOrderBySetsOrderBy(): void
     {
         $this->subject->setOrderBy('foo bar');

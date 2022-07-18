@@ -43,12 +43,6 @@ class Club extends AbstractEntity
 
     /**
      * @var string
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $sortTitle = '';
-
-    /**
-     * @var string
      */
     protected $activity = '';
 
@@ -177,16 +171,6 @@ class Club extends AbstractEntity
     public function setPathSegment(string $pathSegment): void
     {
         $this->pathSegment = $pathSegment;
-    }
-
-    public function getSortTitle(): string
-    {
-        return $this->sortTitle;
-    }
-
-    public function setSortTitle(string $sortTitle): void
-    {
-        $this->sortTitle = $sortTitle;
     }
 
     public function getActivity(): string

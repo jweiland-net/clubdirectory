@@ -11,6 +11,8 @@ ChangeLog
 
 - Use our own FrontendUserRepo and model.
 - Move methods to get current user to new FrontendUSerRepo.
+- Remove column "sortTitle"
+- Deprecate getter/setter for sub-categories in search model
 
 **Version 5.2.1**
 

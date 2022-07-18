@@ -90,30 +90,6 @@ class ClubTest extends UnitTestCase
     /**
      * @test
      */
-    public function getSortTitleInitiallyReturnsEmptyString(): void
-    {
-        self::assertSame(
-            '',
-            $this->subject->getSortTitle()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setSortTitleSetsSortTitle(): void
-    {
-        $this->subject->setSortTitle('foo bar');
-
-        self::assertSame(
-            'foo bar',
-            $this->subject->getSortTitle()
-        );
-    }
-
-    /**
-     * @test
-     */
     public function getActivityInitiallyReturnsEmptyString(): void
     {
         self::assertSame(

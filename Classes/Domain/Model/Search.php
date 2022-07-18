@@ -37,7 +37,7 @@ class Search
     /**
      * @var string
      */
-    protected $orderBy = 'sortTitle';
+    protected $orderBy = 'title';
 
     /**
      * @var string
@@ -66,11 +66,13 @@ class Search
 
     public function getSubCategory(): int
     {
+        trigger_error('Using getSubCategory is deprecated and will be removed with next major release', E_USER_DEPRECATED);
         return $this->subCategory;
     }
 
     public function setSubCategory(int $subCategory): void
     {
+        trigger_error('Using setSubCategory is deprecated and will be removed with next major release', E_USER_DEPRECATED);
         $this->subCategory = $subCategory;
     }
 
@@ -95,30 +97,8 @@ class Search
     }
 
     /**
-     * Helper method to fill selectbox
-     * Get fieldNames to sort by
-     *
-     * @return array
-     */
-    public function getFieldNames(): array
-    {
-        return [
-            0 => [
-                'key' => 'title',
-                'value' => LocalizationUtility::translate('tx_clubdirectory_domain_model_club.title', 'clubdirectory')
-            ],
-            1 => [
-                'key' => 'sortTitle',
-                'value' => LocalizationUtility::translate('tx_clubdirectory_domain_model_club.sortTitle', 'clubdirectory')
-            ],
-        ];
-    }
-
-    /**
-     * Helper method to fill selectbox
+     * Helper method to fill selectbox in fluid template {search.direction}
      * Get order directions
-     *
-     * @return array
      */
     public function getDirections(): array
     {

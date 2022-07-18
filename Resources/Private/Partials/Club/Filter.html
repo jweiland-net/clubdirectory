@@ -17,37 +17,6 @@
 			additionalAttributes="{onChange: 'this.form.submit()'}"
 		/>
 	</div>
-	<f:if condition="{subCategories}">
-		<div class="form-group">
-			<f:form.select
-				class="form-control"
-				name="search[subCategory]"
-				value="{search.subCategory}"
-				options="{subCategories}"
-				optionLabelField="title"
-				optionValueField="uid"
-				prependOptionLabel=""
-				prependOptionValue="0"
-				sortByOptionLabel="1"
-				additionalAttributes="{onChange: 'this.form.submit()'}"
-			/>
-		</div>
-	</f:if>
-	<div class="form-group">
-		<label>Sortieren nach:</label>
-		<f:form.select
-			class="form-control"
-			name="search[orderBy]"
-			value="{search.orderBy}"
-			options="{search.fieldNames}"
-			optionLabelField="value"
-			optionValueField="key"
-			prependOptionLabel=""
-			prependOptionValue="0"
-			sortByOptionLabel="1"
-			additionalAttributes="{onChange: 'this.form.submit()'}"
-		/>
-	</div>
 	<div class="form-group">
 		<f:form.select
 			class="form-control"

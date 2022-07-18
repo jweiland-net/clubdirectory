@@ -37,7 +37,7 @@ class ClubController extends AbstractController
                 (int)$this->settings['district'],
                 $letter
             ),
-            'categories' => $this->categoryRepository->getSubCategories(),
+            'categories' => $this->categoryRepository->getCategories(),
             'search' => $this->objectManager->get(Search::class),
             'allowedUserGroup' => $this->extConf->getUserGroup()
         ]);
@@ -195,28 +195,25 @@ class ClubController extends AbstractController
     /**
      * @param Search|null $search
      */
-    public function searchAction(?Search $search = null): void
+    public function searchAction(Search $search = null): void
     {
         if ($search instanceof Search) {
             $clubs = $this->clubRepository->findBySearch($search);
-            if ($search->getCategory()) {
-                $this->view->assign('subCategories', $this->categoryRepository->getSubCategories($search->getCategory()));
-            }
         } else {
             $clubs = $this->clubRepository->findAll();
         }
 
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $clubs,
-            'categories' => $this->categoryRepository->getSubCategories(),
+            'categories' => $this->categoryRepository->getCategories(),
             'search' => $search,
             'allowedUserGroup' => $this->extConf->getUserGroup()
         ]);
     }
 
-    public function initializeActivateAction()
+    public function initializeActivateAction(): void
     {
-        $hiddenObjectHelper = $this->objectManager->get(HiddenObjectHelper::class);
+        $hiddenObjectHelper = GeneralUtility::makeInstance(HiddenObjectHelper::class);
         $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
             $this->clubRepository,
             $this->request,
