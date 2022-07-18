@@ -93,7 +93,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             }
 
             if ($search->getDistrict()) {
-                $constraints[] = $query->contains('district', $search->getDistrict());
+                $constraints[] = $query->equals('district', $search->getDistrict());
             }
         }
 

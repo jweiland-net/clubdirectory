@@ -8,7 +8,7 @@
 
 	<f:render partial="Club/InsertEditLinks" arguments="{allowedUserGroup: allowedUserGroup}" />
 	<f:render partial="Club/Search" arguments="{search: search}" />
-	<f:render partial="Club/Filter" arguments="{search: search, categories: categories}" />
+	<f:render partial="Club/Filter" arguments="{search: search, categories: categories, districts: districts}" />
 
 	<f:if condition="{settings.showGlossar}">
 		{glossar -> f:format.raw()}
