@@ -1,35 +1,33 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+<html lang="en"
+			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 			data-namespace-typo3-fluid="true">
 
 <f:form action="search">
 	<div class="form-group">
 		<label>{f:translate(key: "filterBy")}:</label>
-		<f:form.select
-			class="form-control"
-			name="search[category]"
-			value="{search.category}"
-			options="{categories}"
-			optionLabelField="title"
-			optionValueField="uid"
-			prependOptionLabel=""
-			prependOptionValue="0"
-			sortByOptionLabel="1"
-			additionalAttributes="{onChange: 'this.form.submit()'}"
-		/>
+		<f:form.select class="form-control"
+									 name="search[category]"
+									 value="{search.category}"
+									 options="{categories}"
+									 optionLabelField="title"
+									 optionValueField="uid"
+									 prependOptionLabel=""
+									 prependOptionValue="0"
+									 sortByOptionLabel="1"
+									 additionalAttributes="{onChange: 'this.form.submit()'}" />
 	</div>
 	<div class="form-group">
-		<f:form.select
-			class="form-control"
-			name="search[direction]"
-			value="{search.direction}"
-			options="{search.directions}"
-			optionLabelField="value"
-			optionValueField="key"
-			prependOptionLabel=""
-			prependOptionValue="0"
-			sortByOptionLabel="1"
-			additionalAttributes="{onChange: 'this.form.submit()'}"
-		/>
+		<label>{f:translate(key: "sortDirection")}:</label>
+		<f:form.select class="form-control"
+									 name="search[direction]"
+									 value="{search.direction}"
+									 options="{search.directions}"
+									 optionLabelField="value"
+									 optionValueField="key"
+									 prependOptionLabel=""
+									 prependOptionValue="0"
+									 sortByOptionLabel="1"
+									 additionalAttributes="{onChange: 'this.form.submit()'}" />
 	</div>
 </f:form>
 </html>

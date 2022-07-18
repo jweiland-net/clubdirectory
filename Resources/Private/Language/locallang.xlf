@@ -117,11 +117,14 @@
 			<trans-unit id="noResults">
 				<source>No results found</source>
 			</trans-unit>
+			<trans-unit id="filterBy">
+				<source>Filter by category</source>
+			</trans-unit>
+			<trans-unit id="sortDirection">
+				<source>Sort by</source>
+			</trans-unit>
 			<trans-unit id="ascending">
 				<source>Ascending</source>
-			</trans-unit>
-			<trans-unit id="filterBy">
-				<source>Filter by</source>
 			</trans-unit>
 			<trans-unit id="descending">
 				<source>Descending</source>

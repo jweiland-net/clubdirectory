@@ -154,13 +154,17 @@
 				<source>No results found</source>
 				<target>Keine Einträge gefunden</target>
 			</trans-unit>
+			<trans-unit id="filterBy">
+				<source>Filter by category</source>
+				<target>Filtern nach Kategorie</target>
+			</trans-unit>
+			<trans-unit id="sortDirection">
+				<source>Sort by</source>
+				<target>Sortieren nach</target>
+			</trans-unit>
 			<trans-unit id="ascending">
 				<source>Ascending</source>
 				<target>Aufsteigend</target>
-			</trans-unit>
-			<trans-unit id="filterBy">
-				<source>Filter by</source>
-				<target>Filtern</target>
 			</trans-unit>
 			<trans-unit id="descending">
 				<source>Descending</source>
