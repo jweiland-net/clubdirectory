@@ -1,4 +1,5 @@
 <?php
+
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Club Directory',
     'description' => 'Manage and display clubs',
@@ -7,16 +8,16 @@ $EM_CONF[$_EXTKEY] = [
     'author_email' => 'projects@jweiland.net',
     'author_company' => 'jweiland.net',
     'state' => 'stable',
-    'version' => '5.2.1',
+    'version' => '5.3.0',
     'constraints' => [
         'depends' => [
             'typo3' => '10.4.0-10.4.99',
             'maps2' => '9.3.0-0.0.0',
-            'glossary2' => '5.0.0-0.0.0'
+            'glossary2' => '5.0.0-0.0.0',
         ],
         'conflicts' => [],
         'suggests' => [
-            'checkfaluploads' => ''
-        ]
-    ]
+            'checkfaluploads' => '',
+        ],
+    ],
 ];

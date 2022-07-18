@@ -16,6 +16,7 @@ use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Repository\CategoryRepository;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
+use JWeiland\Clubdirectory\Domain\Repository\FrontendUserRepository;
 use JWeiland\Clubdirectory\Event\PostProcessControllerActionEvent;
 use JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent;
 use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
@@ -27,7 +28,6 @@ use JWeiland\Maps2\Service\GeoCodeService;
 use JWeiland\Maps2\Service\MapService;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\MvcPropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -48,7 +48,7 @@ class AbstractController extends ActionController
     /**
      * @var FrontendUserRepository
      */
-    protected $feUserRepository;
+    protected $frontendUserRepository;
 
     /**
      * @var CategoryRepository
@@ -72,7 +72,7 @@ class AbstractController extends ActionController
 
     public function injectFeUserRepository(FrontendUserRepository $feUserRepository): void
     {
-        $this->feUserRepository = $feUserRepository;
+        $this->frontendUserRepository = $feUserRepository;
     }
 
     public function injectCategoryRepository(CategoryRepository $categoryRepository): void
@@ -117,14 +117,11 @@ class AbstractController extends ActionController
 
     /**
      * Send email on new/update.
-     *
-     * @param string $subjectKey
-     * @param Club $club
-     * @return bool
      */
     public function sendMail(string $subjectKey, Club $club): bool
     {
         $this->view->assign('club', $club);
+
         /** @var MailMessage $mail */
         $mail = $this->objectManager->get(MailMessage::class);
         $mail->setFrom($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName());
@@ -132,7 +129,7 @@ class AbstractController extends ActionController
         $mail->setSubject(LocalizationUtility::translate('email.subject.' . $subjectKey, 'clubdirectory'));
         $mail->html($this->view->render());
 
-        return (bool)$mail->send();
+        return $mail->send();
     }
 
     /**

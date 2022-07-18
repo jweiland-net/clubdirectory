@@ -1,57 +1,44 @@
-.. include:: Includes.txt
+.. include:: /Includes.rst.txt
 
 
-.. Every manual should have a start label for cross-referencing to
-.. start page. Do not remove this!
+=============
+Clubdirectory
+=============
 
-.. _start:
+:Extension key:
+   clubdirectory
 
-=============================================================
-Extension Name
-=============================================================
+:Package name:
+   Club Directory
 
-.. only:: html
+:Version:
+   |release|
 
-   :Classification:
-      clubdirectory
+:Language:
+   en
 
-   :Version:
-      |release|
+:Author:
+   Stefan Froemken
 
-   :Language:
-      en
+:License:
+   This document is published under the
+   `Creative Commons BY 4.0 <https://creativecommons.org/licenses/by/4.0/>`__
+   license.
 
-   :Description:
-      Manual covering TYPO3 extension clubdirectory
+:Rendered:
+   |today|
 
-   :Keywords:
-      club, clubdirectory, glossary
+----
 
-   :Copyright:
-      2013-2020
+Manual covering TYPO3 extension clubdirectory
 
-   :Author:
-      Stefan Froemken
+----
 
-   :Email:
-      projects@jweiland.net
-
-   :License:
-      This document is published under the Open Publication License
-      available from http://www.opencontent.org/openpub/
-
-   :Rendered:
-      |today|
-
-   The content of this document is related to TYPO3,
-   a GNU/GPL CMS/Framework available from `www.typo3.org <https://typo3.org/>`__.
-
-
-   **Table of Contents**
+**Table of Contents**
 
 .. toctree::
-   :maxdepth: 3
-
+   :maxdepth: 2
+   :titlesonly:
 
    Introduction/Index
    User/Index
@@ -61,3 +48,11 @@ Extension Name
    KnownProblems/Index
    ChangeLog/Index
    Links
+
+.. Meta Menu
+
+.. toctree::
+   :hidden:
+
+   Sitemap
+   genindex

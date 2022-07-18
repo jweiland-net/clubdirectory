@@ -1,10 +1,11 @@
-.. include:: Includes.txt
+.. include:: /Includes.rst.txt
 
 
 .. _links:
 
+=====
 Links
------
+=====
 
 The links to issue and the GitHub repository are maintained in the Settings.cfg.
 

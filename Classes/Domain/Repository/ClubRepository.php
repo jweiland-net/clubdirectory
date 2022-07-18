@@ -35,7 +35,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
      * @var array
      */
     protected $defaultOrderings = [
-        'sortTitle' => QueryInterface::ORDER_ASCENDING
+        'title' => QueryInterface::ORDER_ASCENDING,
     ];
 
     /**
@@ -66,7 +66,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
 
         if ($letter) {
             $glossaryService = GeneralUtility::makeInstance(GlossaryService::class);
-            $constraints[] = $glossaryService->getLetterConstraintForExtbaseQuery($query, 'sortTitle', $letter);
+            $constraints[] = $glossaryService->getLetterConstraintForExtbaseQuery($query, 'title', $letter);
         }
 
         if (empty($constraints)) {
@@ -76,7 +76,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         return $query->matching($query->logicalAnd($constraints))->execute();
     }
 
-    public function findBySearch(?Search $search): QueryResultInterface
+    public function findBySearch(Search $search): QueryResultInterface
     {
         $query = $this->createQuery();
         $constraints = [];
@@ -85,28 +85,34 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         if ($search->getSearchWord()) {
             $constraints[] = $this->getConstraintForSearchWord($query, $search->getSearchWord());
         } else {
-            // add (Sub-)Category
             if ($search->getSubCategory()) {
+                // @ToDo: getSubCategory is deprecated. Remove with next major release
                 $constraints[] = $query->contains('categories', $search->getSubCategory());
             } elseif ($search->getCategory()) {
                 $constraints[] = $query->contains('categories', $search->getCategory());
             }
+
+            if ($search->getDistrict()) {
+                $constraints[] = $query->equals('district', $search->getDistrict());
+            }
         }
 
         // Set ordering
-        if (in_array($search->getOrderBy(), ['title', 'sortTitle'], true)) {
-            if (!in_array($search->getDirection(), [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING], true)) {
+        if ($search->getOrderBy()) {
+            if (!in_array(
+                $search->getDirection(),
+                [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING],
+                true
+            )) {
                 $search->setDirection(QueryInterface::ORDER_ASCENDING);
             }
+
             $query->setOrderings([
-                $search->getOrderBy() => $search->getDirection()
+                $search->getOrderBy() => $search->getDirection(),
             ]);
         }
 
-        if (!empty($constraints)) {
-            return $query->matching($query->logicalAnd($constraints))->execute();
-        }
-        return $query->execute();
+        return $constraints !== [] ? $query->matching($query->logicalAnd($constraints))->execute() : $query->execute();
     }
 
     public function findByFeUser(int $feUser): QueryResultInterface
@@ -192,14 +198,13 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
 
         $logicalOrConstraints = [
             $query->like('title', '%' . $searchWord . '%'),
-            $query->like('sortTitle', '%' . $searchWord . '%'),
             $query->like('addresses.street', '%' . $longStreetSearch . '%'),
             $query->like('addresses.street', '%' . $smallStreetSearch . '%'),
             $query->like('addresses.zip', '%' . $searchWord . '%'),
             $query->like('addresses.city', '%' . $searchWord . '%'),
             $query->like('contactPerson', '%' . $searchWord . '%'),
             $query->like('description', '%' . $searchWord . '%'),
-            $query->like('tags', '%' . $searchWord . '%')
+            $query->like('tags', '%' . $searchWord . '%'),
         ];
 
         return $query->logicalOr($logicalOrConstraints);
@@ -238,7 +243,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                             $address->getHouseNumber(),
                             $address->getZip(),
                             $address->getCity(),
-                            $address->getTelephone()
+                            $address->getTelephone(),
                         ];
                     }
                 }

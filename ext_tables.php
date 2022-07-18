@@ -3,7 +3,7 @@ if (!defined('TYPO3_MODE')) {
     die('Access denied.');
 }
 
-call_user_func(function () {
+call_user_func(static function () {
     $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
         \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
     );
@@ -36,12 +36,4 @@ call_user_func(function () {
         'tx_clubdirectory_domain_model_district',
         'EXT:clubdirectory/Resources/Private/Language/locallang_csh_tx_clubdirectory_domain_model_district.xlf'
     );
-
-    $tsConfig = [];
-    $tsConfig[] = 'TCEFORM.tx_clubdirectory_domain_model_club.categories.PAGE_TSCONFIG_ID = ' . (int)$extConf['rootCategory'];
-    $tsConfig[] = 'TCEFORM.tx_clubdirectory_domain_model_club.fe_users.PAGE_TSCONFIG_ID = ' . (int)$extConf['userGroup'];
-
-    // following line was not used in current system. So it should not crash somewhere else.
-    $tsConfig[] = 'TCEFORM.tt_content.pi_flexform.PAGE_TSCONFIG_ID = ' . (int)$extConf['rootCategory'];
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(implode(LF, $tsConfig));
 });

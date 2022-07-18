@@ -1,7 +1,9 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
+
 
 .. _configuration:
 
+=============
 Configuration
 =============
 

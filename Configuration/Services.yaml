@@ -7,6 +7,14 @@ services:
   JWeiland\Clubdirectory\:
     resource: '../Classes/*'
 
+  # Called by makeInstance in our FrontendUser domain model
+  JWeiland\Clubdirectory\Domain\Repository\FrontendUserRepository:
+    public: true
+
+  # Called by makeInstance in our ClubController
+  JWeiland\Clubdirectory\Helper\HiddenObjectHelper:
+    public: true
+
   JWeiland\Clubdirectory\Helper\PathSegmentHelper:
     public: true
     arguments:
@@ -27,3 +35,4 @@ services:
     tags:
     - name: event.listener
       event: JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent
+

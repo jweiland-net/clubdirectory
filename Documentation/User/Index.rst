@@ -1,4 +1,4 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
 
 
 .. _user-manual:
@@ -20,7 +20,7 @@ Target group: **Editors**
 #. Save
 
 Plugin Options
---------------
+==============
 
 **Show Glossary**
 
@@ -35,7 +35,7 @@ You can decide to prepend an All-link to A-Z links or not.
 Sometimes it makes sense to reduce list of club entries to a given category.
 
 Club Record
------------
+===========
 
 #. Select a Storage Page
 

@@ -1,4 +1,4 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
 
 
 .. _introduction:
@@ -6,7 +6,6 @@
 ============
 Introduction
 ============
-
 
 .. _what-it-does:
 

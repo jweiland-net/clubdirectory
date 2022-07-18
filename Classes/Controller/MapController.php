@@ -48,7 +48,7 @@ class MapController extends AbstractController
      */
     public function createAction(Club $club): void
     {
-        if ($GLOBALS['TSFE']->fe_user->user['uid']) {
+        if ($this->frontendUserRepository->getCurrentFrontendUserUid()) {
             $this->sendMail('create', $club);
             $this->clubRepository->update($club);
             $this->addFlashMessage(LocalizationUtility::translate('clubCreated', 'clubdirectory'));

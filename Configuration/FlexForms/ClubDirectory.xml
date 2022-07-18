@@ -23,7 +23,6 @@
 					<settings.category>
 						<TCEforms>
 							<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:category</label>
-							<description>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:category.description</description>
 							<config>
 								<type>select</type>
 								<renderType>selectSingle</renderType>
