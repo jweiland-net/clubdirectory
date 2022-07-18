@@ -3,19 +3,22 @@
 			data-namespace-typo3-fluid="true">
 
 <f:form action="search">
-	<div class="form-group">
-		<label>{f:translate(key: "filterBy")}:</label>
-		<f:form.select class="form-control"
-									 name="search[category]"
-									 value="{search.category}"
-									 options="{categories}"
-									 optionLabelField="title"
-									 optionValueField="uid"
-									 prependOptionLabel=""
-									 prependOptionValue="0"
-									 sortByOptionLabel="1"
-									 additionalAttributes="{onChange: 'this.form.submit()'}" />
-	</div>
+	<f:if condition="{settings.category} > 0">
+		<div class="form-group">
+			<label>{f:translate(key: "filterBy")}:</label>
+			<f:form.select class="form-control"
+										 name="search[category]"
+										 value="{search.category}"
+										 options="{categories}"
+										 optionLabelField="title"
+										 optionValueField="uid"
+										 prependOptionLabel=""
+										 prependOptionValue="0"
+										 sortByOptionLabel="1"
+										 additionalAttributes="{onChange: 'this.form.submit()'}" />
+		</div>
+	</f:if>
+
 	<div class="form-group">
 		<label>{f:translate(key: "sortDirection")}:</label>
 		<f:form.select class="form-control"
