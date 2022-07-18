@@ -189,7 +189,7 @@ return [
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
-                'rows' => 15,
+                'rows' => 5,
                 'eval' => 'trim'
             ]
         ],
@@ -208,7 +208,7 @@ return [
             'config' => [
                 'type' => 'text',
                 'cols' => 40,
-                'rows' => 15,
+                'rows' => 5,
                 'eval' => 'trim'
             ]
         ],
