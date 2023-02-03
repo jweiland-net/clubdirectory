@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
+use TYPO3\CMS\Backend\View\BackendTemplateView;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -21,7 +23,17 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class ExportController extends ActionController
 {
     /**
-     * in which directory we want to export club data
+     * @var BackendTemplateView
+     */
+    protected $view;
+
+    /**
+     * @var BackendTemplateView
+     */
+    protected $defaultViewObjectName = BackendTemplateView::class;
+
+    /**
+     * In which directory we want to export club data
      * Needed separately to create folder structure if not exists.
      *
      * @var string
@@ -29,7 +41,7 @@ class ExportController extends ActionController
     protected $exportPath = 'typo3temp/tx_clubdirectory/';
 
     /**
-     * in which file we want to export club data.
+     * In which file we want to export club data.
      *
      * @var string
      */
@@ -50,7 +62,7 @@ class ExportController extends ActionController
         $this->createDirectoryStructure();
         $this->removePreviousExports();
 
-        $exportFile = PATH_site . $this->exportPath . $this->exportFile;
+        $exportFile = $this->getExportPath() . $this->exportFile;
         $fp = \fopen($exportFile, 'wb');
         foreach ($this->clubRepository->findAllForExport() as $row) {
             \fputcsv($fp, $row, ';', '\'');
@@ -63,8 +75,8 @@ class ExportController extends ActionController
      */
     protected function createDirectoryStructure(): void
     {
-        if (!\is_dir(PATH_site . $this->exportPath)) {
-            GeneralUtility::mkdir_deep(PATH_site . $this->exportPath);
+        if (!\is_dir($this->getExportPath())) {
+            GeneralUtility::mkdir_deep($this->getExportPath());
         }
     }
 
@@ -73,9 +85,14 @@ class ExportController extends ActionController
      */
     protected function removePreviousExports(): void
     {
-        $exportFile = PATH_site . $this->exportPath . $this->exportFile;
+        $exportFile = $this->getExportPath() . $this->exportFile;
         if (\is_file($exportFile)) {
             \unlink($exportFile); // only to be sure
         }
+    }
+
+    protected function getExportPath(): string
+    {
+        return  Environment::getPublicPath() . '/' . rtrim($this->exportPath, '/') . '/';
     }
 }
