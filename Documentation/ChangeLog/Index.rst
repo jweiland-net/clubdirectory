@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+**Version 5.3.1**
+
+- Repair export of clubs as CSV.
+- Add district to CSV download
+
 **Version 5.3.0**
 
 - Use our own FrontendUserRepo and model.
