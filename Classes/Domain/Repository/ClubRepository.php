@@ -229,23 +229,23 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
     public function findAllForExport(): array
     {
         $clubs = [];
-        $clubs[] = ['Title', 'Email', 'Street', 'HouseNumber', 'Zip', 'City', 'Tel'];
+        $clubs[] = ['Title', 'Email', 'Street', 'HouseNumber', 'Zip', 'City', 'Distrct', 'Tel'];
+
         /** @var ObjectStorage|Club[] $clubObjects */
         $clubObjects = $this->findAll();
-        if ($clubObjects->count()) {
-            foreach ($clubObjects as $club) {
-                foreach ($club->getAddresses() as $address) {
-                    if ($address->getTitle() === 'postAddress') {
-                        $clubs[] = [
-                            $club->getTitle(),
-                            $club->getEmail(),
-                            $address->getStreet(),
-                            $address->getHouseNumber(),
-                            $address->getZip(),
-                            $address->getCity(),
-                            $address->getTelephone(),
-                        ];
-                    }
+        foreach ($clubObjects as $club) {
+            foreach ($club->getAddresses() as $address) {
+                if ($address->getTitle() === 'postAddress') {
+                    $clubs[] = [
+                        $club->getTitle(),
+                        $club->getEmail(),
+                        $address->getStreet(),
+                        $address->getHouseNumber(),
+                        $address->getZip(),
+                        $address->getCity(),
+                        $club->getDistrict() ? $club->getDistrict()->getDistrict() : '',
+                        $address->getTelephone(),
+                    ];
                 }
             }
         }
