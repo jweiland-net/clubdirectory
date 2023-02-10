@@ -37,7 +37,7 @@ class MapController extends AbstractController
     /**
      * As club was already validated in ClubController create/update there can't be any errors. So ignore validation.
      *
-     * @Annotation\IgnoreValidation("club")
+     * @Extbase\IgnoreValidation("club")
      */
     public function newAction(Club $club): void
     {
@@ -57,7 +57,7 @@ class MapController extends AbstractController
     }
 
     /**
-     * @Annotation\IgnoreValidation("club")
+     * @Extbase\IgnoreValidation("club")
      */
     public function editAction(Club $club): void
     {
