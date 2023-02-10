@@ -56,11 +56,6 @@ class AbstractController extends ActionController
     protected $categoryRepository;
 
     /**
-     * @var Session
-     */
-    protected $session;
-
-    /**
      * @var ExtConf
      */
     protected $extConf;
@@ -78,11 +73,6 @@ class AbstractController extends ActionController
     public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {
         $this->categoryRepository = $categoryRepository;
-    }
-
-    public function injectSession(Session $session): void
-    {
-        $this->session = $session;
     }
 
     public function injectExtConf(ExtConf $extConf): void
