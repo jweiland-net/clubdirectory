@@ -2,5 +2,12 @@
 
 <f:section name="main">
 	<h1>Clubdirectory: CSV-Export</h1>
-	<a href="../typo3temp/tx_clubdirectory/export.csv" target="_blank">Download CSV-Export</a>
+
+	<f:be.infobox title="Information" state="-1" disableIcon="false">
+		Will only export clubs where postal address is filled
+	</f:be.infobox>
+
+	<p>
+		<a href="{exportPath}" target="_blank">Download CSV-Export</a>
+	</p>
 </f:section>

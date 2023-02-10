@@ -15,10 +15,11 @@ use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
- * Controller to export clubs
+ * Controller to export clubs as CSV
  */
 class ExportController extends ActionController
 {
@@ -68,6 +69,11 @@ class ExportController extends ActionController
             \fputcsv($fp, $row, ';', '\'');
         }
         \fclose($fp);
+
+        $this->view->assign(
+            'exportPath',
+            PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile)
+        );
     }
 
     /**
