@@ -3,7 +3,6 @@
 			data-namespace-typo3-fluid="true">
 
 <f:render section="renderTextProperty" arguments="{property: 'title', column: 'title', mandatory: 1}" />
-<f:render section="renderTextProperty" arguments="{property: 'sortTitle', column: 'sortTitle', mandatory: 1}" />
 <f:render section="renderSelectProperty" arguments="{property: 'categories', column: 'categories', options: categories, size: 5, multiple: 1}" />
 <f:render section="renderTextareaProperty" arguments="{property: 'activity', column: 'activity'}" />
 <f:render section="renderTextareaProperty" arguments="{property: 'description', column: 'description'}" />
@@ -140,11 +139,11 @@
 </f:section>
 
 <f:section name="renderCheckboxProperty">
-	<div class="form-group">
+	<div class="form-check">
 		<f:render section="renderLabel" arguments="{column: column, domain: domain}" />
 		<f:form.checkbox property="{property}"
 										 id="{property}_{index}"
-										 class="form-control"
+										 class="form-check-input"
 										 value="1" />
 		<f:render section="renderHelpMessage" arguments="{property: property}" />
 	</div>
@@ -154,10 +153,9 @@
 	<div class="form-group">
 		<f:render section="renderLabel" arguments="{column: column, domain: domain}" />
 		<input type="hidden" name="tx_clubdirectory_clubdirectory[club][addresses][{index}][__identity]" value="{address.uid}" />
-		<maps2:widget.editPoi property="addresses.{index}.txMaps2Uid"
-													title="{address.street} {address.houseNumber}, {address.zip}{address.city}"
-													poiCollection="{address.txMaps2Uid}"
-													override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
+		<f:render partial="Maps2/EditPoiCollection"
+							section="editMap"
+							arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', title: '{address.street} {address.houseNumber}, {address.zip}{address.city}', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}" />
 		<f:render section="renderHelpMessage" arguments="{property: property}" />
 	</div>
 </f:section>
