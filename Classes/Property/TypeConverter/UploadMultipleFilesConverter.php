@@ -151,14 +151,17 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
             if (
                 ExtensionManagementUtility::isLoaded('checkfaluploads')
-                && $this->getFalUploadService()->checkFile($uploadedFile)
+                && $error = $this->getFalUploadService()->checkFile($uploadedFile)
             ) {
-                return true;
+                return $error;
             }
 
             $event = new PostCheckFileReferenceEvent($source, $key, $uploadedFile, $alreadyPersistedImage);
-            if ($this->emitPostCheckFileReference($event) instanceof Error) {
-                return true;
+            if (
+                ($error = $this->emitPostCheckFileReference($event))
+                && $error instanceof Error
+            ) {
+                return $error;
             }
         }
 
