@@ -4,6 +4,7 @@ return [
         'title' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address',
         'label' => 'title',
         'label_userFunc' => \JWeiland\Clubdirectory\UserFunc\AltLabelForAddressTableUserFunc::class . '->setAddressLabel',
+        'hideTable' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
