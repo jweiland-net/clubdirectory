@@ -263,7 +263,7 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'fe_users',
-                'foreign_table_where' => 'AND FIND_IN_SET(###PAGE_TSCONFIG_ID###, fe_users.usergroup) ORDER BY fe_users.username',
+                'foreign_table_where' => 'AND (###PAGE_TSCONFIG_ID### = 0 OR FIND_IN_SET(###PAGE_TSCONFIG_ID###, fe_users.usergroup)) ORDER BY fe_users.username',
                 'foreign_sortby' => 'sorting',
                 'MM' => 'tx_clubdirectory_club_user_mm',
                 'minitems' => 0,
