@@ -56,15 +56,18 @@ call_user_func(static function () {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['clubdirectoryUpdateSlug']
         = \JWeiland\Clubdirectory\Updater\ClubdirectorySlugUpdater::class;
 
-    $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-        \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
-    );
+    $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+    if (version_compare($typo3Version->getBranch(), '<', '11.0')) {
+        $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
+        );
 
-    // update poiCollection record while saving club records
-    $signalSlotDispatcher->connect(
-        \JWeiland\Maps2\Hook\CreateMaps2RecordHook::class,
-        'postUpdatePoiCollection',
-        \JWeiland\Clubdirectory\Hook\UpdateMaps2RecordHook::class,
-        'postUpdatePoiCollection'
-    );
+        // update poiCollection record while saving club records
+        $signalSlotDispatcher->connect(
+            \JWeiland\Maps2\Hook\CreateMaps2RecordHook::class,
+            'postUpdatePoiCollection',
+            \JWeiland\Clubdirectory\Hook\UpdateMaps2RecordHook::class,
+            'postUpdatePoiCollection'
+        );
+    }
 });
