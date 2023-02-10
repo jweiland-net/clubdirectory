@@ -57,7 +57,7 @@ call_user_func(static function () {
         = \JWeiland\Clubdirectory\Updater\ClubdirectorySlugUpdater::class;
 
     $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
-    if (version_compare($typo3Version->getBranch(), '<', '11.0')) {
+    if (version_compare($typo3Version->getBranch(), '11.0', '<')) {
         $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
         );

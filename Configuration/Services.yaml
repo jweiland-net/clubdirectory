@@ -25,11 +25,6 @@ services:
     - name: event.listener
       event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
 
-  JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
-
   JWeiland\Clubdirectory\EventListener\AddGlossaryEventListener:
     tags:
     - name: event.listener
@@ -40,4 +35,9 @@ services:
     tags:
     - name: event.listener
       event: JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent
+
+  JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener:
+    tags:
+    - name: event.listener
+      event: JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent
 
