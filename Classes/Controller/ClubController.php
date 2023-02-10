@@ -65,8 +65,6 @@ class ClubController extends AbstractController
 
     /**
      * We are using int to prevent calling any Validator
-     *
-     * @param int $club
      */
     public function showAction(int $club): void
     {
@@ -101,7 +99,6 @@ class ClubController extends AbstractController
     }
 
     /**
-     * @param Club $club
      * @Extbase\Validate(param="club", validator="JWeiland\Clubdirectory\Domain\Validator\ClubValidator")
      */
     public function createAction(Club $club): void
@@ -149,8 +146,7 @@ class ClubController extends AbstractController
     /**
      * We are using int to prevent calling any Validator
      *
-     * @param Club $club
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("club")
+     * @Extbase\IgnoreValidation("club")
      */
     public function editAction(Club $club): void
     {
@@ -186,7 +182,6 @@ class ClubController extends AbstractController
     }
 
     /**
-     * @param Club $club
      * @Extbase\Validate(param="club", validator="JWeiland\Clubdirectory\Domain\Validator\ClubValidator")
      */
     public function updateAction(Club $club): void
@@ -204,16 +199,9 @@ class ClubController extends AbstractController
         $this->preProcessControllerAction();
     }
 
-    /**
-     * @param Search|null $search
-     */
-    public function searchAction(Search $search = null): void
+    public function searchAction(Search $search): void
     {
-        if ($search instanceof Search) {
-            $clubs = $this->clubRepository->findBySearch($search);
-        } else {
-            $clubs = $this->clubRepository->findAll();
-        }
+        $clubs = $this->clubRepository->findBySearch($search);
 
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $clubs,
@@ -236,9 +224,6 @@ class ClubController extends AbstractController
         $this->preProcessControllerAction();
     }
 
-    /**
-     * @param Club $club
-     */
     public function activateAction(Club $club): void
     {
         $club->setHidden(false);

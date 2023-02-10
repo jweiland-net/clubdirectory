@@ -6,16 +6,16 @@ if (!defined('TYPO3_MODE')) {
 
 call_user_func(static function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'JWeiland.clubdirectory',
+        'Clubdirectory',
         'Clubdirectory',
         [
-            'Club' => 'list, listMyClubs, show, new, create, edit, update, search, activate',
-            'Map' => 'new, create, edit, update'
+            \JWeiland\Clubdirectory\Controller\ClubController::class => 'list, listMyClubs, show, new, create, edit, update, search, activate',
+            \JWeiland\Clubdirectory\Controller\MapController::class => 'new, create, edit, update'
         ],
         // non-cacheable actions
         [
-            'Club' => 'create, update, search, activate',
-            'Map' => 'create, update'
+            \JWeiland\Clubdirectory\Controller\ClubController::class => 'create, update, search, activate',
+            \JWeiland\Clubdirectory\Controller\MapController::class => 'create, update'
         ]
     );
 

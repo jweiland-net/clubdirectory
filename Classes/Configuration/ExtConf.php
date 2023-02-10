@@ -59,7 +59,7 @@ class ExtConf implements SingletonInterface
     {
         // get global configuration
         $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('clubdirectory');
-        if (is_array($extConf) && count($extConf)) {
+        if (is_array($extConf)) {
             // call setter method foreach configuration entry
             foreach ($extConf as $key => $value) {
                 $methodName = 'set' . ucfirst($key);
