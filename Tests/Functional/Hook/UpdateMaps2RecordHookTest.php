@@ -9,10 +9,10 @@ declare(strict_types=1);
  * LICENSE file that was distributed with this source code.
  */
 
-namespace JWeiland\Clubdirectory\Tests\Unit\Hook;
+namespace JWeiland\Clubdirectory\Tests\Functional\Hook;
 
 use JWeiland\Clubdirectory\Hook\UpdateMaps2RecordHook;
-use JWeiland\Clubdirectory\Tests\Unit\AbstractUnitTestCase;
+use JWeiland\Clubdirectory\Tests\Functional\AbstractUnitTestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;

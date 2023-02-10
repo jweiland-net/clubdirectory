@@ -9,7 +9,7 @@ declare(strict_types=1);
  * LICENSE file that was distributed with this source code.
  */
 
-namespace JWeiland\Clubdirectory\Tests\Unit;
+namespace JWeiland\Clubdirectory\Tests\Functional;
 
 use Doctrine\DBAL\Driver\Statement;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
