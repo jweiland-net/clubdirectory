@@ -86,7 +86,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
                 )
             )
             ->execute()
-            ->fetchColumn(0);
+            ->fetchColumn();
 
         return (bool)$amountOfRecordsWithEmptySlug;
     }

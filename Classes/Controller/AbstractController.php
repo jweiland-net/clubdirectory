@@ -122,8 +122,7 @@ class AbstractController extends ActionController
     {
         $this->view->assign('club', $club);
 
-        /** @var MailMessage $mail */
-        $mail = $this->objectManager->get(MailMessage::class);
+        $mail = GeneralUtility::makeInstance(MailMessage::class);
         $mail->setFrom($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName());
         $mail->setTo($this->extConf->getEmailToAddress(), $this->extConf->getEmailToName());
         $mail->setSubject(LocalizationUtility::translate('email.subject.' . $subjectKey, 'clubdirectory'));
@@ -163,7 +162,7 @@ class AbstractController extends ActionController
     {
         $geocodeService = GeneralUtility::makeInstance(GeoCodeService::class);
         $mapService = GeneralUtility::makeInstance(MapService::class);
-        $poiCollectionRepository = $this->objectManager->get(PoiCollectionRepository::class);
+        $poiCollectionRepository = GeneralUtility::makeInstance(PoiCollectionRepository::class);
         foreach ($club->getOriginalAddresses() as $address) {
             // add a new poi record if empty
             if ($address->getTxMaps2Uid() === null && $address->getZip() && $address->getCity()) {
@@ -214,7 +213,7 @@ class AbstractController extends ActionController
         }
 
         /** @var TypeConverterInterface $typeConverter */
-        $typeConverter = $this->objectManager->get($className);
+        $typeConverter = GeneralUtility::makeInstance($className);
         $propertyMappingConfigurationForMediaFiles = $propertyMappingConfigurationForClub
             ->forProperty($property)
             ->setTypeConverter($typeConverter);

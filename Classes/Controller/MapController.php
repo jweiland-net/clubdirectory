@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -25,7 +26,7 @@ class MapController extends AbstractController
     {
         parent::initializeAction();
 
-        $hiddenObjectHelper = $this->objectManager->get(HiddenObjectHelper::class);
+        $hiddenObjectHelper = GeneralUtility::makeInstance(HiddenObjectHelper::class);
         $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
             $this->clubRepository,
             $this->request,

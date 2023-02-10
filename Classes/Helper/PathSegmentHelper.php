@@ -14,7 +14,6 @@ namespace JWeiland\Clubdirectory\Helper;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 
 /*
@@ -37,8 +36,7 @@ class PathSegmentHelper
     {
         // First of all, we have to check, if an UID is available
         if (!$club->getUid()) {
-            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-            $persistenceManager = $objectManager->get(PersistenceManagerInterface::class);
+            $persistenceManager = GeneralUtility::makeInstance(PersistenceManagerInterface::class);
             $persistenceManager->persistAll();
         }
 
