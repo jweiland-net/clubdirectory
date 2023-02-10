@@ -6,9 +6,6 @@
 			<trans-unit id="title.description">
 				<source>The title will be used as main header in detail view</source>
 			</trans-unit>
-			<trans-unit id="sort_title.description">
-				<source>This title will be used to sort clubs in list view. Normally you should never see that value in FE.</source>
-			</trans-unit>
 			<trans-unit id="activity.description">
 				<source>Describe something about what your club offers</source>
 			</trans-unit>

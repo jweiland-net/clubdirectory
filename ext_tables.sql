@@ -3,7 +3,6 @@
 #
 CREATE TABLE tx_clubdirectory_domain_model_club (
 	title varchar(255) DEFAULT '' NOT NULL,
-	sort_title varchar(255) DEFAULT '' NOT NULL,
 	path_segment varchar(2048) DEFAULT '' NOT NULL,
 	activity text NOT NULL,
 	contact_person varchar(255) DEFAULT '' NOT NULL,
