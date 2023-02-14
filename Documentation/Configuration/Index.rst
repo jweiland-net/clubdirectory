@@ -1,7 +1,7 @@
-.. include:: /Includes.rst.txt
+..  include:: /Includes.rst.txt
 
 
-.. _configuration:
+..  _configuration:
 
 =============
 Configuration
@@ -9,8 +9,8 @@ Configuration
 
 This chapter describes the various configuration settings of clubdirectory.
 
-.. toctree::
-   :maxdepth: 2
+..  toctree::
+    :maxdepth: 2
 
-   Extension/Index
-   TypoScript/Index
+    Extension/Index
+    TypoScript/Index
