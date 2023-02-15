@@ -17,6 +17,10 @@ use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
+/**
+ * By default the title of the address record will be used as POI title. That's wrong.
+ * In this special case we have to update the POI title with the title from club record.
+ */
 class SetTitleOfPOIToClubTitleEventListener
 {
     /**
@@ -35,8 +39,8 @@ class SetTitleOfPOIToClubTitleEventListener
             $foreignLocationRecord = $event->getForeignLocationRecord();
             $poiCollectionTableName = $event->getPoiCollectionTableName();
 
-            // execute update only, if club column is filled. Else POI collection will be filled with title of address
-            // before this SignalSlot was called.
+            // Execute update only, if club column is filled. Else POI collection will be filled with title of address
+            // before this EventListener was called.
             if (
                 array_key_exists('club', $foreignLocationRecord)
                 && $event->getForeignTableName() === 'tx_clubdirectory_domain_model_address'
@@ -46,7 +50,6 @@ class SetTitleOfPOIToClubTitleEventListener
                 if (!empty($club)) {
                     $connection = $this->getConnectionPool()->getConnectionForTable($poiCollectionTableName);
 
-                    // update amount of category relations
                     $connection->update(
                         $poiCollectionTableName,
                         [
