@@ -7,6 +7,13 @@
 ChangeLog
 =========
 
+Version 6.0.0
+=============
+
+*   Add TYPO3 compatibility
+*   Add EventListener for POI title as replacement for SignalSlot in future
+*   Replace ObjectManager with GeneralUtility::makeInstance
+
 Version 5.3.1
 =============
 
