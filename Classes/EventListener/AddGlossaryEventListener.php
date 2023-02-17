@@ -31,8 +31,8 @@ class AddGlossaryEventListener extends AbstractControllerEventListener
     protected $allowedControllerActions = [
         'Club' => [
             'list',
-            'search'
-        ]
+            'search',
+        ],
     ];
 
     public function __construct(GlossaryService $glossaryService, ClubRepository $clubRepository)
@@ -61,7 +61,7 @@ class AddGlossaryEventListener extends AbstractControllerEventListener
             'pluginName' => 'clubdirectory',
             'controllerName' => 'Club',
             'column' => 'title',
-            'settings' => $event->getSettings()
+            'settings' => $event->getSettings(),
         ];
 
         if (

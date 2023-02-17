@@ -25,8 +25,8 @@ class AddPaginatorEventListener extends AbstractControllerEventListener
     protected $allowedControllerActions = [
         'Club' => [
             'list',
-            'search'
-        ]
+            'search',
+        ],
     ];
 
     public function __invoke(PostProcessFluidVariablesEvent $event): void
