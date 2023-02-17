@@ -1,7 +1,7 @@
-.. include:: /Includes.rst.txt
+..  include:: /Includes.rst.txt
 
 
-.. _extensionSettings:
+..  _extensionSettings:
 
 ==================
 Extension Settings
@@ -13,7 +13,7 @@ Tab: Basic
 ==========
 
 userGroup
-"""""""""
+---------
 
 Default: 0
 
@@ -21,7 +21,7 @@ If you will allow for frontend users to create and edit their own club records y
 assign them a frontend usergroup and add this group UID to this property.
 
 poiCollectionPid
-""""""""""""""""
+----------------
 
 Default: 0
 
@@ -31,7 +31,7 @@ While creating location records we catch the address and automatically create a 
 for you. Define a storage PID where we should store these records.
 
 rootCategory
-""""""""""""
+------------
 
 Default: 0
 
@@ -39,7 +39,7 @@ If you have many sys_category records with huge trees in your TYPO3 project, it 
 reduce the category trees in our Plugins to a parent category UID (root UID).
 
 emailFromAddress
-""""""""""""""""
+----------------
 
 Default: empty (use value from INSTALL_TOOL)
 
@@ -48,7 +48,7 @@ events. These created records will be hidden by default. Add an email address
 of the sender, if a new record was created over the frontend.
 
 emailFromName
-"""""""""""""
+-------------
 
 Default: empty (use value from INSTALL_TOOL)
 
@@ -57,7 +57,7 @@ events. These created records will be hidden by default. Add a name
 of the sender, if a new record was created over the frontend.
 
 emailToAddress
-""""""""""""""
+--------------
 
 Default: empty
 
@@ -66,7 +66,7 @@ events. These created records will be hidden by default. Add an email address
 of the receiver, if a new record was created over the frontend.
 
 emailToName
-"""""""""""
+-----------
 
 Default: empty
 

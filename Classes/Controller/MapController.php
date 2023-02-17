@@ -13,6 +13,8 @@ namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -24,7 +26,7 @@ class MapController extends AbstractController
     {
         parent::initializeAction();
 
-        $hiddenObjectHelper = $this->objectManager->get(HiddenObjectHelper::class);
+        $hiddenObjectHelper = GeneralUtility::makeInstance(HiddenObjectHelper::class);
         $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
             $this->clubRepository,
             $this->request,
@@ -35,17 +37,13 @@ class MapController extends AbstractController
     /**
      * As club was already validated in ClubController create/update there can't be any errors. So ignore validation.
      *
-     * @param Club $club
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("club")
+     * @Extbase\IgnoreValidation("club")
      */
     public function newAction(Club $club): void
     {
         $this->view->assign('club', $club);
     }
 
-    /**
-     * @param Club $club
-     */
     public function createAction(Club $club): void
     {
         if ($this->frontendUserRepository->getCurrentFrontendUserUid()) {
@@ -59,8 +57,7 @@ class MapController extends AbstractController
     }
 
     /**
-     * @param Club $club
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("club")
+     * @Extbase\IgnoreValidation("club")
      */
     public function editAction(Club $club): void
     {
@@ -69,9 +66,6 @@ class MapController extends AbstractController
         $this->view->assign('addressTitles', $this->getAddressTitles());
     }
 
-    /**
-     * @param Club $club
-     */
     public function updateAction(Club $club): void
     {
         $this->addMapRecordIfPossible($club);

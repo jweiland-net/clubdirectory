@@ -10,12 +10,12 @@ call_user_func(static function () {
     $extConf = $extensionConfiguration->get('clubdirectory');
 
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-        'JWeiland.clubdirectory',
+        'Clubdirectory',
         'web',    // Make module a submodule of 'web'
         'club',    // Submodule key
         '',    // Position
         [
-            'Export' => 'index'
+            \JWeiland\Clubdirectory\Controller\ExportController::class => 'index'
         ],
         [
             'access' => 'user,group',

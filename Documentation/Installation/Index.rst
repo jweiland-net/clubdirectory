@@ -1,7 +1,7 @@
-.. include:: /Includes.rst.txt
+..  include:: /Includes.rst.txt
 
 
-.. _installation:
+..  _installation:
 
 =================
 Installation Type
@@ -12,28 +12,28 @@ Composer
 
 You can install `clubdirectory` with following shell command:
 
-.. code-block:: bash
+..  code-block:: bash
 
-   composer req jweiland/clubdirectory
+    composer req jweiland/clubdirectory
 
 Extensionmanager
-""""""""""""""""
+----------------
 
 If you want to install `clubdirectory` traditionally with Extensionmanager, follow these steps:
 
-#. Visit ExtensionManager
+#.  Visit ExtensionManager
 
-#. Switch over to `Get Extensions`
+#.  Switch over to `Get Extensions`
 
-#. Search for `clubdirectory`
+#.  Search for `clubdirectory`
 
-#. Install extension
+#.  Install extension
 
 DEV Version (GIT)
-"""""""""""""""""
+-----------------
 
 You can install the latest DEV Version with following GIT command:
 
-.. code-block:: bash
+..  code-block:: bash
 
-   git clone https://github.com/jweiland-net/clubdirectory.git
+    git clone https://github.com/jweiland-net/clubdirectory.git

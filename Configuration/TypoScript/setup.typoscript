@@ -10,7 +10,8 @@ plugin.tx_clubdirectory {
     }
     partialRootPaths {
       0 = EXT:clubdirectory/Resources/Private/Partials/
-      1 = {$plugin.tx_clubdirectory.view.partialRootPath}
+      1 = EXT:maps2/Resources/Private/Partials/
+      2 = {$plugin.tx_clubdirectory.view.partialRootPath}
     }
     layoutRootPath {
       0 = EXT:clubdirectory/Resources/Private/Layouts/

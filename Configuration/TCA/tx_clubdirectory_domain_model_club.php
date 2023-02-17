@@ -6,7 +6,6 @@ return [
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
-        'dividers2tabs' => true,
         'default_sortby' => 'ORDER BY title',
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
@@ -16,13 +15,10 @@ return [
         'enablecolumns' => [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
-            'endtime' => 'endtime'
+            'endtime' => 'endtime',
         ],
         'searchFields' => 'title,activity,contact_person,email,description,user,tags',
-        'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_club.svg'
-    ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, path_segment, activity, contact_person, contact_times, email, website, members, club_home, description, fe_users, logo, images, facebook, twitter, instagram, tags, district, addresses'
+        'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_club.svg',
     ],
     'types' => [
         '1' => [
@@ -37,8 +33,8 @@ return [
              --div--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.tabs.social_media,
              facebook, twitter, instagram, tags,
              --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
-             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access'
-        ]
+             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access',
+        ],
     ],
     'palettes' => [
         'language' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource'],
@@ -47,31 +43,30 @@ return [
         'location' => ['showitem' => 'club_home, district, --linebreak--, addresses'],
         'access' => [
             'showitem' => 'starttime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:starttime_formlabel,endtime;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:endtime_formlabel',
-        ]
+        ],
     ],
 
     'columns' => [
         'sys_language_uid' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.language',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'special' => 'languages',
                 'items' => [
                     [
-                        'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
+                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
                         -1,
-                        'flags-multiple'
+                        'flags-multiple',
                     ],
                 ],
                 'default' => 0,
-            ]
+            ],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'exclude' => false,
-            'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -84,8 +79,8 @@ return [
         'l10n_diffsource' => [
             'config' => [
                 'type' => 'passthrough',
-                'default' => ''
-            ]
+                'default' => '',
+            ],
         ],
         'hidden' => [
             'exclude' => true,
@@ -97,34 +92,34 @@ return [
                     [
                         0 => '',
                         1 => '',
-                        'invertStateDisplay' => true
-                    ]
+                        'invertStateDisplay' => true,
+                    ],
                 ],
-            ]
+            ],
         ],
         'cruser_id' => [
             'label' => 'cruser_id',
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
         'pid' => [
             'label' => 'pid',
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
         'crdate' => [
             'label' => 'crdate',
             'config' => [
                 'type' => 'passthrough',
-            ]
+            ],
         ],
         'tstamp' => [
             'label' => 'tstamp',
             'config' => [
                 'type' => 'passthrough',
-            ]
+            ],
         ],
         'starttime' => [
             'exclude' => true,
@@ -138,7 +133,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
-            ]
+            ],
         ],
         'endtime' => [
             'exclude' => true,
@@ -152,7 +147,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
-            ]
+            ],
         ],
         'title' => [
             'exclude' => true,
@@ -160,8 +155,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required'
-            ]
+                'eval' => 'trim,required',
+            ],
         ],
         'path_segment' => [
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.path_segment',
@@ -175,13 +170,13 @@ return [
                     'prefixParentPageSlug' => false,
                     'fieldSeparator' => '-',
                     'replacements' => [
-                        '/' => '-'
+                        '/' => '-',
                     ],
                 ],
                 'fallbackCharacter' => '-',
                 'eval' => 'unique',
-                'default' => ''
-            ]
+                'default' => '',
+            ],
         ],
         'activity' => [
             'exclude' => true,
@@ -190,8 +185,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 5,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'contact_person' => [
             'exclude' => true,
@@ -199,8 +194,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'contact_times' => [
             'exclude' => true,
@@ -209,8 +204,8 @@ return [
                 'type' => 'text',
                 'cols' => 40,
                 'rows' => 5,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'email' => [
             'exclude' => true,
@@ -218,8 +213,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim, email'
-            ]
+                'eval' => 'trim, email',
+            ],
         ],
         'website' => [
             'exclude' => true,
@@ -229,8 +224,8 @@ return [
                 'size' => 30,
                 'eval' => 'trim',
                 'renderType' => 'inputLink',
-                'softref' => 'typolink'
-            ]
+                'softref' => 'typolink',
+            ],
         ],
         'members' => [
             'exclude' => true,
@@ -238,8 +233,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'club_home' => [
             'exclude' => true,
@@ -247,8 +242,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'description' => [
             'exclude' => true,
@@ -268,13 +263,13 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'fe_users',
-                'foreign_table_where' => 'AND FIND_IN_SET(###PAGE_TSCONFIG_ID###, fe_users.usergroup) ORDER BY fe_users.username',
+                'foreign_table_where' => 'AND (###PAGE_TSCONFIG_ID### = 0 OR FIND_IN_SET(###PAGE_TSCONFIG_ID###, fe_users.usergroup)) ORDER BY fe_users.username',
                 'foreign_sortby' => 'sorting',
                 'MM' => 'tx_clubdirectory_club_user_mm',
                 'minitems' => 0,
                 'maxitems' => 3,
-                'size' => 5
-            ]
+                'size' => 5,
+            ],
         ],
         'logo' => [
             'exclude' => true,
@@ -287,10 +282,10 @@ return [
                     'foreign_match_fields' => [
                         'fieldname' => 'logo',
                         'tablenames' => 'tx_clubdirectory_domain_model_club',
-                        'table_local' => 'sys_file'
-                    ]
+                        'table_local' => 'sys_file',
+                    ],
                 ]
-            )
+            ),
         ],
         'images' => [
             'exclude' => true,
@@ -303,10 +298,10 @@ return [
                     'foreign_match_fields' => [
                         'fieldname' => 'images',
                         'tablenames' => 'tx_clubdirectory_domain_model_club',
-                        'table_local' => 'sys_file'
-                    ]
+                        'table_local' => 'sys_file',
+                    ],
                 ]
-            )
+            ),
         ],
         'facebook' => [
             'exclude' => true,
@@ -314,8 +309,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'twitter' => [
             'exclude' => true,
@@ -323,8 +318,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'instagram' => [
             'exclude' => true,
@@ -332,8 +327,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'tags' => [
             'exclude' => true,
@@ -341,8 +336,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
-            ]
+                'eval' => 'trim',
+            ],
         ],
         'district' => [
             'exclude' => true,
@@ -353,12 +348,12 @@ return [
                 'foreign_table' => 'tx_clubdirectory_domain_model_district',
                 'foreign_table_where' => 'ORDER BY tx_clubdirectory_domain_model_district.district',
                 'items' => [
-                    ['', 0]
+                    ['', 0],
                 ],
                 'default' => 0,
                 'minitems' => 0,
-                'maxitems' => 1
-            ]
+                'maxitems' => 1,
+            ],
         ],
         'addresses' => [
             'exclude' => true,
@@ -375,9 +370,9 @@ return [
                     'levelLinksPosition' => 'both',
                     'showSynchronizationLink' => 1,
                     'showPossibleLocalizationRecords' => 1,
-                    'showAllLocalizationLink' => 1
-                ]
-            ]
-        ]
-    ]
+                    'showAllLocalizationLink' => 1,
+                ],
+            ],
+        ],
+    ],
 ];

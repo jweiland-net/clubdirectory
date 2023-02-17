@@ -26,12 +26,14 @@ use JWeiland\Maps2\Domain\Model\Position;
 use JWeiland\Maps2\Domain\Repository\PoiCollectionRepository;
 use JWeiland\Maps2\Service\GeoCodeService;
 use JWeiland\Maps2\Service\MapService;
-use TYPO3\CMS\Core\Mail\MailMessage;
+use Symfony\Component\Mailer\SentMessage;
+use Symfony\Component\Mime\Address as MailAddress;
+use TYPO3\CMS\Core\Mail\FluidEmail;
+use TYPO3\CMS\Core\Mail\Mailer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Controller\MvcPropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
-use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 use TYPO3\CMS\Extbase\Property\TypeConverterInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -56,11 +58,6 @@ class AbstractController extends ActionController
     protected $categoryRepository;
 
     /**
-     * @var Session
-     */
-    protected $session;
-
-    /**
      * @var ExtConf
      */
     protected $extConf;
@@ -78,11 +75,6 @@ class AbstractController extends ActionController
     public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {
         $this->categoryRepository = $categoryRepository;
-    }
-
-    public function injectSession(Session $session): void
-    {
-        $this->session = $session;
     }
 
     public function injectExtConf(ExtConf $extConf): void
@@ -122,14 +114,19 @@ class AbstractController extends ActionController
     {
         $this->view->assign('club', $club);
 
-        /** @var MailMessage $mail */
-        $mail = $this->objectManager->get(MailMessage::class);
-        $mail->setFrom($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName());
-        $mail->setTo($this->extConf->getEmailToAddress(), $this->extConf->getEmailToName());
-        $mail->setSubject(LocalizationUtility::translate('email.subject.' . $subjectKey, 'clubdirectory'));
-        $mail->html($this->view->render());
+        $email = GeneralUtility::makeInstance(FluidEmail::class);
+        $email
+            ->to(new MailAddress($this->extConf->getEmailToAddress(), $this->extConf->getEmailToName()))
+            ->from(new MailAddress($this->extConf->getEmailFromAddress(), $this->extConf->getEmailFromName()))
+            ->subject(LocalizationUtility::translate('email.subject.' . $subjectKey, 'clubdirectory'))
+            ->format('html') // only HTML mail
+            ->setTemplate('SendNotification')
+            ->assignMultiple([
+                'subject' => LocalizationUtility::translate('email.subject.' . $subjectKey, 'clubdirectory'),
+                'content' => $this->view->render(),
+            ]);
 
-        return $mail->send();
+        return GeneralUtility::makeInstance(Mailer::class)->send($email) instanceof SentMessage;
     }
 
     /**
@@ -156,14 +153,12 @@ class AbstractController extends ActionController
 
     /**
      * If no poi record was connected with address try to create one.
-     *
-     * @param Club $club
      */
     protected function addMapRecordIfPossible(Club $club): void
     {
         $geocodeService = GeneralUtility::makeInstance(GeoCodeService::class);
         $mapService = GeneralUtility::makeInstance(MapService::class);
-        $poiCollectionRepository = $this->objectManager->get(PoiCollectionRepository::class);
+        $poiCollectionRepository = GeneralUtility::makeInstance(PoiCollectionRepository::class);
         foreach ($club->getOriginalAddresses() as $address) {
             // add a new poi record if empty
             if ($address->getTxMaps2Uid() === null && $address->getZip() && $address->getCity()) {
@@ -178,7 +173,7 @@ class AbstractController extends ActionController
                                 $club->getTitle(),
                                 $club->getUid(),
                                 $address->getTitle()
-                            )
+                            ),
                         ]
                     );
                     /** @var PoiCollection $poiCollection */
@@ -196,10 +191,6 @@ class AbstractController extends ActionController
 
     /**
      * Currently only "logo" and "images" are allowed properties.
-     *
-     * @param string $property
-     * @param MvcPropertyMappingConfiguration $propertyMappingConfigurationForClub
-     * @param mixed $converterOptionValue
      */
     protected function assignMediaTypeConverter(
         string $property,
@@ -214,7 +205,7 @@ class AbstractController extends ActionController
         }
 
         /** @var TypeConverterInterface $typeConverter */
-        $typeConverter = $this->objectManager->get($className);
+        $typeConverter = GeneralUtility::makeInstance($className);
         $propertyMappingConfigurationForMediaFiles = $propertyMappingConfigurationForClub
             ->forProperty($property)
             ->setTypeConverter($typeConverter);
@@ -239,9 +230,6 @@ class AbstractController extends ActionController
      * Sometimes Extbase tries to map an empty value like 0 to UID 0.
      * As there is no record with UID 0 a Mapping Error occurs.
      * To prevent that, we remove these kind of properties out of request directly.
-     *
-     * @param string $property
-     * @param array $requestArgument
      */
     protected function removeEmptyPropertyFromRequest(string $property, array &$requestArgument): void
     {
@@ -257,8 +245,6 @@ class AbstractController extends ActionController
      *
      * Never put that into Club Model as we don't want all these empty addresses in DB.
      * So this Method will only correct the rendering of frontend.
-     *
-     * @param Club $club
      */
     protected function fillAddressesUpToMaximum(Club $club): void
     {
@@ -270,8 +256,6 @@ class AbstractController extends ActionController
     /**
      * Remove empty addresses from request before Property Mapping starts,
      * to prevent inserting empty addresses into DB
-     *
-     * @param array $requestArgument
      */
     protected function removeEmptyAddressesFromRequest(array &$requestArgument): void
     {
@@ -296,8 +280,6 @@ class AbstractController extends ActionController
     /**
      * Files will be uploaded in typeConverter.
      * But, if an error occurs we have to remove these files.
-     *
-     * @param string $argument
      */
     protected function deleteUploadedFilesOnValidationErrors(string $argument): void
     {

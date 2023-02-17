@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+	<tx_maps2_domain_model_poicollection>
+		<uid>123</uid>
+		<pid>1</pid>
+		<tstamp>1676389796</tstamp>
+		<hidden>0</hidden>
+		<title>Postal Address</title>
+		<map_provider>gm</map_provider>
+		<collection_type>point</collection_type>
+	</tx_maps2_domain_model_poicollection>
+</dataset>

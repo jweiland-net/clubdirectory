@@ -11,9 +11,11 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
- * Extend extbase model for frontend users
+ * Domain model for fe_users table. We only need the UID to map to other domain models
  */
-class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+class FrontendUser extends AbstractEntity
 {
 }

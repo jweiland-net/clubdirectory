@@ -151,11 +151,11 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                     (string)$queryBuilder->expr()->andX(
                         $queryBuilder->expr()->eq(
                             'mm.tablenames',
-                            $queryBuilder->createNamedParameter('tx_clubdirectory_domain_model_club', \PDO::PARAM_STR)
+                            $queryBuilder->createNamedParameter('tx_clubdirectory_domain_model_club')
                         ),
                         $queryBuilder->expr()->eq(
                             'mm.fieldname',
-                            $queryBuilder->createNamedParameter('categories', \PDO::PARAM_STR)
+                            $queryBuilder->createNamedParameter('categories')
                         ),
                         $queryBuilder->expr()->eq(
                             'mm.uid_foreign',

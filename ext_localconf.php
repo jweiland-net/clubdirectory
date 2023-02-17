@@ -6,16 +6,16 @@ if (!defined('TYPO3_MODE')) {
 
 call_user_func(static function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'JWeiland.clubdirectory',
+        'Clubdirectory',
         'Clubdirectory',
         [
-            'Club' => 'list, listMyClubs, show, new, create, edit, update, search, activate',
-            'Map' => 'new, create, edit, update'
+            \JWeiland\Clubdirectory\Controller\ClubController::class => 'list, listMyClubs, show, new, create, edit, update, search, activate',
+            \JWeiland\Clubdirectory\Controller\MapController::class => 'new, create, edit, update',
         ],
         // non-cacheable actions
         [
-            'Club' => 'create, update, search, activate',
-            'Map' => 'create, update'
+            \JWeiland\Clubdirectory\Controller\ClubController::class => 'create, update, search, activate',
+            \JWeiland\Clubdirectory\Controller\MapController::class => 'create, update',
         ]
     );
 
@@ -46,7 +46,7 @@ call_user_func(static function () {
         $tsConfig = [
             'TCEFORM.tt_content.pi_flexform.clubdirectory_clubdirectory.sDEFAULT.settings\.category.PAGE_TSCONFIG_ID = ' . $rootCategory,
             'TCEFORM.tx_clubdirectory_domain_model_club.categories.config.treeConfig.rootUid = ' . $rootCategory,
-            'TCEFORM.tx_clubdirectory_domain_model_club.fe_users.PAGE_TSCONFIG_ID = ' . $userGroup
+            'TCEFORM.tx_clubdirectory_domain_model_club.fe_users.PAGE_TSCONFIG_ID = ' . $userGroup,
         ];
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(implode(LF, $tsConfig));
     } catch (\TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException | \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException $exception) {
@@ -56,15 +56,20 @@ call_user_func(static function () {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['clubdirectoryUpdateSlug']
         = \JWeiland\Clubdirectory\Updater\ClubdirectorySlugUpdater::class;
 
-    $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-        \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
-    );
+    $GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][1000] = 'EXT:clubdirectory/Resources/Private/Templates/Email';
 
-    // update poiCollection record while saving club records
-    $signalSlotDispatcher->connect(
-        \JWeiland\Maps2\Hook\CreateMaps2RecordHook::class,
-        'postUpdatePoiCollection',
-        \JWeiland\Clubdirectory\Hook\UpdateMaps2RecordHook::class,
-        'postUpdatePoiCollection'
-    );
+    $typo3Version = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Information\Typo3Version::class);
+    if (version_compare($typo3Version->getBranch(), '11.0', '<')) {
+        $signalSlotDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class
+        );
+
+        // update poiCollection record while saving club records
+        $signalSlotDispatcher->connect(
+            \JWeiland\Maps2\Hook\CreateMaps2RecordHook::class,
+            'postUpdatePoiCollection',
+            \JWeiland\Clubdirectory\Hook\UpdateMaps2RecordHook::class,
+            'postUpdatePoiCollection'
+        );
+    }
 });

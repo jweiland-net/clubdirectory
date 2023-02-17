@@ -9,9 +9,6 @@
 			<trans-unit id="tx_clubdirectory_domain_model_club.title">
 				<source>Title</source>
 			</trans-unit>
-			<trans-unit id="tx_clubdirectory_domain_model_club.sortTitle">
-				<source>Title to sort by</source>
-			</trans-unit>
 			<trans-unit id="tx_clubdirectory_domain_model_club.activity">
 				<source>Activity</source>
 			</trans-unit>
@@ -178,9 +175,6 @@
 			</trans-unit>
 			<trans-unit id="cshtitle">
 				<source>The title is mandatory</source>
-			</trans-unit>
-			<trans-unit id="cshsortTitle">
-				<source>Give it a title to sort by</source>
 			</trans-unit>
 			<trans-unit id="cshcategories">
 				<source>Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</source>

@@ -12,13 +12,13 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Domain\Model\FrontendUser;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
 use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -50,8 +50,8 @@ class ClubController extends AbstractController
             ),
             'categories' => $this->categoryRepository->getCategories(),
             'districts' => $this->districtRepository->findAll(),
-            'search' => $this->objectManager->get(Search::class),
-            'allowedUserGroup' => $this->extConf->getUserGroup()
+            'search' => GeneralUtility::makeInstance(Search::class),
+            'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
     }
 
@@ -59,32 +59,30 @@ class ClubController extends AbstractController
     {
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $this->clubRepository->findByFeUser($this->frontendUserRepository->getCurrentFrontendUserUid()),
-            'allowedUserGroup' => $this->extConf->getUserGroup()
+            'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
     }
 
     /**
      * We are using int to prevent calling any Validator
-     *
-     * @param int $club
      */
     public function showAction(int $club): void
     {
         $this->postProcessAndAssignFluidVariables([
-            'club' => $this->clubRepository->findByIdentifier($club)
+            'club' => $this->clubRepository->findByIdentifier($club),
         ]);
     }
 
     public function newAction(): void
     {
         $this->deleteUploadedFilesOnValidationErrors('club');
-        $club = $this->objectManager->get(Club::class);
+        $club = GeneralUtility::makeInstance(Club::class);
         $this->fillAddressesUpToMaximum($club);
 
         $this->postProcessAndAssignFluidVariables([
             'club' => $club,
             'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
-            'addressTitles' => $this->getAddressTitles()
+            'addressTitles' => $this->getAddressTitles(),
         ]);
     }
 
@@ -101,7 +99,6 @@ class ClubController extends AbstractController
     }
 
     /**
-     * @param Club $club
      * @Extbase\Validate(param="club", validator="JWeiland\Clubdirectory\Domain\Validator\ClubValidator")
      */
     public function createAction(Club $club): void
@@ -119,12 +116,12 @@ class ClubController extends AbstractController
             $pathSegmentHelper = GeneralUtility::makeInstance(PathSegmentHelper::class);
             $pathSegmentHelper->setGeneratorFields([
                 'title',
-                'uid'
+                'uid',
             ]);
             $pathSegmentHelper->updatePathSegmentForClub($club);
             $this->clubRepository->update($club);
 
-            $persistenceManager = $this->objectManager->get(PersistenceManagerInterface::class);
+            $persistenceManager = GeneralUtility::makeInstance(PersistenceManagerInterface::class);
             $persistenceManager->persistAll();
 
             $this->redirect('new', 'Map', 'clubdirectory', ['club' => $club]);
@@ -136,7 +133,7 @@ class ClubController extends AbstractController
 
     public function initializeEditAction(): void
     {
-        $hiddenObjectHelper = $this->objectManager->get(HiddenObjectHelper::class);
+        $hiddenObjectHelper = GeneralUtility::makeInstance(HiddenObjectHelper::class);
         $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
             $this->clubRepository,
             $this->request,
@@ -149,8 +146,7 @@ class ClubController extends AbstractController
     /**
      * We are using int to prevent calling any Validator
      *
-     * @param Club $club
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("club")
+     * @Extbase\IgnoreValidation("club")
      */
     public function editAction(Club $club): void
     {
@@ -159,7 +155,7 @@ class ClubController extends AbstractController
         $this->postProcessAndAssignFluidVariables([
             'club' => $club,
             'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
-            'addressTitles' => $this->getAddressTitles()
+            'addressTitles' => $this->getAddressTitles(),
         ]);
     }
 
@@ -186,7 +182,6 @@ class ClubController extends AbstractController
     }
 
     /**
-     * @param Club $club
      * @Extbase\Validate(param="club", validator="JWeiland\Clubdirectory\Domain\Validator\ClubValidator")
      */
     public function updateAction(Club $club): void
@@ -204,23 +199,16 @@ class ClubController extends AbstractController
         $this->preProcessControllerAction();
     }
 
-    /**
-     * @param Search|null $search
-     */
-    public function searchAction(Search $search = null): void
+    public function searchAction(Search $search): void
     {
-        if ($search instanceof Search) {
-            $clubs = $this->clubRepository->findBySearch($search);
-        } else {
-            $clubs = $this->clubRepository->findAll();
-        }
+        $clubs = $this->clubRepository->findBySearch($search);
 
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $clubs,
             'categories' => $this->categoryRepository->getCategories(),
             'districts' => $this->districtRepository->findAll(),
             'search' => $search,
-            'allowedUserGroup' => $this->extConf->getUserGroup()
+            'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
     }
 
@@ -236,9 +224,6 @@ class ClubController extends AbstractController
         $this->preProcessControllerAction();
     }
 
-    /**
-     * @param Club $club
-     */
     public function activateAction(Club $club): void
     {
         $club->setHidden(false);

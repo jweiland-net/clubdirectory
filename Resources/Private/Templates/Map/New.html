@@ -1,4 +1,5 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+<html lang="en"
+			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
 			xmlns:maps2="http://typo3.org/ns/JWeiland/Maps2/ViewHelpers"
 			data-namespace-typo3-fluid="true">
 
@@ -18,10 +19,9 @@
 				</dd>
 			</dl>
 
-			<maps2:widget.editPoi property="addresses.{index}.txMaps2Uid"
-														title="{address.street} {address.houseNumber}, {address.zip} {address.city}"
-														poiCollection="{address.txMaps2Uid}"
-														override="{settings: {mapWidth: '100%', mapHeight: '300'}}" />
+			<f:render partial="Maps2/EditPoiCollection"
+								section="editMap"
+								arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', title: '{address.street} {address.houseNumber}, {address.zip}{address.city}', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}" />
 		</f:for>
 		<f:form.submit value="{f:translate(key: 'create')}" />
 	</f:form>

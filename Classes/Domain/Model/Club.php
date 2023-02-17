@@ -16,7 +16,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -83,17 +82,17 @@ class Club extends AbstractEntity
     protected $description = '';
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FrontendUser>
+     * @var ObjectStorage<FrontendUser>
      */
     protected $feUsers;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+     * @var ObjectStorage<FileReference>
      */
     protected $logo;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\FileReference>
+     * @var ObjectStorage<FileReference>
      */
     protected $images;
 
@@ -118,18 +117,18 @@ class Club extends AbstractEntity
     protected $tags = '';
 
     /**
-     * @var \JWeiland\Clubdirectory\Domain\Model\District
+     * @var District
      */
     protected $district;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\JWeiland\Clubdirectory\Domain\Model\Address>
+     * @var ObjectStorage<Address>
      * @Extbase\ORM\Cascade("remove")
      */
     protected $addresses;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     * @var ObjectStorage<Category>
      * @Extbase\ORM\Lazy
      */
     protected $categories;
@@ -141,6 +140,20 @@ class Club extends AbstractEntity
         $this->images = new ObjectStorage();
         $this->addresses = new ObjectStorage();
         $this->categories = new ObjectStorage();
+    }
+
+    /**
+     * SF: The "target" property is not part of persistence and will therefore not be filled by DataMapper
+     * with an ObjectStorage. Further DataMapper prevents calling the constructor of domain models, that's why we
+     * have to initialize the target property manually here.
+     */
+    public function initializeObject(): void
+    {
+        $this->feUsers = $this->feUsers ?? new ObjectStorage();
+        $this->logo = $this->logo ?? new ObjectStorage();
+        $this->images = $this->images ?? new ObjectStorage();
+        $this->addresses = $this->addresses ?? new ObjectStorage();
+        $this->categories = $this->categories ?? new ObjectStorage();
     }
 
     public function getHidden(): bool
@@ -483,7 +496,7 @@ class Club extends AbstractEntity
         return [
             'uid' => $this->getUid(),
             'pid' => $this->getPid(),
-            'title' => $this->getTitle()
+            'title' => $this->getTitle(),
         ];
     }
 }

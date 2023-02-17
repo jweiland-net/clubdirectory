@@ -120,11 +120,11 @@ class Search
         return [
             0 => [
                 'key' => QueryInterface::ORDER_ASCENDING,
-                'value' => LocalizationUtility::translate('ascending', 'clubdirectory')
+                'value' => LocalizationUtility::translate('ascending', 'clubdirectory'),
             ],
             1 => [
                 'key' => QueryInterface::ORDER_DESCENDING,
-                'value' => LocalizationUtility::translate('descending', 'clubdirectory')
+                'value' => LocalizationUtility::translate('descending', 'clubdirectory'),
             ],
         ];
     }

@@ -17,12 +17,14 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * Set title of POI collection to title of club record instead of title from address.
+ *
+ * ToDo: Remove this file and register part in ext_localconf.php, if TYPO3 10 compatibility has been removed
  */
 class UpdateMaps2RecordHook
 {
     public function postUpdatePoiCollection(string $poiCollectionTableName, int $poiCollectionUid, string $foreignTableName, array $foreignLocationRecord, array $options): void
     {
-        // execute update only, if club column is filled. Else POI collection will be filled with title of address
+        // Execute update only, if club column is filled. Else POI collection will be filled with title of address
         // before this SignalSlot was called.
         if (
             $foreignTableName === 'tx_clubdirectory_domain_model_address'
@@ -30,17 +32,17 @@ class UpdateMaps2RecordHook
             && MathUtility::canBeInterpretedAsInteger($foreignLocationRecord['club'])
         ) {
             $club = $this->getClubRecord((int)$foreignLocationRecord['club']);
-            if (!empty($club)) {
+            if ($club !== []) {
                 $connection = $this->getConnectionPool()->getConnectionForTable($poiCollectionTableName);
 
                 // update amount of category relations
                 $connection->update(
                     $poiCollectionTableName,
                     [
-                        'title' => $club['title']
+                        'title' => $club['title'] ?? '',
                     ],
                     [
-                        'uid' => $poiCollectionUid
+                        'uid' => $poiCollectionUid,
                     ]
                 );
             }

@@ -86,7 +86,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
                 )
             )
             ->execute()
-            ->fetchColumn(0);
+            ->fetchColumn();
 
         return (bool)$amountOfRecordsWithEmptySlug;
     }
@@ -127,10 +127,10 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
                         $this->fieldName => $this->pathSegmentHelper->generatePathSegment(
                             $recordToUpdate,
                             (int)$recordToUpdate['pid']
-                        )
+                        ),
                     ],
                     [
-                        'uid' => (int)$recordToUpdate['uid']
+                        'uid' => (int)$recordToUpdate['uid'],
                     ]
                 );
             }
@@ -145,7 +145,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
     public function getPrerequisites(): array
     {
         return [
-            DatabaseUpdatedPrerequisite::class
+            DatabaseUpdatedPrerequisite::class,
         ];
     }
 

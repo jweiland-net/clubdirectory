@@ -125,8 +125,9 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                 }
                 continue;
             }
+
             // Check if uploaded file returns an error
-            if (!$uploadedFile['error'] === 0) {
+            if ($uploadedFile['error']) {
                 return new Error(
                     LocalizationUtility::translate('error.upload', 'clubdirectory') . $uploadedFile['error'],
                     1396957314
@@ -141,7 +142,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                         'error.fileExtension',
                         'clubdirectory',
                         [
-                            $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+                            $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
                         ]
                     ),
                     1402981282
@@ -156,7 +157,10 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             }
 
             $event = new PostCheckFileReferenceEvent($source, $key, $uploadedFile, $alreadyPersistedImage);
-            if ($error = $this->emitPostCheckFileReference($event) instanceof Error) {
+            if (
+                ($error = $this->emitPostCheckFileReference($event))
+                && $error instanceof Error
+            ) {
                 return $error;
             }
         }
@@ -174,10 +178,10 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         return $references;
     }
 
-    protected function initialize(?PropertyMappingConfigurationInterface $configuration)
+    protected function initialize(?PropertyMappingConfigurationInterface $configuration): void
     {
         if ($configuration === null) {
-            throw new \Exception(
+            throw new \InvalidArgumentException(
                 'Missing PropertyMapper configuration in UploadMultipleFilesConverter',
                 1604051720
             );
@@ -215,11 +219,11 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         return $settings ?? [];
     }
 
-    protected function setUploadFolder()
+    protected function setUploadFolder(): void
     {
         $combinedUploadFolderIdentifier = $this->getTypoScriptPluginSettings()['new']['uploadFolder'] ?? '';
         if ($combinedUploadFolderIdentifier === '') {
-            throw new \Exception(
+            throw new \InvalidArgumentException(
                 'You have forgotten to set an Upload Folder in TypoScript for clubdirectory',
                 1603808777
             );
@@ -240,9 +244,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     /**
      * Check, if we have a valid uploaded file
      * Error = 4: No file uploaded
-     *
-     * @param array $uploadedFile
-     * @return bool
      */
     protected function isValidUploadFile(array $uploadedFile): bool
     {
@@ -261,17 +262,15 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
     /**
      * If file is in our own upload folder we can delete it from filesystem and sys_file table.
-     *
-     * @param FileReference|null $fileReference
      */
-    protected function deleteFile(?FileReference $fileReference)
+    protected function deleteFile(?FileReference $extbaseFileReference): void
     {
-        if ($fileReference !== null) {
-            $fileReference = $fileReference->getOriginalResource();
+        if ($extbaseFileReference !== null) {
+            $coreFileReference = $extbaseFileReference->getOriginalResource();
 
-            if ($fileReference->getStorage()->isWithinFolder($this->uploadFolder, $fileReference)) {
+            if ($coreFileReference->getStorage()->isWithinFolder($this->uploadFolder, $coreFileReference)) {
                 try {
-                    $fileReference->getOriginalFile()->delete();
+                    $coreFileReference->getOriginalFile()->delete();
                 } catch (\Exception $exception) {
                     // Do nothing. File already deleted or not found
                 }
@@ -281,9 +280,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
     /**
      * upload file and get a file reference object.
-     *
-     * @param array $source
-     * @return FileReference
      */
     protected function getExtbaseFileReference(array $source): FileReference
     {
@@ -295,9 +291,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
     /**
      * Upload file and get a file reference object.
-     *
-     * @param array $source
-     * @return \TYPO3\CMS\Core\Resource\FileReference
      */
     protected function getCoreFileReference(array $source): \TYPO3\CMS\Core\Resource\FileReference
     {
@@ -308,17 +301,17 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         return $resourceFactory->createFileReferenceObject(
             [
                 'uid_local' => $uploadedFile->getUid(),
-                'uid_foreign' => uniqid('NEW_'),
-                'uid' => uniqid('NEW_'),
+                'uid_foreign' => uniqid('NEW_', true),
+                'uid' => uniqid('NEW_', true),
             ]
         );
     }
 
     protected function emitPostCheckFileReference(PostCheckFileReferenceEvent $event): ?Error
     {
-        /** @var PostCheckFileReferenceEvent $event */
-        $event = $this->eventDispatcher->dispatch($event);
-        return $event->getError();
+        /** @var PostCheckFileReferenceEvent $modifiedEvent */
+        $modifiedEvent = $this->eventDispatcher->dispatch($event);
+        return $modifiedEvent->getError();
     }
 
     protected function getFalUploadService(): FalUploadService

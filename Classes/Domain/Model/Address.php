@@ -63,7 +63,7 @@ class Address extends AbstractEntity
     protected $barrierFree = false;
 
     /**
-     * @var \JWeiland\Maps2\Domain\Model\PoiCollection
+     * @var PoiCollection
      * @Extbase\ORM\Cascade("remove")
      */
     protected $txMaps2Uid;
