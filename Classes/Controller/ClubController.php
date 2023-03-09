@@ -11,35 +11,61 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
+use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
+use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
+use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
-use JWeiland\Clubdirectory\Domain\Model\FrontendUser;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
-use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
+use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
+use JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent;
+use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Controller to list, show and edit clubs
  */
-class ClubController extends AbstractController
+class ClubController extends ActionController
 {
+    use ControllerInjectionTrait;
+    use InitializeControllerTrait;
+    use AddressTrait;
+
     /**
      * @var DistrictRepository
      */
     protected $districtRepository;
+
+    /**
+     * @var PathSegmentHelper
+     */
+    protected $pathSegmentHelper;
+
+    /**
+     * @var PersistenceManagerInterface
+     */
+    protected $persistenceManager;
 
     public function injectDistrictRepository(DistrictRepository $districtRepository): void
     {
         $this->districtRepository = $districtRepository;
     }
 
-    /**
-     * @param string $letter
-     */
+    public function injectPathSegmentHelper(PathSegmentHelper $pathSegmentHelper): void
+    {
+        $this->pathSegmentHelper = $pathSegmentHelper;
+    }
+
+    public function injectPersistenceManager(PersistenceManagerInterface $persistenceManager): void
+    {
+        $this->persistenceManager = $persistenceManager;
+    }
+
     public function listAction(string $letter = ''): void
     {
         $this->postProcessAndAssignFluidVariables([
@@ -75,7 +101,8 @@ class ClubController extends AbstractController
 
     public function newAction(): void
     {
-        $this->deleteUploadedFilesOnValidationErrors('club');
+        $this->preProcessControllerAction();
+
         $club = GeneralUtility::makeInstance(Club::class);
         $this->fillAddressesUpToMaximum($club);
 
@@ -88,14 +115,7 @@ class ClubController extends AbstractController
 
     public function initializeCreateAction(): void
     {
-        $clubMappingConfiguration = $this->arguments
-            ->getArgument('club')
-            ->getPropertyMappingConfiguration();
-
-        $this->assignMediaTypeConverter('logo', $clubMappingConfiguration, null);
-        $this->assignMediaTypeConverter('images', $clubMappingConfiguration, null);
-
-        $this->preProcessControllerAction();
+        $this->emitInitializeControllerAction();
     }
 
     /**
@@ -104,25 +124,24 @@ class ClubController extends AbstractController
     public function createAction(Club $club): void
     {
         if ($this->frontendUserRepository->getCurrentFrontendUserRecord() !== []) {
-            /** @var FrontendUser $feUser */
             $feUser = $this->frontendUserRepository->findByUid(
                 $this->frontendUserRepository->getCurrentFrontendUserUid()
             );
             $club->addFeUser($feUser);
             $club->setHidden(true);
-            $this->addMapRecordIfPossible($club);
+            if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
+                $this->errorAction();
+            }
             $this->clubRepository->add($club);
 
-            $pathSegmentHelper = GeneralUtility::makeInstance(PathSegmentHelper::class);
-            $pathSegmentHelper->setGeneratorFields([
+            $this->pathSegmentHelper->setGeneratorFields([
                 'title',
                 'uid',
             ]);
-            $pathSegmentHelper->updatePathSegmentForClub($club);
-            $this->clubRepository->update($club);
+            $this->pathSegmentHelper->updatePathSegmentForClub($club);
 
-            $persistenceManager = GeneralUtility::makeInstance(PersistenceManagerInterface::class);
-            $persistenceManager->persistAll();
+            $this->clubRepository->update($club);
+            $this->persistenceManager->persistAll();
 
             $this->redirect('new', 'Map', 'clubdirectory', ['club' => $club]);
         } else {
@@ -133,14 +152,7 @@ class ClubController extends AbstractController
 
     public function initializeEditAction(): void
     {
-        $hiddenObjectHelper = GeneralUtility::makeInstance(HiddenObjectHelper::class);
-        $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
-            $this->clubRepository,
-            $this->request,
-            'club'
-        );
-
-        $this->preProcessControllerAction();
+        $this->emitInitializeControllerAction();
     }
 
     /**
@@ -168,17 +180,7 @@ class ClubController extends AbstractController
         $this->removeEmptyPropertyFromRequest('categories', $requestArgument);
         $this->removeEmptyAddressesFromRequest($requestArgument);
 
-        $clubMappingConfiguration = $this->arguments
-            ->getArgument('club')
-            ->getPropertyMappingConfiguration();
-
-        // Needed to get the previously stored logo and images
-        /** @var Club $persistedClub */
-        $persistedClub = $this->clubRepository->findHiddenObject($requestArgument['__identity']);
-        $this->assignMediaTypeConverter('logo', $clubMappingConfiguration, $persistedClub->getOriginalLogo());
-        $this->assignMediaTypeConverter('images', $clubMappingConfiguration, $persistedClub->getOriginalImages());
-
-        $this->preProcessControllerAction();
+        $this->emitInitializeControllerAction();
     }
 
     /**
@@ -186,25 +188,35 @@ class ClubController extends AbstractController
      */
     public function updateAction(Club $club): void
     {
-        $this->addMapRecordIfPossible($club);
+        if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
+            $this->errorAction();
+        }
         $this->clubRepository->update($club);
-        $this->sendMail('update', $club);
+
+        $this->postProcessAndAssignFluidVariables([
+            'club' => $club,
+        ]);
+
+        $this->mailHelper->sendMail(
+            $this->view->render(),
+            LocalizationUtility::translate('email.subject.update', 'clubdirectory')
+        );
+
         $club->setHidden(true);
         $this->addFlashMessage(LocalizationUtility::translate('clubUpdated', 'clubdirectory'));
+
         $this->redirect('listMyClubs');
     }
 
     public function initializeSearchAction(): void
     {
-        $this->preProcessControllerAction();
+        $this->emitInitializeControllerAction();
     }
 
     public function searchAction(Search $search): void
     {
-        $clubs = $this->clubRepository->findBySearch($search);
-
         $this->postProcessAndAssignFluidVariables([
-            'clubs' => $clubs,
+            'clubs' => $this->clubRepository->findBySearch($search),
             'categories' => $this->categoryRepository->getCategories(),
             'districts' => $this->districtRepository->findAll(),
             'search' => $search,
@@ -214,14 +226,7 @@ class ClubController extends AbstractController
 
     public function initializeActivateAction(): void
     {
-        $hiddenObjectHelper = GeneralUtility::makeInstance(HiddenObjectHelper::class);
-        $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
-            $this->clubRepository,
-            $this->request,
-            'club'
-        );
-
-        $this->preProcessControllerAction();
+        $this->emitInitializeControllerAction();
     }
 
     public function activateAction(Club $club): void
@@ -230,5 +235,54 @@ class ClubController extends AbstractController
         $this->clubRepository->update($club);
         $this->addFlashMessage(LocalizationUtility::translate('clubActivated', 'clubdirectory'));
         $this->redirect('list', 'Club');
+    }
+
+    /**
+     * Sometimes Extbase tries to map an empty value like 0 to UID 0.
+     * As there is no record with UID 0 a Mapping Error occurs.
+     * To prevent that, we remove these kind of properties out of request directly.
+     */
+    protected function removeEmptyPropertyFromRequest(string $property, array &$requestArgument): void
+    {
+        if (empty($requestArgument[$property])) {
+            unset($requestArgument[$property]);
+            $this->request->setArgument('club', $requestArgument);
+        }
+    }
+
+    protected function emitInitializeControllerAction(): void
+    {
+        $this->eventDispatcher->dispatch(
+            new InitializeControllerActionEvent(
+                $this->request,
+                $this->arguments,
+                $this->settings
+            )
+        );
+    }
+
+    protected function postProcessAndAssignFluidVariables(array $variables = []): void
+    {
+        /** @var PostProcessFluidVariablesEvent $event */
+        $event = $this->eventDispatcher->dispatch(
+            new PostProcessFluidVariablesEvent(
+                $this->request,
+                $this->settings,
+                $variables
+            )
+        );
+
+        $this->view->assignMultiple($event->getFluidVariables());
+    }
+
+    protected function preProcessControllerAction(?Club $club = null): void
+    {
+        $this->eventDispatcher->dispatch(
+            new PreProcessControllerActionEvent(
+                $this,
+                $club,
+                $this->settings
+            )
+        );
     }
 }

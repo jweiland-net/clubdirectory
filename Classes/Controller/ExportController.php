@@ -77,7 +77,7 @@ class ExportController extends ActionController
     }
 
     /**
-     * check directory and create directory structure if not already created.
+     * Check directory and create directory structure if not already created.
      */
     protected function createDirectoryStructure(): void
     {

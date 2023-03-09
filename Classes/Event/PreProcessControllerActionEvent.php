@@ -11,54 +11,76 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Event;
 
-use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
+use JWeiland\Clubdirectory\Controller\ClubController;
+use JWeiland\Clubdirectory\Controller\MapController;
+use JWeiland\Clubdirectory\Domain\Model\Club;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Request;
 
+/**
+ * Pre process controller actions which does not assign any variables to view.
+ * Often used by controller actions like "update" or "create" which redirects after success.
+ */
 class PreProcessControllerActionEvent implements ControllerActionEventInterface
 {
     /**
-     * @var Request
+     * @var ActionController|ClubController|MapController
      */
-    protected $request;
+    protected $controller;
 
     /**
-     * @var Arguments
+     * @var Club|null
      */
-    protected $arguments;
+    protected $club;
 
     /**
      * @var array
      */
-    protected $settings = [];
+    protected $settings;
 
     public function __construct(
-        Request $request,
-        Arguments $arguments,
+        ActionController $controller,
+        ?Club $club,
         array $settings
     ) {
-        $this->request = $request;
-        $this->arguments = $arguments;
+        $this->controller = $controller;
+        $this->club = $club;
         $this->settings = $settings;
+    }
+
+    public function getController(): ActionController
+    {
+        return $this->controller;
+    }
+
+    public function getClubController(): ClubController
+    {
+        return $this->controller;
+    }
+
+    public function getMapController(): MapController
+    {
+        return $this->controller;
     }
 
     public function getRequest(): Request
     {
-        return $this->request;
+        return $this->getController()->getControllerContext()->getRequest();
     }
 
     public function getControllerName(): string
     {
-        return $this->request->getControllerName();
+        return $this->getRequest()->getControllerName();
     }
 
     public function getActionName(): string
     {
-        return $this->request->getControllerActionName();
+        return $this->getRequest()->getControllerActionName();
     }
 
-    public function getArguments(): Arguments
+    public function getClub(): ?Club
     {
-        return $this->arguments;
+        return $this->club;
     }
 
     public function getSettings(): array

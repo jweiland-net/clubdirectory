@@ -11,28 +11,22 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
+use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
+use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
+use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
-use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
  * Controller to edit map records. Just after saving a club.
  */
-class MapController extends AbstractController
+class MapController extends ActionController
 {
-    public function initializeAction(): void
-    {
-        parent::initializeAction();
-
-        $hiddenObjectHelper = GeneralUtility::makeInstance(HiddenObjectHelper::class);
-        $hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
-            $this->clubRepository,
-            $this->request,
-            'club'
-        );
-    }
+    use ControllerInjectionTrait;
+    use InitializeControllerTrait;
+    use AddressTrait;
 
     /**
      * As club was already validated in ClubController create/update there can't be any errors. So ignore validation.
@@ -47,12 +41,18 @@ class MapController extends AbstractController
     public function createAction(Club $club): void
     {
         if ($this->frontendUserRepository->getCurrentFrontendUserUid()) {
-            $this->sendMail('create', $club);
+            $this->view->assign('club', $club);
+            $this->mailHelper->sendMail(
+                $this->view->render(),
+                LocalizationUtility::translate('email.subject.create', 'clubdirectory')
+            );
+
             $this->clubRepository->update($club);
             $this->addFlashMessage(LocalizationUtility::translate('clubCreated', 'clubdirectory'));
         } else {
             $this->addFlashMessage('There is no valid user logged in. So record was not saved');
         }
+
         $this->redirect('list', 'Club');
     }
 
@@ -68,10 +68,17 @@ class MapController extends AbstractController
 
     public function updateAction(Club $club): void
     {
-        $this->addMapRecordIfPossible($club);
+        if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
+            $this->errorAction();
+        }
         $this->clubRepository->update($club);
-        $this->sendMail('update', $club);
+        $this->view->assign('club', $club);
+        $this->mailHelper->sendMail(
+            $this->view->render(),
+            LocalizationUtility::translate('email.subject.update', 'clubdirectory')
+        );
         $club->setHidden(true);
+
         $this->redirect('list', 'Club', null, ['club' => $club]);
     }
 }
