@@ -12,7 +12,7 @@ $EM_CONF[$_EXTKEY] = [
     'constraints' => [
         'depends' => [
             'typo3' => '10.4.36-10.4.99',
-            'maps2' => '10.0.0-0.0.0',
+            'maps2' => '9.3.0-0.0.0',
             'glossary2' => '5.0.0-0.0.0',
         ],
         'conflicts' => [],
