@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\EventListener;
 
-use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
+use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 /*
@@ -27,14 +27,23 @@ class AllowSearchParameterEventListener extends AbstractControllerEventListener
         ],
     ];
 
-    public function __invoke(PreProcessControllerActionEvent $event): void
+    public function __invoke(InitializeControllerActionEvent $event): void
     {
         if ($this->isValidRequest($event)) {
             $pmc = $event->getArguments()
                 ->getArgument('search')
                 ->getPropertyMappingConfiguration();
 
-            $pmc->allowAllProperties();
+            // ToDo: Remove subCategory with next major version
+            $pmc->allowProperties(
+                'searchWord',
+                'letter',
+                'district',
+                'category',
+                'subCategory',
+                'direction',
+                'orderBy'
+            );
 
             $pmc->setTypeConverterOptions(
                 PersistentObjectConverter::class,

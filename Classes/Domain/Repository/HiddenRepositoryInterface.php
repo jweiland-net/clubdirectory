@@ -11,9 +11,11 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
-/*
- * Interface to identify Repositories which can find hidden objects
- * Currently used in HiddenObjectsHelper
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
+/**
+ * Interface to identify Repositories which can find hidden objects.
+ * Currently used in HiddenObjectsHelper.
  */
 interface HiddenRepositoryInterface
 {
@@ -21,8 +23,7 @@ interface HiddenRepositoryInterface
      * Find object by a given property value whether it is hidden or not.
      *
      * @param mixed $value The Value to compare against $property
-     * @param string $property
-     * @return object|null
+     * @return AbstractEntity|null Don't add return type. Let the individual repo decide
      */
-    public function findHiddenObject($value, string $property = 'uid'): ?object;
+    public function findHiddenObject($value, string $property = 'uid');
 }

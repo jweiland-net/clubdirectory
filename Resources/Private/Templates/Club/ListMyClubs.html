@@ -1,23 +1,23 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:section name="main">
-	<f:flashMessages />
+    <f:flashMessages/>
 
-	<f:link.action action="list" pageUid="{settings.pidOfListPage}" title="{f:translate(key: 'backToList')}">
-		{f:translate(key: 'backToList')}
-	</f:link.action>
+    <f:link.action action="list" pageUid="{settings.pidOfListPage}" title="{f:translate(key: 'backToList')}">
+        {f:translate(key: 'backToList')}
+    </f:link.action>
 
-	<f:if condition="{clubs}">
-		<f:then>
-			<f:render partial="Club/List" arguments="{clubs: clubs}" />
-		</f:then>
-		<f:else>
-			<div class="noResults">{f:translate(key: "noResults")}</div>
-		</f:else>
-	</f:if>
+    <f:if condition="{clubs}">
+        <f:then>
+            <f:render partial="Club/List" arguments="{clubs: clubs}"/>
+        </f:then>
+        <f:else>
+            <div class="noResults">{f:translate(key: "noResults")}</div>
+        </f:else>
+    </f:if>
 </f:section>
 </html>

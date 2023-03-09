@@ -1,27 +1,27 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:section name="main">
-	<f:flashMessages />
+    <f:flashMessages/>
 
-	<f:render partial="Club/InsertEditLinks" arguments="{allowedUserGroup: allowedUserGroup}" />
-	<f:render partial="Club/Search" arguments="{search: search}" />
-	<f:render partial="Club/Filter" arguments="{search: search, categories: categories, districts: districts}" />
+    <f:render partial="Club/InsertEditLinks" arguments="{allowedUserGroup: allowedUserGroup}"/>
+    <f:render partial="Club/Search" arguments="{search: search}"/>
+    <f:render partial="Club/Filter" arguments="{search: search, categories: categories, districts: districts}"/>
 
-	<f:if condition="{settings.showGlossar}">
-		{glossar -> f:format.raw()}
-	</f:if>
+    <f:if condition="{settings.showGlossar}">
+        {glossar -> f:format.raw()}
+    </f:if>
 
-	<f:if condition="{clubs}">
-		<f:then>
-			<f:render partial="Club/List" arguments="{_all}" />
-		</f:then>
-		<f:else>
-			<div class="noResults">{f:translate(key: "noResults")}</div>
-		</f:else>
-	</f:if>
+    <f:if condition="{clubs}">
+        <f:then>
+            <f:render partial="Club/List" arguments="{_all}"/>
+        </f:then>
+        <f:else>
+            <div class="noResults">{f:translate(key: "noResults")}</div>
+        </f:else>
+    </f:if>
 </f:section>
 </html>

@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Helper;
 
 use JWeiland\Clubdirectory\Domain\Repository\HiddenRepositoryInterface;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
@@ -37,7 +38,10 @@ class HiddenObjectHelper
         RequestInterface $request,
         string $argumentName
     ): void {
-        if ($repository instanceof HiddenRepositoryInterface) {
+        if (
+            $repository instanceof HiddenRepositoryInterface
+            && $request->hasArgument($argumentName)
+        ) {
             $objectRaw = $request->getArgument($argumentName);
             if (is_array($objectRaw)) {
                 // get object from form ($_POST)
@@ -46,7 +50,10 @@ class HiddenObjectHelper
                 // get object from UID
                 $object = $repository->findHiddenObject((int)$objectRaw);
             }
-            $this->session->registerObject($object, $object->getUid());
+
+            if ($object instanceof AbstractEntity) {
+                $this->session->registerObject($object, $object->getUid());
+            }
         }
     }
 }

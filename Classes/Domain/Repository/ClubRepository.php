@@ -210,14 +210,17 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         return $query->logicalOr($logicalOrConstraints);
     }
 
-    public function findHiddenObject($value, string $property = 'uid'): ?object
+    public function findHiddenObject($value, string $property = 'uid'): ?Club
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setIgnoreEnableFields(true);
         $query->getQuerySettings()->setEnableFieldsToBeIgnored(['disabled']);
         $query->getQuerySettings()->setRespectStoragePage(false);
 
-        return $query->matching($query->equals($property, $value))->execute()->getFirst();
+        /** @var Club $club */
+        $club = $query->matching($query->equals($property, $value))->execute()->getFirst();
+
+        return $club;
     }
 
     /**

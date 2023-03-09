@@ -1,29 +1,29 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			xmlns:maps2="http://typo3.org/ns/JWeiland/Maps2/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:maps2="http://typo3.org/ns/JWeiland/Maps2/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:section name="main">
-	<f:render partial="FormErrors" arguments="{object: Club}"/>
+    <f:render partial="FormErrors" arguments="{object: Club}"/>
 
-	<f:form action="create" name="club" object="{club}" enctype="multipart/form-data">
-		<f:for each="{club.addresses}" as="address" key="index">
-			<dl>
-				<dt>{f:translate(key: 'tx_clubdirectory_domain_model_address.title.{address.title}')}:</dt>
-				<dd>
-					{club.title}<br>
-					{address.street} {address.houseNumber}<br>
-					{address.zip} {address.city}
-				</dd>
-			</dl>
+    <f:form action="create" name="club" object="{club}" enctype="multipart/form-data">
+        <f:for each="{club.addresses}" as="address" key="index">
+            <dl>
+                <dt>{f:translate(key: 'tx_clubdirectory_domain_model_address.title.{address.title}')}:</dt>
+                <dd>
+                    {club.title}<br>
+                    {address.street} {address.houseNumber}<br>
+                    {address.zip} {address.city}
+                </dd>
+            </dl>
 
-			<f:render partial="Maps2/EditPoiCollection"
-								section="editMap"
-								arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', title: '{address.street} {address.houseNumber}, {address.zip}{address.city}', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}" />
-		</f:for>
-		<f:form.submit value="{f:translate(key: 'create')}" />
-	</f:form>
+            <f:render partial="Maps2/EditPoiCollection"
+                      section="editMap"
+                      arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', title: '{address.street} {address.houseNumber}, {address.zip}{address.city}', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}"/>
+        </f:for>
+        <f:form.submit value="{f:translate(key: 'create')}"/>
+    </f:form>
 </f:section>
 </html>

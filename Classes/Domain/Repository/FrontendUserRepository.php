@@ -11,12 +11,15 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
+use JWeiland\Clubdirectory\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Repository to manage records of fe_users table and retrieve current logged-in user
+ *
+ * @method FrontendUser findByUid(int $frontendUserUid)
  */
 class FrontendUserRepository extends Repository
 {

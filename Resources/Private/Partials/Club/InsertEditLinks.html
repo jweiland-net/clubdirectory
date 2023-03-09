@@ -1,19 +1,21 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
 <f:security.ifHasRole role="{allowedUserGroup}">
-	<div>
-		<p>
-			<f:link.action class="new" action="new" pageUid="{settings.pidOfDetailPage}" title="{f:translate(key: 'newEntry')}">
-				<span>{f:translate(key: "newEntry")}</span>
-			</f:link.action>
-		</p>
-		<p>
-			<f:link.action class="listMyClubs" action="listMyClubs" pageUid="{settings.pidOfDetailPage}" title="{f:translate(key: 'listMyClubs')}">
-				<span>{f:translate(key: "listMyClubs")}</span>
-			</f:link.action>
-		</p>
-	</div>
+    <div>
+        <p>
+            <f:link.action class="new" action="new" pageUid="{settings.pidOfDetailPage}"
+                           title="{f:translate(key: 'newEntry')}">
+                <span>{f:translate(key: "newEntry")}</span>
+            </f:link.action>
+        </p>
+        <p>
+            <f:link.action class="listMyClubs" action="listMyClubs" pageUid="{settings.pidOfDetailPage}"
+                           title="{f:translate(key: 'listMyClubs')}">
+                <span>{f:translate(key: "listMyClubs")}</span>
+            </f:link.action>
+        </p>
+    </div>
 </f:security.ifHasRole>
 </html>

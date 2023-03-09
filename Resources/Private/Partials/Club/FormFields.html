@@ -1,208 +1,218 @@
 <html lang="en"
-			xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-			xmlns:maps2="http://typo3.org/ns/JWeiland/Maps2/ViewHelpers"
-			data-namespace-typo3-fluid="true">
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:maps2="http://typo3.org/ns/JWeiland/Maps2/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
-<f:render section="renderTextProperty" arguments="{property: 'title', column: 'title', mandatory: 1}" />
-<f:render section="renderSelectProperty" arguments="{property: 'categories', column: 'categories', options: categories, size: 5, multiple: 1}" />
-<f:render section="renderTextareaProperty" arguments="{property: 'activity', column: 'activity'}" />
-<f:render section="renderTextareaProperty" arguments="{property: 'description', column: 'description'}" />
-<f:render section="renderTextProperty" arguments="{property: 'contactPerson', column: 'contactPerson'}" />
-<f:render section="renderTextProperty" arguments="{property: 'contactTimes', column: 'contactTimes'}" />
-<f:render section="renderTextProperty" arguments="{property: 'email', column: 'email'}" />
-<f:render section="renderTextProperty" arguments="{property: 'website', column: 'website'}" />
-<f:render section="renderTextProperty" arguments="{property: 'members', column: 'members'}" />
-<f:render section="renderTextProperty" arguments="{property: 'clubHome', column: 'clubHome'}" />
-<f:render section="renderAddresses" arguments="{_all}" />
-<f:render section="renderTextProperty" arguments="{property: 'facebook', column: 'facebook'}" />
-<f:render section="renderTextProperty" arguments="{property: 'twitter', column: 'twitter'}" />
-<f:render section="renderTextProperty" arguments="{property: 'instagram', column: 'instagram'}" />
-<f:render section="renderTextProperty" arguments="{property: 'tags', column: 'tags'}" />
+<f:render section="renderTextProperty" arguments="{property: 'title', column: 'title', mandatory: 1}"/>
+<f:render section="renderSelectProperty"
+          arguments="{property: 'categories', column: 'categories', options: categories, size: 5, multiple: 1}"/>
+<f:render section="renderTextareaProperty" arguments="{property: 'activity', column: 'activity'}"/>
+<f:render section="renderTextareaProperty" arguments="{property: 'description', column: 'description'}"/>
+<f:render section="renderTextProperty" arguments="{property: 'contactPerson', column: 'contactPerson'}"/>
+<f:render section="renderTextProperty" arguments="{property: 'contactTimes', column: 'contactTimes'}"/>
+<f:render section="renderTextProperty" arguments="{property: 'email', column: 'email'}"/>
+<f:render section="renderTextProperty" arguments="{property: 'website', column: 'website'}"/>
+<f:render section="renderTextProperty" arguments="{property: 'members', column: 'members'}"/>
+<f:render section="renderTextProperty" arguments="{property: 'clubHome', column: 'clubHome'}"/>
+<f:render section="renderAddresses" arguments="{_all}"/>
+<f:render section="renderTextProperty" arguments="{property: 'facebook', column: 'facebook'}"/>
+<f:render section="renderTextProperty" arguments="{property: 'twitter', column: 'twitter'}"/>
+<f:render section="renderTextProperty" arguments="{property: 'instagram', column: 'instagram'}"/>
+<f:render section="renderTextProperty" arguments="{property: 'tags', column: 'tags'}"/>
 
-<f:render section="renderLogo" arguments="{club: club}" />
-<f:render section="renderImages" arguments="{club: club}" />
+<f:render section="renderLogo" arguments="{club: club}"/>
+<f:render section="renderImages" arguments="{club: club}"/>
 
 <f:section name="renderLogo">
-	<f:render section="renderLabel" arguments="{column: 'logo'}" />
+    <f:render section="renderLabel" arguments="{column: 'logo'}"/>
 
-	<div class="media mb-3">
-		<f:if condition="{club.logo.0}">
-			<f:image image="{club.logo.0}"
-							 class="mr-3"
-							 alt="{club.title}"
-							 width="{settings.list.image.width}"
-							 height="{settings.list.image.height}"
-			/>
-		</f:if>
-		<div class="media-body">
-			<div class="form-group">
-				<f:form.upload property="logo.0"
-											 class="form-control-file"
-											 id="logo" />
-			</div>
-			<f:if condition="{club.logo.0}">
-				<div class="form-group form-check">
-					<f:form.checkbox property="logo.0.delete"
-													 id="logoDelete"
-													 class="form-check-input"
-													 value="1" />
-					<label class="form-check-label" for="logoDelete">
-						{f:translate(key: "deleteLogo")}
-					</label>
-				</div>
-			</f:if>
-		</div>
-	</div>
+    <div class="media mb-3">
+        <f:if condition="{club.logo.0}">
+            <f:image image="{club.logo.0}"
+                     class="mr-3"
+                     alt="{club.title}"
+                     width="{settings.list.image.width}"
+                     height="{settings.list.image.height}"
+            />
+        </f:if>
+        <div class="media-body">
+            <div class="form-group">
+                <f:form.upload property="logo.0"
+                               class="form-control-file"
+                               id="logo"/>
+            </div>
+            <f:if condition="{club.logo.0}">
+                <div class="form-group form-check">
+                    <f:form.checkbox property="logo.0.delete"
+                                     id="logoDelete"
+                                     class="form-check-input"
+                                     value="1"/>
+                    <label class="form-check-label" for="logoDelete">
+                        {f:translate(key: "deleteLogo")}
+                    </label>
+                </div>
+            </f:if>
+        </div>
+    </div>
 </f:section>
 
 <f:section name="renderImages">
-	<f:render section="renderLabel" arguments="{column: 'images'}" />
+    <f:render section="renderLabel" arguments="{column: 'images'}"/>
 
-	<f:for each="{0: 1, 1: 2, 2: 3, 3: 4, 4: 5}" as="number" key="globalIndex">
-		<f:variable name="currentImage" value="" />
-		<f:for each="{club.images}" as="image" key="imageIndex">
-			<f:if condition="{globalIndex}=={imageIndex}">
-				<f:variable name="currentImage">{image}</f:variable>
-			</f:if>
-		</f:for>
-		<div class="media mb-3">
-			<f:if condition="{currentImage}">
-				<f:image image="{currentImage}"
-								 class="mr-3"
-								 alt="{club.title}"
-								 width="{settings.list.image.width}"
-								 height="{settings.list.image.height}"
-				/>
-			</f:if>
-			<div class="media-body">
-				<div class="form-group">
-					<f:form.upload property="images.{globalIndex}"
-												 class="form-control-file"
-												 id="images_{globalIndex}" />
-				</div>
-				<f:if condition="{currentImage}">
-					<div class="form-group form-check">
-						<f:form.checkbox property="images.{globalIndex}.delete"
-														 id="imageDelete{globalIndex}"
-														 class="form-check-input"
-														 value="1" />
-						<label class="form-check-label" for="imageDelete{globalIndex}">
-							{f:translate(key: "deleteImage")}
-						</label>
-					</div>
-				</f:if>
-			</div>
-		</div>
-	</f:for>
+    <f:for each="{0: 1, 1: 2, 2: 3, 3: 4, 4: 5}" as="number" key="globalIndex">
+        <f:variable name="currentImage" value=""/>
+        <f:for each="{club.images}" as="image" key="imageIndex">
+            <f:if condition="{globalIndex}=={imageIndex}">
+                <f:variable name="currentImage">{image}</f:variable>
+            </f:if>
+        </f:for>
+        <div class="media mb-3">
+            <f:if condition="{currentImage}">
+                <f:image image="{currentImage}"
+                         class="mr-3"
+                         alt="{club.title}"
+                         width="{settings.list.image.width}"
+                         height="{settings.list.image.height}"
+                />
+            </f:if>
+            <div class="media-body">
+                <div class="form-group">
+                    <f:form.upload property="images.{globalIndex}"
+                                   class="form-control-file"
+                                   id="images_{globalIndex}"/>
+                </div>
+                <f:if condition="{currentImage}">
+                    <div class="form-group form-check">
+                        <f:form.checkbox property="images.{globalIndex}.delete"
+                                         id="imageDelete{globalIndex}"
+                                         class="form-check-input"
+                                         value="1"/>
+                        <label class="form-check-label" for="imageDelete{globalIndex}">
+                            {f:translate(key: "deleteImage")}
+                        </label>
+                    </div>
+                </f:if>
+            </div>
+        </div>
+    </f:for>
 </f:section>
 
 <f:section name="renderTextProperty">
-	<div class="form-group">
-		<f:render section="renderLabel" arguments="{column: column, domain: domain}" />
-		<f:form.textfield property="{property}"
-											class="form-control"
-											id="{property}"
-											additionalAttributes="{aria-describedby: '{property}Help'}"
-		/>
-		<f:render section="renderHelpMessage" arguments="{property: property}" />
-	</div>
+    <div class="form-group">
+        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
+        <f:form.textfield property="{property}"
+                          class="form-control"
+                          id="{property}"
+                          additionalAttributes="{aria-describedby: '{property}Help'}"
+        />
+        <f:render section="renderHelpMessage" arguments="{property: property}"/>
+    </div>
 </f:section>
 
 <f:section name="renderSelectProperty">
-	<div class="form-group">
-		<f:render section="renderLabel" arguments="{column: column, domain: domain}" />
-		<f:form.select
-						property="{property}"
-						class="form-control"
-						id="{property}"
-						options="{options}"
-						size="{f:if(condition: size, then: size, else: 1)}"
-						multiple="{f:if(condition: multiple, then: 1, else: 0)}"
-						optionValueField="{f:if(condition: optionValueField, then: optionValueField, else: 'uid')}"
-						optionLabelField="{f:if(condition: optionLabelField, then: optionLabelField, else: 'title')}"
-						sortByOptionLabel="1"
-						prependOptionLabel="{f:translate(key: 'pleaseChoose')}"
-						prependOptionValue="" />
-		<f:render section="renderHelpMessage" arguments="{property: property}" />
-	</div>
+    <div class="form-group">
+        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
+        <f:form.select
+            property="{property}"
+            class="form-control"
+            id="{property}"
+            options="{options}"
+            size="{f:if(condition: size, then: size, else: 1)}"
+            multiple="{f:if(condition: multiple, then: 1, else: 0)}"
+            optionValueField="{f:if(condition: optionValueField, then: optionValueField, else: 'uid')}"
+            optionLabelField="{f:if(condition: optionLabelField, then: optionLabelField, else: 'title')}"
+            sortByOptionLabel="1"
+            prependOptionLabel="{f:translate(key: 'pleaseChoose')}"
+            prependOptionValue=""/>
+        <f:render section="renderHelpMessage" arguments="{property: property}"/>
+    </div>
 </f:section>
 
 <f:section name="renderTextareaProperty">
-	<div class="form-group">
-		<f:render section="renderLabel" arguments="{column: column, domain: domain}" />
-		<f:form.textarea property="{property}"
-										 class="form-control"
-										 id="{property}"
-										 rows="5"
-										 cols="50" />
-		<f:render section="renderHelpMessage" arguments="{property: property}" />
-	</div>
+    <div class="form-group">
+        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
+        <f:form.textarea property="{property}"
+                         class="form-control"
+                         id="{property}"
+                         rows="5"
+                         cols="50"/>
+        <f:render section="renderHelpMessage" arguments="{property: property}"/>
+    </div>
 </f:section>
 
 <f:section name="renderCheckboxProperty">
-	<div class="form-check">
-		<f:render section="renderLabel" arguments="{column: column, domain: domain}" />
-		<f:form.checkbox property="{property}"
-										 id="{property}_{index}"
-										 class="form-check-input"
-										 value="1" />
-		<f:render section="renderHelpMessage" arguments="{property: property}" />
-	</div>
+    <div class="form-check">
+        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
+        <f:form.checkbox property="{property}"
+                         id="{property}_{index}"
+                         class="form-check-input"
+                         value="1"/>
+        <f:render section="renderHelpMessage" arguments="{property: property}"/>
+    </div>
 </f:section>
 
 <f:section name="renderMaps2Property">
-	<div class="form-group">
-		<f:render section="renderLabel" arguments="{column: column, domain: domain}" />
-		<input type="hidden" name="tx_clubdirectory_clubdirectory[club][addresses][{index}][__identity]" value="{address.uid}" />
-		<f:render partial="Maps2/EditPoiCollection"
-							section="editMap"
-							arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', title: '{address.street} {address.houseNumber}, {address.zip}{address.city}', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}" />
-		<f:render section="renderHelpMessage" arguments="{property: property}" />
-	</div>
+    <div class="form-group">
+        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
+        <input type="hidden" name="tx_clubdirectory_clubdirectory[club][addresses][{index}][__identity]"
+               value="{address.uid}"/>
+        <f:render partial="Maps2/EditPoiCollection"
+                  section="editMap"
+                  arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', title: '{address.street} {address.houseNumber}, {address.zip}{address.city}', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}"/>
+        <f:render section="renderHelpMessage" arguments="{property: property}"/>
+    </div>
 </f:section>
 
 <f:section name="renderAddresses">
-	<div class="form-group">
-		<f:render section="renderLabel" arguments="{column: 'addresses', domain: domain}" />
-		<f:for each="{club.addresses}" as="address" key="index">
-			<f:render section="renderAddressProperties" arguments="{addressTitles: addressTitles, address: address, index: index}" />
-		</f:for>
-		<f:render section="renderHelpMessage" arguments="{property: property}" />
-	</div>
+    <div class="form-group">
+        <f:render section="renderLabel" arguments="{column: 'addresses', domain: domain}"/>
+        <f:for each="{club.addresses}" as="address" key="index">
+            <f:render section="renderAddressProperties"
+                      arguments="{addressTitles: addressTitles, address: address, index: index}"/>
+        </f:for>
+        <f:render section="renderHelpMessage" arguments="{property: property}"/>
+    </div>
 </f:section>
 
 <f:section name="renderAddressProperties">
-	<f:variable name="prefix">addresses.{index}</f:variable>
+    <f:variable name="prefix">addresses.{index}</f:variable>
 
-	<f:render section="renderSelectProperty" arguments="{property: '{prefix}.title', column: 'title', domain: 'address', options: addressTitles, optionValueField: 'value', optionLabelField: 'label'}" />
-	<f:render section="renderTextProperty" arguments="{property: '{prefix}.street', column: 'street', domain: 'address'}" />
-	<f:render section="renderTextProperty" arguments="{property: '{prefix}.houseNumber', column: 'houseNumber', domain: 'address'}" />
-	<f:render section="renderTextProperty" arguments="{property: '{prefix}.zip', column: 'zip', domain: 'address'}" />
-	<f:render section="renderTextProperty" arguments="{property: '{prefix}.city', column: 'city', domain: 'address'}" />
-	<f:render section="renderTextProperty" arguments="{property: '{prefix}.fax', column: 'fax', domain: 'address'}" />
-	<f:render section="renderCheckboxProperty" arguments="{property: '{prefix}.barrierFree', column: 'barrierFree', domain: 'address'}" />
+    <f:render section="renderSelectProperty"
+              arguments="{property: '{prefix}.title', column: 'title', domain: 'address', options: addressTitles, optionValueField: 'value', optionLabelField: 'label'}"/>
+    <f:render section="renderTextProperty"
+              arguments="{property: '{prefix}.street', column: 'street', domain: 'address'}"/>
+    <f:render section="renderTextProperty"
+              arguments="{property: '{prefix}.houseNumber', column: 'houseNumber', domain: 'address'}"/>
+    <f:render section="renderTextProperty" arguments="{property: '{prefix}.zip', column: 'zip', domain: 'address'}"/>
+    <f:render section="renderTextProperty" arguments="{property: '{prefix}.city', column: 'city', domain: 'address'}"/>
+    <f:render section="renderTextProperty" arguments="{property: '{prefix}.fax', column: 'fax', domain: 'address'}"/>
+    <f:render section="renderCheckboxProperty"
+              arguments="{property: '{prefix}.barrierFree', column: 'barrierFree', domain: 'address'}"/>
 
-	<f:if condition="{address.txMaps2Uid}">
-		<f:render section="renderMaps2Property" arguments="{_all}" />
-	</f:if>
+    <f:if condition="{address.txMaps2Uid}">
+        <f:render section="renderMaps2Property" arguments="{_all}"/>
+    </f:if>
 </f:section>
 
 <f:section name="renderLabel">
-	<f:variable name="tableName">tx_clubdirectory_domain_model_{f:if(condition: domain, then: domain, else: 'club')}</f:variable>
-	<label for="{column}">
-		{f:translate(key: "{tableName}.{column}")}
-		<f:if condition="{mandatory}">
-			<span class="required">*</span>
-		</f:if>
-	</label>
+    <f:variable name="tableName">tx_clubdirectory_domain_model_{f:if(condition: domain, then: domain, else: 'club')}
+    </f:variable>
+    <label for="{column}">
+        {f:translate(key: "{tableName}.{column}")}
+        <f:if condition="{mandatory}">
+            <span class="required">*</span>
+        </f:if>
+    </label>
 </f:section>
 
 <f:section name="renderHelpMessage">
-	<f:variable name="helpMessage"><f:spaceless>
-		<f:translate key="csh{property}"/>
-	</f:spaceless></f:variable>
-	<f:if condition="{helpMessage}">
-		<small id="{property}Help" class="form-text text-muted">{helpMessage}</small>
-	</f:if>
+    <f:variable name="helpMessage">
+        <f:spaceless>
+            <f:translate key="csh{property}"/>
+        </f:spaceless>
+    </f:variable>
+    <f:if condition="{helpMessage}">
+        <small id="{property}Help" class="form-text text-muted">{helpMessage}</small>
+    </f:if>
 </f:section>
 </html>

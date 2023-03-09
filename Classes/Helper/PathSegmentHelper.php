@@ -27,6 +27,16 @@ class PathSegmentHelper
      */
     protected $generatorFields = [];
 
+    /**
+     * @var PersistenceManagerInterface
+     */
+    protected $persistenceManager;
+
+    public function __construct(PersistenceManagerInterface $persistenceManager)
+    {
+        $this->persistenceManager = $persistenceManager;
+    }
+
     public function generatePathSegment(array $baseRecord, int $pid): string
     {
         return $this->getSlugHelper()->generate($baseRecord, $pid);
@@ -36,8 +46,7 @@ class PathSegmentHelper
     {
         // First of all, we have to check, if an UID is available
         if (!$club->getUid()) {
-            $persistenceManager = GeneralUtility::makeInstance(PersistenceManagerInterface::class);
-            $persistenceManager->persistAll();
+            $this->persistenceManager->persistAll();
         }
 
         $club->setPathSegment(
