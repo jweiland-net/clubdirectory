@@ -22,21 +22,24 @@ view.templateRootPaths
 
 Default: Value from Constants *EXT:clubdirectory/Resources/Private/Templates/*
 
-You can override our Templates with your own SitePackage extension. We prefer to change this value in TS Constants.
+You can override our Templates with your own SitePackage extension. We prefer
+to change this value in TS Constants.
 
 view.partialRootPaths
 ---------------------
 
 Default: Value from Constants *EXT:clubdirectory/Resources/Private/Partials/*
 
-You can override our Partials with your own SitePackage extension. We prefer to change this value in TS Constants.
+You can override our Partials with your own SitePackage extension. We prefer
+to change this value in TS Constants.
 
 view.layoutsRootPaths
 ---------------------
 
 Default: Value from Constants *EXT:clubdirectory/Resources/Layouts/Templates/*
 
-You can override our Layouts with your own SitePackage extension. We prefer to change this value in TS Constants.
+You can override our Layouts with your own SitePackage extension. We prefer
+to change this value in TS Constants.
 
 
 Persistence
@@ -60,7 +63,8 @@ Default: 0
 
 Example: `plugin.tx_clubdirectory.settings.pidOfMaps2Plugin = 12`
 
-Define the page UID where the EXT:maps2 plugin is located to show an address on a map.
+Define the page UID where the EXT:maps2 plugin is located to show an address
+on a map.
 
 setting.pidOfDetailPage
 -----------------------
@@ -69,7 +73,8 @@ Default: 0
 
 Example: `plugin.tx_clubdirectory.settings.pidOfDetailPage = 84`
 
-Often it is useful to move the detail view onto a separate page for design/layout reasons.
+Often it is useful to move the detail view onto a separate page for
+design/layout reasons.
 
 settings.glossary.mergeNumbers
 ------------------------------
