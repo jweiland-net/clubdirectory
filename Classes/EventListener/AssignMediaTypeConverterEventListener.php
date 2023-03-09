@@ -31,7 +31,7 @@ class AssignMediaTypeConverterEventListener extends AbstractControllerEventListe
         'Club' => [
             'create',
             'update',
-        ]
+        ],
     ];
 
     public function __construct(ClubRepository $clubRepository)
