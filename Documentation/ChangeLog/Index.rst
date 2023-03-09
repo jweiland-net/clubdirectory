@@ -10,9 +10,12 @@ ChangeLog
 Version 6.0.0
 =============
 
-*   Add TYPO3 compatibility
+*   Add TYPO3 11 compatibility
+*   Remove TYPO3 9 compatibility
 *   Add EventListener for POI title as replacement for SignalSlot in future
 *   Replace ObjectManager with GeneralUtility::makeInstance
+*   Migrate SignalSlot of maps2 to EventListener
+*   Refactor the controllers
 
 Version 5.3.1
 =============

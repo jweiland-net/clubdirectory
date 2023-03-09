@@ -16,4 +16,4 @@ Administrator manual
     :titlesonly:
 
     Routes/Index
-    Update/Index
+    Upgrade/Index
