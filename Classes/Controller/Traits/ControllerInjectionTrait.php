@@ -14,7 +14,6 @@ namespace JWeiland\Clubdirectory\Controller\Traits;
 use JWeiland\Clubdirectory\Configuration\ExtConf;
 use JWeiland\Clubdirectory\Domain\Repository\CategoryRepository;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
-use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
 use JWeiland\Clubdirectory\Domain\Repository\FrontendUserRepository;
 use JWeiland\Clubdirectory\Helper\MailHelper;
 use JWeiland\Clubdirectory\Helper\MapHelper;

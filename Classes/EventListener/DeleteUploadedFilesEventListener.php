@@ -25,7 +25,7 @@ class DeleteUploadedFilesEventListener extends AbstractControllerEventListener
 
     protected $allowedControllerActions = [
         'Club' => [
-            'new'
+            'new',
         ]
     ];
 

@@ -32,7 +32,9 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class ClubController extends ActionController
 {
-    use ControllerInjectionTrait, InitializeControllerTrait, AddressTrait;
+    use ControllerInjectionTrait;
+    use InitializeControllerTrait;
+    use AddressTrait;
 
     /**
      * @var DistrictRepository
@@ -192,7 +194,7 @@ class ClubController extends ActionController
         $this->clubRepository->update($club);
 
         $this->postProcessAndAssignFluidVariables([
-            'club' => $club
+            'club' => $club,
         ]);
 
         $this->mailHelper->sendMail(

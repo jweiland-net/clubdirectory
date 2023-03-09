@@ -19,7 +19,6 @@ use JWeiland\Maps2\Domain\Model\Position;
 use JWeiland\Maps2\Domain\Repository\PoiCollectionRepository;
 use JWeiland\Maps2\Service\GeoCodeService;
 use JWeiland\Maps2\Service\MapService;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**

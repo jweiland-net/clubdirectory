@@ -24,7 +24,9 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class MapController extends ActionController
 {
-    use ControllerInjectionTrait, InitializeControllerTrait, AddressTrait;
+    use ControllerInjectionTrait;
+    use InitializeControllerTrait;
+    use AddressTrait;
 
     /**
      * As club was already validated in ClubController create/update there can't be any errors. So ignore validation.

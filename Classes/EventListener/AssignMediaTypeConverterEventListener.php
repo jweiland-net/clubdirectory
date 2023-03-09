@@ -30,7 +30,7 @@ class AssignMediaTypeConverterEventListener extends AbstractControllerEventListe
     protected $allowedControllerActions = [
         'Club' => [
             'create',
-            'update'
+            'update',
         ]
     ];
 
