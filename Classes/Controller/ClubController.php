@@ -129,6 +129,7 @@ class ClubController extends ActionController
             );
             $club->addFeUser($feUser);
             $club->setHidden(true);
+
             if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
                 $this->errorAction();
             }

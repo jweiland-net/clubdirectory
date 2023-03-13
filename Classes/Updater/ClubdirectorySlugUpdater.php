@@ -41,7 +41,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 
     public function __construct(PathSegmentHelper $pathSegmentHelper = null)
     {
-        $this->pathSegmentHelper = $pathSegmentHelper ?? GeneralUtility::makeInstance(PathSegmentHelper::class);
+        $this->pathSegmentHelper = $pathSegmentHelper;
     }
 
     /**
