@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
 use JWeiland\Clubdirectory\Configuration\ExtConf;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
