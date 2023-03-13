@@ -26,11 +26,21 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 class CategoryRepository extends Repository
 {
     /**
+     * @var ExtConf
+     */
+    protected $extConf;
+
+    /**
      * @var array
      */
     protected $defaultOrderings = [
         'title' => QueryInterface::ORDER_ASCENDING,
     ];
+
+    public function injectExtConf(ExtConf $extConf): void
+    {
+        $this->extConf = $extConf;
+    }
 
     public function initializeObject(): void
     {
@@ -42,9 +52,8 @@ class CategoryRepository extends Repository
      */
     public function getCategories(): QueryResultInterface
     {
-        $extConf = GeneralUtility::makeInstance(ExtConf::class);
-
         $query = $this->createQuery();
-        return $query->matching($query->equals('parent', $extConf->getRootCategory()))->execute();
+
+        return $query->matching($query->equals('parent', $this->extConf->getRootCategory()))->execute();
     }
 }

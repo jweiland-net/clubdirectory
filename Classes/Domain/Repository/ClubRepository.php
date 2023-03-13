@@ -39,16 +39,26 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
     ];
 
     /**
-     * charset converter
+     * Charset converter
      * We need some UTF-8 compatible functions for search.
      *
      * @var CharsetConverter
      */
     protected $charsetConverter;
 
+    /**
+     * @var GlossaryService
+     */
+    protected $glossaryService;
+
     public function injectCharsetConverter(CharsetConverter $charsetConverter): void
     {
         $this->charsetConverter = $charsetConverter;
+    }
+
+    public function inject(GlossaryService $glossaryService): void
+    {
+        $this->glossaryService = $glossaryService;
     }
 
     public function findFilteredBy(int $category, int $district = 0, string $letter = ''): QueryResultInterface
@@ -65,11 +75,14 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         }
 
         if ($letter) {
-            $glossaryService = GeneralUtility::makeInstance(GlossaryService::class);
-            $constraints[] = $glossaryService->getLetterConstraintForExtbaseQuery($query, 'title', $letter);
+            $constraints[] = $this->glossaryService->getLetterConstraintForExtbaseQuery(
+                $query,
+                'title',
+                $letter
+            );
         }
 
-        if (empty($constraints)) {
+        if ($constraints === []) {
             return $query->execute();
         }
 
