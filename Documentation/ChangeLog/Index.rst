@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+Version 6.0.1
+=============
+
+*   Replace GeneralUtility::makeInstance where possible
+*   BUGFIX: Solve AJAX error while calling UpgradeWizards module
+
 Version 6.0.0
 =============
 
