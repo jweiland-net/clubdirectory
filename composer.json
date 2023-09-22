@@ -4,7 +4,7 @@
 	"description": "Club directory",
 	"license": "GPL-2.0-or-later",
 	"keywords": ["typo3", "TYPO3 CMS", "club", "directory"],
-	"homepage": "https://www.jweiland.net",
+	"homepage": "https://jweiland.net",
 	"authors": [
 		{
 			"name": "Stefan Froemken",
@@ -27,6 +27,9 @@
 		"friendsofphp/php-cs-fixer": "^3.4",
 		"nimut/testing-framework": "^6.0",
 		"phpunit/phpunit": "^9.5"
+	},
+	"replace": {
+		"typo3-ter/clubdirectory": "self.version"
 	},
 	"autoload": {
 		"psr-4": {
