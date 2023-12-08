@@ -34,3 +34,12 @@ nbproject
 
 # Ignore composer stuff
 /composer.lock
+bin/*
+vendor/*
+.build
+.php_cs.cache
+
+# Ignore testing stuff
+/.Build
+/composer.json.orig
+/composer.json.testing
