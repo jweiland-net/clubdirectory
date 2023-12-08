@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
+use Psr\Http\Message\ResponseInterface;
+use JWeiland\Clubdirectory\Domain\Validator\ClubValidator;
 use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
@@ -24,6 +26,7 @@ use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -36,20 +39,11 @@ class ClubController extends ActionController
     use InitializeControllerTrait;
     use AddressTrait;
 
-    /**
-     * @var DistrictRepository
-     */
-    protected $districtRepository;
+    protected DistrictRepository $districtRepository;
 
-    /**
-     * @var PathSegmentHelper
-     */
-    protected $pathSegmentHelper;
+    protected PathSegmentHelper $pathSegmentHelper;
 
-    /**
-     * @var PersistenceManagerInterface
-     */
-    protected $persistenceManager;
+    protected PersistenceManager $persistenceManager;
 
     public function injectDistrictRepository(DistrictRepository $districtRepository): void
     {
@@ -66,7 +60,7 @@ class ClubController extends ActionController
         $this->persistenceManager = $persistenceManager;
     }
 
-    public function listAction(string $letter = ''): void
+    public function listAction(string $letter = ''): ResponseInterface
     {
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $this->clubRepository->findFilteredBy(
@@ -79,27 +73,33 @@ class ClubController extends ActionController
             'search' => GeneralUtility::makeInstance(Search::class),
             'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
+
+        return $this->htmlResponse();
     }
 
-    public function listMyClubsAction(): void
+    public function listMyClubsAction(): ResponseInterface
     {
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $this->clubRepository->findByFeUser($this->frontendUserRepository->getCurrentFrontendUserUid()),
             'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
+
+        return $this->htmlResponse();
     }
 
     /**
      * We are using int to prevent calling any Validator
      */
-    public function showAction(int $club): void
+    public function showAction(int $club): ResponseInterface
     {
         $this->postProcessAndAssignFluidVariables([
             'club' => $this->clubRepository->findByIdentifier($club),
         ]);
+
+        return $this->htmlResponse();
     }
 
-    public function newAction(): void
+    public function newAction(): ResponseInterface
     {
         $this->preProcessControllerAction();
 
@@ -111,6 +111,8 @@ class ClubController extends ActionController
             'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
             'addressTitles' => $this->getAddressTitles(),
         ]);
+
+        return $this->htmlResponse();
     }
 
     public function initializeCreateAction(): void
@@ -161,7 +163,7 @@ class ClubController extends ActionController
      *
      * @Extbase\IgnoreValidation("club")
      */
-    public function editAction(Club $club): void
+    public function editAction(Club $club): ResponseInterface
     {
         $this->fillAddressesUpToMaximum($club);
 
@@ -170,6 +172,8 @@ class ClubController extends ActionController
             'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
             'addressTitles' => $this->getAddressTitles(),
         ]);
+
+        return $this->htmlResponse();
     }
 
     public function initializeUpdateAction(): void
@@ -214,7 +218,7 @@ class ClubController extends ActionController
         $this->emitInitializeControllerAction();
     }
 
-    public function searchAction(Search $search): void
+    public function searchAction(Search $search): ResponseInterface
     {
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $this->clubRepository->findBySearch($search),
@@ -223,6 +227,8 @@ class ClubController extends ActionController
             'search' => $search,
             'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
+
+        return $this->htmlResponse();
     }
 
     public function initializeActivateAction(): void

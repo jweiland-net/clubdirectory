@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
+use Psr\Http\Message\ResponseInterface;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Core\Environment;
@@ -24,42 +26,33 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class ExportController extends ActionController
 {
     /**
-     * @var BackendTemplateView
-     */
-    protected $view;
-
-    /**
-     * @var BackendTemplateView
-     */
-    protected $defaultViewObjectName = BackendTemplateView::class;
-
-    /**
      * In which directory we want to export club data
      * Needed separately to create folder structure if not exists.
-     *
-     * @var string
      */
-    protected $exportPath = 'typo3temp/tx_clubdirectory/';
+    protected string $exportPath = 'typo3temp/tx_clubdirectory/';
 
     /**
      * In which file we want to export club data.
-     *
-     * @var string
      */
-    protected $exportFile = 'export.csv';
+    protected string $exportFile = 'export.csv';
 
-    /**
-     * @var ClubRepository
-     */
-    protected $clubRepository;
+    protected ClubRepository $clubRepository;
+
+    protected ModuleTemplateFactory $moduleTemplateFactory;
 
     public function injectClubRepository(ClubRepository $clubRepository): void
     {
         $this->clubRepository = $clubRepository;
     }
 
-    public function indexAction(): void
+    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory)
     {
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
+    }
+
+    public function indexAction(): ResponseInterface
+    {
+        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->createDirectoryStructure();
         $this->removePreviousExports();
 
@@ -74,6 +67,9 @@ class ExportController extends ActionController
             'exportPath',
             PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile)
         );
+
+        $moduleTemplate->setContent($this->view->render());
+        return $this->htmlResponse($moduleTemplate->renderContent());
     }
 
     /**

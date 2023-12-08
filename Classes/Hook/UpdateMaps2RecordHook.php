@@ -61,7 +61,7 @@ class UpdateMaps2RecordHook
                     $queryBuilder->createNamedParameter($clubUid, \PDO::PARAM_INT)
                 )
             )
-            ->execute()
+            ->executeQuery()
             ->fetch();
         if (empty($club)) {
             $club = [];

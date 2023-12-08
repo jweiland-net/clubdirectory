@@ -36,14 +36,12 @@ class ClubValidator extends AbstractValidator
      * @param Club $value The value that should be validated
      * @return bool TRUE if the value is valid, FALSE if an error occurred
      */
-    public function isValid($value): bool
+    public function isValid($value): void
     {
         $this->removeEmptyAddresses($value);
         if (empty($value->getAddresses())) {
             $this->addError('You have forgotten to set at least one address', 1399904889);
-            return false;
         }
-        return true;
     }
 
     /**

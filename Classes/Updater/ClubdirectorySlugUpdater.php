@@ -75,7 +75,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
             ->count('*')
             ->from($this->tableName)
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq(
                         $this->fieldName,
                         $queryBuilder->createNamedParameter('', Connection::PARAM_STR)
@@ -85,7 +85,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
                     )
                 )
             )
-            ->execute()
+            ->executeQuery()
             ->fetchColumn();
 
         return (bool)$amountOfRecordsWithEmptySlug;
@@ -106,7 +106,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
             ->select('uid', 'pid', 'title')
             ->from($this->tableName)
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq(
                         $this->fieldName,
                         $queryBuilder->createNamedParameter('', Connection::PARAM_STR)
@@ -116,7 +116,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
                     )
                 )
             )
-            ->execute();
+            ->executeQuery();
 
         $connection = $this->getConnectionPool()->getConnectionForTable($this->tableName);
         while ($recordToUpdate = $statement->fetch()) {

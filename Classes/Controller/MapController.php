@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
@@ -33,9 +34,10 @@ class MapController extends ActionController
      *
      * @Extbase\IgnoreValidation("club")
      */
-    public function newAction(Club $club): void
+    public function newAction(Club $club): ResponseInterface
     {
         $this->view->assign('club', $club);
+        return $this->htmlResponse();
     }
 
     public function createAction(Club $club): void
@@ -59,11 +61,12 @@ class MapController extends ActionController
     /**
      * @Extbase\IgnoreValidation("club")
      */
-    public function editAction(Club $club): void
+    public function editAction(Club $club): ResponseInterface
     {
         $this->view->assign('club', $club);
         $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
         $this->view->assign('addressTitles', $this->getAddressTitles());
+        return $this->htmlResponse();
     }
 
     public function updateAction(Club $club): void

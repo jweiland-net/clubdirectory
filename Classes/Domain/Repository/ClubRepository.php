@@ -82,11 +82,17 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             );
         }
 
+        if (count($constraints) === 1) {
+        $query->matching(reset($constraints));
+        } elseif (count($constraints) >= 2) {
+            $query->matching($query->logicalAnd(...$constraints));
+        }
+
         if ($constraints === []) {
             return $query->execute();
         }
 
-        return $query->matching($query->logicalAnd($constraints))->execute();
+        return $query->matching($query->logicalAnd(...$constraints))->execute();
     }
 
     public function findBySearch(Search $search): QueryResultInterface
@@ -125,7 +131,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             ]);
         }
 
-        return $constraints !== [] ? $query->matching($query->logicalAnd($constraints))->execute() : $query->execute();
+        return $constraints !== [] ? $query->matching($query->logicalAnd(...$constraints))->execute() : $query->execute();
     }
 
     public function findByFeUser(int $feUser): QueryResultInterface
@@ -161,7 +167,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                     'c',
                     'sys_category_record_mm',
                     'mm',
-                    (string)$queryBuilder->expr()->andX(
+                    (string)$queryBuilder->expr()->and(
                         $queryBuilder->expr()->eq(
                             'mm.tablenames',
                             $queryBuilder->createNamedParameter('tx_clubdirectory_domain_model_club')
@@ -220,7 +226,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             $query->like('tags', '%' . $searchWord . '%'),
         ];
 
-        return $query->logicalOr($logicalOrConstraints);
+        return $query->logicalOr(...$logicalOrConstraints);
     }
 
     public function findHiddenObject($value, string $property = 'uid'): ?Club
