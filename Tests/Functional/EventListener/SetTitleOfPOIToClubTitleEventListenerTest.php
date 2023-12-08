@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Functional\EventListener;
 
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
-use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

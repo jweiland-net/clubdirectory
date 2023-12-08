@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use JWeiland\Clubdirectory\Domain\Model\Search;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
