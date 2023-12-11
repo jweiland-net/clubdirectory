@@ -22,15 +22,9 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
  */
 class PathSegmentHelper
 {
-    /**
-     * @var array
-     */
-    protected $generatorFields = [];
+    protected array $generatorFields = [];
 
-    /**
-     * @var PersistenceManagerInterface
-     */
-    protected $persistenceManager;
+    protected PersistenceManagerInterface $persistenceManager;
 
     public function __construct(PersistenceManagerInterface $persistenceManager)
     {

@@ -23,10 +23,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class SetTitleOfPOIToClubTitleEventListener
 {
-    /**
-     * @var Typo3Version
-     */
-    protected $typo3Version;
+    protected Typo3Version $typo3Version;
 
     public function __construct(Typo3Version $typo3Version)
     {
@@ -77,7 +74,7 @@ class SetTitleOfPOIToClubTitleEventListener
                 )
             )
             ->executeQuery()
-            ->fetch();
+            ->fetchOne();
 
         if (empty($club)) {
             $club = [];

@@ -23,35 +23,17 @@ use JWeiland\Clubdirectory\Helper\MapHelper;
  */
 trait ControllerInjectionTrait
 {
-    /**
-     * @var CategoryRepository
-     */
-    protected $categoryRepository;
+    protected CategoryRepository $categoryRepository;
 
-    /**
-     * @var ClubRepository
-     */
-    protected $clubRepository;
+    protected ClubRepository $clubRepository;
 
-    /**
-     * @var ExtConf
-     */
-    protected $extConf;
+    protected ExtConf $extConf;
 
-    /**
-     * @var FrontendUserRepository
-     */
-    protected $frontendUserRepository;
+    protected FrontendUserRepository $frontendUserRepository;
 
-    /**
-     * @var MailHelper
-     */
-    protected $mailHelper;
+    protected MailHelper $mailHelper;
 
-    /**
-     * @var MapHelper
-     */
-    protected $mapHelper;
+    protected MapHelper $mapHelper;
 
     public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {

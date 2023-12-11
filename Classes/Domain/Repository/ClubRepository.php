@@ -41,15 +41,10 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
     /**
      * Charset converter
      * We need some UTF-8 compatible functions for search.
-     *
-     * @var CharsetConverter
      */
-    protected $charsetConverter;
+    protected CharsetConverter $charsetConverter;
 
-    /**
-     * @var GlossaryService
-     */
-    protected $glossaryService;
+    protected GlossaryService $glossaryService;
 
     public function injectCharsetConverter(CharsetConverter $charsetConverter): void
     {
@@ -245,8 +240,6 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
     /**
      * Find all clubs to export them via CSV
      * only for BE.
-     *
-     * @return array
      */
     public function findAllForExport(): array
     {

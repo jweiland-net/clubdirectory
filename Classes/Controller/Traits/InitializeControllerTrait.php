@@ -19,10 +19,7 @@ use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
  */
 trait InitializeControllerTrait
 {
-    /**
-     * @var HiddenObjectHelper
-     */
-    protected $hiddenObjectHelper;
+    protected HiddenObjectHelper $hiddenObjectHelper;
 
     public function injectHiddenObjectHelper(HiddenObjectHelper $hiddenObjectHelper): void
     {

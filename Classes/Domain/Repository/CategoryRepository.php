@@ -24,10 +24,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class CategoryRepository extends Repository
 {
-    /**
-     * @var ExtConf
-     */
-    protected $extConf;
+    protected ExtConf $extConf;
 
     /**
      * @var array

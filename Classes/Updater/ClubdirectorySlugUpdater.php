@@ -24,20 +24,11 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
  */
 class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 {
-    /**
-     * @var string
-     */
-    protected $tableName = 'tx_clubdirectory_domain_model_club';
+    protected string $tableName = 'tx_clubdirectory_domain_model_club';
 
-    /**
-     * @var string
-     */
-    protected $fieldName = 'path_segment';
+    protected string $fieldName = 'path_segment';
 
-    /**
-     * @var PathSegmentHelper
-     */
-    protected $pathSegmentHelper;
+    protected PathSegmentHelper $pathSegmentHelper;
 
     public function __construct(PathSegmentHelper $pathSegmentHelper = null)
     {
@@ -47,8 +38,6 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
     /**
      * Return the identifier for this wizard
      * This should be the same string as used in the ext_localconf class registration
-     *
-     * @return string
      */
     public function getIdentifier(): string
     {
@@ -93,8 +82,6 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 
     /**
      * Performs the accordant updates.
-     *
-     * @return bool Whether everything went smoothly or not
      */
     public function executeUpdate(): bool
     {
@@ -139,9 +126,6 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
         return true;
     }
 
-    /**
-     * @return string[]
-     */
     public function getPrerequisites(): array
     {
         return [

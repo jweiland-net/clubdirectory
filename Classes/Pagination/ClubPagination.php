@@ -17,20 +17,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ClubPagination implements PaginationInterface
 {
-    /**
-     * @var string
-     */
-    protected $pluginNamespace = 'tx_clubdirectory_clubdirectory';
+    protected string $pluginNamespace = 'tx_clubdirectory_clubdirectory';
 
-    /**
-     * @var PaginatorInterface
-     */
-    protected $paginator;
+    protected PaginatorInterface $paginator;
 
-    /**
-     * @var array
-     */
-    protected $arguments = [];
+    protected array $arguments = [];
 
     public function __construct(PaginatorInterface $paginator)
     {

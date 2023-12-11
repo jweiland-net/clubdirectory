@@ -19,35 +19,17 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class Search
 {
-    /**
-     * @var string
-     */
-    protected $searchWord = '';
+    protected string $searchWord = '';
 
-    /**
-     * @var int
-     */
-    protected $category = 0;
+    protected int $category = 0;
 
-    /**
-     * @var int
-     */
-    protected $district = 0;
+    protected int $district = 0;
 
-    /**
-     * @var int
-     */
-    protected $subCategory = 0;
+    protected int $subCategory = 0;
 
-    /**
-     * @var string
-     */
-    protected $orderBy = 'title';
+    protected string $orderBy = 'title';
 
-    /**
-     * @var string
-     */
-    protected $direction = QueryInterface::ORDER_ASCENDING;
+    protected string $direction = QueryInterface::ORDER_ASCENDING;
 
     public function getSearchWord(): string
     {

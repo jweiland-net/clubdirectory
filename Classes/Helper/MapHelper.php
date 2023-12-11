@@ -25,25 +25,13 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class MapHelper
 {
-    /**
-     * @var GeoCodeService
-     */
-    protected $geoCodeService;
+    protected GeoCodeService $geoCodeService;
 
-    /**
-     * @var MapService
-     */
-    protected $mapService;
+    protected MapService $mapService;
 
-    /**
-     * @var PoiCollectionRepository
-     */
-    protected $poiCollectionRepository;
+    protected PoiCollectionRepository $poiCollectionRepository;
 
-    /**
-     * @var ExtConf
-     */
-    protected $extConf;
+    protected ExtConf $extConf;
 
     public function __construct(
         GeoCodeService $geoCodeService,

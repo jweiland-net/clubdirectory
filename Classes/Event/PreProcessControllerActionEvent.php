@@ -33,10 +33,7 @@ class PreProcessControllerActionEvent implements ControllerActionEventInterface
      */
     protected $club;
 
-    /**
-     * @var array
-     */
-    protected $settings;
+    protected array $settings;
 
     public function __construct(
         ActionController $controller,

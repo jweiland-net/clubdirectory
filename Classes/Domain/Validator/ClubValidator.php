@@ -34,7 +34,6 @@ class ClubValidator extends AbstractValidator
      * If at least one error occurred, the result is FALSE.
      *
      * @param Club $value The value that should be validated
-     * @return bool TRUE if the value is valid, FALSE if an error occurred
      */
     public function isValid($value): void
     {
