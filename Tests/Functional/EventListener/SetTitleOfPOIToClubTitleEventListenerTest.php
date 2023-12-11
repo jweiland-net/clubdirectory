@@ -22,20 +22,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
 {
-    /**
-     * @var Typo3Version
-     */
-    protected $typo3Version;
+    protected Typo3Version $typo3Version;
 
-    /**
-     * @var SetTitleOfPOIToClubTitleEventListener
-     */
-    protected $subject;
+    protected SetTitleOfPOIToClubTitleEventListener $subject;
 
-    protected $testExtensionsToLoad = [
-        'typo3conf/ext/maps2',
-        'typo3conf/ext/glossary2',
-        'typo3conf/ext/clubdirectory',
+    protected array $testExtensionsToLoad = [
+        'jweiland/maps2',
+        'jweiland/glossary2',
+        'jweiland/clubdirectory',
     ];
 
     protected function setUp(): void
