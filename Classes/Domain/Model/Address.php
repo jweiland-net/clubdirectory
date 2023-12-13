@@ -45,7 +45,7 @@ class Address extends AbstractEntity
     /**
      * @Extbase\ORM\Cascade("remove")
      */
-    protected PoiCollection $txMaps2Uid;
+    protected ?PoiCollection $txMaps2Uid;
 
     public function getTitle(): string
     {

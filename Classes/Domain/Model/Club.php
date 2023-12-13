@@ -75,7 +75,7 @@ class Club extends AbstractEntity
 
     protected string $tags = '';
 
-    protected District $district;
+    protected ?District $district;
 
     /**
      * @var ObjectStorage<Address>
