@@ -11,10 +11,12 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
-use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
-use TYPO3\CMS\Backend\View\BackendTemplateView;
+use TYPO3\CMS\Backend\Attribute\AsController;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
@@ -23,7 +25,8 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Controller to export clubs as CSV
  */
-class ExportController extends ActionController
+#[AsController]
+class ExportModuleController extends ActionController
 {
     /**
      * In which directory we want to export club data
@@ -40,19 +43,33 @@ class ExportController extends ActionController
 
     protected ModuleTemplateFactory $moduleTemplateFactory;
 
+    private ModuleTemplate $moduleTemplate;
+
     public function injectClubRepository(ClubRepository $clubRepository): void
     {
         $this->clubRepository = $clubRepository;
     }
 
-    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory)
+    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
     {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
     }
 
+    public function initializeModuleTemplate(ServerRequestInterface $request): void
+    {
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($request);
+        $this->moduleTemplate->setFlashMessageQueue($this->getFlashMessageQueue());
+    }
+
+    public function initializeAction()
+    {
+        parent::initializeAction();
+
+        $this->initializeModuleTemplate($this->request);
+    }
+
     public function indexAction(): ResponseInterface
     {
-        $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->createDirectoryStructure();
         $this->removePreviousExports();
 
@@ -68,8 +85,8 @@ class ExportController extends ActionController
             PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile)
         );
 
-        $moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $this->moduleTemplate->setContent($this->view->render());
+        return $this->htmlResponse($this->moduleTemplate->renderContent());
     }
 
     /**
@@ -95,6 +112,6 @@ class ExportController extends ActionController
 
     protected function getExportPath(): string
     {
-        return  Environment::getPublicPath() . '/' . rtrim($this->exportPath, '/') . '/';
+        return Environment::getPublicPath() . '/' . rtrim($this->exportPath, '/') . '/';
     }
 }

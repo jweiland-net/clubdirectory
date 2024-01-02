@@ -44,3 +44,6 @@ services:
     tags:
     - name: event.listener
       event: JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent
+
+  JWeiland\Clubdirectory\Controller\ExportModuleController:
+    tags: ['backend.controller']

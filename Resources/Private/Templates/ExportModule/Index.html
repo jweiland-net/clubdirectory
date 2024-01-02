@@ -1,6 +1,10 @@
-<f:layout name="Default" />
+<html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+
+<f:layout name="BackendModuleDefault" />
 
 <f:section name="main">
+    <f:flashMessages/>
+
 	<h1>Clubdirectory: CSV-Export</h1>
 
 	<f:be.infobox title="Information" state="-1" disableIcon="false">
@@ -11,3 +15,4 @@
 		<a href="{exportPath}" target="_blank">Download CSV-Export</a>
 	</p>
 </f:section>
+</html>
