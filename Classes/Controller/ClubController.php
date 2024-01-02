@@ -26,7 +26,6 @@ use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -43,7 +42,7 @@ class ClubController extends ActionController
 
     protected PathSegmentHelper $pathSegmentHelper;
 
-    protected PersistenceManager $persistenceManager;
+    protected PersistenceManagerInterface $persistenceManager;
 
     public function injectDistrictRepository(DistrictRepository $districtRepository): void
     {
@@ -120,9 +119,7 @@ class ClubController extends ActionController
         $this->emitInitializeControllerAction();
     }
 
-    /**
-     * @Extbase\Validate(param="club", validator="JWeiland\Clubdirectory\Domain\Validator\ClubValidator")
-     */
+    #[Extbase\Validate(['param' => 'club', 'validator' => ClubValidator::class])]
     public function createAction(Club $club): void
     {
         if ($this->frontendUserRepository->getCurrentFrontendUserRecord() !== []) {
@@ -158,11 +155,7 @@ class ClubController extends ActionController
         $this->emitInitializeControllerAction();
     }
 
-    /**
-     * We are using int to prevent calling any Validator
-     *
-     * @Extbase\IgnoreValidation("club")
-     */
+    #[Extbase\IgnoreValidation(['value' => 'club'])]
     public function editAction(Club $club): ResponseInterface
     {
         $this->fillAddressesUpToMaximum($club);
@@ -188,9 +181,7 @@ class ClubController extends ActionController
         $this->emitInitializeControllerAction();
     }
 
-    /**
-     * @Extbase\Validate(param="club", validator="JWeiland\Clubdirectory\Domain\Validator\ClubValidator")
-     */
+    #[Extbase\Validate(['param' => 'club', 'validator' => ClubValidator::class])]
     public function updateAction(Club $club): void
     {
         if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {

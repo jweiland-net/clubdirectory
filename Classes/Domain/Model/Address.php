@@ -20,18 +20,14 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Address extends AbstractEntity
 {
-    /**
-     * @Extbase\Validate("NotEmpty")
-     */
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $title = 'organizationAddress';
 
     protected string $street = '';
 
     protected string $houseNumber = '';
 
-    /**
-     * @Extbase\Validate("RegularExpression", options={"regularExpression": "/^[0-9]{4,5}$/"})
-     */
+    #[Extbase\Validate(['validator' => 'RegularExpression', 'options' => ['regularExpression' => '/^[0-9]{4,5}$/']])]
     protected string $zip = '';
 
     protected string $city = '';
@@ -42,9 +38,7 @@ class Address extends AbstractEntity
 
     protected bool $barrierFree = false;
 
-    /**
-     * @Extbase\ORM\Cascade("remove")
-     */
+    #[Extbase\ORM\Cascade(['value' => 'remove'])]
     protected ?PoiCollection $txMaps2Uid;
 
     public function getTitle(): string

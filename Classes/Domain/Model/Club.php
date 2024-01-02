@@ -26,9 +26,7 @@ class Club extends AbstractEntity
 {
     protected bool $hidden = false;
 
-    /**
-     * @Extbase\Validate("NotEmpty")
-     */
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $title = '';
 
     protected string $pathSegment = '';
@@ -39,9 +37,7 @@ class Club extends AbstractEntity
 
     protected string $contactTimes = '';
 
-    /**
-     * @Extbase\Validate("EmailAddress")
-     */
+    #[Extbase\Validate(['validator' => 'EmailAddress'])]
     protected string $email = '';
 
     protected string $website = '';
@@ -75,18 +71,18 @@ class Club extends AbstractEntity
 
     protected string $tags = '';
 
-    protected ?District $district;
+    protected ?District $district = null;
 
     /**
      * @var ObjectStorage<Address>
-     * @Extbase\ORM\Cascade("remove")
      */
+    #[Extbase\ORM\Cascade(['value' => 'remove'])]
     protected ObjectStorage $addresses;
 
     /**
      * @var ObjectStorage<Category>
-     * @Extbase\ORM\Lazy
      */
+    #[Extbase\ORM\Lazy]
     protected ObjectStorage $categories;
 
     public function __construct()

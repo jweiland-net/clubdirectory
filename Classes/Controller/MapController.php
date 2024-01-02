@@ -31,9 +31,8 @@ class MapController extends ActionController
 
     /**
      * As club was already validated in ClubController create/update there can't be any errors. So ignore validation.
-     *
-     * @Extbase\IgnoreValidation("club")
      */
+    #[Extbase\IgnoreValidation(['value' => 'club'])]
     public function newAction(Club $club): ResponseInterface
     {
         $this->view->assign('club', $club);
@@ -58,9 +57,7 @@ class MapController extends ActionController
         $this->redirect('list', 'Club');
     }
 
-    /**
-     * @Extbase\IgnoreValidation("club")
-     */
+    #[Extbase\IgnoreValidation(['value' => 'club'])]
     public function editAction(Club $club): ResponseInterface
     {
         $this->view->assign('club', $club);

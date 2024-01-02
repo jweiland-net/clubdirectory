@@ -19,9 +19,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class District extends AbstractEntity
 {
-    /**
-     * @Extbase\Validate("NotEmpty")
-     */
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $district = '';
 
     public function getDistrict(): string
