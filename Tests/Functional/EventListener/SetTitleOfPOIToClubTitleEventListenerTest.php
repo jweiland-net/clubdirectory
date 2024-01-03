@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Functional\EventListener;
 
+use Doctrine\DBAL\Driver\Exception;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -22,8 +22,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
 {
-    protected Typo3Version $typo3Version;
-
     protected SetTitleOfPOIToClubTitleEventListener $subject;
 
     protected array $testExtensionsToLoad = [
@@ -39,16 +37,13 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
         $this->importDataSet(__DIR__ . '/../Fixtures/tx_clubdirectory_domain_model_club.xml');
         $this->importDataSet(__DIR__ . '/../Fixtures/tx_maps2_domain_model_poicollection.xml');
 
-        $this->typo3Version = GeneralUtility::makeInstance(Typo3Version::class);
-
-        $this->subject = new SetTitleOfPOIToClubTitleEventListener($this->typo3Version);
+        $this->subject = new SetTitleOfPOIToClubTitleEventListener();
     }
 
     protected function tearDown(): void
     {
         unset(
-            $this->subject,
-            $this->typo3Version
+            $this->subject
         );
 
         parent::tearDown();
@@ -57,12 +52,8 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
     /**
      * @test
      */
-    public function callInvokeWithWrongTypo3Version(): void
+    public function callInvokePostProcessPoiCollectionRecordEvent(): void
     {
-        if (version_compare($this->typo3Version->getBranch(), '11.0', '<')) {
-            self::markTestSkipped('This test will only work in TYPO3 11 and higher');
-        }
-
         $event = new PostProcessPoiCollectionRecordEvent(
             'tx_maps2_domain_model_poicollection',
             123,
@@ -75,7 +66,22 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
         );
         call_user_func($this->subject, $event);
 
-        $poiRecord = $this->getDatabaseConnection()->selectSingleRow('*', 'tx_maps2_domain_model_poicollection', 'uid = 123');
+        $queryBuilder = $this
+            ->getConnectionPool()
+            ->getConnectionForTable('tx_maps2_domain_model_poicollection');
+
+        try {
+            $poiRecord = $queryBuilder
+                ->select(
+                    ['*'],
+                    'tx_maps2_domain_model_poicollection',
+                    ['uid' => 123]
+                )
+                ->fetchAssociative();
+        } catch (Exception|\Doctrine\DBAL\Exception $e) {
+            $poiRecord['title'] = false;
+        }
+
         self::assertSame(
             'Swimmingclub',
             $poiRecord['title']

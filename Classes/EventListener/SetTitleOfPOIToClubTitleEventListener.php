@@ -11,9 +11,10 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\EventListener;
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\Exception;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -23,44 +24,41 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  */
 class SetTitleOfPOIToClubTitleEventListener
 {
-    protected Typo3Version $typo3Version;
-
-    public function __construct(Typo3Version $typo3Version)
-    {
-        $this->typo3Version = $typo3Version;
-    }
-
     public function __invoke(PostProcessPoiCollectionRecordEvent $event): void
     {
-        if (version_compare($this->typo3Version->getBranch(), '11.0', '>=')) {
-            $foreignLocationRecord = $event->getForeignLocationRecord();
-            $poiCollectionTableName = $event->getPoiCollectionTableName();
+        $foreignLocationRecord = $event->getForeignLocationRecord();
+        $poiCollectionTableName = $event->getPoiCollectionTableName();
 
-            // Execute update only, if club column is filled. Else POI collection will be filled with title of address
-            // before this EventListener was called.
-            if (
-                array_key_exists('club', $foreignLocationRecord)
-                && $event->getForeignTableName() === 'tx_clubdirectory_domain_model_address'
-                && MathUtility::canBeInterpretedAsInteger($foreignLocationRecord['club'])
-            ) {
-                $club = $this->getClubRecord((int)$foreignLocationRecord['club']);
-                if (!empty($club)) {
-                    $connection = $this->getConnectionPool()->getConnectionForTable($poiCollectionTableName);
+        // Execute update only, if club column is filled. Else POI collection will be filled with title of address
+        // before this EventListener was called.
+        if (
+            array_key_exists('club', $foreignLocationRecord)
+            && $event->getForeignTableName() === 'tx_clubdirectory_domain_model_address'
+            && MathUtility::canBeInterpretedAsInteger($foreignLocationRecord['club'])
+        ) {
+            $club = $this->getClubRecord((int)$foreignLocationRecord['club']);
+            if (!empty($club)) {
+                $connection = $this->getConnectionPool()->getConnectionForTable($poiCollectionTableName);
 
-                    $connection->update(
-                        $poiCollectionTableName,
-                        [
-                            'title' => $club['title'],
-                        ],
-                        [
-                            'uid' => $event->getPoiCollectionUid(),
-                        ]
-                    );
-                }
+                $connection->update(
+                    $poiCollectionTableName,
+                    [
+                        'title' => $club['title'],
+                    ],
+                    [
+                        'uid' => $event->getPoiCollectionUid(),
+                    ]
+                );
             }
         }
+
     }
 
+    /**
+     * @throws Exception
+     * @throws \Doctrine\DBAL\Exception
+     * @throws DBALException
+     */
     protected function getClubRecord(int $clubUid): array
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');
@@ -74,7 +72,7 @@ class SetTitleOfPOIToClubTitleEventListener
                 )
             )
             ->executeQuery()
-            ->fetchOne();
+            ->fetchAssociative();
 
         if (empty($club)) {
             $club = [];
