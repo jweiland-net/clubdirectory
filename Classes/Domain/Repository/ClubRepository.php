@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Glossary2\Service\GlossaryService;
@@ -266,6 +268,24 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         }
 
         return $clubs;
+    }
+
+    /**
+     * @throws DBALException
+     * @throws Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
+    public function getStoragePids()
+    {
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');
+        $queryBuilder
+            ->select('pid')
+            ->from('tx_clubdirectory_domain_model_club')
+            ->groupBy('pid');
+
+        return $queryBuilder
+            ->executeQuery()
+            ->fetchAllAssociative();
     }
 
     protected function getConnectionPool(): ConnectionPool

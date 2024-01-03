@@ -74,6 +74,7 @@ class ExportModuleController extends ActionController
         $this->removePreviousExports();
 
         $clubs = $this->clubRepository->findAllForExport();
+        $storagePids = $this->clubRepository->getStoragePids();
 
         $exportFile = $this->getExportPath() . $this->exportFile;
         $fp = \fopen($exportFile, 'wb');
@@ -87,6 +88,7 @@ class ExportModuleController extends ActionController
             PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile)
         );
         $this->moduleTemplate->assign('clubs', $clubs);
+        $this->moduleTemplate->assign('storagePids', $storagePids);
 
         return $this->moduleTemplate->renderResponse('Index');
     }
