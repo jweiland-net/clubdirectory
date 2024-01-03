@@ -19,7 +19,7 @@ return [
         'extensionName' => 'clubdirectory',
         'controllerActions' => [
             ExportModuleController::class => [
-                'index',
+                'index', 'show',
             ],
         ],
     ],

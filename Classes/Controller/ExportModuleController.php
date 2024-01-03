@@ -73,9 +73,11 @@ class ExportModuleController extends ActionController
         $this->createDirectoryStructure();
         $this->removePreviousExports();
 
+        $clubs = $this->clubRepository->findAllForExport();
+
         $exportFile = $this->getExportPath() . $this->exportFile;
         $fp = \fopen($exportFile, 'wb');
-        foreach ($this->clubRepository->findAllForExport() as $row) {
+        foreach ($clubs as $row) {
             \fputcsv($fp, $row, ';', '\'');
         }
         \fclose($fp);
@@ -84,7 +86,17 @@ class ExportModuleController extends ActionController
             'exportPath',
             PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile)
         );
+        $this->moduleTemplate->assign('clubs', $clubs);
+
         return $this->moduleTemplate->renderResponse('Index');
+    }
+
+    public function showAction(): ResponseInterface
+    {
+        $clubs = $this->clubRepository->findAllForExport();
+        $this->moduleTemplate->assign('clubs', $clubs);
+
+        return $this->moduleTemplate->renderResponse('Show');
     }
 
     /**
