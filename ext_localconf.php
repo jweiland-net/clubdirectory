@@ -29,10 +29,9 @@ call_user_func(static function () {
         $rootCategory = (int)$extConf->get('clubdirectory', 'rootCategory');
         $userGroup = (int)$extConf->get('clubdirectory', 'userGroup');
 
-        // @ToDo: rootUid is deprecated since TYPO3 11. Replace while removing TYPO3 10 compatibility
         $tsConfig = [
             'TCEFORM.tt_content.pi_flexform.clubdirectory_clubdirectory.sDEFAULT.settings\.category.PAGE_TSCONFIG_ID = ' . $rootCategory,
-            'TCEFORM.tx_clubdirectory_domain_model_club.categories.config.treeConfig.rootUid = ' . $rootCategory,
+            'TCEFORM.tx_clubdirectory_domain_model_club.categories.config.treeConfig.startingPoints = ' . $rootCategory,
             'TCEFORM.tx_clubdirectory_domain_model_club.fe_users.PAGE_TSCONFIG_ID = ' . $userGroup,
         ];
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(implode(LF, $tsConfig));

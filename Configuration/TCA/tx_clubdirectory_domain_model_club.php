@@ -3,6 +3,7 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club',
         'label' => 'title',
+        'descriptionColumn' => 'notes',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'default_sortby' => 'ORDER BY title',
@@ -18,6 +19,9 @@ return [
         ],
         'searchFields' => 'title,activity,contact_person,email,description,user,tags',
         'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_club.svg',
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'types' => [
         '1' => [
@@ -32,7 +36,8 @@ return [
              --div--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.tabs.social_media,
              facebook, twitter, instagram, tags,
              --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
-             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access',
+             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access,
+             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes, notes',
         ],
     ],
     'palettes' => [
@@ -343,6 +348,15 @@ return [
                     'showPossibleLocalizationRecords' => 1,
                     'showAllLocalizationLink' => 1,
                 ],
+            ],
+        ],
+        'notes' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.description',
+            'config' => [
+                'type' => 'text',
+                'rows' => 5,
+                'cols' => 40,
             ],
         ],
     ],

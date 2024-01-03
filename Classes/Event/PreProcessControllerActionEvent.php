@@ -14,6 +14,7 @@ namespace JWeiland\Clubdirectory\Event;
 use JWeiland\Clubdirectory\Controller\ClubController;
 use JWeiland\Clubdirectory\Controller\MapController;
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use MongoDB\Driver\Server;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Request;
 
@@ -35,14 +36,18 @@ class PreProcessControllerActionEvent implements ControllerActionEventInterface
 
     protected array $settings;
 
+    protected Request $request;
+
     public function __construct(
         ActionController $controller,
         ?Club $club,
-        array $settings
+        array $settings,
+        Request $request
     ) {
         $this->controller = $controller;
         $this->club = $club;
         $this->settings = $settings;
+        $this->request = $request;
     }
 
     public function getController(): ActionController
@@ -62,7 +67,7 @@ class PreProcessControllerActionEvent implements ControllerActionEventInterface
 
     public function getRequest(): Request
     {
-        return $this->getController()->getControllerContext()->getRequest();
+        return $this->request;
     }
 
     public function getControllerName(): string

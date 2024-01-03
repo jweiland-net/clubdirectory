@@ -2,6 +2,7 @@
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_district',
+        'descriptionColumn' => 'description',
         'label' => 'district',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
@@ -18,13 +19,17 @@ return [
         ],
         'searchFields' => 'district',
         'iconfile' => 'EXT:clubdirectory/Resources/Public/Icons/tx_clubdirectory_domain_model_district.svg',
+        'security' => [
+            'ignorePageTypeRestriction' => true,
+        ],
     ],
     'types' => [
         '1' => [
             'showitem' => '--palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.language;language,
              --palette--;;titleAndHidden,
-            --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access',
+            --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes, description',
         ],
     ],
     'palettes' => [
@@ -127,6 +132,15 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+            ],
+        ],
+        'description' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.description',
+            'config' => [
+                'type' => 'text',
+                'rows' => 5,
+                'cols' => 40,
             ],
         ],
     ],

@@ -279,7 +279,8 @@ class ClubController extends ActionController
             new PreProcessControllerActionEvent(
                 $this,
                 $club,
-                $this->settings
+                $this->settings,
+                $this->request
             )
         );
     }

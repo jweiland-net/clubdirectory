@@ -2,6 +2,7 @@
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address',
+        'descriptionColumn' => 'description',
         'label' => 'title',
         'label_userFunc' => \JWeiland\Clubdirectory\UserFunc\AltLabelForAddressTableUserFunc::class . '->setAddressLabel',
         'hideTable' => true,
@@ -24,10 +25,11 @@ return [
     'types' => [
         '1' => [
             'showitem' => '--palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.language;language,
-             --palette--;;titleAndHidden, 
+             --palette--;;titleAndHidden,
              --palette--;;address, --palette--;;location, --palette--;;contact, barrier_free, club,
-            --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
-            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access',
+            --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
+            --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access,
+            --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:notes, description',
         ],
     ],
     'palettes' => [
@@ -213,6 +215,15 @@ return [
                 'foreign_table' => 'tx_clubdirectory_domain_model_club',
                 'default' => 0,
                 'readOnly' => true,
+            ],
+        ],
+        'description' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.description',
+            'config' => [
+                'type' => 'text',
+                'rows' => 5,
+                'cols' => 40,
             ],
         ],
     ],

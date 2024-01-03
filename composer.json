@@ -23,9 +23,10 @@
 		"source": "https://github.com/jweiland-net/clubdirectory"
 	},
 	"require": {
-		"typo3/cms-core": "^12.4.8",
+		"jweiland/glossary2": ">=6.0.0",
 		"jweiland/maps2": ">=11.0.0",
-		"jweiland/glossary2": ">=6.0.0"
+		"typo3/cms-core": "^12.4.8",
+		"typo3/cms-redirects": "^12.4"
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^3.14",
