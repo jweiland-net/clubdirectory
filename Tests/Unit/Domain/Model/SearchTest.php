@@ -99,24 +99,24 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function getDirectionInitiallyReturnsAscending(): void
+    public function getOrderInitiallyReturnsAscending(): void
     {
         self::assertSame(
             QueryInterface::ORDER_ASCENDING,
-            $this->subject->getDirection()
+            $this->subject->getOrder()
         );
     }
 
     /**
      * @test
      */
-    public function setDirectionSetsDirection(): void
+    public function setOrderSetsSortingOrder(): void
     {
-        $this->subject->setDirection('foo bar');
+        $this->subject->setOrder('foo bar');
 
         self::assertSame(
             'foo bar',
-            $this->subject->getDirection()
+            $this->subject->getOrder()
         );
     }
 }
