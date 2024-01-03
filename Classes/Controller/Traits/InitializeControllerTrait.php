@@ -28,7 +28,7 @@ trait InitializeControllerTrait
 
     protected function initializeView($view): void
     {
-        $view->assign('data', $this->configurationManager->getContentObject()->data);
+        $view->assign('data', $this->request->getAttribute('currentContentObject')->data);
         $view->assign('extConf', $this->extConf);
     }
 
