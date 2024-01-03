@@ -80,13 +80,11 @@ class ExportModuleController extends ActionController
         }
         \fclose($fp);
 
-        $this->view->assign(
+        $this->moduleTemplate->assign(
             'exportPath',
             PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile)
         );
-
-        $this->moduleTemplate->setContent($this->view->render());
-        return $this->htmlResponse($this->moduleTemplate->renderContent());
+        return $this->moduleTemplate->renderResponse('Index');
     }
 
     /**
