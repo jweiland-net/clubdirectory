@@ -114,7 +114,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         // Set ordering
         if ($search->getOrderBy()) {
             if (!in_array(
-                $search->getDirection(),
+                $search->getOrder(),
                 [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING],
                 true
             )) {
@@ -122,7 +122,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             }
 
             $query->setOrderings([
-                $search->getOrderBy() => $search->getDirection(),
+                $search->getOrderBy() => $search->getOrder(),
             ]);
         }
 

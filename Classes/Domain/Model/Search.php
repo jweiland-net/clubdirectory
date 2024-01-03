@@ -29,7 +29,7 @@ class Search
 
     protected string $orderBy = 'title';
 
-    protected string $direction = QueryInterface::ORDER_ASCENDING;
+    protected string $order = QueryInterface::ORDER_ASCENDING;
 
     public function getSearchWord(): string
     {
@@ -83,21 +83,21 @@ class Search
         $this->orderBy = $orderBy;
     }
 
-    public function getDirection(): string
+    public function getOrder(): string
     {
-        return $this->direction;
+        return $this->order;
     }
 
-    public function setDirection(string $direction): void
+    public function setOrder(string $order): void
     {
-        $this->direction = $direction;
+        $this->order = $order;
     }
 
     /**
      * Helper method to fill selectbox in fluid template {search.direction}
      * Get order directions
      */
-    public function getDirections(): array
+    public function getSortingOrders(): array
     {
         return [
             0 => [
