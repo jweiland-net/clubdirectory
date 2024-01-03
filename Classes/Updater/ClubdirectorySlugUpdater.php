@@ -16,12 +16,14 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
  * Updater to fill empty slug columns of clubdirectory records
  */
+#[UpgradeWizard('myUpgradeWizard')]
 class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 {
     protected string $tableName = 'tx_clubdirectory_domain_model_club';
