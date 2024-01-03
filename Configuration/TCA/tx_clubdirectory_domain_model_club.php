@@ -23,7 +23,7 @@ return [
         '1' => [
             'showitem' => '--palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.language;language,
              --palette--;;titleAndHidden, path_segment,
-             activity, description, members, contact_times, 
+             activity, description, members, contact_times,
              --palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.contact;contact,
              --palette--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.palettes.location;location,
              fe_users,
@@ -31,7 +31,7 @@ return [
              logo, images,
              --div--;LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:clubdirectory.tabs.social_media,
              facebook, twitter, instagram, tags,
-             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access, 
+             --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.tabs.access,
              --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:pages.palettes.access;access',
         ],
     ],
@@ -257,32 +257,22 @@ return [
         'logo' => [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.logo',
-            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
-                'logo',
-                [
-                    'minitems' => 0,
-                    'maxitems' => 1,
-                    'foreign_match_fields' => [
-                        'fieldname' => 'logo',
-                        'tablenames' => 'tx_clubdirectory_domain_model_club',
-                    ],
-                ]
-            ),
+            'config' => [
+                'type' => 'file',
+                'minitems' => 0,
+                'maxitems' => 1,
+                'allowed' => 'common-image-types'
+            ],
         ],
         'images' => [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.images',
-            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
-                'images',
-                [
-                    'minitems' => 0,
-                    'maxitems' => 5,
-                    'foreign_match_fields' => [
-                        'fieldname' => 'images',
-                        'tablenames' => 'tx_clubdirectory_domain_model_club',
-                    ],
-                ]
-            ),
+            'config' => [
+                'type' => 'file',
+                'minitems' => 0,
+                'maxitems' => 5,
+                'allowed' => 'common-image-types'
+            ],
         ],
         'facebook' => [
             'exclude' => true,
