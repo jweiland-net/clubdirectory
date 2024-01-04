@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Glossary2\Service\GlossaryService;
@@ -41,15 +43,10 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
     /**
      * Charset converter
      * We need some UTF-8 compatible functions for search.
-     *
-     * @var CharsetConverter
      */
-    protected $charsetConverter;
+    protected CharsetConverter $charsetConverter;
 
-    /**
-     * @var GlossaryService
-     */
-    protected $glossaryService;
+    protected GlossaryService $glossaryService;
 
     public function injectCharsetConverter(CharsetConverter $charsetConverter): void
     {
@@ -82,11 +79,17 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             );
         }
 
+        if (count($constraints) === 1) {
+        $query->matching(reset($constraints));
+        } elseif (count($constraints) >= 2) {
+            $query->matching($query->logicalAnd(...$constraints));
+        }
+
         if ($constraints === []) {
             return $query->execute();
         }
 
-        return $query->matching($query->logicalAnd($constraints))->execute();
+        return $query->matching($query->logicalAnd(...$constraints))->execute();
     }
 
     public function findBySearch(Search $search): QueryResultInterface
@@ -113,7 +116,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         // Set ordering
         if ($search->getOrderBy()) {
             if (!in_array(
-                $search->getDirection(),
+                $search->getOrder(),
                 [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING],
                 true
             )) {
@@ -121,11 +124,11 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             }
 
             $query->setOrderings([
-                $search->getOrderBy() => $search->getDirection(),
+                $search->getOrderBy() => $search->getOrder(),
             ]);
         }
 
-        return $constraints !== [] ? $query->matching($query->logicalAnd($constraints))->execute() : $query->execute();
+        return $constraints !== [] ? $query->matching($query->logicalAnd(...$constraints))->execute() : $query->execute();
     }
 
     public function findByFeUser(int $feUser): QueryResultInterface
@@ -161,7 +164,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                     'c',
                     'sys_category_record_mm',
                     'mm',
-                    (string)$queryBuilder->expr()->andX(
+                    (string)$queryBuilder->expr()->and(
                         $queryBuilder->expr()->eq(
                             'mm.tablenames',
                             $queryBuilder->createNamedParameter('tx_clubdirectory_domain_model_club')
@@ -220,7 +223,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             $query->like('tags', '%' . $searchWord . '%'),
         ];
 
-        return $query->logicalOr($logicalOrConstraints);
+        return $query->logicalOr(...$logicalOrConstraints);
     }
 
     public function findHiddenObject($value, string $property = 'uid'): ?Club
@@ -239,8 +242,6 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
     /**
      * Find all clubs to export them via CSV
      * only for BE.
-     *
-     * @return array
      */
     public function findAllForExport(): array
     {
@@ -267,6 +268,23 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         }
 
         return $clubs;
+    }
+
+    public function getStoragePid(): array
+    {
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');
+        $queryBuilder
+            ->select('pid')
+            ->from('tx_clubdirectory_domain_model_club')
+            ->groupBy('pid');
+
+        try {
+            return $queryBuilder
+                ->executeQuery()
+                ->fetchAllAssociative();
+        } catch (Exception|\Doctrine\DBAL\Driver\Exception|DBALException $e) {
+            return [];
+        }
     }
 
     protected function getConnectionPool(): ConnectionPool

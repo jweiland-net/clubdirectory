@@ -24,114 +24,66 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class Club extends AbstractEntity
 {
-    /**
-     * @var bool
-     */
-    protected $hidden = false;
+    protected bool $hidden = false;
 
-    /**
-     * @var string
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $title = '';
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    protected string $title = '';
 
-    /**
-     * @var string
-     */
-    protected $pathSegment = '';
+    protected string $pathSegment = '';
 
-    /**
-     * @var string
-     */
-    protected $activity = '';
+    protected string $activity = '';
 
-    /**
-     * @var string
-     */
-    protected $contactPerson = '';
+    protected string $contactPerson = '';
 
-    /**
-     * @var string
-     */
-    protected $contactTimes = '';
+    protected string $contactTimes = '';
 
-    /**
-     * @var string
-     * @Extbase\Validate("EmailAddress")
-     */
-    protected $email = '';
+    #[Extbase\Validate(['validator' => 'EmailAddress'])]
+    protected string $email = '';
 
-    /**
-     * @var string
-     */
-    protected $website = '';
+    protected string $website = '';
 
-    /**
-     * @var string
-     */
-    protected $members = '';
+    protected string $members = '';
 
-    /**
-     * @var string
-     */
-    protected $clubHome = '';
+    protected string $clubHome = '';
 
-    /**
-     * @var string
-     */
-    protected $description = '';
+    protected string $description = '';
 
     /**
      * @var ObjectStorage<FrontendUser>
      */
-    protected $feUsers;
+    protected ObjectStorage $feUsers;
 
     /**
      * @var ObjectStorage<FileReference>
      */
-    protected $logo;
+    protected ObjectStorage $logo;
 
     /**
      * @var ObjectStorage<FileReference>
      */
-    protected $images;
+    protected ObjectStorage $images;
 
-    /**
-     * @var string
-     */
-    protected $facebook = '';
+    protected string $facebook = '';
 
-    /**
-     * @var string
-     */
-    protected $twitter = '';
+    protected string $twitter = '';
 
-    /**
-     * @var string
-     */
-    protected $instagram = '';
+    protected string $instagram = '';
 
-    /**
-     * @var string
-     */
-    protected $tags = '';
+    protected string $tags = '';
 
-    /**
-     * @var District
-     */
-    protected $district;
+    protected ?District $district = null;
 
     /**
      * @var ObjectStorage<Address>
-     * @Extbase\ORM\Cascade("remove")
      */
-    protected $addresses;
+    #[Extbase\ORM\Cascade(['value' => 'remove'])]
+    protected ObjectStorage $addresses;
 
     /**
      * @var ObjectStorage<Category>
-     * @Extbase\ORM\Lazy
      */
-    protected $categories;
+    #[Extbase\ORM\Lazy]
+    protected ObjectStorage $categories;
 
     public function __construct()
     {
@@ -301,9 +253,6 @@ class Club extends AbstractEntity
         return $currentUserCanEditThisClub;
     }
 
-    /**
-     * @return FileReference[]
-     */
     public function getLogo(): array
     {
         return $this->logo->toArray();
@@ -335,9 +284,6 @@ class Club extends AbstractEntity
         $this->logo->detach($logo);
     }
 
-    /**
-     * @return array|FileReference[]
-     */
     public function getImages(): array
     {
         $references = [];
@@ -348,9 +294,6 @@ class Club extends AbstractEntity
         return $references;
     }
 
-    /**
-     * @return ObjectStorage|\TYPO3\CMS\Core\Resource\FileReference[]
-     */
     public function getOriginalImages(): ObjectStorage
     {
         return $this->images;
@@ -433,9 +376,6 @@ class Club extends AbstractEntity
         return $addresses;
     }
 
-    /**
-     * @return ObjectStorage|Address[]
-     */
     public function getOriginalAddresses(): ObjectStorage
     {
         return $this->addresses;
@@ -456,9 +396,6 @@ class Club extends AbstractEntity
         $this->addresses->detach($address);
     }
 
-    /**
-     * @return ObjectStorage|Category[]
-     */
     public function getCategories(): ObjectStorage
     {
         return $this->categories;
@@ -488,8 +425,6 @@ class Club extends AbstractEntity
     /**
      * Helper method to build a baseRecord for path_segment
      * Needed in PathSegmentHelper
-     *
-     * @return array
      */
     public function getBaseRecordForPathSegment(): array
     {

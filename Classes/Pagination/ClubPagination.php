@@ -11,32 +11,25 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Pagination;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Pagination\PaginationInterface;
 use TYPO3\CMS\Core\Pagination\PaginatorInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 class ClubPagination implements PaginationInterface
 {
-    /**
-     * @var string
-     */
-    protected $pluginNamespace = 'tx_clubdirectory_clubdirectory';
+    protected string $pluginNamespace = 'tx_clubdirectory_clubdirectory';
 
-    /**
-     * @var PaginatorInterface
-     */
-    protected $paginator;
+    protected PaginatorInterface $paginator;
 
-    /**
-     * @var array
-     */
-    protected $arguments = [];
+    protected array $arguments = [];
 
     public function __construct(PaginatorInterface $paginator)
     {
         $this->paginator = $paginator;
+        $pluginArguments = $this->getPluginArguments($this->pluginNamespace);
 
-        foreach (GeneralUtility::_GPmerged($this->pluginNamespace) as $argumentName => $argument) {
+        foreach ($pluginArguments as $argumentName => $argument) {
             if ($argumentName[0] === '_' && $argumentName[1] === '_') {
                 continue;
             }
@@ -127,5 +120,20 @@ class ClubPagination implements PaginationInterface
         }
 
         return $this->paginator->getKeyOfLastPaginatedItem() + 1;
+    }
+
+    public function getPluginArguments($pluginNamespace): array
+    {
+        $request = $this->getRequestFromGlobalScope();
+        $getMergedWithPost = $request->getQueryParams()[$pluginNamespace] ?? [];
+        $postArgument = $request->getParsedBody()[$pluginNamespace] ?? [];
+        ArrayUtility::mergeRecursiveWithOverrule($getMergedWithPost, $postArgument);
+
+        return $getMergedWithPost;
+    }
+
+    public function getRequestFromGlobalScope(): ServerRequestInterface
+    {
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 }

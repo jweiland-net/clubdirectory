@@ -23,7 +23,7 @@ class DeleteUploadedFilesEventListener extends AbstractControllerEventListener
 {
     private const ARGUMENT_NAME = 'club';
 
-    protected $allowedControllerActions = [
+    protected array $allowedControllerActions = [
         'Club' => [
             'new',
         ],

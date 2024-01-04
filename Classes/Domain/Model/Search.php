@@ -19,35 +19,17 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class Search
 {
-    /**
-     * @var string
-     */
-    protected $searchWord = '';
+    protected string $searchWord = '';
 
-    /**
-     * @var int
-     */
-    protected $category = 0;
+    protected int $category = 0;
 
-    /**
-     * @var int
-     */
-    protected $district = 0;
+    protected int $district = 0;
 
-    /**
-     * @var int
-     */
-    protected $subCategory = 0;
+    protected int $subCategory = 0;
 
-    /**
-     * @var string
-     */
-    protected $orderBy = 'title';
+    protected string $orderBy = 'title';
 
-    /**
-     * @var string
-     */
-    protected $direction = QueryInterface::ORDER_ASCENDING;
+    protected string $order = QueryInterface::ORDER_ASCENDING;
 
     public function getSearchWord(): string
     {
@@ -101,21 +83,21 @@ class Search
         $this->orderBy = $orderBy;
     }
 
-    public function getDirection(): string
+    public function getOrder(): string
     {
-        return $this->direction;
+        return $this->order;
     }
 
-    public function setDirection(string $direction): void
+    public function setOrder(string $order): void
     {
-        $this->direction = $direction;
+        $this->order = $order;
     }
 
     /**
      * Helper method to fill selectbox in fluid template {search.direction}
      * Get order directions
      */
-    public function getDirections(): array
+    public function getSortingOrders(): array
     {
         return [
             0 => [

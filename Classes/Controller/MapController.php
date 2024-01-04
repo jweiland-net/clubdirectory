@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
@@ -30,12 +31,12 @@ class MapController extends ActionController
 
     /**
      * As club was already validated in ClubController create/update there can't be any errors. So ignore validation.
-     *
-     * @Extbase\IgnoreValidation("club")
      */
-    public function newAction(Club $club): void
+    #[Extbase\IgnoreValidation(['value' => 'club'])]
+    public function newAction(Club $club): ResponseInterface
     {
         $this->view->assign('club', $club);
+        return $this->htmlResponse();
     }
 
     public function createAction(Club $club): void
@@ -56,14 +57,13 @@ class MapController extends ActionController
         $this->redirect('list', 'Club');
     }
 
-    /**
-     * @Extbase\IgnoreValidation("club")
-     */
-    public function editAction(Club $club): void
+    #[Extbase\IgnoreValidation(['value' => 'club'])]
+    public function editAction(Club $club): ResponseInterface
     {
         $this->view->assign('club', $club);
         $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
         $this->view->assign('addressTitles', $this->getAddressTitles());
+        return $this->htmlResponse();
     }
 
     public function updateAction(Club $club): void

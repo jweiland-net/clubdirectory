@@ -22,12 +22,9 @@ use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 
 class AssignMediaTypeConverterEventListener extends AbstractControllerEventListener
 {
-    /**
-     * @var ClubRepository
-     */
-    protected $clubRepository;
+    protected ClubRepository $clubRepository;
 
-    protected $allowedControllerActions = [
+    protected array $allowedControllerActions = [
         'Club' => [
             'create',
             'update',

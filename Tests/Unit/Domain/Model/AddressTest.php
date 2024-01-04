@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use JWeiland\Clubdirectory\Domain\Model\Address;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 /**
  * Test case for model Address

@@ -11,8 +11,12 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
-use TYPO3\CMS\Backend\View\BackendTemplateView;
+use TYPO3\CMS\Backend\Attribute\AsController;
+use TYPO3\CMS\Backend\Template\ModuleTemplate;
+use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
@@ -21,59 +25,79 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Controller to export clubs as CSV
  */
-class ExportController extends ActionController
+#[AsController]
+class ExportModuleController extends ActionController
 {
-    /**
-     * @var BackendTemplateView
-     */
-    protected $view;
-
-    /**
-     * @var BackendTemplateView
-     */
-    protected $defaultViewObjectName = BackendTemplateView::class;
-
     /**
      * In which directory we want to export club data
      * Needed separately to create folder structure if not exists.
-     *
-     * @var string
      */
-    protected $exportPath = 'typo3temp/tx_clubdirectory/';
+    protected string $exportPath = 'typo3temp/tx_clubdirectory/';
 
     /**
      * In which file we want to export club data.
-     *
-     * @var string
      */
-    protected $exportFile = 'export.csv';
+    protected string $exportFile = 'export.csv';
 
-    /**
-     * @var ClubRepository
-     */
-    protected $clubRepository;
+    protected ClubRepository $clubRepository;
+
+    protected ModuleTemplateFactory $moduleTemplateFactory;
+
+    private ModuleTemplate $moduleTemplate;
 
     public function injectClubRepository(ClubRepository $clubRepository): void
     {
         $this->clubRepository = $clubRepository;
     }
 
-    public function indexAction(): void
+    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
+    {
+        $this->moduleTemplateFactory = $moduleTemplateFactory;
+    }
+
+    public function initializeModuleTemplate(ServerRequestInterface $request): void
+    {
+        $this->moduleTemplate = $this->moduleTemplateFactory->create($request);
+        $this->moduleTemplate->setFlashMessageQueue($this->getFlashMessageQueue());
+    }
+
+    public function initializeAction()
+    {
+        parent::initializeAction();
+
+        $this->initializeModuleTemplate($this->request);
+    }
+
+    public function indexAction(): ResponseInterface
     {
         $this->createDirectoryStructure();
         $this->removePreviousExports();
 
+        $clubs = $this->clubRepository->findAllForExport();
+        $storagePid = (count($clubs) <= 1) ? $this->clubRepository->getStoragePid() : [];
         $exportFile = $this->getExportPath() . $this->exportFile;
         $fp = \fopen($exportFile, 'wb');
-        foreach ($this->clubRepository->findAllForExport() as $row) {
+        foreach ($clubs as $row) {
             \fputcsv($fp, $row, ';', '\'');
         }
         \fclose($fp);
 
-        $this->view->assign(
+        $this->moduleTemplate->assign(
             'exportPath',
             PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile)
         );
+        $this->moduleTemplate->assign('clubs', $clubs);
+        $this->moduleTemplate->assign('storagePid', $storagePid);
+
+        return $this->moduleTemplate->renderResponse('Index');
+    }
+
+    public function showAction(): ResponseInterface
+    {
+        $clubs = $this->clubRepository->findAllForExport();
+        $this->moduleTemplate->assign('clubs', $clubs);
+
+        return $this->moduleTemplate->renderResponse('Show');
     }
 
     /**
@@ -99,6 +123,6 @@ class ExportController extends ActionController
 
     protected function getExportPath(): string
     {
-        return  Environment::getPublicPath() . '/' . rtrim($this->exportPath, '/') . '/';
+        return Environment::getPublicPath() . '/' . rtrim($this->exportPath, '/') . '/';
     }
 }

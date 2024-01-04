@@ -16,28 +16,21 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 /**
  * Updater to fill empty slug columns of clubdirectory records
  */
+#[UpgradeWizard('myUpgradeWizard')]
 class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 {
-    /**
-     * @var string
-     */
-    protected $tableName = 'tx_clubdirectory_domain_model_club';
+    protected string $tableName = 'tx_clubdirectory_domain_model_club';
 
-    /**
-     * @var string
-     */
-    protected $fieldName = 'path_segment';
+    protected string $fieldName = 'path_segment';
 
-    /**
-     * @var PathSegmentHelper
-     */
-    protected $pathSegmentHelper;
+    protected PathSegmentHelper $pathSegmentHelper;
 
     public function __construct(PathSegmentHelper $pathSegmentHelper = null)
     {
@@ -47,8 +40,6 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
     /**
      * Return the identifier for this wizard
      * This should be the same string as used in the ext_localconf class registration
-     *
-     * @return string
      */
     public function getIdentifier(): string
     {
@@ -75,7 +66,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
             ->count('*')
             ->from($this->tableName)
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq(
                         $this->fieldName,
                         $queryBuilder->createNamedParameter('', Connection::PARAM_STR)
@@ -85,7 +76,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
                     )
                 )
             )
-            ->execute()
+            ->executeQuery()
             ->fetchColumn();
 
         return (bool)$amountOfRecordsWithEmptySlug;
@@ -93,8 +84,6 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 
     /**
      * Performs the accordant updates.
-     *
-     * @return bool Whether everything went smoothly or not
      */
     public function executeUpdate(): bool
     {
@@ -106,7 +95,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
             ->select('uid', 'pid', 'title')
             ->from($this->tableName)
             ->where(
-                $queryBuilder->expr()->orX(
+                $queryBuilder->expr()->or(
                     $queryBuilder->expr()->eq(
                         $this->fieldName,
                         $queryBuilder->createNamedParameter('', Connection::PARAM_STR)
@@ -116,7 +105,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
                     )
                 )
             )
-            ->execute();
+            ->executeQuery();
 
         $connection = $this->getConnectionPool()->getConnectionForTable($this->tableName);
         while ($recordToUpdate = $statement->fetch()) {
@@ -139,9 +128,6 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
         return true;
     }
 
-    /**
-     * @return string[]
-     */
     public function getPrerequisites(): array
     {
         return [

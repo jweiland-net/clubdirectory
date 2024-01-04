@@ -25,25 +25,13 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class MapHelper
 {
-    /**
-     * @var GeoCodeService
-     */
-    protected $geoCodeService;
+    protected GeoCodeService $geoCodeService;
 
-    /**
-     * @var MapService
-     */
-    protected $mapService;
+    protected MapService $mapService;
 
-    /**
-     * @var PoiCollectionRepository
-     */
-    protected $poiCollectionRepository;
+    protected PoiCollectionRepository $poiCollectionRepository;
 
-    /**
-     * @var ExtConf
-     */
-    protected $extConf;
+    protected ExtConf $extConf;
 
     public function __construct(
         GeoCodeService $geoCodeService,
@@ -85,7 +73,7 @@ class MapHelper
                     $address->setTxMaps2Uid($poiCollection);
                 } else {
                     foreach ($this->geoCodeService->getErrors() as $error) {
-                        $actionController->addFlashMessage($error->getMessage(), $error->getTitle(), $error->getSeverity());
+                        $actionController->addFlashMessage($error->getMessage(), $error->getTitle(), $error->getSeverity()->value);
                     }
                     return false;
                 }

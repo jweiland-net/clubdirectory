@@ -77,20 +77,6 @@ plugin.tx_clubdirectory {
 [end]
 
 module.tx_clubdirectory {
-  view {
-    templateRootPaths {
-      0 = EXT:clubdirectory/Resources/Private/Backend/Templates/
-      1 = {$module.tx_clubdirectory.view.templateRootPath}
-    }
-    partialRootPaths {
-      0 = EXT:clubdirectory/Resources/Private/Backend/Partials/
-      1 = {$module.tx_clubdirectory.view.partialRootPath}
-    }
-    layoutRootPath {
-      0 = EXT:clubdirectory/Resources/Private/Backend/Layouts/
-      1 = {$module.tx_clubdirectory.view.layoutRootPath}
-    }
-  }
   persistence < plugin.tx_clubdirectory.persistence
 }
 

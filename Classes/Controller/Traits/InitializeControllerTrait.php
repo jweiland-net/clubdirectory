@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller\Traits;
 
 use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
-use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
 /**
  * Trait to initialize the view in controllers.
@@ -20,19 +19,16 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
  */
 trait InitializeControllerTrait
 {
-    /**
-     * @var HiddenObjectHelper
-     */
-    protected $hiddenObjectHelper;
+    protected HiddenObjectHelper $hiddenObjectHelper;
 
     public function injectHiddenObjectHelper(HiddenObjectHelper $hiddenObjectHelper): void
     {
         $this->hiddenObjectHelper = $hiddenObjectHelper;
     }
 
-    protected function initializeView(ViewInterface $view): void
+    protected function initializeView($view): void
     {
-        $view->assign('data', $this->configurationManager->getContentObject()->data);
+        $view->assign('data', $this->request->getAttribute('currentContentObject')->data);
         $view->assign('extConf', $this->extConf);
     }
 

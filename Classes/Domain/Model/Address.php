@@ -20,53 +20,26 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Address extends AbstractEntity
 {
-    /**
-     * @var string
-     * @Extbase\Validate("NotEmpty")
-     */
-    protected $title = 'organizationAddress';
+    #[Extbase\Validate(['validator' => 'NotEmpty'])]
+    protected string $title = 'organizationAddress';
 
-    /**
-     * @var string
-     */
-    protected $street = '';
+    protected string $street = '';
 
-    /**
-     * @var string
-     */
-    protected $houseNumber = '';
+    protected string $houseNumber = '';
 
-    /**
-     * @var string
-     * @Extbase\Validate("RegularExpression", options={"regularExpression": "/^[0-9]{4,5}$/"})
-     */
-    protected $zip = '';
+    #[Extbase\Validate(['validator' => 'RegularExpression', 'options' => ['regularExpression' => '/^[0-9]{4,5}$/']])]
+    protected string $zip = '';
 
-    /**
-     * @var string
-     */
-    protected $city = '';
+    protected string $city = '';
 
-    /**
-     * @var string
-     */
-    protected $telephone = '';
+    protected string $telephone = '';
 
-    /**
-     * @var string
-     */
-    protected $fax = '';
+    protected string $fax = '';
 
-    /**
-     * @var bool
-     */
-    protected $barrierFree = false;
+    protected bool $barrierFree = false;
 
-    /**
-     * @var PoiCollection
-     * @Extbase\ORM\Cascade("remove")
-     */
-    protected $txMaps2Uid;
+    #[Extbase\ORM\Cascade(['value' => 'remove'])]
+    protected ?PoiCollection $txMaps2Uid;
 
     public function getTitle(): string
     {
@@ -161,8 +134,6 @@ class Address extends AbstractEntity
     /**
      * helper method to get the address of the record
      * this is needed by google maps api geocode.
-     *
-     * @return string
      */
     public function getAddress(): string
     {

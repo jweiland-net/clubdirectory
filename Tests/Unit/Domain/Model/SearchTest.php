@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use JWeiland\Clubdirectory\Domain\Model\Search;
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
@@ -99,24 +99,24 @@ class SearchTest extends UnitTestCase
     /**
      * @test
      */
-    public function getDirectionInitiallyReturnsAscending(): void
+    public function getOrderInitiallyReturnsAscending(): void
     {
         self::assertSame(
             QueryInterface::ORDER_ASCENDING,
-            $this->subject->getDirection()
+            $this->subject->getOrder()
         );
     }
 
     /**
      * @test
      */
-    public function setDirectionSetsDirection(): void
+    public function setOrderSetsSortingOrder(): void
     {
-        $this->subject->setDirection('foo bar');
+        $this->subject->setOrder('foo bar');
 
         self::assertSame(
             'foo bar',
-            $this->subject->getDirection()
+            $this->subject->getOrder()
         );
     }
 }
