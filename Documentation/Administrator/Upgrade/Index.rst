@@ -10,6 +10,15 @@ Upgrade
 If you upgrade `clubdirectory` to a newer version, please read this
 section carefully!
 
+Update to Version 7.0.0
+=======================
+
+This version supports TYPO3 version 12 LTS only. Lower version support removed.
+All Test Cases which were based on Nimut Testing framework has been replaced
+with TYPO3 Testing Framework. The backend module for CSV export has been fixed
+for new backend module API service. All the deprecations are fixed in this
+version so there are no logs thrown in extension scanner.
+
 Update to Version 6.0.0
 =======================
 

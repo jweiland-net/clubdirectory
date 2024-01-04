@@ -7,6 +7,15 @@
 ChangeLog
 =========
 
+Version 7.0.0
+=============
+
+*   TYPO3 Version compatibility for 12 LTS
+*   Backend Module rewrite with new API
+*   Test Cases rewrites to TYPO3 Testing Framework
+*   Removed compatibility for TYPO3 11 and lower versions
+*   All deprecated calls replaced
+
 Version 6.0.1
 =============
 
