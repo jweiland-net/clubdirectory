@@ -7,58 +7,70 @@
 
 	<h1>Clubdirectory: CSV-Export</h1>
 
-	<f:be.infobox title="Information" state="-1" disableIcon="false">
-		Will only export clubs where postal address is filled
-	</f:be.infobox>
+    <f:render section="InfoBox"/>
 
     <f:if condition="{clubs->f:count()} <= 1">
         <f:then>
-            <f:be.infobox title="No Records Available!" state="-2">
-                There are no records available in the current selected page / folder.
-                <f:if condition="{storagePids}">
-                    <f:then>
-                        <p>There are some records found in following pages click here to show more.</p>
-                        <p>
-                            <f:for each="{storagePids}" as="storagePid">
-                                <a href="{f:uri.action(action: 'index', controller: 'ExportModule', additionalParams: '{id:storagePid.pid}')}" class="btn btn-default">
-                                    <span class="t3js-icon icon icon-size-small icon-state-default icon-apps-filetree-folder-default" data-identifier="apps-filetree-folder-default" aria-hidden="true" target="_blank">
-                                        <span class="icon-markup">
-                                            <svg class="icon-color"><use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-document-view"></use></svg>
-                                        </span>
-                                    </span>
-                                    View Records ({storagePid.pid})
-                                </a>
-                            </f:for>
-                        </p>
-                    </f:then>
-                </f:if>
-            </f:be.infobox>
+            <f:render section="NoRecordsMessage" arguments="{_all}"/>
         </f:then>
         <f:else>
-            <p>
-                <a href="{exportPath}" class="btn btn-default">
-                    <span class="t3js-icon icon icon-size-small icon-state-default icon-apps-filetree-folder-default" data-identifier="apps-filetree-folder-default" aria-hidden="true" target="_blank">
-                        <span class="icon-markup">
-                            <svg class="icon-color">
-                                <use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-file-csv-download"></use>
-                            </svg>
-                        </span>
-                    </span>
-                    Download CSV-Export
-                </a>
-
-                <a href="{f:uri.action(action: 'show', controller: 'ExportModule')}" class="btn btn-default">
-                    <span class="t3js-icon icon icon-size-small icon-state-default icon-apps-filetree-folder-default" data-identifier="apps-filetree-folder-default" aria-hidden="true" target="_blank">
-                        <span class="icon-markup">
-                            <svg class="icon-color"><use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-document-view"></use></svg>
-                        </span>
-                    </span>
-                    View Records
-                </a>
-
-            </p>
-
+            <f:render section="DownloadsAndViewBox" arguments="{_all}"/>
         </f:else>
     </f:if>
+</f:section>
+
+<f:section name="InfoBox">
+    <f:be.infobox title="Information" state="-1" disableIcon="false">
+        Will only export clubs where postal address is filled
+    </f:be.infobox>
+</f:section>
+
+<f:section name="NoRecordsMessage">
+    <f:be.infobox title="No Records Available!" state="-2">
+        There are no records available in the current selected page / folder.
+
+        <f:if condition="{storagePid}">
+            <f:then>
+                <p>There are some records found in following pages click here to show more.</p>
+                <p>
+                    <f:for each="{storagePid}" as="storage">
+                        <a href="{f:uri.action(action: 'index', controller: 'ExportModule', additionalParams: '{id:storage.pid}')}" class="btn btn-default">
+                            <span class="t3js-icon icon icon-size-small icon-state-default icon-apps-filetree-folder-default" data-identifier="apps-filetree-folder-default" aria-hidden="true" target="_blank">
+                                <span class="icon-markup">
+                                    <svg class="icon-color"><use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-document-view"></use></svg>
+                                </span>
+                            </span>
+                            View Records ({storage.pid})
+                        </a>
+                    </f:for>
+                </p>
+            </f:then>
+        </f:if>
+    </f:be.infobox>
+</f:section>
+
+<f:section name="DownloadsAndViewBox">
+    <p>
+        <a href="{exportPath}" class="btn btn-default">
+            <span class="t3js-icon icon icon-size-small icon-state-default icon-apps-filetree-folder-default" data-identifier="apps-filetree-folder-default" aria-hidden="true" target="_blank">
+                <span class="icon-markup">
+                    <svg class="icon-color">
+                        <use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-file-csv-download"></use>
+                    </svg>
+                </span>
+            </span>
+            Download CSV-Export
+        </a>
+
+        <a href="{f:uri.action(action: 'show', controller: 'ExportModule')}" class="btn btn-default">
+            <span class="t3js-icon icon icon-size-small icon-state-default icon-apps-filetree-folder-default" data-identifier="apps-filetree-folder-default" aria-hidden="true" target="_blank">
+                <span class="icon-markup">
+                    <svg class="icon-color"><use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-document-view"></use></svg>
+                </span>
+            </span>
+            View Records
+        </a>
+
+    </p>
 </f:section>
 </html>

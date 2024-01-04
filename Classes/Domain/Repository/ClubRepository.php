@@ -270,12 +270,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         return $clubs;
     }
 
-    /**
-     * @throws DBALException
-     * @throws Exception
-     * @throws \Doctrine\DBAL\Driver\Exception
-     */
-    public function getStoragePids()
+    public function getStoragePid(): array
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');
         $queryBuilder
@@ -283,9 +278,13 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             ->from('tx_clubdirectory_domain_model_club')
             ->groupBy('pid');
 
-        return $queryBuilder
-            ->executeQuery()
-            ->fetchAllAssociative();
+        try {
+            return $queryBuilder
+                ->executeQuery()
+                ->fetchAllAssociative();
+        } catch (Exception|\Doctrine\DBAL\Driver\Exception|DBALException $e) {
+            return [];
+        }
     }
 
     protected function getConnectionPool(): ConnectionPool
