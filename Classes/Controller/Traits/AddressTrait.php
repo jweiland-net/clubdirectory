@@ -27,7 +27,7 @@ trait AddressTrait
      */
     protected function getAddressTitles(): array
     {
-        $values = GeneralUtility::trimExplode(',', 'organizationAddress, postAddress, clubAddress');
+        $values = GeneralUtility::trimExplode(',', 'organizationAddress, postAddress, clubAddress', true);
         $titles = [];
         foreach ($values as $value) {
             $title = new \stdClass();
