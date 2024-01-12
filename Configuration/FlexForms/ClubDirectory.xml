@@ -5,8 +5,8 @@
 	<sheets>
 		<sDEFAULT>
 			<ROOT>
-                <sheetTitle>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:sheetGeneral</sheetTitle>
-                <type>array</type>
+				<sheetTitle>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:sheetGeneral</sheetTitle>
+				<type>array</type>
 				<el>
 					<settings.showGlossar>
 						<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:showGlossar</label><config>
