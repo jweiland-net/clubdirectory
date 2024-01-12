@@ -14,10 +14,10 @@ namespace JWeiland\Clubdirectory\Domain\Repository;
 use Doctrine\DBAL\Exception;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
+use JWeiland\Clubdirectory\Traits\ConnectionPoolTrait;
 use JWeiland\Glossary2\Service\GlossaryService;
 use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -32,6 +32,8 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class ClubRepository extends Repository implements HiddenRepositoryInterface
 {
+    use ConnectionPoolTrait;
+
     /**
      * @var array
      */
@@ -284,10 +286,5 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         } catch (Exception $e) {
             return [];
         }
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }

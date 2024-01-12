@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Updater;
 
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
+use JWeiland\Clubdirectory\Traits\ConnectionPoolTrait;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
@@ -26,6 +26,8 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 #[UpgradeWizard('myUpgradeWizard')]
 class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 {
+    use ConnectionPoolTrait;
+
     protected string $tableName = 'tx_clubdirectory_domain_model_club';
 
     protected string $fieldName = 'path_segment';
@@ -133,10 +135,5 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
         return [
             DatabaseUpdatedPrerequisite::class,
         ];
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }
