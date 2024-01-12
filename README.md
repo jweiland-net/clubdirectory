@@ -1,6 +1,6 @@
 # TYPO3 Extension `clubdirectory`
 
-![Build Status](https://github.com/jweiland-net/clubdirectory/workflows/testscorev12/badge.svg)
+![Build Status](https://github.com/jweiland-net/clubdirectory/workflows/testscorev12.yml/badge.svg)
 
 With `clubdirectory` you can create, manage and display club entries.
 
