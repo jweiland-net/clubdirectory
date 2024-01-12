@@ -12,9 +12,9 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
 use JWeiland\Clubdirectory\Domain\Model\FrontendUser;
+use JWeiland\Clubdirectory\Traits\TypoScriptFrontendControllerTrait;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Repository to manage records of fe_users table and retrieve current logged-in user
@@ -23,6 +23,8 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
  */
 class FrontendUserRepository extends Repository
 {
+    use TypoScriptFrontendControllerTrait;
+
     public function getCurrentFrontendUserUid(): int
     {
         return $this->getCurrentFrontendUserRecord()['uid'] ?? 0;
@@ -30,18 +32,14 @@ class FrontendUserRepository extends Repository
 
     public function getCurrentFrontendUserRecord(): array
     {
-        if (!isset($GLOBALS['TSFE'])) {
+        $typoScriptFrontendController = $this->getTypoScriptFrontendController();
+
+        if (!$typoScriptFrontendController->fe_user instanceof FrontendUserAuthentication) {
             return [];
         }
 
-        if (!$GLOBALS['TSFE'] instanceof TypoScriptFrontendController) {
-            return [];
-        }
-
-        if (!$GLOBALS['TSFE']->fe_user instanceof FrontendUserAuthentication) {
-            return [];
-        }
-
-        return is_array($GLOBALS['TSFE']->fe_user->user) ? $GLOBALS['TSFE']->fe_user->user : [];
+        return is_array($typoScriptFrontendController->fe_user->user)
+            ? $typoScriptFrontendController->fe_user->user
+            : [];
     }
 }
