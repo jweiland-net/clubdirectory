@@ -79,7 +79,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
                 )
             )
             ->executeQuery()
-            ->fetchColumn();
+            ->fetchOne();
 
         return (bool)$amountOfRecordsWithEmptySlug;
     }
@@ -110,7 +110,7 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
             ->executeQuery();
 
         $connection = $this->getConnectionPool()->getConnectionForTable($this->tableName);
-        while ($recordToUpdate = $statement->fetch()) {
+        while ($recordToUpdate = $statement->fetchAssociative()) {
             if ((string)$recordToUpdate['title'] !== '') {
                 $connection->update(
                     $this->tableName,
