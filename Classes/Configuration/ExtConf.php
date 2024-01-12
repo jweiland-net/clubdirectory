@@ -84,14 +84,13 @@ class ExtConf implements SingletonInterface
 
     public function getEmailFromAddress(): string
     {
-        if (empty($this->emailFromAddress)) {
-            $senderMail = $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'];
-            if (empty($senderMail)) {
+        if ($this->emailFromAddress === '') {
+            $senderMail = (string)($GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'] ?? '');
+            if ($senderMail === '') {
                 throw new \InvalidArgumentException(
                     'You have forgotten to set a sender email address in extension configuration or in install tool'
                 );
             }
-
             return $senderMail;
         }
 
@@ -105,12 +104,11 @@ class ExtConf implements SingletonInterface
 
     public function getEmailFromName(): string
     {
-        if (empty($this->emailFromName)) {
-            $senderName = $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromName'];
-            if (empty($senderName)) {
+        if ($this->emailFromName === '') {
+            $senderName = (string)($GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromName'] ?? '');
+            if ($senderName === '') {
                 throw new \InvalidArgumentException('You have forgotten to set a sender name in extension configuration or in install tool');
             }
-
             return $senderName;
         }
 
@@ -124,7 +122,7 @@ class ExtConf implements SingletonInterface
 
     public function getEmailToAddress(): string
     {
-        if (empty($this->emailToAddress)) {
+        if ($this->emailToAddress === '') {
             throw new \InvalidArgumentException('You have forgotten to set a receiver email address in extension configuration of clubdirectory');
         }
 
