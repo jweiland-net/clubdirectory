@@ -11,9 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\EventListener;
 
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Driver\Exception;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -55,9 +54,7 @@ class SetTitleOfPOIToClubTitleEventListener
     }
 
     /**
-     * @throws Exception
      * @throws \Doctrine\DBAL\Exception
-     * @throws DBALException
      */
     protected function getClubRecord(int $clubUid): array
     {
@@ -68,13 +65,13 @@ class SetTitleOfPOIToClubTitleEventListener
             ->where(
                 $queryBuilder->expr()->eq(
                     'uid',
-                    $queryBuilder->createNamedParameter($clubUid, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($clubUid, Connection::PARAM_INT)
                 )
             )
             ->executeQuery()
             ->fetchAssociative();
 
-        if (empty($club)) {
+        if ($club === false) {
             $club = [];
         }
 

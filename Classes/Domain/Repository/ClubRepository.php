@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
-use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Exception;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
@@ -182,7 +181,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                 ->andWhere(
                     $queryBuilder->expr()->eq(
                         'mm.uid_local',
-                        $queryBuilder->createNamedParameter($category, \PDO::PARAM_INT)
+                        $queryBuilder->createNamedParameter($category, Connection::PARAM_INT)
                     )
                 );
         }

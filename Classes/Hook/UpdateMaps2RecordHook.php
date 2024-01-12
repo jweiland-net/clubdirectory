@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Hook;
 
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -58,12 +59,13 @@ class UpdateMaps2RecordHook
             ->where(
                 $queryBuilder->expr()->eq(
                     'uid',
-                    $queryBuilder->createNamedParameter($clubUid, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($clubUid, Connection::PARAM_INT)
                 )
             )
             ->executeQuery()
-            ->fetch();
-        if (empty($club)) {
+            ->fetchAssociative();
+
+        if ($club === false) {
             $club = [];
         }
 
