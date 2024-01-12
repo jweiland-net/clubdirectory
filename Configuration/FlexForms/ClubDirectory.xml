@@ -1,56 +1,59 @@
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
-	<sheets>
-		<sDEFAULT>
-			<ROOT>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEFAULT>
+            <ROOT>
                 <sheetTitle>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:sheetGeneral</sheetTitle>
                 <type>array</type>
-				<el>
-					<settings.showGlossar>
-						<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:showGlossar</label><config>
-								<type>check</type>
-								<renderType>checkboxToggle</renderType>
-								<default>1</default>
-							</config>
-					</settings.showGlossar>
-					<settings.category>
-						<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:category</label><config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<foreign_table>sys_category</foreign_table>
-								<foreign_table_where>AND parent=###PAGE_TSCONFIG_ID### ORDER BY title</foreign_table_where>
-								<items type="array">
-									<numIndex index="0">
-										<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:allCategories</label>
-										<value>0</value>
-									</numIndex>
-								</items>
-								<default>0</default>
-								<size>1</size>
-								<minitems>0</minitems>
-							</config>
-					</settings.category>
-					<settings.district>
-						<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:district</label><config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<foreign_table>tx_clubdirectory_domain_model_district</foreign_table>
-								<foreign_table_where>AND tx_clubdirectory_domain_model_district.district != "" ORDER BY district</foreign_table_where>
-								<items type="array">
-									<numIndex index="0">
-										<label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:allDistricts</label>
-										<value>0</value>
-									</numIndex>
-								</items>
-								<default>0</default>
-								<size>1</size>
-								<minitems>0</minitems>
-							</config>
-					</settings.district>
-				</el>
-			</ROOT>
-		</sDEFAULT>
-	</sheets>
+                <el>
+                    <settings.showGlossar>
+                        <label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:showGlossar</label>
+                        <config>
+                            <type>check</type>
+                            <renderType>checkboxToggle</renderType>
+                            <default>1</default>
+                        </config>
+                    </settings.showGlossar>
+                    <settings.category>
+                        <label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:category</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <foreign_table>sys_category</foreign_table>
+                            <foreign_table_where>AND parent=###PAGE_TSCONFIG_ID### ORDER BY title</foreign_table_where>
+                            <items type="array">
+                                <numIndex index="0">
+                                    <label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:allCategories</label>
+                                    <value>0</value>
+                                </numIndex>
+                            </items>
+                            <default>0</default>
+                            <size>1</size>
+                            <minitems>0</minitems>
+                        </config>
+                    </settings.category>
+                    <settings.district>
+                        <label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:district</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <foreign_table>tx_clubdirectory_domain_model_district</foreign_table>
+                            <foreign_table_where>AND tx_clubdirectory_domain_model_district.district != "" ORDER BY district</foreign_table_where>
+                            <items type="array">
+                                <numIndex index="0">
+                                    <label>LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf:allDistricts</label>
+                                    <value>0</value>
+                                </numIndex>
+                            </items>
+                            <default>0</default>
+                            <size>1</size>
+                            <minitems>0</minitems>
+                        </config>
+                    </settings.district>
+                </el>
+            </ROOT>
+        </sDEFAULT>
+    </sheets>
 </T3DataStructure>

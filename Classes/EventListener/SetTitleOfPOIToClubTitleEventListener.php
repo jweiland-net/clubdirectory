@@ -11,19 +11,19 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\EventListener;
 
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Driver\Exception;
+use JWeiland\Clubdirectory\Traits\ConnectionPoolTrait;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
-use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
- * By default the title of the address record will be used as POI title. That's wrong.
+ * By default, the title of the address record will be used as POI title. That's wrong.
  * In this special case we have to update the POI title with the title from club record.
  */
 class SetTitleOfPOIToClubTitleEventListener
 {
+    use ConnectionPoolTrait;
+
     public function __invoke(PostProcessPoiCollectionRecordEvent $event): void
     {
         $foreignLocationRecord = $event->getForeignLocationRecord();
@@ -55,9 +55,7 @@ class SetTitleOfPOIToClubTitleEventListener
     }
 
     /**
-     * @throws Exception
      * @throws \Doctrine\DBAL\Exception
-     * @throws DBALException
      */
     protected function getClubRecord(int $clubUid): array
     {
@@ -68,21 +66,16 @@ class SetTitleOfPOIToClubTitleEventListener
             ->where(
                 $queryBuilder->expr()->eq(
                     'uid',
-                    $queryBuilder->createNamedParameter($clubUid, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($clubUid, Connection::PARAM_INT)
                 )
             )
             ->executeQuery()
             ->fetchAssociative();
 
-        if (empty($club)) {
+        if ($club === false) {
             $club = [];
         }
 
         return $club;
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }

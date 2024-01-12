@@ -36,6 +36,7 @@ class MapController extends ActionController
     public function newAction(Club $club): ResponseInterface
     {
         $this->view->assign('club', $club);
+
         return $this->htmlResponse();
     }
 
@@ -63,6 +64,7 @@ class MapController extends ActionController
         $this->view->assign('club', $club);
         $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
         $this->view->assign('addressTitles', $this->getAddressTitles());
+
         return $this->htmlResponse();
     }
 

@@ -1,13 +1,11 @@
 # TYPO3 Extension `clubdirectory`
 
 [![Latest Stable Version](https://poser.pugx.org/jweiland/clubdirectory/v/stable.svg)](https://packagist.org/packages/jweiland/clubdirectory)
-[![TYPO3 11.5](https://img.shields.io/badge/TYPO3-12.4-green.svg)](https://get.typo3.org/version/12)
-[![TYPO3 11.5](https://img.shields.io/badge/TYPO3-11.5-green.svg)](https://get.typo3.org/version/11)
+[![TYPO3 12.4](https://img.shields.io/badge/TYPO3-12.4-green.svg)](https://get.typo3.org/version/12)
 [![License](http://poser.pugx.org/jweiland/clubdirectory/license)](https://packagist.org/packages/jweiland/clubdirectory)
 [![Total Downloads](https://poser.pugx.org/jweiland/clubdirectory/downloads.svg)](https://packagist.org/packages/jweiland/clubdirectory)
 [![Monthly Downloads](https://poser.pugx.org/jweiland/clubdirectory/d/monthly)](https://packagist.org/packages/jweiland/clubdirectory)
 ![Build Status](https://github.com/jweiland-net/clubdirectory/actions/workflows/testscorev12.yml/badge.svg)
-
 
 With `clubdirectory` you can create, manage and display club entries.
 

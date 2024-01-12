@@ -11,14 +11,13 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
-use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Exception;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
+use JWeiland\Clubdirectory\Traits\ConnectionPoolTrait;
 use JWeiland\Glossary2\Service\GlossaryService;
 use TYPO3\CMS\Core\Charset\CharsetConverter;
 use TYPO3\CMS\Core\Database\Connection;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,6 +32,8 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  */
 class ClubRepository extends Repository implements HiddenRepositoryInterface
 {
+    use ConnectionPoolTrait;
+
     /**
      * @var array
      */
@@ -120,7 +121,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                 [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING],
                 true
             )) {
-                $search->setDirection(QueryInterface::ORDER_ASCENDING);
+                $search->setOrderBy(QueryInterface::ORDER_ASCENDING);
             }
 
             $query->setOrderings([
@@ -182,7 +183,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                 ->andWhere(
                     $queryBuilder->expr()->eq(
                         'mm.uid_local',
-                        $queryBuilder->createNamedParameter($category, \PDO::PARAM_INT)
+                        $queryBuilder->createNamedParameter($category, Connection::PARAM_INT)
                     )
                 );
         }
@@ -282,13 +283,8 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             return $queryBuilder
                 ->executeQuery()
                 ->fetchAllAssociative();
-        } catch (Exception|\Doctrine\DBAL\Driver\Exception|DBALException $e) {
+        } catch (Exception $e) {
             return [];
         }
-    }
-
-    protected function getConnectionPool(): ConnectionPool
-    {
-        return GeneralUtility::makeInstance(ConnectionPool::class);
     }
 }
