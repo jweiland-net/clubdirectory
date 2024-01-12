@@ -37,7 +37,6 @@ nbproject
 bin/*
 vendor/*
 .build
-.php_cs.cache
 
 # Ignore testing stuff
 /.Build
