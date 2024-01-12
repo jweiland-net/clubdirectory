@@ -119,7 +119,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                 [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING],
                 true
             )) {
-                $search->setDirection(QueryInterface::ORDER_ASCENDING);
+                $search->setOrderBy(QueryInterface::ORDER_ASCENDING);
             }
 
             $query->setOrderings([
@@ -281,7 +281,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             return $queryBuilder
                 ->executeQuery()
                 ->fetchAllAssociative();
-        } catch (Exception|\Doctrine\DBAL\Driver\Exception|DBALException $e) {
+        } catch (Exception $e) {
             return [];
         }
     }
