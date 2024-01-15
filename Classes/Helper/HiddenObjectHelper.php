@@ -49,7 +49,7 @@ class HiddenObjectHelper
             }
 
             if ($object instanceof AbstractEntity) {
-                $this->session->registerObject($object, $object->getUid());
+                $this->session->registerObject($object, (string)$object->getUid());
             }
         }
     }

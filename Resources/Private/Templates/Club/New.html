@@ -7,7 +7,7 @@
 <f:section name="main">
     <f:flashMessages/>
 
-    <f:render partial="FormErrors" arguments="{object:Club}"/>
+    <f:render partial="FormErrors" arguments="{object:Club, type:'club'}"/>
 
     <f:form action="create" enctype="multipart/form-data" name="club" object="{club}" class="extform withinfo">
         <legend class="powermail_legend">{f:translate(key: "newEntry")}</legend>

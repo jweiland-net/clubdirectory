@@ -78,6 +78,6 @@ trait AddressTrait
             }
         }
 
-        $this->request->setArgument('club', $requestArgument);
+        $this->request = $this->request->withArgument('club', $requestArgument);
     }
 }
