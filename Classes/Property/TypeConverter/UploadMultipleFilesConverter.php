@@ -247,7 +247,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      */
     protected function isValidUploadFile(array $uploadedFile): bool
     {
-        if (($uploadedFile['error'] ?? null) === 4) {
+        if ((int)($uploadedFile['error'] ?? 0) !== 0) {
             return false;
         }
 
