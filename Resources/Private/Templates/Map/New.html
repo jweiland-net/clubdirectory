@@ -6,7 +6,7 @@
 <f:layout name="Default"/>
 
 <f:section name="main">
-    <f:render partial="FormErrors" arguments="{object: Club}"/>
+    <f:render partial="FormErrors" arguments="{object: club, type: 'club'}"/>
 
     <f:form action="create" name="club" object="{club}" enctype="multipart/form-data">
         <f:for each="{club.addresses}" as="address" key="index">

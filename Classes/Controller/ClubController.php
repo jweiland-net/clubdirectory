@@ -182,7 +182,7 @@ class ClubController extends ActionController
     }
 
     #[Extbase\Validate(['param' => 'club', 'validator' => ClubValidator::class])]
-    public function updateAction(Club $club): void
+    public function updateAction(Club $club): ResponseInterface
     {
         if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
             $this->errorAction();
@@ -201,7 +201,7 @@ class ClubController extends ActionController
         $club->setHidden(true);
         $this->addFlashMessage(LocalizationUtility::translate('clubUpdated', 'clubdirectory'));
 
-        $this->redirect('listMyClubs');
+        return $this->redirect('listMyClubs');
     }
 
     public function initializeSearchAction(): void
@@ -244,7 +244,7 @@ class ClubController extends ActionController
     {
         if (empty($requestArgument[$property])) {
             unset($requestArgument[$property]);
-            $this->request->setArgument('club', $requestArgument);
+            $this->request = $this->request->withArgument('club', $requestArgument);
         }
     }
 

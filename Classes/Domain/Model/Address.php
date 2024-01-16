@@ -39,7 +39,7 @@ class Address extends AbstractEntity
     protected bool $barrierFree = false;
 
     #[Extbase\ORM\Cascade(['value' => 'remove'])]
-    protected ?PoiCollection $txMaps2Uid;
+    protected ?PoiCollection $txMaps2Uid = null;
 
     public function getTitle(): string
     {
