@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 7.0.1
+=============
+
+*   BUGFIX: Removed notes from TCA show configuration
+
 Version 7.0.0
 =============
 
