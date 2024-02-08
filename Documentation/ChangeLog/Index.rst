@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 7.0.1
+=============
+
+*   TASK: Moved categories filed of club TCA to seperate categories tab
+
 Version 7.0.0
 =============
 
