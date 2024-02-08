@@ -12,6 +12,8 @@ call_user_func(static function (): void {
 
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
         'tx_clubdirectory_domain_model_club',
-        'categories'
+        'categories',
+        '',
+        'before:notes'
     );
 });
