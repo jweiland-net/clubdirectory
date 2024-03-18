@@ -3,389 +3,389 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory" target-language="de">
     <header/>
     <body>
-      <trans-unit id="tx_clubdirectory_domain_model_club">
+      <trans-unit id="tx_clubdirectory_domain_model_club" approved="yes">
         <source>Club</source>
-        <target state="needs-translation">Club</target>
+        <target state="final">Verein</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.title">
+      <trans-unit id="tx_clubdirectory_domain_model_club.title" approved="yes">
         <source>Title</source>
-        <target state="needs-translation">Title</target>
+        <target state="final">Titel</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.activity">
+      <trans-unit id="tx_clubdirectory_domain_model_club.activity" approved="yes">
         <source>Activity</source>
-        <target state="needs-translation">Activity</target>
+        <target state="final">Vereinstätigkeit</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.contactPerson">
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactPerson" approved="yes">
         <source>Contact Person</source>
-        <target state="needs-translation">Contact Person</target>
+        <target state="final">Ansprechpartner</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.contactTimes">
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactTimes" approved="yes">
         <source>Contact Times</source>
-        <target state="needs-translation">Contact Times</target>
+        <target state="final">Kontaktzeiten</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.email">
+      <trans-unit id="tx_clubdirectory_domain_model_club.email" approved="yes">
         <source>Email</source>
-        <target state="needs-translation">Email</target>
+        <target state="final">E-Mail</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.website">
+      <trans-unit id="tx_clubdirectory_domain_model_club.website" approved="yes">
         <source>Website</source>
-        <target state="needs-translation">Website</target>
+        <target state="final">Webseite</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.members">
+      <trans-unit id="tx_clubdirectory_domain_model_club.members" approved="yes">
         <source>Members</source>
-        <target state="needs-translation">Members</target>
+        <target state="final">Mitglieder</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.clubHome">
+      <trans-unit id="tx_clubdirectory_domain_model_club.clubHome" approved="yes">
         <source>Club Home</source>
-        <target state="needs-translation">Club Home</target>
+        <target state="final">Vereinsheim</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.description">
+      <trans-unit id="tx_clubdirectory_domain_model_club.description" approved="yes">
         <source>Description</source>
-        <target state="needs-translation">Description</target>
+        <target state="final">Beschreibung</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.feUsers">
+      <trans-unit id="tx_clubdirectory_domain_model_club.feUsers" approved="yes">
         <source>Frontend User</source>
-        <target state="needs-translation">Frontend User</target>
+        <target state="final">Bearbeitung durch Frontend-User</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.logo">
+      <trans-unit id="tx_clubdirectory_domain_model_club.logo" approved="yes">
         <source>Logo</source>
-        <target state="needs-translation">Logo</target>
+        <target state="final">Logo</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.images">
+      <trans-unit id="tx_clubdirectory_domain_model_club.images" approved="yes">
         <source>Images</source>
-        <target state="needs-translation">Images</target>
+        <target state="final">Bilder</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.facebook">
+      <trans-unit id="tx_clubdirectory_domain_model_club.facebook" approved="yes">
         <source>Facebook</source>
-        <target state="needs-translation">Facebook</target>
+        <target state="final">Facebook</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.twitter">
+      <trans-unit id="tx_clubdirectory_domain_model_club.twitter" approved="yes">
         <source>Twitter</source>
-        <target state="needs-translation">Twitter</target>
+        <target state="final">Twitter</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.instagram">
+      <trans-unit id="tx_clubdirectory_domain_model_club.instagram" approved="yes">
         <source>Instagram</source>
-        <target state="needs-translation">Instagram</target>
+        <target state="final">Instagram</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.tags">
+      <trans-unit id="tx_clubdirectory_domain_model_club.tags" approved="yes">
         <source>Tags</source>
-        <target state="needs-translation">Tags</target>
+        <target state="final">Schlagwörter</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.district">
+      <trans-unit id="tx_clubdirectory_domain_model_club.district" approved="yes">
         <source>District</source>
-        <target state="needs-translation">District</target>
+        <target state="final">Stadtteil</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.addresses">
+      <trans-unit id="tx_clubdirectory_domain_model_club.addresses" approved="yes">
         <source>Addresses</source>
-        <target state="needs-translation">Addresses</target>
+        <target state="final">Adressen</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_club.categories">
+      <trans-unit id="tx_clubdirectory_domain_model_club.categories" approved="yes">
         <source>Categories</source>
-        <target state="needs-translation">Categories</target>
+        <target state="final">Kategorien</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address">
+      <trans-unit id="tx_clubdirectory_domain_model_address" approved="yes">
         <source>Address</source>
-        <target state="needs-translation">Address</target>
+        <target state="final">Adresse</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.title">
+      <trans-unit id="tx_clubdirectory_domain_model_address.title" approved="yes">
         <source>Address Type</source>
-        <target state="needs-translation">Address Type</target>
+        <target state="final">Adresstyp</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.title.organizationAddress">
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.organizationAddress" approved="yes">
         <source>Organization Address</source>
-        <target state="needs-translation">Organization Address</target>
+        <target state="final">Vereinsheim</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.title.postAddress">
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.postAddress" approved="yes">
         <source>Post Address</source>
-        <target state="needs-translation">Post Address</target>
+        <target state="final">Postanschrift</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.title.clubAddress">
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.clubAddress" approved="yes">
         <source>Club Address</source>
-        <target state="needs-translation">Club Address</target>
+        <target state="final">Clubheim</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.street">
+      <trans-unit id="tx_clubdirectory_domain_model_address.street" approved="yes">
         <source>Street</source>
-        <target state="needs-translation">Street</target>
+        <target state="final">Straße</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.houseNumber">
+      <trans-unit id="tx_clubdirectory_domain_model_address.houseNumber" approved="yes">
         <source>House Number</source>
-        <target state="needs-translation">House Number</target>
+        <target state="final">Hausnummer</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.zip">
+      <trans-unit id="tx_clubdirectory_domain_model_address.zip" approved="yes">
         <source>Zip</source>
-        <target state="needs-translation">Zip</target>
+        <target state="final">PLZ</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.city">
+      <trans-unit id="tx_clubdirectory_domain_model_address.city" approved="yes">
         <source>City</source>
-        <target state="needs-translation">City</target>
+        <target state="final">Ort</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.telephone">
+      <trans-unit id="tx_clubdirectory_domain_model_address.telephone" approved="yes">
         <source>Telephone</source>
-        <target state="needs-translation">Telephone</target>
+        <target state="final">Telefon</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.fax">
+      <trans-unit id="tx_clubdirectory_domain_model_address.fax" approved="yes">
         <source>Fax</source>
-        <target state="needs-translation">Fax</target>
+        <target state="final">Fax</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_address.barrierFree">
+      <trans-unit id="tx_clubdirectory_domain_model_address.barrierFree" approved="yes">
         <source>Barrier Free</source>
-        <target state="needs-translation">Barrier Free</target>
+        <target state="final">Barrierefreier Zugang</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_district">
+      <trans-unit id="tx_clubdirectory_domain_model_district" approved="yes">
         <source>District (clubs)</source>
-        <target state="needs-translation">District (clubs)</target>
+        <target state="final">Stadtteil (Vereine)</target>
       </trans-unit>
-      <trans-unit id="tx_clubdirectory_domain_model_district.district">
+      <trans-unit id="tx_clubdirectory_domain_model_district.district" approved="yes">
         <source>District</source>
-        <target state="needs-translation">District</target>
+        <target state="final">Stadtteil</target>
       </trans-unit>
-      <trans-unit id="search">
+      <trans-unit id="search" approved="yes">
         <source>Search</source>
-        <target state="needs-translation">Search</target>
+        <target state="final">Suche</target>
       </trans-unit>
-      <trans-unit id="noResults">
+      <trans-unit id="noResults" approved="yes">
         <source>No results found</source>
-        <target state="needs-translation">No results found</target>
+        <target state="final">Keine Ergebnisse gefunden</target>
       </trans-unit>
-      <trans-unit id="filterByCategory">
+      <trans-unit id="filterByCategory" approved="yes">
         <source>Filter by category</source>
-        <target state="needs-translation">Filter by category</target>
+        <target state="final">Nach Kategorie filtern</target>
       </trans-unit>
-      <trans-unit id="filterByDistrict">
+      <trans-unit id="filterByDistrict" approved="yes">
         <source>Filter by district</source>
-        <target state="needs-translation">Filter by district</target>
+        <target state="final">Nach Stadtteil filtern</target>
       </trans-unit>
-      <trans-unit id="sortDirection">
+      <trans-unit id="sortDirection" approved="yes">
         <source>Sort by</source>
-        <target state="needs-translation">Sort by</target>
+        <target state="final">Sortieren nach</target>
       </trans-unit>
-      <trans-unit id="ascending">
+      <trans-unit id="ascending" approved="yes">
         <source>Ascending</source>
-        <target state="needs-translation">Ascending</target>
+        <target state="final">Aufsteigend</target>
       </trans-unit>
-      <trans-unit id="descending">
+      <trans-unit id="descending" approved="yes">
         <source>Descending</source>
-        <target state="needs-translation">Descending</target>
+        <target state="final">Absteigend</target>
       </trans-unit>
-      <trans-unit id="all">
+      <trans-unit id="all" approved="yes">
         <source>All</source>
-        <target state="needs-translation">All</target>
+        <target state="final">Alle</target>
       </trans-unit>
-      <trans-unit id="new">
+      <trans-unit id="new" approved="yes">
         <source>New record</source>
-        <target state="needs-translation">New record</target>
+        <target state="final">Neuer Eintrag</target>
       </trans-unit>
-      <trans-unit id="edit">
+      <trans-unit id="edit" approved="yes">
         <source>Edit record</source>
-        <target state="needs-translation">Edit record</target>
+        <target state="final">Eintrag editieren</target>
       </trans-unit>
-      <trans-unit id="newEntry">
+      <trans-unit id="newEntry" approved="yes">
         <source>Insert new Club</source>
-        <target state="needs-translation">Insert new Club</target>
+        <target state="final">Neuen Verein anlegen</target>
       </trans-unit>
-      <trans-unit id="backToList">
+      <trans-unit id="backToList" approved="yes">
         <source>Back to list view</source>
-        <target state="needs-translation">Back to list view</target>
+        <target state="final">Zurück zur Listenansicht</target>
       </trans-unit>
-      <trans-unit id="listMyClubs">
+      <trans-unit id="listMyClubs" approved="yes">
         <source>List my Clubs</source>
-        <target state="needs-translation">List my Clubs</target>
+        <target state="final">Zu meinen Vereinen</target>
       </trans-unit>
-      <trans-unit id="create">
+      <trans-unit id="create" approved="yes">
         <source>Create</source>
-        <target state="needs-translation">Create</target>
+        <target state="final">Anlegen</target>
       </trans-unit>
-      <trans-unit id="update">
+      <trans-unit id="update" approved="yes">
         <source>Edit</source>
-        <target state="needs-translation">Edit</target>
+        <target state="final">Bearbeiten</target>
       </trans-unit>
-      <trans-unit id="clubCreated">
+      <trans-unit id="clubCreated" approved="yes">
         <source>Club created</source>
-        <target state="needs-translation">Club created</target>
+        <target state="final">Neuer Verein wurde angelegt</target>
       </trans-unit>
-      <trans-unit id="clubUpdated">
+      <trans-unit id="clubUpdated" approved="yes">
         <source>Club updated</source>
-        <target state="needs-translation">Club updated</target>
+        <target state="final">Der Verein wurde bearbeitet</target>
       </trans-unit>
-      <trans-unit id="clubActivated">
+      <trans-unit id="clubActivated" approved="yes">
         <source>The club was activated and is now visible in frontend</source>
-        <target state="needs-translation">The club was activated and is now visible in frontend</target>
+        <target state="final">Der Verein wurde aktiviert und ist nun im Frontend sichtbar</target>
       </trans-unit>
-      <trans-unit id="deleteLogo">
+      <trans-unit id="deleteLogo" approved="yes">
         <source>Delete Logo</source>
-        <target state="needs-translation">Delete Logo</target>
+        <target state="final">Logo entfernen</target>
       </trans-unit>
-      <trans-unit id="deleteImage">
+      <trans-unit id="deleteImage" approved="yes">
         <source>Delete Image</source>
-        <target state="needs-translation">Delete Image</target>
+        <target state="final">Bild entfernen</target>
       </trans-unit>
-      <trans-unit id="hint">
+      <trans-unit id="hint" approved="yes">
         <source>Hint</source>
-        <target state="needs-translation">Hint</target>
+        <target state="final">Hinweis</target>
       </trans-unit>
-      <trans-unit id="cshtitle">
+      <trans-unit id="cshtitle" approved="yes">
         <source>The title is mandatory</source>
-        <target state="needs-translation">The title is mandatory</target>
+        <target state="final">Der Titel ist ein Pflichtfeld und muss angegeben werden</target>
       </trans-unit>
-      <trans-unit id="cshcategories">
+      <trans-unit id="cshcategories" approved="yes">
         <source>Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</source>
-        <target state="needs-translation">Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</target>
+        <target state="final">Bitte wählen Sie die Kategorie die zum Verein passt aus. Mehrfachauswahl mit gedrückter Steuerungstaste |Strg|</target>
       </trans-unit>
-      <trans-unit id="cshactivity">
+      <trans-unit id="cshactivity" approved="yes">
         <source>Describe the activities/goals of the club.</source>
-        <target state="needs-translation">Describe the activities/goals of the club.</target>
+        <target state="final">Beschreiben Sie hier die Aktivitäten/Ziele des Vereins.</target>
       </trans-unit>
-      <trans-unit id="cshdescription">
+      <trans-unit id="cshdescription" approved="yes">
         <source>Further descriptions</source>
-        <target state="needs-translation">Further descriptions</target>
+        <target state="final">Weitere Beschreibungsoption</target>
       </trans-unit>
-      <trans-unit id="cshcontactPerson">
+      <trans-unit id="cshcontactPerson" approved="yes">
         <source>Enter the contact person of the club</source>
-        <target state="needs-translation">Enter the contact person of the club</target>
+        <target state="final">Geben Sie hier die Kontaktperson für den Verein ein.</target>
       </trans-unit>
-      <trans-unit id="cshcontactTimes">
+      <trans-unit id="cshcontactTimes" approved="yes">
         <source>Specify the times when the contact person is available.</source>
-        <target state="needs-translation">Specify the times when the contact person is available.</target>
+        <target state="final">Geben Sie die Zeiten an, wann die Kontaktperson verfügbar ist.</target>
       </trans-unit>
-      <trans-unit id="cshemail">
+      <trans-unit id="cshemail" approved="yes">
         <source>Enter the email address of the club or contact person.</source>
-        <target state="needs-translation">Enter the email address of the club or contact person.</target>
+        <target state="final">Geben Sie die E-Mail Adresse der Kontaktperson oder des Vereins an.</target>
       </trans-unit>
-      <trans-unit id="cshwebsite">
+      <trans-unit id="cshwebsite" approved="yes">
         <source>If the club has a website, it may be entered here.</source>
-        <target state="needs-translation">If the club has a website, it may be entered here.</target>
+        <target state="final">Wenn der Verein über einen Internetauftritt verfügt, kann dieser hier eingetragen werden.</target>
       </trans-unit>
-      <trans-unit id="cshmembers">
+      <trans-unit id="cshmembers" approved="yes">
         <source>Enter the number of members of the club.</source>
-        <target state="needs-translation">Enter the number of members of the club.</target>
+        <target state="final">Geben Sie die Mitgliederanzahl des Vereins an.</target>
       </trans-unit>
-      <trans-unit id="cshclubHome">
+      <trans-unit id="cshclubHome" approved="yes">
         <source>Enter the name of the clubhouse if it exists.</source>
-        <target state="needs-translation">Enter the name of the clubhouse if it exists.</target>
+        <target state="final">Geben Sie den Namen des Vereinsheimes an, falls vorhanden.</target>
       </trans-unit>
-      <trans-unit id="cshtitle_0">
+      <trans-unit id="cshtitle_0" approved="yes">
         <source>Choose the address type of the club and add the address infos.</source>
-        <target state="needs-translation">Choose the address type of the club and add the address infos.</target>
+        <target state="final">Sie haben hier die Möglichkeit mehrere Adressdaten zu hinterlegen. Wählen Sie hierfür zuerst den Typ aus.</target>
       </trans-unit>
-      <trans-unit id="cshtitle_1">
+      <trans-unit id="cshtitle_1" approved="yes">
         <source>Enter a further address type of the club with all address infos.</source>
-        <target state="needs-translation">Enter a further address type of the club with all address infos.</target>
+        <target state="final">Geben Sie einen weiteren Adresstyp mit allen Daten ein.</target>
       </trans-unit>
-      <trans-unit id="cshtitle_2">
+      <trans-unit id="cshtitle_2" approved="yes">
         <source>Enter a further address type of the club with all address infos.</source>
-        <target state="needs-translation">Enter a further address type of the club with all address infos.</target>
+        <target state="final">Geben Sie einen weiteren Adresstyp mit allen Daten ein.</target>
       </trans-unit>
-      <trans-unit id="cshfacebook">
+      <trans-unit id="cshfacebook" approved="yes">
         <source>Enter URL to facebook.</source>
-        <target state="needs-translation">Enter URL to facebook.</target>
+        <target state="final">Geben Sie die URL zur Facebook Seite des Vereins ein, falls vorhanden.</target>
       </trans-unit>
-      <trans-unit id="cshtwitter">
+      <trans-unit id="cshtwitter" approved="yes">
         <source>Enter URL to twitter.</source>
-        <target state="needs-translation">Enter URL to twitter.</target>
+        <target state="final">Geben Sie die URL zu Twitter Seite des Vereins ein, falls vorhanden.</target>
       </trans-unit>
-      <trans-unit id="cshinstagram">
+      <trans-unit id="cshinstagram" approved="yes">
         <source>Enter URL to Instagram.</source>
-        <target state="needs-translation">Enter URL to Instagram.</target>
+        <target state="final">Geben Sie die URL zur Instagram Seite des Vereins ein, falls vorhanden.</target>
       </trans-unit>
-      <trans-unit id="cshlogo">
+      <trans-unit id="cshlogo" approved="yes">
         <source>Upload the logo file (jpg,gif,png) in a square formatting.</source>
-        <target state="needs-translation">Upload the logo file (jpg,gif,png) in a square formatting.</target>
+        <target state="final">Laden Sie das Vereinslogo in quadratischem Format hoch (jpg,gif,png).</target>
       </trans-unit>
-      <trans-unit id="cshtags">
+      <trans-unit id="cshtags" approved="yes">
         <source>Enter further tags for the alphabetic list view.</source>
-        <target state="needs-translation">Enter further tags for the alphabetic list view.</target>
+        <target state="final">Geben Sie hier weitere Schlagwörter ein unter denen der Verein in der alphabetischen Listenansicht aufgeführt werden soll.</target>
       </trans-unit>
-      <trans-unit id="cshimages_0">
+      <trans-unit id="cshimages_0" approved="yes">
         <source>Upload max. 5 image files (jpg,gif,png). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
-        <target state="needs-translation">Upload max. 5 image files (jpg,gif,png). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</target>
+        <target state="final">Laden Sie max. 5 Bilddateien (jpg, gif, png) hoch. Bitte benutzen Sie bei mehreren Bildern immer das gleiche Bildformat (z.B. 3:2, 4:3) um eine ruckelfreie Ausgabe der Bildergalerie zu gewährleisten.</target>
       </trans-unit>
-      <trans-unit id="altTextMapImg">
+      <trans-unit id="altTextMapImg" approved="yes">
         <source>Map</source>
-        <target state="needs-translation">Map</target>
+        <target state="final">Karte</target>
       </trans-unit>
-      <trans-unit id="yes">
+      <trans-unit id="yes" approved="yes">
         <source>Yes</source>
-        <target state="needs-translation">Yes</target>
+        <target state="final">Ja</target>
       </trans-unit>
-      <trans-unit id="no">
+      <trans-unit id="no" approved="yes">
         <source>No</source>
-        <target state="needs-translation">No</target>
+        <target state="final">Nein</target>
       </trans-unit>
-      <trans-unit id="pageBrowser.first">
+      <trans-unit id="pageBrowser.first" approved="yes">
         <source>First</source>
-        <target state="needs-translation">First</target>
+        <target state="final">Erste</target>
       </trans-unit>
-      <trans-unit id="pageBrowser.previous">
+      <trans-unit id="pageBrowser.previous" approved="yes">
         <source>Previous</source>
-        <target state="needs-translation">Previous</target>
+        <target state="final">Vorherige</target>
       </trans-unit>
-      <trans-unit id="pageBrowser.next">
+      <trans-unit id="pageBrowser.next" approved="yes">
         <source>Next</source>
-        <target state="needs-translation">Next</target>
+        <target state="final">Nächste</target>
       </trans-unit>
-      <trans-unit id="pageBrowser.last">
+      <trans-unit id="pageBrowser.last" approved="yes">
         <source>Last</source>
-        <target state="needs-translation">Last</target>
+        <target state="final">Letzte</target>
       </trans-unit>
-      <trans-unit id="email.subject.create">
+      <trans-unit id="email.subject.create" approved="yes">
         <source>A new record was created</source>
-        <target state="needs-translation">A new record was created</target>
+        <target state="final">Vereinsverzeichnis – Ein neuer Datensatz wurde angelegt</target>
       </trans-unit>
-      <trans-unit id="email.body.create">
+      <trans-unit id="email.body.create" approved="yes">
         <source>A new record of type club was created. Following you see the entered data.</source>
-        <target state="needs-translation">A new record of type club was created. Following you see the entered data.</target>
+        <target state="final">Ein neuer Vereinsdatensatz wurde angegelegt. Im Folgenden sehen Sie die eingetragenen Daten.</target>
       </trans-unit>
-      <trans-unit id="email.subject.update">
+      <trans-unit id="email.subject.update" approved="yes">
         <source>A record was updated</source>
-        <target state="needs-translation">A record was updated</target>
+        <target state="final">Vereinsverzeichnis – Ein Datensatz wurde bearbeitet</target>
       </trans-unit>
-      <trans-unit id="email.body.update">
+      <trans-unit id="email.body.update" approved="yes">
         <source>A record of type club was edited. Following you see its properties.</source>
-        <target state="needs-translation">A record of type club was edited. Following you see its properties.</target>
+        <target state="final">Ein Vereinsdatensatz wurde bearbeitet. Im Folgenden sehen Sie die seine Eigenschaften.</target>
       </trans-unit>
-      <trans-unit id="email.salutation">
+      <trans-unit id="email.salutation" approved="yes">
         <source>Hello</source>
-        <target state="needs-translation">Hello</target>
+        <target state="final">Hallo</target>
       </trans-unit>
-      <trans-unit id="email.editRecord">
+      <trans-unit id="email.editRecord" approved="yes">
         <source>Edit record</source>
-        <target state="needs-translation">Edit record</target>
+        <target state="final">Datensatz bearbeiten</target>
       </trans-unit>
-      <trans-unit id="email.activateRecord">
+      <trans-unit id="email.activateRecord" approved="yes">
         <source>Activate record</source>
-        <target state="needs-translation">Activate record</target>
+        <target state="final">Datensatz freischalten</target>
       </trans-unit>
-      <trans-unit id="email.property">
+      <trans-unit id="email.property" approved="yes">
         <source>Property</source>
-        <target state="needs-translation">Property</target>
+        <target state="final">Eigenschaft</target>
       </trans-unit>
-      <trans-unit id="email.value">
+      <trans-unit id="email.value" approved="yes">
         <source>Value</source>
-        <target state="needs-translation">Value</target>
+        <target state="final">Wert</target>
       </trans-unit>
-      <trans-unit id="error.upload">
+      <trans-unit id="error.upload" approved="yes">
         <source>Something went wrong with your uploaded files. Please try again. Error: </source>
-        <target state="needs-translation">Something went wrong with your uploaded files. Please try again. Error: </target>
+        <target state="final">Ein Fehler ist beim Upload der Dateien aufgetreten. Bitte versuchen Sie es zunächst erneut. Fehlermeldung: </target>
       </trans-unit>
-      <trans-unit id="error.fileExtension">
+      <trans-unit id="error.fileExtension" approved="yes">
         <source>You only can upload files with following file extensions: %1$s</source>
-        <target state="needs-translation">You only can upload files with following file extensions: %1$s</target>
+        <target state="final">Sie können nur Bilder mit folgenden Dateiendungen hochladen: %1$s</target>
       </trans-unit>
-      <trans-unit id="mapview">
+      <trans-unit id="mapview" approved="yes">
         <source>Map View</source>
-        <target state="needs-translation">Map View</target>
+        <target state="final">Kartenansicht</target>
       </trans-unit>
-      <trans-unit id="facebook">
+      <trans-unit id="facebook" approved="yes">
         <source>facebook</source>
-        <target state="needs-translation">facebook</target>
+        <target state="final">facebook</target>
       </trans-unit>
-      <trans-unit id="twitter">
+      <trans-unit id="twitter" approved="yes">
         <source>twitter</source>
-        <target state="needs-translation">twitter</target>
+        <target state="final">twitter</target>
       </trans-unit>
-      <trans-unit id="instagram">
+      <trans-unit id="instagram" approved="yes">
         <source>Instagram</source>
-        <target state="needs-translation">Instagram</target>
+        <target state="final">Instagram</target>
       </trans-unit>
     </body>
   </file>
