@@ -3,29 +3,29 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2013-08-28T14:46:07Z" product-name="clubdirectory" target-language="de">
     <header/>
     <body>
-      <trans-unit id="sheetGeneral">
+      <trans-unit id="sheetGeneral" approved="yes">
         <source>General</source>
-        <target state="needs-translation">General</target>
+        <target state="final">Allgemein</target>
       </trans-unit>
-      <trans-unit id="showGlossar">
+      <trans-unit id="showGlossar" approved="yes">
         <source>Show A-Z links</source>
-        <target state="needs-translation">Show A-Z links</target>
+        <target state="final">Zeige A-Z Links</target>
       </trans-unit>
-      <trans-unit id="category">
+      <trans-unit id="category" approved="yes">
         <source>Category</source>
-        <target state="needs-translation">Category</target>
+        <target state="final">Kategorie</target>
       </trans-unit>
-      <trans-unit id="allCategories">
+      <trans-unit id="allCategories" approved="yes">
         <source>Show all categories</source>
-        <target state="needs-translation">Show all categories</target>
+        <target state="final">Zeige alle Kategorien</target>
       </trans-unit>
-      <trans-unit id="district">
+      <trans-unit id="district" approved="yes">
         <source>Choose a district</source>
-        <target state="needs-translation">Choose a district</target>
+        <target state="final">Wählen Sie einen Stadtteil aus.</target>
       </trans-unit>
-      <trans-unit id="allDistricts">
+      <trans-unit id="allDistricts" approved="yes">
         <source>Show all districts</source>
-        <target state="needs-translation">Show all districts</target>
+        <target state="final">Zeige alle Stadtteile</target>
       </trans-unit>
     </body>
   </file>
