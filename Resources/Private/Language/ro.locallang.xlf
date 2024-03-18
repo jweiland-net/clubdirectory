@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory" target-language="ro">
+    <header/>
+    <body>
+      <trans-unit id="tx_clubdirectory_domain_model_club">
+        <source>Club</source>
+        <target state="needs-translation">Club</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.title">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.activity">
+        <source>Activity</source>
+        <target state="needs-translation">Activity</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactPerson">
+        <source>Contact Person</source>
+        <target state="needs-translation">Contact Person</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactTimes">
+        <source>Contact Times</source>
+        <target state="needs-translation">Contact Times</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.email">
+        <source>Email</source>
+        <target state="needs-translation">Email</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.website">
+        <source>Website</source>
+        <target state="needs-translation">Website</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.members">
+        <source>Members</source>
+        <target state="needs-translation">Members</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.clubHome">
+        <source>Club Home</source>
+        <target state="needs-translation">Club Home</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.description">
+        <source>Description</source>
+        <target state="needs-translation">Description</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.feUsers">
+        <source>Frontend User</source>
+        <target state="needs-translation">Frontend User</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.logo">
+        <source>Logo</source>
+        <target state="needs-translation">Logo</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.images">
+        <source>Images</source>
+        <target state="needs-translation">Images</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.facebook">
+        <source>Facebook</source>
+        <target state="needs-translation">Facebook</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.twitter">
+        <source>Twitter</source>
+        <target state="needs-translation">Twitter</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.instagram">
+        <source>Instagram</source>
+        <target state="needs-translation">Instagram</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.tags">
+        <source>Tags</source>
+        <target state="needs-translation">Tags</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.district">
+        <source>District</source>
+        <target state="needs-translation">District</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.addresses">
+        <source>Addresses</source>
+        <target state="needs-translation">Addresses</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.categories">
+        <source>Categories</source>
+        <target state="needs-translation">Categories</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address">
+        <source>Address</source>
+        <target state="needs-translation">Address</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title">
+        <source>Address Type</source>
+        <target state="needs-translation">Address Type</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.organizationAddress">
+        <source>Organization Address</source>
+        <target state="needs-translation">Organization Address</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.postAddress">
+        <source>Post Address</source>
+        <target state="needs-translation">Post Address</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.clubAddress">
+        <source>Club Address</source>
+        <target state="needs-translation">Club Address</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.street">
+        <source>Street</source>
+        <target state="needs-translation">Street</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.houseNumber">
+        <source>House Number</source>
+        <target state="needs-translation">House Number</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.zip">
+        <source>Zip</source>
+        <target state="needs-translation">Zip</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.city">
+        <source>City</source>
+        <target state="needs-translation">City</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.telephone">
+        <source>Telephone</source>
+        <target state="needs-translation">Telephone</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.fax">
+        <source>Fax</source>
+        <target state="needs-translation">Fax</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.barrierFree">
+        <source>Barrier Free</source>
+        <target state="needs-translation">Barrier Free</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_district">
+        <source>District (clubs)</source>
+        <target state="needs-translation">District (clubs)</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_district.district">
+        <source>District</source>
+        <target state="needs-translation">District</target>
+      </trans-unit>
+      <trans-unit id="search">
+        <source>Search</source>
+        <target state="needs-translation">Search</target>
+      </trans-unit>
+      <trans-unit id="noResults">
+        <source>No results found</source>
+        <target state="needs-translation">No results found</target>
+      </trans-unit>
+      <trans-unit id="filterByCategory">
+        <source>Filter by category</source>
+        <target state="needs-translation">Filter by category</target>
+      </trans-unit>
+      <trans-unit id="filterByDistrict">
+        <source>Filter by district</source>
+        <target state="needs-translation">Filter by district</target>
+      </trans-unit>
+      <trans-unit id="sortDirection">
+        <source>Sort by</source>
+        <target state="needs-translation">Sort by</target>
+      </trans-unit>
+      <trans-unit id="ascending">
+        <source>Ascending</source>
+        <target state="needs-translation">Ascending</target>
+      </trans-unit>
+      <trans-unit id="descending">
+        <source>Descending</source>
+        <target state="needs-translation">Descending</target>
+      </trans-unit>
+      <trans-unit id="all">
+        <source>All</source>
+        <target state="needs-translation">All</target>
+      </trans-unit>
+      <trans-unit id="new">
+        <source>New record</source>
+        <target state="needs-translation">New record</target>
+      </trans-unit>
+      <trans-unit id="edit">
+        <source>Edit record</source>
+        <target state="needs-translation">Edit record</target>
+      </trans-unit>
+      <trans-unit id="newEntry">
+        <source>Insert new Club</source>
+        <target state="needs-translation">Insert new Club</target>
+      </trans-unit>
+      <trans-unit id="backToList">
+        <source>Back to list view</source>
+        <target state="needs-translation">Back to list view</target>
+      </trans-unit>
+      <trans-unit id="listMyClubs">
+        <source>List my Clubs</source>
+        <target state="needs-translation">List my Clubs</target>
+      </trans-unit>
+      <trans-unit id="create">
+        <source>Create</source>
+        <target state="needs-translation">Create</target>
+      </trans-unit>
+      <trans-unit id="update">
+        <source>Edit</source>
+        <target state="needs-translation">Edit</target>
+      </trans-unit>
+      <trans-unit id="clubCreated">
+        <source>Club created</source>
+        <target state="needs-translation">Club created</target>
+      </trans-unit>
+      <trans-unit id="clubUpdated">
+        <source>Club updated</source>
+        <target state="needs-translation">Club updated</target>
+      </trans-unit>
+      <trans-unit id="clubActivated">
+        <source>The club was activated and is now visible in frontend</source>
+        <target state="needs-translation">The club was activated and is now visible in frontend</target>
+      </trans-unit>
+      <trans-unit id="deleteLogo">
+        <source>Delete Logo</source>
+        <target state="needs-translation">Delete Logo</target>
+      </trans-unit>
+      <trans-unit id="deleteImage">
+        <source>Delete Image</source>
+        <target state="needs-translation">Delete Image</target>
+      </trans-unit>
+      <trans-unit id="hint">
+        <source>Hint</source>
+        <target state="needs-translation">Hint</target>
+      </trans-unit>
+      <trans-unit id="cshtitle">
+        <source>The title is mandatory</source>
+        <target state="needs-translation">The title is mandatory</target>
+      </trans-unit>
+      <trans-unit id="cshcategories">
+        <source>Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</source>
+        <target state="needs-translation">Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</target>
+      </trans-unit>
+      <trans-unit id="cshactivity">
+        <source>Describe the activities/goals of the club.</source>
+        <target state="needs-translation">Describe the activities/goals of the club.</target>
+      </trans-unit>
+      <trans-unit id="cshdescription">
+        <source>Further descriptions</source>
+        <target state="needs-translation">Further descriptions</target>
+      </trans-unit>
+      <trans-unit id="cshcontactPerson">
+        <source>Enter the contact person of the club</source>
+        <target state="needs-translation">Enter the contact person of the club</target>
+      </trans-unit>
+      <trans-unit id="cshcontactTimes">
+        <source>Specify the times when the contact person is available.</source>
+        <target state="needs-translation">Specify the times when the contact person is available.</target>
+      </trans-unit>
+      <trans-unit id="cshemail">
+        <source>Enter the email address of the club or contact person.</source>
+        <target state="needs-translation">Enter the email address of the club or contact person.</target>
+      </trans-unit>
+      <trans-unit id="cshwebsite">
+        <source>If the club has a website, it may be entered here.</source>
+        <target state="needs-translation">If the club has a website, it may be entered here.</target>
+      </trans-unit>
+      <trans-unit id="cshmembers">
+        <source>Enter the number of members of the club.</source>
+        <target state="needs-translation">Enter the number of members of the club.</target>
+      </trans-unit>
+      <trans-unit id="cshclubHome">
+        <source>Enter the name of the clubhouse if it exists.</source>
+        <target state="needs-translation">Enter the name of the clubhouse if it exists.</target>
+      </trans-unit>
+      <trans-unit id="cshtitle_0">
+        <source>Choose the address type of the club and add the address infos.</source>
+        <target state="needs-translation">Choose the address type of the club and add the address infos.</target>
+      </trans-unit>
+      <trans-unit id="cshtitle_1">
+        <source>Enter a further address type of the club with all address infos.</source>
+        <target state="needs-translation">Enter a further address type of the club with all address infos.</target>
+      </trans-unit>
+      <trans-unit id="cshtitle_2">
+        <source>Enter a further address type of the club with all address infos.</source>
+        <target state="needs-translation">Enter a further address type of the club with all address infos.</target>
+      </trans-unit>
+      <trans-unit id="cshfacebook">
+        <source>Enter URL to facebook.</source>
+        <target state="needs-translation">Enter URL to facebook.</target>
+      </trans-unit>
+      <trans-unit id="cshtwitter">
+        <source>Enter URL to twitter.</source>
+        <target state="needs-translation">Enter URL to twitter.</target>
+      </trans-unit>
+      <trans-unit id="cshinstagram">
+        <source>Enter URL to Instagram.</source>
+        <target state="needs-translation">Enter URL to Instagram.</target>
+      </trans-unit>
+      <trans-unit id="cshlogo">
+        <source>Upload the logo file (jpg,gif,png) in a square formatting.</source>
+        <target state="needs-translation">Upload the logo file (jpg,gif,png) in a square formatting.</target>
+      </trans-unit>
+      <trans-unit id="cshtags">
+        <source>Enter further tags for the alphabetic list view.</source>
+        <target state="needs-translation">Enter further tags for the alphabetic list view.</target>
+      </trans-unit>
+      <trans-unit id="cshimages_0">
+        <source>Upload max. 5 image files (jpg,gif,png). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
+        <target state="needs-translation">Upload max. 5 image files (jpg,gif,png). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</target>
+      </trans-unit>
+      <trans-unit id="altTextMapImg">
+        <source>Map</source>
+        <target state="needs-translation">Map</target>
+      </trans-unit>
+      <trans-unit id="yes">
+        <source>Yes</source>
+        <target state="needs-translation">Yes</target>
+      </trans-unit>
+      <trans-unit id="no">
+        <source>No</source>
+        <target state="needs-translation">No</target>
+      </trans-unit>
+      <trans-unit id="pageBrowser.first">
+        <source>First</source>
+        <target state="needs-translation">First</target>
+      </trans-unit>
+      <trans-unit id="pageBrowser.previous">
+        <source>Previous</source>
+        <target state="needs-translation">Previous</target>
+      </trans-unit>
+      <trans-unit id="pageBrowser.next">
+        <source>Next</source>
+        <target state="needs-translation">Next</target>
+      </trans-unit>
+      <trans-unit id="pageBrowser.last">
+        <source>Last</source>
+        <target state="needs-translation">Last</target>
+      </trans-unit>
+      <trans-unit id="email.subject.create">
+        <source>A new record was created</source>
+        <target state="needs-translation">A new record was created</target>
+      </trans-unit>
+      <trans-unit id="email.body.create">
+        <source>A new record of type club was created. Following you see the entered data.</source>
+        <target state="needs-translation">A new record of type club was created. Following you see the entered data.</target>
+      </trans-unit>
+      <trans-unit id="email.subject.update">
+        <source>A record was updated</source>
+        <target state="needs-translation">A record was updated</target>
+      </trans-unit>
+      <trans-unit id="email.body.update">
+        <source>A record of type club was edited. Following you see its properties.</source>
+        <target state="needs-translation">A record of type club was edited. Following you see its properties.</target>
+      </trans-unit>
+      <trans-unit id="email.salutation">
+        <source>Hello</source>
+        <target state="needs-translation">Hello</target>
+      </trans-unit>
+      <trans-unit id="email.editRecord">
+        <source>Edit record</source>
+        <target state="needs-translation">Edit record</target>
+      </trans-unit>
+      <trans-unit id="email.activateRecord">
+        <source>Activate record</source>
+        <target state="needs-translation">Activate record</target>
+      </trans-unit>
+      <trans-unit id="email.property">
+        <source>Property</source>
+        <target state="needs-translation">Property</target>
+      </trans-unit>
+      <trans-unit id="email.value">
+        <source>Value</source>
+        <target state="needs-translation">Value</target>
+      </trans-unit>
+      <trans-unit id="error.upload">
+        <source>Something went wrong with your uploaded files. Please try again. Error: </source>
+        <target state="needs-translation">Something went wrong with your uploaded files. Please try again. Error: </target>
+      </trans-unit>
+      <trans-unit id="error.fileExtension">
+        <source>You only can upload files with following file extensions: %1$s</source>
+        <target state="needs-translation">You only can upload files with following file extensions: %1$s</target>
+      </trans-unit>
+      <trans-unit id="mapview">
+        <source>Map View</source>
+        <target state="needs-translation">Map View</target>
+      </trans-unit>
+      <trans-unit id="facebook">
+        <source>facebook</source>
+        <target state="needs-translation">facebook</target>
+      </trans-unit>
+      <trans-unit id="twitter">
+        <source>twitter</source>
+        <target state="needs-translation">twitter</target>
+      </trans-unit>
+      <trans-unit id="instagram">
+        <source>Instagram</source>
+        <target state="needs-translation">Instagram</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

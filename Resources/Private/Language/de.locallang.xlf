@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="tx_clubdirectory_domain_model_club" approved="yes">
+        <source>Club</source>
+        <target state="final">Verein</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titel</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.activity" approved="yes">
+        <source>Activity</source>
+        <target state="final">Vereinstätigkeit</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactPerson" approved="yes">
+        <source>Contact Person</source>
+        <target state="final">Ansprechpartner</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactTimes" approved="yes">
+        <source>Contact Times</source>
+        <target state="final">Kontaktzeiten</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.email" approved="yes">
+        <source>Email</source>
+        <target state="final">E-Mail</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.website" approved="yes">
+        <source>Website</source>
+        <target state="final">Webseite</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.members" approved="yes">
+        <source>Members</source>
+        <target state="final">Mitglieder</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.clubHome" approved="yes">
+        <source>Club Home</source>
+        <target state="final">Vereinsheim</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.description" approved="yes">
+        <source>Description</source>
+        <target state="final">Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.feUsers" approved="yes">
+        <source>Frontend User</source>
+        <target state="final">Bearbeitung durch Frontend-User</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.logo" approved="yes">
+        <source>Logo</source>
+        <target state="final">Logo</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.images" approved="yes">
+        <source>Images</source>
+        <target state="final">Bilder</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.facebook" approved="yes">
+        <source>Facebook</source>
+        <target state="final">Facebook</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.twitter" approved="yes">
+        <source>Twitter</source>
+        <target state="final">Twitter</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.instagram" approved="yes">
+        <source>Instagram</source>
+        <target state="final">Instagram</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.tags" approved="yes">
+        <source>Tags</source>
+        <target state="final">Schlagwörter</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.district" approved="yes">
+        <source>District</source>
+        <target state="final">Stadtteil</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.addresses" approved="yes">
+        <source>Addresses</source>
+        <target state="final">Adressen</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.categories" approved="yes">
+        <source>Categories</source>
+        <target state="final">Kategorien</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address" approved="yes">
+        <source>Address</source>
+        <target state="final">Adresse</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title" approved="yes">
+        <source>Address Type</source>
+        <target state="final">Adresstyp</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.organizationAddress" approved="yes">
+        <source>Organization Address</source>
+        <target state="final">Vereinsheim</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.postAddress" approved="yes">
+        <source>Post Address</source>
+        <target state="final">Postanschrift</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.clubAddress" approved="yes">
+        <source>Club Address</source>
+        <target state="final">Clubheim</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.street" approved="yes">
+        <source>Street</source>
+        <target state="final">Straße</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.houseNumber" approved="yes">
+        <source>House Number</source>
+        <target state="final">Hausnummer</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.zip" approved="yes">
+        <source>Zip</source>
+        <target state="final">PLZ</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.city" approved="yes">
+        <source>City</source>
+        <target state="final">Ort</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.telephone" approved="yes">
+        <source>Telephone</source>
+        <target state="final">Telefon</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.fax" approved="yes">
+        <source>Fax</source>
+        <target state="final">Fax</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.barrierFree" approved="yes">
+        <source>Barrier Free</source>
+        <target state="final">Barrierefreier Zugang</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_district" approved="yes">
+        <source>District (clubs)</source>
+        <target state="final">Stadtteil (Vereine)</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_district.district" approved="yes">
+        <source>District</source>
+        <target state="final">Stadtteil</target>
+      </trans-unit>
+      <trans-unit id="search" approved="yes">
+        <source>Search</source>
+        <target state="final">Suche</target>
+      </trans-unit>
+      <trans-unit id="noResults" approved="yes">
+        <source>No results found</source>
+        <target state="final">Keine Ergebnisse gefunden</target>
+      </trans-unit>
+      <trans-unit id="filterByCategory" approved="yes">
+        <source>Filter by category</source>
+        <target state="final">Nach Kategorie filtern</target>
+      </trans-unit>
+      <trans-unit id="filterByDistrict" approved="yes">
+        <source>Filter by district</source>
+        <target state="final">Nach Stadtteil filtern</target>
+      </trans-unit>
+      <trans-unit id="sortDirection" approved="yes">
+        <source>Sort by</source>
+        <target state="final">Sortieren nach</target>
+      </trans-unit>
+      <trans-unit id="ascending" approved="yes">
+        <source>Ascending</source>
+        <target state="final">Aufsteigend</target>
+      </trans-unit>
+      <trans-unit id="descending" approved="yes">
+        <source>Descending</source>
+        <target state="final">Absteigend</target>
+      </trans-unit>
+      <trans-unit id="all" approved="yes">
+        <source>All</source>
+        <target state="final">Alle</target>
+      </trans-unit>
+      <trans-unit id="new" approved="yes">
+        <source>New record</source>
+        <target state="final">Neuer Eintrag</target>
+      </trans-unit>
+      <trans-unit id="edit" approved="yes">
+        <source>Edit record</source>
+        <target state="final">Eintrag editieren</target>
+      </trans-unit>
+      <trans-unit id="newEntry" approved="yes">
+        <source>Insert new Club</source>
+        <target state="final">Neuen Verein anlegen</target>
+      </trans-unit>
+      <trans-unit id="backToList" approved="yes">
+        <source>Back to list view</source>
+        <target state="final">Zurück zur Listenansicht</target>
+      </trans-unit>
+      <trans-unit id="listMyClubs" approved="yes">
+        <source>List my Clubs</source>
+        <target state="final">Zu meinen Vereinen</target>
+      </trans-unit>
+      <trans-unit id="create" approved="yes">
+        <source>Create</source>
+        <target state="final">Anlegen</target>
+      </trans-unit>
+      <trans-unit id="update" approved="yes">
+        <source>Edit</source>
+        <target state="final">Bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="clubCreated" approved="yes">
+        <source>Club created</source>
+        <target state="final">Neuer Verein wurde angelegt</target>
+      </trans-unit>
+      <trans-unit id="clubUpdated" approved="yes">
+        <source>Club updated</source>
+        <target state="final">Der Verein wurde bearbeitet</target>
+      </trans-unit>
+      <trans-unit id="clubActivated" approved="yes">
+        <source>The club was activated and is now visible in frontend</source>
+        <target state="final">Der Verein wurde aktiviert und ist nun im Frontend sichtbar</target>
+      </trans-unit>
+      <trans-unit id="deleteLogo" approved="yes">
+        <source>Delete Logo</source>
+        <target state="final">Logo entfernen</target>
+      </trans-unit>
+      <trans-unit id="deleteImage" approved="yes">
+        <source>Delete Image</source>
+        <target state="final">Bild entfernen</target>
+      </trans-unit>
+      <trans-unit id="hint" approved="yes">
+        <source>Hint</source>
+        <target state="final">Hinweis</target>
+      </trans-unit>
+      <trans-unit id="cshtitle" approved="yes">
+        <source>The title is mandatory</source>
+        <target state="final">Der Titel ist ein Pflichtfeld und muss angegeben werden</target>
+      </trans-unit>
+      <trans-unit id="cshcategories" approved="yes">
+        <source>Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</source>
+        <target state="final">Bitte wählen Sie die Kategorie die zum Verein passt aus. Mehrfachauswahl mit gedrückter Steuerungstaste |Strg|</target>
+      </trans-unit>
+      <trans-unit id="cshactivity" approved="yes">
+        <source>Describe the activities/goals of the club.</source>
+        <target state="final">Beschreiben Sie hier die Aktivitäten/Ziele des Vereins.</target>
+      </trans-unit>
+      <trans-unit id="cshdescription" approved="yes">
+        <source>Further descriptions</source>
+        <target state="final">Weitere Beschreibungsoption</target>
+      </trans-unit>
+      <trans-unit id="cshcontactPerson" approved="yes">
+        <source>Enter the contact person of the club</source>
+        <target state="final">Geben Sie hier die Kontaktperson für den Verein ein.</target>
+      </trans-unit>
+      <trans-unit id="cshcontactTimes" approved="yes">
+        <source>Specify the times when the contact person is available.</source>
+        <target state="final">Geben Sie die Zeiten an, wann die Kontaktperson verfügbar ist.</target>
+      </trans-unit>
+      <trans-unit id="cshemail" approved="yes">
+        <source>Enter the email address of the club or contact person.</source>
+        <target state="final">Geben Sie die E-Mail Adresse der Kontaktperson oder des Vereins an.</target>
+      </trans-unit>
+      <trans-unit id="cshwebsite" approved="yes">
+        <source>If the club has a website, it may be entered here.</source>
+        <target state="final">Wenn der Verein über einen Internetauftritt verfügt, kann dieser hier eingetragen werden.</target>
+      </trans-unit>
+      <trans-unit id="cshmembers" approved="yes">
+        <source>Enter the number of members of the club.</source>
+        <target state="final">Geben Sie die Mitgliederanzahl des Vereins an.</target>
+      </trans-unit>
+      <trans-unit id="cshclubHome" approved="yes">
+        <source>Enter the name of the clubhouse if it exists.</source>
+        <target state="final">Geben Sie den Namen des Vereinsheimes an, falls vorhanden.</target>
+      </trans-unit>
+      <trans-unit id="cshtitle_0" approved="yes">
+        <source>Choose the address type of the club and add the address infos.</source>
+        <target state="final">Sie haben hier die Möglichkeit mehrere Adressdaten zu hinterlegen. Wählen Sie hierfür zuerst den Typ aus.</target>
+      </trans-unit>
+      <trans-unit id="cshtitle_1" approved="yes">
+        <source>Enter a further address type of the club with all address infos.</source>
+        <target state="final">Geben Sie einen weiteren Adresstyp mit allen Daten ein.</target>
+      </trans-unit>
+      <trans-unit id="cshtitle_2" approved="yes">
+        <source>Enter a further address type of the club with all address infos.</source>
+        <target state="final">Geben Sie einen weiteren Adresstyp mit allen Daten ein.</target>
+      </trans-unit>
+      <trans-unit id="cshfacebook" approved="yes">
+        <source>Enter URL to facebook.</source>
+        <target state="final">Geben Sie die URL zur Facebook Seite des Vereins ein, falls vorhanden.</target>
+      </trans-unit>
+      <trans-unit id="cshtwitter" approved="yes">
+        <source>Enter URL to twitter.</source>
+        <target state="final">Geben Sie die URL zu Twitter Seite des Vereins ein, falls vorhanden.</target>
+      </trans-unit>
+      <trans-unit id="cshinstagram" approved="yes">
+        <source>Enter URL to Instagram.</source>
+        <target state="final">Geben Sie die URL zur Instagram Seite des Vereins ein, falls vorhanden.</target>
+      </trans-unit>
+      <trans-unit id="cshlogo" approved="yes">
+        <source>Upload the logo file (jpg,gif,png) in a square formatting.</source>
+        <target state="final">Laden Sie das Vereinslogo in quadratischem Format hoch (jpg,gif,png).</target>
+      </trans-unit>
+      <trans-unit id="cshtags" approved="yes">
+        <source>Enter further tags for the alphabetic list view.</source>
+        <target state="final">Geben Sie hier weitere Schlagwörter ein unter denen der Verein in der alphabetischen Listenansicht aufgeführt werden soll.</target>
+      </trans-unit>
+      <trans-unit id="cshimages_0" approved="yes">
+        <source>Upload max. 5 image files (jpg,gif,png). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
+        <target state="final">Laden Sie max. 5 Bilddateien (jpg, gif, png) hoch. Bitte benutzen Sie bei mehreren Bildern immer das gleiche Bildformat (z.B. 3:2, 4:3) um eine ruckelfreie Ausgabe der Bildergalerie zu gewährleisten.</target>
+      </trans-unit>
+      <trans-unit id="altTextMapImg" approved="yes">
+        <source>Map</source>
+        <target state="final">Karte</target>
+      </trans-unit>
+      <trans-unit id="yes" approved="yes">
+        <source>Yes</source>
+        <target state="final">Ja</target>
+      </trans-unit>
+      <trans-unit id="no" approved="yes">
+        <source>No</source>
+        <target state="final">Nein</target>
+      </trans-unit>
+      <trans-unit id="pageBrowser.first" approved="yes">
+        <source>First</source>
+        <target state="final">Erste</target>
+      </trans-unit>
+      <trans-unit id="pageBrowser.previous" approved="yes">
+        <source>Previous</source>
+        <target state="final">Vorherige</target>
+      </trans-unit>
+      <trans-unit id="pageBrowser.next" approved="yes">
+        <source>Next</source>
+        <target state="final">Nächste</target>
+      </trans-unit>
+      <trans-unit id="pageBrowser.last" approved="yes">
+        <source>Last</source>
+        <target state="final">Letzte</target>
+      </trans-unit>
+      <trans-unit id="email.subject.create" approved="yes">
+        <source>A new record was created</source>
+        <target state="final">Vereinsverzeichnis – Ein neuer Datensatz wurde angelegt</target>
+      </trans-unit>
+      <trans-unit id="email.body.create" approved="yes">
+        <source>A new record of type club was created. Following you see the entered data.</source>
+        <target state="final">Ein neuer Vereinsdatensatz wurde angegelegt. Im Folgenden sehen Sie die eingetragenen Daten.</target>
+      </trans-unit>
+      <trans-unit id="email.subject.update" approved="yes">
+        <source>A record was updated</source>
+        <target state="final">Vereinsverzeichnis – Ein Datensatz wurde bearbeitet</target>
+      </trans-unit>
+      <trans-unit id="email.body.update" approved="yes">
+        <source>A record of type club was edited. Following you see its properties.</source>
+        <target state="final">Ein Vereinsdatensatz wurde bearbeitet. Im Folgenden sehen Sie die seine Eigenschaften.</target>
+      </trans-unit>
+      <trans-unit id="email.salutation" approved="yes">
+        <source>Hello</source>
+        <target state="final">Hallo</target>
+      </trans-unit>
+      <trans-unit id="email.editRecord" approved="yes">
+        <source>Edit record</source>
+        <target state="final">Datensatz bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="email.activateRecord" approved="yes">
+        <source>Activate record</source>
+        <target state="final">Datensatz freischalten</target>
+      </trans-unit>
+      <trans-unit id="email.property" approved="yes">
+        <source>Property</source>
+        <target state="final">Eigenschaft</target>
+      </trans-unit>
+      <trans-unit id="email.value" approved="yes">
+        <source>Value</source>
+        <target state="final">Wert</target>
+      </trans-unit>
+      <trans-unit id="error.upload" approved="yes">
+        <source>Something went wrong with your uploaded files. Please try again. Error: </source>
+        <target state="final">Ein Fehler ist beim Upload der Dateien aufgetreten. Bitte versuchen Sie es zunächst erneut. Fehlermeldung: </target>
+      </trans-unit>
+      <trans-unit id="error.fileExtension" approved="yes">
+        <source>You only can upload files with following file extensions: %1$s</source>
+        <target state="final">Sie können nur Bilder mit folgenden Dateiendungen hochladen: %1$s</target>
+      </trans-unit>
+      <trans-unit id="mapview" approved="yes">
+        <source>Map View</source>
+        <target state="final">Kartenansicht</target>
+      </trans-unit>
+      <trans-unit id="facebook" approved="yes">
+        <source>facebook</source>
+        <target state="final">facebook</target>
+      </trans-unit>
+      <trans-unit id="twitter" approved="yes">
+        <source>twitter</source>
+        <target state="final">twitter</target>
+      </trans-unit>
+      <trans-unit id="instagram" approved="yes">
+        <source>Instagram</source>
+        <target state="final">Instagram</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

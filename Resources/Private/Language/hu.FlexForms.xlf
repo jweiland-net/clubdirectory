@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-08-28T14:46:07Z" product-name="clubdirectory" target-language="hu">
+    <header/>
+    <body>
+      <trans-unit id="sheetGeneral">
+        <source>General</source>
+        <target state="needs-translation">General</target>
+      </trans-unit>
+      <trans-unit id="showGlossar">
+        <source>Show A-Z links</source>
+        <target state="needs-translation">Show A-Z links</target>
+      </trans-unit>
+      <trans-unit id="category">
+        <source>Category</source>
+        <target state="needs-translation">Category</target>
+      </trans-unit>
+      <trans-unit id="allCategories">
+        <source>Show all categories</source>
+        <target state="needs-translation">Show all categories</target>
+      </trans-unit>
+      <trans-unit id="district">
+        <source>Choose a district</source>
+        <target state="needs-translation">Choose a district</target>
+      </trans-unit>
+      <trans-unit id="allDistricts">
+        <source>Show all districts</source>
+        <target state="needs-translation">Show all districts</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
