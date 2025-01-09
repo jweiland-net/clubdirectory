@@ -1,11 +1,13 @@
 # TYPO3 Extension `clubdirectory`
 
-[![Latest Stable Version](https://poser.pugx.org/jweiland/clubdirectory/v/stable.svg)](https://packagist.org/packages/jweiland/clubdirectory)
-[![TYPO3 12.4](https://img.shields.io/badge/TYPO3-12.4-green.svg)](https://get.typo3.org/version/12)
-[![License](http://poser.pugx.org/jweiland/clubdirectory/license)](https://packagist.org/packages/jweiland/clubdirectory)
-[![Total Downloads](https://poser.pugx.org/jweiland/clubdirectory/downloads.svg)](https://packagist.org/packages/jweiland/clubdirectory)
-[![Monthly Downloads](https://poser.pugx.org/jweiland/clubdirectory/d/monthly)](https://packagist.org/packages/jweiland/clubdirectory)
-![Build Status](https://github.com/jweiland-net/clubdirectory/actions/workflows/testscorev12.yml/badge.svg)
+[![Packagist][packagist-logo-stable]][extension-packagist-url]
+[![Latest Stable Version][extension-build-shield]][extension-ter-url]
+[![License][LICENSE_BADGE]][extension-packagist-url]
+[![Total Downloads][extension-downloads-badge]][extension-packagist-url]
+[![Monthly Downloads][extension-monthly-downloads]][extension-packagist-url]
+[![TYPO3 13.4][TYPO3-shield]][TYPO3-13-url]
+
+![Build Status][extension-ci-shield]
 
 With `clubdirectory` you can create, manage and display club entries.
 
@@ -36,3 +38,26 @@ Download and install `clubdirectory` with the extension manager module.
 1) Include the static TypoScript of the extension.
 2) Create club records on a sysfolder.
 3) Add clubdirectory plugin on a page and select at least the sysfolder as startingpoint.
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[extension-build-shield]: https://poser.pugx.org/jweiland/clubdirectory/v/stable.svg?style=for-the-badge
+
+[extension-ci-shield]: https://github.com/jweiland-net/clubdirectory/actions/workflows/ci.yml/badge.svg
+
+[extension-downloads-badge]: https://poser.pugx.org/jweiland/clubdirectory/d/total.svg?style=for-the-badge
+
+[extension-monthly-downloads]: https://poser.pugx.org/jweiland/clubdirectory/d/monthly?style=for-the-badge
+
+[extension-ter-url]: https://extensions.typo3.org/extension/clubdirectory/
+
+[extension-packagist-url]: https://packagist.org/packages/jweiland/clubdirectory/
+
+[packagist-logo-stable]: https://img.shields.io/badge/--grey.svg?style=for-the-badge&logo=packagist&logoColor=white
+
+[TYPO3-13-url]: https://get.typo3.org/version/13
+
+[TYPO3-shield]: https://img.shields.io/badge/TYPO3-13.4-green.svg?style=for-the-badge&logo=typo3
+
+[LICENSE_BADGE]: https://img.shields.io/github/license/jweiland-net/clubdirectory?label=license&style=for-the-badge
