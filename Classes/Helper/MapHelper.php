@@ -75,6 +75,7 @@ class MapHelper
                     foreach ($this->geoCodeService->getErrors() as $error) {
                         $actionController->addFlashMessage($error->getMessage(), $error->getTitle(), $error->getSeverity()->value);
                     }
+
                     return false;
                 }
             }

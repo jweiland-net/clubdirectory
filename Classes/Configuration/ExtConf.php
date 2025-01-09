@@ -91,6 +91,7 @@ class ExtConf implements SingletonInterface
                     'You have forgotten to set a sender email address in extension configuration or in install tool'
                 );
             }
+
             return $senderMail;
         }
 
@@ -109,6 +110,7 @@ class ExtConf implements SingletonInterface
             if ($senderName === '') {
                 throw new \InvalidArgumentException('You have forgotten to set a sender name in extension configuration or in install tool');
             }
+
             return $senderName;
         }
 

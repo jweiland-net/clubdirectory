@@ -63,8 +63,6 @@ class ExportModuleController extends ActionController
 
     public function initializeAction()
     {
-        parent::initializeAction();
-
         $this->initializeModuleTemplate($this->request);
     }
 
@@ -78,8 +76,9 @@ class ExportModuleController extends ActionController
         $exportFile = $this->getExportPath() . $this->exportFile;
         $fp = \fopen($exportFile, 'wb');
         foreach ($clubs as $row) {
-            \fputcsv($fp, $row, ';', '\'');
+            \fputcsv($fp, $row, ';', "'");
         }
+
         \fclose($fp);
 
         $this->moduleTemplate->assign(

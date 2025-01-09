@@ -27,7 +27,7 @@ class Address extends AbstractEntity
 
     protected string $houseNumber = '';
 
-    #[Extbase\Validate(['validator' => 'RegularExpression', 'options' => ['regularExpression' => '/^[0-9]{4,5}$/']])]
+    #[Extbase\Validate(['validator' => 'RegularExpression', 'options' => ['regularExpression' => '/^\d{4,5}$/']])]
     protected string $zip = '';
 
     protected string $city = '';

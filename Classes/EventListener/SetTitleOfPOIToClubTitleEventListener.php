@@ -37,7 +37,7 @@ class SetTitleOfPOIToClubTitleEventListener
             && MathUtility::canBeInterpretedAsInteger($foreignLocationRecord['club'])
         ) {
             $club = $this->getClubRecord((int)$foreignLocationRecord['club']);
-            if (!empty($club)) {
+            if ($club !== []) {
                 $connection = $this->getConnectionPool()->getConnectionForTable($poiCollectionTableName);
 
                 $connection->update(

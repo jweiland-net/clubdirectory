@@ -48,6 +48,7 @@ class AddPaginatorEventListener extends AbstractControllerEventListener
         if ($event->getRequest()->hasArgument('currentPage')) {
             $currentPage = $event->getRequest()->getArgument('currentPage');
         }
+
         return (int)$currentPage;
     }
 
@@ -57,6 +58,7 @@ class AddPaginatorEventListener extends AbstractControllerEventListener
         if (isset($event->getSettings()['pageBrowser']['itemsPerPage'])) {
             $itemsPerPage = $event->getSettings()['pageBrowser']['itemsPerPage'];
         }
+
         return (int)$itemsPerPage;
     }
 }

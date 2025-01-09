@@ -132,6 +132,7 @@ class ClubController extends ActionController
             if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
                 $this->errorAction();
             }
+
             $this->clubRepository->add($club);
 
             $this->pathSegmentHelper->setGeneratorFields([
@@ -174,6 +175,7 @@ class ClubController extends ActionController
         if (!$this->request->hasArgument('club')) {
             return;
         }
+
         $requestArgument = $this->request->getArgument('club');
         $this->removeEmptyPropertyFromRequest('categories', $requestArgument);
         $this->removeEmptyAddressesFromRequest($requestArgument);
@@ -187,6 +189,7 @@ class ClubController extends ActionController
         if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
             $this->errorAction();
         }
+
         $this->clubRepository->update($club);
 
         $this->postProcessAndAssignFluidVariables([

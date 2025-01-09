@@ -14,7 +14,6 @@ namespace JWeiland\Clubdirectory\Event;
 use JWeiland\Clubdirectory\Controller\ClubController;
 use JWeiland\Clubdirectory\Controller\MapController;
 use JWeiland\Clubdirectory\Domain\Model\Club;
-use MongoDB\Driver\Server;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Request;
 

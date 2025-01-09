@@ -33,9 +33,11 @@ class ClubPagination implements PaginationInterface
             if ($argumentName[0] === '_' && $argumentName[1] === '_') {
                 continue;
             }
+
             if (in_array($argumentName, ['@extension', '@subpackage', '@controller', '@action', '@format'], true)) {
                 continue;
             }
+
             if (in_array($argumentName, ['extension', 'plugin', 'controller', 'action'], true)) {
                 continue;
             }

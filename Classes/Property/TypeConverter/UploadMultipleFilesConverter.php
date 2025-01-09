@@ -123,6 +123,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                 } else {
                     unset($source[$key]);
                 }
+
                 continue;
             }
 
@@ -180,7 +181,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
     protected function initialize(?PropertyMappingConfigurationInterface $configuration): void
     {
-        if ($configuration === null) {
+        if (!$configuration instanceof PropertyMappingConfigurationInterface) {
             throw new \InvalidArgumentException(
                 'Missing PropertyMapper configuration in UploadMultipleFilesConverter',
                 1604051720
@@ -232,7 +233,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         try {
             $uploadFolder = $resourceFactory->getObjectFromCombinedIdentifier($combinedUploadFolderIdentifier);
-        } catch (ResourceDoesNotExistException $exception) {
+        } catch (ResourceDoesNotExistException $resourceDoesNotExistException) {
             [$storageUid] = GeneralUtility::trimExplode(':', $combinedUploadFolderIdentifier);
             $resourceStorage = $resourceFactory->getStorageObject((int)$storageUid);
             $uploadFolder = $resourceStorage->createFolder($combinedUploadFolderIdentifier);
@@ -265,7 +266,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      */
     protected function deleteFile(?FileReference $extbaseFileReference): void
     {
-        if ($extbaseFileReference !== null) {
+        if ($extbaseFileReference instanceof FileReference) {
             $coreFileReference = $extbaseFileReference->getOriginalResource();
 
             if ($coreFileReference->getStorage()->isWithinFolder($this->uploadFolder, $coreFileReference)) {
@@ -319,6 +320,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         if ($this->falUploadService === null) {
             $this->falUploadService = GeneralUtility::makeInstance(FalUploadService::class);
         }
+
         return $this->falUploadService;
     }
 }

@@ -73,6 +73,7 @@ class MapController extends ActionController
         if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
             $this->errorAction();
         }
+
         $this->clubRepository->update($club);
         $this->view->assign('club', $club);
         $this->mailHelper->sendMail(

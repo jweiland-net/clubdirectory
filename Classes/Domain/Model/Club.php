@@ -101,11 +101,11 @@ class Club extends AbstractEntity
      */
     public function initializeObject(): void
     {
-        $this->feUsers = $this->feUsers ?? new ObjectStorage();
-        $this->logo = $this->logo ?? new ObjectStorage();
-        $this->images = $this->images ?? new ObjectStorage();
-        $this->addresses = $this->addresses ?? new ObjectStorage();
-        $this->categories = $this->categories ?? new ObjectStorage();
+        $this->feUsers ??= new ObjectStorage();
+        $this->logo ??= new ObjectStorage();
+        $this->images ??= new ObjectStorage();
+        $this->addresses ??= new ObjectStorage();
+        $this->categories ??= new ObjectStorage();
     }
 
     public function getHidden(): bool
@@ -250,6 +250,7 @@ class Club extends AbstractEntity
                 }
             }
         }
+
         return $currentUserCanEditThisClub;
     }
 
@@ -373,6 +374,7 @@ class Club extends AbstractEntity
         foreach ($this->addresses as $address) {
             $addresses[] = $address;
         }
+
         return $addresses;
     }
 

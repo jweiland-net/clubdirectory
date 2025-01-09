@@ -81,7 +81,7 @@ class AssignMediaTypeConverterEventListener extends AbstractControllerEventListe
             $event->getSettings()
         );
 
-        if ($persistedFiles !== null) {
+        if ($persistedFiles instanceof ObjectStorage) {
             $this->addOptionToUploadFilesConverter(
                 $propertyMappingConfiguration,
                 'IMAGES',

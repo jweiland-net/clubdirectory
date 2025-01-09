@@ -64,15 +64,15 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         $query = $this->createQuery();
         $constraints = [];
 
-        if (!empty($category)) {
+        if ($category !== 0) {
             $constraints[] = $query->contains('categories', $category);
         }
 
-        if ($district) {
+        if ($district !== 0) {
             $constraints[] = $query->equals('district', $district);
         }
 
-        if ($letter) {
+        if ($letter !== '' && $letter !== '0') {
             $constraints[] = $this->glossaryService->getLetterConstraintForExtbaseQuery(
                 $query,
                 'title',
@@ -159,7 +159,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                 )
             );
 
-        if ($category) {
+        if ($category !== 0) {
             $queryBuilder
                 ->leftJoin(
                     'c',
@@ -188,7 +188,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                 );
         }
 
-        if ($district) {
+        if ($district !== 0) {
             $queryBuilder->andWhere($queryBuilder->expr()->eq('c.district', $district));
         }
 
@@ -205,10 +205,12 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         if (\strtolower(mb_substr($searchWord, -6)) === 'straße') {
             $smallStreetSearch = \str_ireplace('straße', 'str', $searchWord);
         }
+
         if (\strtolower(mb_substr($searchWord, -4)) === 'str.') {
             $longStreetSearch = \str_ireplace('str.', 'straße', $searchWord);
             $smallStreetSearch = \str_ireplace('str.', 'str', $searchWord);
         }
+
         if (\strtolower(mb_substr($searchWord, -3)) === 'str') {
             $longStreetSearch = \str_ireplace('str', 'straße', $searchWord);
         }
@@ -283,7 +285,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             return $queryBuilder
                 ->executeQuery()
                 ->fetchAllAssociative();
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return [];
         }
     }
