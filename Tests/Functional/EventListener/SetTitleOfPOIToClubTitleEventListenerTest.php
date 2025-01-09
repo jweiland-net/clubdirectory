@@ -15,7 +15,6 @@ use Doctrine\DBAL\Driver\Exception;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Test case

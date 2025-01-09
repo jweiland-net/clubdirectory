@@ -298,6 +298,7 @@ class ClubTest extends UnitTestCase
         $object = new FrontendUser();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setFeUsers($objectStorage);
 
         self::assertSame(
@@ -333,9 +334,11 @@ class ClubTest extends UnitTestCase
         $object = new FrontendUser();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setFeUsers($objectStorage);
 
         $this->subject->removeFeUser($object);
+
         $objectStorage->detach($object);
 
         self::assertSame(
@@ -384,6 +387,7 @@ class ClubTest extends UnitTestCase
         $object = new FileReference();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setLogo($objectStorage);
 
         self::assertSame(
@@ -419,9 +423,11 @@ class ClubTest extends UnitTestCase
         $object = new FileReference();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setLogo($objectStorage);
 
         $this->subject->removeLogo($object);
+
         $objectStorage->detach($object);
 
         self::assertSame(
@@ -449,6 +455,7 @@ class ClubTest extends UnitTestCase
         $object = new FileReference();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setImages($objectStorage);
 
         self::assertSame(
@@ -484,9 +491,11 @@ class ClubTest extends UnitTestCase
         $object = new FileReference();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setImages($objectStorage);
 
         $this->subject->removeImage($object);
+
         $objectStorage->detach($object);
 
         self::assertSame(
@@ -643,6 +652,7 @@ class ClubTest extends UnitTestCase
         $object = new Address();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setAddresses($objectStorage);
 
         self::assertSame(
@@ -678,9 +688,11 @@ class ClubTest extends UnitTestCase
         $object = new Address();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setAddresses($objectStorage);
 
         $this->subject->removeAddress($object);
+
         $objectStorage->detach($object);
 
         self::assertSame(
@@ -708,6 +720,7 @@ class ClubTest extends UnitTestCase
         $object = new Category();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setCategories($objectStorage);
 
         self::assertSame(
@@ -743,9 +756,11 @@ class ClubTest extends UnitTestCase
         $object = new Category();
         $objectStorage = new ObjectStorage();
         $objectStorage->attach($object);
+
         $this->subject->setCategories($objectStorage);
 
         $this->subject->removeCategory($object);
+
         $objectStorage->detach($object);
 
         self::assertSame(
