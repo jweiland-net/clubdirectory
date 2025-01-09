@@ -1,10 +1,13 @@
 <?php
+
+use JWeiland\Clubdirectory\UserFunc\AltLabelForAddressTableUserFunc;
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_address',
         'descriptionColumn' => 'description',
         'label' => 'title',
-        'label_userFunc' => \JWeiland\Clubdirectory\UserFunc\AltLabelForAddressTableUserFunc::class . '->setAddressLabel',
+        'label_userFunc' => AltLabelForAddressTableUserFunc::class . '->setAddressLabel',
         'hideTable' => true,
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',

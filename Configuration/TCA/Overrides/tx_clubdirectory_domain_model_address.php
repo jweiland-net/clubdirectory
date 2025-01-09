@@ -1,11 +1,14 @@
 <?php
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use JWeiland\Maps2\Tca\Maps2Registry;
+
 if (!defined('TYPO3')) {
     die('Access denied.');
 }
 
 // Add tx_maps2_uid column to address table
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('maps2')) {
-    \JWeiland\Maps2\Tca\Maps2Registry::getInstance()->add(
+if (ExtensionManagementUtility::isLoaded('maps2')) {
+    Maps2Registry::getInstance()->add(
         'clubdirectory',
         'tx_clubdirectory_domain_model_address',
         [

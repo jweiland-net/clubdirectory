@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+use JWeiland\Clubdirectory\Domain\Model\FrontendUser;
+
 return [
-    \JWeiland\Clubdirectory\Domain\Model\FrontendUser::class => [
+    FrontendUser::class => [
         'tableName' => 'fe_users',
     ],
 ];
