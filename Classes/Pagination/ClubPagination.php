@@ -138,4 +138,9 @@ class ClubPagination implements PaginationInterface
     {
         return $GLOBALS['TYPO3_REQUEST'];
     }
+
+    public function getAllPageNumbers(): array
+    {
+        return range($this->getFirstPageNumber(), $this->getLastPageNumber());
+    }
 }

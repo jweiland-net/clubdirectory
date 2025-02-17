@@ -61,7 +61,7 @@ class ExportModuleController extends ActionController
         $this->moduleTemplate->setFlashMessageQueue($this->getFlashMessageQueue());
     }
 
-    public function initializeAction()
+    public function initializeAction(): void
     {
         $this->initializeModuleTemplate($this->request);
     }
