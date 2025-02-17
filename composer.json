@@ -23,16 +23,17 @@
 		"source": "https://github.com/jweiland-net/clubdirectory"
 	},
 	"require": {
-		"jweiland/glossary2": ">=6.0.0",
-		"jweiland/maps2": ">=11.0.0",
-		"typo3/cms-core": "^12.4.8",
-		"typo3/cms-redirects": "^12.4"
+		"jweiland/glossary2": ">=7.0.0",
+		"typo3/cms-core": "^13.4",
+		"typo3/cms-redirects": "^13.4"
 	},
 	"require-dev": {
+		"ergebnis/composer-normalize": "^2.44",
 		"friendsofphp/php-cs-fixer": "^3.14",
-		"phpunit/phpunit": "^9.6",
-		"typo3/coding-standards": "^0.6",
-		"typo3/testing-framework": "^7.0.2"
+		"phpstan/phpstan": "^1.10",
+		"roave/security-advisories": "dev-latest",
+		"typo3/coding-standards": "^0.8",
+		"typo3/testing-framework": "^9.0.1"
 	},
 	"replace": {
 		"typo3-ter/clubdirectory": "self.version"
