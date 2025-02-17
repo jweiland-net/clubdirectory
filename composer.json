@@ -1,10 +1,14 @@
 {
 	"name": "jweiland/clubdirectory",
-	"type": "typo3-cms-extension",
 	"description": "Club directory",
 	"license": "GPL-2.0-or-later",
-	"keywords": ["typo3", "TYPO3 CMS", "club", "directory"],
-	"homepage": "https://jweiland.net",
+	"type": "typo3-cms-extension",
+	"keywords": [
+		"typo3",
+		"TYPO3 CMS",
+		"club",
+		"directory"
+	],
 	"authors": [
 		{
 			"name": "Stefan Froemken",
@@ -17,6 +21,7 @@
 			"role": "Senior Developer"
 		}
 	],
+	"homepage": "https://jweiland.net",
 	"support": {
 		"email": "projects@jweiland.net",
 		"issues": "https://github.com/jweiland-net/clubdirectory/issues",
@@ -49,18 +54,19 @@
 		}
 	},
 	"config": {
-		"sort-packages": true,
-		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin",
 		"allow-plugins": {
+			"ergebnis/composer-normalize": true,
 			"typo3/class-alias-loader": true,
 			"typo3/cms-composer-installers": true
-		}
+		},
+		"bin-dir": ".Build/bin",
+		"sort-packages": true,
+		"vendor-dir": ".Build/vendor"
 	},
 	"extra": {
 		"typo3/cms": {
-			"extension-key": "clubdirectory",
 			"app-dir": ".Build",
+			"extension-key": "clubdirectory",
 			"web-dir": ".Build/public"
 		}
 	}
