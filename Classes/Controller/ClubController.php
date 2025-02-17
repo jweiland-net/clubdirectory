@@ -11,18 +11,18 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
-use Psr\Http\Message\ResponseInterface;
-use JWeiland\Clubdirectory\Domain\Validator\ClubValidator;
 use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
+use JWeiland\Clubdirectory\Domain\Validator\ClubValidator;
 use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
 use JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent;
 use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -65,7 +65,7 @@ class ClubController extends ActionController
             'clubs' => $this->clubRepository->findFilteredBy(
                 (int)$this->settings['category'],
                 (int)$this->settings['district'],
-                $letter
+                $letter,
             ),
             'categories' => $this->categoryRepository->getCategories(),
             'districts' => $this->districtRepository->findAll(),
@@ -124,7 +124,7 @@ class ClubController extends ActionController
     {
         if ($this->frontendUserRepository->getCurrentFrontendUserRecord() !== []) {
             $feUser = $this->frontendUserRepository->findByUid(
-                $this->frontendUserRepository->getCurrentFrontendUserUid()
+                $this->frontendUserRepository->getCurrentFrontendUserUid(),
             );
             $club->addFeUser($feUser);
             $club->setHidden(true);
@@ -198,7 +198,7 @@ class ClubController extends ActionController
 
         $this->mailHelper->sendMail(
             $this->view->render(),
-            LocalizationUtility::translate('email.subject.update', 'clubdirectory')
+            LocalizationUtility::translate('email.subject.update', 'clubdirectory'),
         );
 
         $club->setHidden(true);
@@ -257,8 +257,8 @@ class ClubController extends ActionController
             new InitializeControllerActionEvent(
                 $this->request,
                 $this->arguments,
-                $this->settings
-            )
+                $this->settings,
+            ),
         );
     }
 
@@ -269,8 +269,8 @@ class ClubController extends ActionController
             new PostProcessFluidVariablesEvent(
                 $this->request,
                 $this->settings,
-                $variables
-            )
+                $variables,
+            ),
         );
 
         $this->view->assignMultiple($event->getFluidVariables());
@@ -283,8 +283,8 @@ class ClubController extends ActionController
                 $this,
                 $club,
                 $this->settings,
-                $this->request
-            )
+                $this->request,
+            ),
         );
     }
 }

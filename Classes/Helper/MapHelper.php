@@ -37,7 +37,7 @@ class MapHelper
         GeoCodeService $geoCodeService,
         MapService $mapService,
         PoiCollectionRepository $poiCollectionRepository,
-        ExtConf $extConf
+        ExtConf $extConf,
     ) {
         $this->geoCodeService = $geoCodeService;
         $this->mapService = $mapService;
@@ -64,9 +64,9 @@ class MapHelper
                                 '%s (%d) - %s',
                                 $club->getTitle(),
                                 $club->getUid(),
-                                $address->getTitle()
+                                $address->getTitle(),
                             ),
-                        ]
+                        ],
                     );
                     /** @var PoiCollection $poiCollection */
                     $poiCollection = $this->poiCollectionRepository->findByIdentifier($poiCollectionUid);

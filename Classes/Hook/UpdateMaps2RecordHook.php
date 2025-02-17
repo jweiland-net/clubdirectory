@@ -45,7 +45,7 @@ class UpdateMaps2RecordHook
                     ],
                     [
                         'uid' => $poiCollectionUid,
-                    ]
+                    ],
                 );
             }
         }
@@ -60,8 +60,8 @@ class UpdateMaps2RecordHook
             ->where(
                 $queryBuilder->expr()->eq(
                     'uid',
-                    $queryBuilder->createNamedParameter($clubUid, Connection::PARAM_INT)
-                )
+                    $queryBuilder->createNamedParameter($clubUid, Connection::PARAM_INT),
+                ),
             )
             ->executeQuery()
             ->fetchAssociative();

@@ -41,7 +41,7 @@ class PreProcessControllerActionEvent implements ControllerActionEventInterface
         ActionController $controller,
         ?Club $club,
         array $settings,
-        Request $request
+        Request $request,
     ) {
         $this->controller = $controller;
         $this->club = $club;

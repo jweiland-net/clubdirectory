@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
 
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\District;
@@ -19,6 +18,7 @@ use JWeiland\Clubdirectory\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Test case for model Club
@@ -38,7 +38,7 @@ class ClubTest extends UnitTestCase
     protected function tearDown(): void
     {
         unset(
-            $this->subject
+            $this->subject,
         );
     }
 
@@ -48,7 +48,7 @@ class ClubTest extends UnitTestCase
     public function getHiddenInitiallyReturnsFalse(): void
     {
         self::assertFalse(
-            $this->subject->getHidden()
+            $this->subject->getHidden(),
         );
     }
 
@@ -59,7 +59,7 @@ class ClubTest extends UnitTestCase
     {
         $this->subject->setHidden(true);
         self::assertTrue(
-            $this->subject->getHidden()
+            $this->subject->getHidden(),
         );
     }
 
@@ -70,7 +70,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -83,7 +83,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -94,7 +94,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getActivity()
+            $this->subject->getActivity(),
         );
     }
 
@@ -107,7 +107,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getActivity()
+            $this->subject->getActivity(),
         );
     }
 
@@ -118,7 +118,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getContactPerson()
+            $this->subject->getContactPerson(),
         );
     }
 
@@ -131,7 +131,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getContactPerson()
+            $this->subject->getContactPerson(),
         );
     }
 
@@ -142,7 +142,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getContactTimes()
+            $this->subject->getContactTimes(),
         );
     }
 
@@ -155,7 +155,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getContactTimes()
+            $this->subject->getContactTimes(),
         );
     }
 
@@ -166,7 +166,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getEmail()
+            $this->subject->getEmail(),
         );
     }
 
@@ -179,7 +179,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getEmail()
+            $this->subject->getEmail(),
         );
     }
 
@@ -190,7 +190,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getWebsite()
+            $this->subject->getWebsite(),
         );
     }
 
@@ -203,7 +203,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getWebsite()
+            $this->subject->getWebsite(),
         );
     }
 
@@ -214,7 +214,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getMembers()
+            $this->subject->getMembers(),
         );
     }
 
@@ -227,7 +227,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getMembers()
+            $this->subject->getMembers(),
         );
     }
 
@@ -238,7 +238,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getClubHome()
+            $this->subject->getClubHome(),
         );
     }
 
@@ -251,7 +251,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getClubHome()
+            $this->subject->getClubHome(),
         );
     }
 
@@ -262,7 +262,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getDescription()
+            $this->subject->getDescription(),
         );
     }
 
@@ -275,7 +275,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getDescription()
+            $this->subject->getDescription(),
         );
     }
 
@@ -286,7 +286,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertEquals(
             new ObjectStorage(),
-            $this->subject->getFeUsers()
+            $this->subject->getFeUsers(),
         );
     }
 
@@ -303,7 +303,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getFeUsers()
+            $this->subject->getFeUsers(),
         );
     }
 
@@ -322,7 +322,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getFeUsers()
+            $this->subject->getFeUsers(),
         );
     }
 
@@ -343,7 +343,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getFeUsers()
+            $this->subject->getFeUsers(),
         );
     }
 
@@ -354,7 +354,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             [],
-            $this->subject->getLogo()
+            $this->subject->getLogo(),
         );
     }
 
@@ -364,7 +364,7 @@ class ClubTest extends UnitTestCase
     public function getFirstLogoInitiallyReturnsNull(): void
     {
         self::assertNull(
-            $this->subject->getFirstLogo()
+            $this->subject->getFirstLogo(),
         );
     }
 
@@ -375,7 +375,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertEquals(
             new ObjectStorage(),
-            $this->subject->getOriginalLogo()
+            $this->subject->getOriginalLogo(),
         );
     }
 
@@ -392,7 +392,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalLogo()
+            $this->subject->getOriginalLogo(),
         );
     }
 
@@ -411,7 +411,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalLogo()
+            $this->subject->getOriginalLogo(),
         );
     }
 
@@ -432,7 +432,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalLogo()
+            $this->subject->getOriginalLogo(),
         );
     }
 
@@ -443,7 +443,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertEquals(
             [],
-            $this->subject->getImages()
+            $this->subject->getImages(),
         );
     }
 
@@ -460,7 +460,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             [$object],
-            $this->subject->getImages()
+            $this->subject->getImages(),
         );
     }
 
@@ -479,7 +479,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             [$object],
-            $this->subject->getImages()
+            $this->subject->getImages(),
         );
     }
 
@@ -500,7 +500,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             [],
-            $this->subject->getImages()
+            $this->subject->getImages(),
         );
     }
 
@@ -511,7 +511,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getFacebook()
+            $this->subject->getFacebook(),
         );
     }
 
@@ -524,7 +524,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getFacebook()
+            $this->subject->getFacebook(),
         );
     }
 
@@ -535,7 +535,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getTwitter()
+            $this->subject->getTwitter(),
         );
     }
 
@@ -548,7 +548,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getTwitter()
+            $this->subject->getTwitter(),
         );
     }
 
@@ -559,7 +559,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getInstagram()
+            $this->subject->getInstagram(),
         );
     }
 
@@ -572,7 +572,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getInstagram()
+            $this->subject->getInstagram(),
         );
     }
 
@@ -583,7 +583,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getTags()
+            $this->subject->getTags(),
         );
     }
 
@@ -596,7 +596,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getTags()
+            $this->subject->getTags(),
         );
     }
 
@@ -618,7 +618,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $instance,
-            $this->subject->getDistrict()
+            $this->subject->getDistrict(),
         );
     }
 
@@ -629,7 +629,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertEquals(
             [],
-            $this->subject->getAddresses()
+            $this->subject->getAddresses(),
         );
     }
 
@@ -640,7 +640,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertEquals(
             new ObjectStorage(),
-            $this->subject->getOriginalAddresses()
+            $this->subject->getOriginalAddresses(),
         );
     }
 
@@ -657,7 +657,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalAddresses()
+            $this->subject->getOriginalAddresses(),
         );
     }
 
@@ -676,7 +676,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalAddresses()
+            $this->subject->getOriginalAddresses(),
         );
     }
 
@@ -697,7 +697,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalAddresses()
+            $this->subject->getOriginalAddresses(),
         );
     }
 
@@ -708,7 +708,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertEquals(
             new ObjectStorage(),
-            $this->subject->getCategories()
+            $this->subject->getCategories(),
         );
     }
 
@@ -725,7 +725,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getCategories()
+            $this->subject->getCategories(),
         );
     }
 
@@ -744,7 +744,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getCategories()
+            $this->subject->getCategories(),
         );
     }
 
@@ -765,7 +765,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getCategories()
+            $this->subject->getCategories(),
         );
     }
 }

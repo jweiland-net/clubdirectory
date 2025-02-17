@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
 
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use JWeiland\Clubdirectory\Domain\Model\Address;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Test case for model Address
@@ -32,7 +32,7 @@ class AddressTest extends UnitTestCase
     protected function tearDown(): void
     {
         unset(
-            $this->subject
+            $this->subject,
         );
     }
 
@@ -43,7 +43,7 @@ class AddressTest extends UnitTestCase
     {
         self::assertSame(
             'organizationAddress',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -56,7 +56,7 @@ class AddressTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getTitle()
+            $this->subject->getTitle(),
         );
     }
 
@@ -67,7 +67,7 @@ class AddressTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getStreet()
+            $this->subject->getStreet(),
         );
     }
 
@@ -80,7 +80,7 @@ class AddressTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getStreet()
+            $this->subject->getStreet(),
         );
     }
 
@@ -91,7 +91,7 @@ class AddressTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getHouseNumber()
+            $this->subject->getHouseNumber(),
         );
     }
 
@@ -104,7 +104,7 @@ class AddressTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getHouseNumber()
+            $this->subject->getHouseNumber(),
         );
     }
 
@@ -115,7 +115,7 @@ class AddressTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getZip()
+            $this->subject->getZip(),
         );
     }
 
@@ -128,7 +128,7 @@ class AddressTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getZip()
+            $this->subject->getZip(),
         );
     }
 
@@ -139,7 +139,7 @@ class AddressTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getCity()
+            $this->subject->getCity(),
         );
     }
 
@@ -152,7 +152,7 @@ class AddressTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getCity()
+            $this->subject->getCity(),
         );
     }
 
@@ -163,7 +163,7 @@ class AddressTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getTelephone()
+            $this->subject->getTelephone(),
         );
     }
 
@@ -176,7 +176,7 @@ class AddressTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getTelephone()
+            $this->subject->getTelephone(),
         );
     }
 
@@ -187,7 +187,7 @@ class AddressTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getFax()
+            $this->subject->getFax(),
         );
     }
 
@@ -200,7 +200,7 @@ class AddressTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getFax()
+            $this->subject->getFax(),
         );
     }
 
@@ -210,7 +210,7 @@ class AddressTest extends UnitTestCase
     public function getBarrierFreeInitiallyReturnsFalse(): void
     {
         self::assertFalse(
-            $this->subject->getBarrierFree()
+            $this->subject->getBarrierFree(),
         );
     }
 
@@ -221,7 +221,7 @@ class AddressTest extends UnitTestCase
     {
         $this->subject->setBarrierFree(true);
         self::assertTrue(
-            $this->subject->getBarrierFree()
+            $this->subject->getBarrierFree(),
         );
     }
 }

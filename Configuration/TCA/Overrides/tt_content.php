@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of the package jweiland/clubdirectory.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
@@ -10,11 +18,11 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist']['clubdire
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['clubdirectory_clubdirectory'] = 'pi_flexform';
 ExtensionManagementUtility::addPiFlexFormValue(
     'clubdirectory_clubdirectory',
-    'FILE:EXT:clubdirectory/Configuration/FlexForms/ClubDirectory.xml'
+    'FILE:EXT:clubdirectory/Configuration/FlexForms/ClubDirectory.xml',
 );
 
 ExtensionUtility::registerPlugin(
     'Clubdirectory',
     'Clubdirectory',
-    'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.clubdirectory.title'
+    'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.clubdirectory.title',
 );

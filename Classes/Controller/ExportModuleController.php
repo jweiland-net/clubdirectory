@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
+use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use TYPO3\CMS\Backend\Attribute\AsController;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
@@ -83,7 +83,7 @@ class ExportModuleController extends ActionController
 
         $this->moduleTemplate->assign(
             'exportPath',
-            PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile)
+            PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile),
         );
         $this->moduleTemplate->assign('clubs', $clubs);
         $this->moduleTemplate->assign('storagePid', $storagePid);

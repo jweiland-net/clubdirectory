@@ -33,7 +33,7 @@ class PostCheckFileReferenceEvent
         array $source,
         int $key,
         array $uploadedFile,
-        ?FileReference $alreadyPersistedImage = null
+        ?FileReference $alreadyPersistedImage = null,
     ) {
         $this->source = $source;
         $this->key = $key;

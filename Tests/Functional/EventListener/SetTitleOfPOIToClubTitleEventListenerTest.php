@@ -12,9 +12,9 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Tests\Functional\EventListener;
 
 use Doctrine\DBAL\Driver\Exception;
-use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * Test case
@@ -42,7 +42,7 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
     protected function tearDown(): void
     {
         unset(
-            $this->subject
+            $this->subject,
         );
 
         parent::tearDown();
@@ -61,7 +61,7 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
                 'title' => 'Postal Address',
                 'club' => 1,
             ],
-            []
+            [],
         );
         call_user_func($this->subject, $event);
 
@@ -74,7 +74,7 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
                 ->select(
                     ['*'],
                     'tx_maps2_domain_model_poicollection',
-                    ['uid' => 123]
+                    ['uid' => 123],
                 )
                 ->fetchAssociative();
         } catch (Exception|\Doctrine\DBAL\Exception $e) {
@@ -83,7 +83,7 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
 
         self::assertSame(
             'Swimmingclub',
-            $poiRecord['title']
+            $poiRecord['title'],
         );
     }
 }

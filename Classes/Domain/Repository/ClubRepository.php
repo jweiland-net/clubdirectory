@@ -76,12 +76,12 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             $constraints[] = $this->glossaryService->getLetterConstraintForExtbaseQuery(
                 $query,
                 'title',
-                $letter
+                $letter,
             );
         }
 
         if (count($constraints) === 1) {
-        $query->matching(reset($constraints));
+            $query->matching(reset($constraints));
         } elseif (count($constraints) >= 2) {
             $query->matching($query->logicalAnd(...$constraints));
         }
@@ -119,7 +119,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             if (!in_array(
                 $search->getOrder(),
                 [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING],
-                true
+                true,
             )) {
                 $search->setOrderBy(QueryInterface::ORDER_ASCENDING);
             }
@@ -154,9 +154,9 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                     'pid',
                     $queryBuilder->createNamedParameter(
                         $query->getQuerySettings()->getStoragePageIds(),
-                        Connection::PARAM_INT_ARRAY
-                    )
-                )
+                        Connection::PARAM_INT_ARRAY,
+                    ),
+                ),
             );
 
         if ($category !== 0) {
@@ -168,23 +168,23 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                     (string)$queryBuilder->expr()->and(
                         $queryBuilder->expr()->eq(
                             'mm.tablenames',
-                            $queryBuilder->createNamedParameter('tx_clubdirectory_domain_model_club')
+                            $queryBuilder->createNamedParameter('tx_clubdirectory_domain_model_club'),
                         ),
                         $queryBuilder->expr()->eq(
                             'mm.fieldname',
-                            $queryBuilder->createNamedParameter('categories')
+                            $queryBuilder->createNamedParameter('categories'),
                         ),
                         $queryBuilder->expr()->eq(
                             'mm.uid_foreign',
-                            $queryBuilder->quoteIdentifier('c.uid')
-                        )
-                    )
+                            $queryBuilder->quoteIdentifier('c.uid'),
+                        ),
+                    ),
                 )
                 ->andWhere(
                     $queryBuilder->expr()->eq(
                         'mm.uid_local',
-                        $queryBuilder->createNamedParameter($category, Connection::PARAM_INT)
-                    )
+                        $queryBuilder->createNamedParameter($category, Connection::PARAM_INT),
+                    ),
                 );
         }
 

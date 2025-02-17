@@ -1,6 +1,14 @@
 <?php
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
+/*
+ * This file is part of the package jweiland/clubdirectory.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 use JWeiland\Maps2\Tca\Maps2Registry;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 if (!defined('TYPO3')) {
     die('Access denied.');
@@ -24,6 +32,6 @@ if (ExtensionManagementUtility::isLoaded('maps2')) {
                     'poiCollectionColumnName' => 'title',
                 ],
             ],
-        ]
+        ],
     );
 }

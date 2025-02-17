@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the package jweiland/clubdirectory.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 if (!defined('TYPO3')) {
     die('Access denied.');
 }
@@ -27,7 +34,7 @@ call_user_func(static function () {
         [
             ClubController::class => 'create, update, search, activate',
             MapController::class => 'create, update',
-        ]
+        ],
     );
 
     try {

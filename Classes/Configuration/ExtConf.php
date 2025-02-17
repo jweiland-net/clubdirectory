@@ -88,7 +88,7 @@ class ExtConf implements SingletonInterface
             $senderMail = (string)($GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'] ?? '');
             if ($senderMail === '') {
                 throw new \InvalidArgumentException(
-                    'You have forgotten to set a sender email address in extension configuration or in install tool'
+                    'You have forgotten to set a sender email address in extension configuration or in install tool',
                 );
             }
 

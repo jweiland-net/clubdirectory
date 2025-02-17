@@ -16,6 +16,4 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * Domain model for fe_users table. We only need the UID to map to other domain models
  */
-class FrontendUser extends AbstractEntity
-{
-}
+class FrontendUser extends AbstractEntity {}
