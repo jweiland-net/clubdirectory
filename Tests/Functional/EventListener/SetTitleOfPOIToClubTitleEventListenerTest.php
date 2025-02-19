@@ -33,8 +33,8 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importDataSet(__DIR__ . '/../Fixtures/tx_clubdirectory_domain_model_club.xml');
-        $this->importDataSet(__DIR__ . '/../Fixtures/tx_maps2_domain_model_poicollection.xml');
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/tx_clubdirectory_domain_model_club.csv');
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/tx_maps2_domain_model_poicollection.csv');
 
         $this->subject = new SetTitleOfPOIToClubTitleEventListener();
     }
