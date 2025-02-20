@@ -9,7 +9,7 @@ declare(strict_types=1);
  * LICENSE file that was distributed with this source code.
  */
 
-namespace JWeiland\Clubdirectory\Updater;
+namespace JWeiland\Clubdirectory\Updates;
 
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use JWeiland\Clubdirectory\Traits\ConnectionPoolTrait;
