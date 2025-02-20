@@ -8,6 +8,10 @@ services:
     resource: '../Classes/*'
     exclude: '../Classes/Domain/Model/*'
 
+  # Called by makeInstance in TYPO3's PluginPreview
+  JWeiland\Clubdirectory\Backend\Preview\ClubDirectoryPluginPreview:
+    public: true
+
   # Called by makeInstance in our FrontendUser domain model
   JWeiland\Clubdirectory\Domain\Repository\FrontendUserRepository:
     public: true
