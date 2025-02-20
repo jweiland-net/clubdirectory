@@ -35,6 +35,7 @@ call_user_func(static function () {
             ClubController::class => 'create, update, search, activate',
             MapController::class => 'create, update',
         ],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
     );
 
     try {
