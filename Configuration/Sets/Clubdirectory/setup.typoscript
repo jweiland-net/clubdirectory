@@ -1,0 +1,93 @@
+page.includeJSFooter {
+  clubdirectory = {$clubdirectory.feJavaScript}
+}
+
+plugin.tx_clubdirectory {
+  view {
+    templateRootPaths {
+      0 = EXT:clubdirectory/Resources/Private/Templates/
+      1 = {$clubdirectory.templateRootPath}
+    }
+    partialRootPaths {
+      0 = EXT:clubdirectory/Resources/Private/Partials/
+      1 = EXT:maps2/Resources/Private/Partials/
+      2 = {$clubdirectory.partialRootPath}
+    }
+    layoutRootPath {
+      0 = EXT:clubdirectory/Resources/Private/Layouts/
+      1 = {$clubdirectory.layoutRootPath}
+    }
+  }
+  persistence {
+    storagePid = {$clubdirectory.storagePid}
+    updateReferenceIndex = 1
+  }
+  settings {
+    pidOfMaps2Plugin = {$clubdirectory.pidOfMaps2Plugin}
+    pidOfDetailPage = {$clubdirectory.pidOfDetailPage}
+    list {
+      image {
+        width = {$clubdirectory.list.image.width}
+        height= {$clubdirectory.list.image.height}
+        minWidth = {$clubdirectory.list.image.minWidth}
+        maxWidth = {$clubdirectory.list.image.maxWidth}
+        minHeight = {$clubdirectory.list.image.minHeight}
+        maxHeight = {$clubdirectory.list.image.maxHeight}
+      }
+    }
+
+    show {
+      logo {
+        width = {$clubdirectory.show.logo.width}
+        height= {$clubdirectory.show.logo.height}
+        minWidth = {$clubdirectory.show.logo.minWidth}
+        maxWidth = {$clubdirectory.show.logo.maxWidth}
+        minHeight = {$clubdirectory.show.logo.minHeight}
+        maxHeight = {$clubdirectory.show.logo.maxHeight}
+      }
+      image {
+        width = {$clubdirectory.show.image.width}
+        height= {$clubdirectory.show.image.height}
+        minWidth = {$clubdirectory.show.image.minWidth}
+        maxWidth = {$clubdirectory.show.image.maxWidth}
+        minHeight = {$clubdirectory.show.image.minHeight}
+        maxHeight = {$clubdirectory.show.image.maxHeight}
+      }
+    }
+
+    new {
+      uploadFolder = {$clubdirectory.newUploadPath}
+    }
+
+    glossary {
+      mergeNumbers = {$clubdirectory.glossary2.mergeNumbers}
+      showAllLink = {$clubdirectory.glossary2.showAllLink}
+    }
+
+    pageBrowser {
+      itemsPerPage = {$clubdirectory.pageBrowser.itemsPerPage}
+    }
+  }
+}
+
+# TYPO3 8 comes with a new security feature which requires a cHash for all URLs
+# I need an uncached search form where I don't have a cHash. So I disable that feature for that individual action.
+[traverse(request.getQueryParams(), 'tx_clubdirectory_clubdirectory/action') == "search"]
+  plugin.tx_clubdirectory_clubdirectory.features.requireCHashArgumentForActionArguments = 0
+[end]
+
+module.tx_clubdirectory {
+  persistence < plugin.tx_clubdirectory.persistence
+}
+
+plugin.tx_clubdirectory._CSS_DEFAULT_STYLE (
+  textarea.f3-form-error {
+    background-color:#FF9F9F;
+    border: 1px #FF0000 solid;
+  }
+
+  input.f3-form-error {
+    background-color:#FF9F9F;
+    border: 1px #FF0000 solid;
+  }
+)

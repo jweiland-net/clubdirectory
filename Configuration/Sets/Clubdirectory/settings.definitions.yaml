@@ -1,0 +1,200 @@
+categories:
+  clubdirectory:
+    label: 'clubdirectory'
+  clubdirectory.templates:
+    label: 'Templates'
+    parent: clubdirectory
+  clubdirectory.pages:
+    label: 'Pages'
+    parent: clubdirectory
+  clubdirectory.settings:
+    label: 'Settings'
+    parent: clubdirectory
+  clubdirectory.media:
+    label: 'Image Sizes'
+    parent: clubdirectory
+  clubdirectory.glossary2:
+    label: 'Glossary2'
+    parent: clubdirectory
+
+settings:
+  clubdirectory.templateRootPath:
+    label: 'Templates'
+    category: clubdirectory.templates
+    description: 'Path to template root'
+    type: string
+    default: 'EXT:clubdirectory/Resources/Private/Templates/'
+  clubdirectory.partialRootPath:
+    label: 'Partials'
+    category: clubdirectory.templates
+    description: 'Path to partial root'
+    type: string
+    default: 'EXT:clubdirectory/Resources/Private/Partials/'
+  clubdirectory.layoutRootPath:
+    label: 'Layouts'
+    category: clubdirectory.templates
+    description: 'Path to layout root'
+    type: string
+    default: 'EXT:clubdirectory/Resources/Private/Layouts/'
+  clubdirectory.storagePid:
+    label: 'Default storage PID'
+    category: clubdirectory.settings
+    description: 'Folder that stores all POIs'
+    type: int
+    default: 0
+  clubdirectory.pidOfDetailPage:
+    label: 'Pid of Detail Page'
+    category: clubdirectory.settings
+    description: 'Page with detail page plugin'
+    type: int
+    default: 0
+  clubdirectory.pageBrowser.itemsPerPage:
+    label: 'Items per page for pagination'
+    category: clubdirectory.settings
+    description: 'Number of results that needs to be shown on listing page'
+    type: int
+    default: 10
+  clubdirectory.pidOfMaps2Plugin:
+    label: 'Pid of Maps2 Plugins'
+    category: clubdirectory.settings
+    description: 'Storage Page Uid of Maps2 Plugin'
+    type: int
+    default: 0
+  clubdirectory.updateReferenceIndex:
+    label: 'Update Reference Index'
+    category: clubdirectory.settings
+    description: 'Enable or disable updating the reference index'
+    type: bool
+    default: 1
+  clubdirectory.newUploadPath:
+    label: 'New upload path'
+    category: clubdirectory.settings
+    description: 'Path for uploading assets for clubdirectory records'
+    type: string
+    default: '1:user_upload/tx_clubdirectory/'
+  clubdirectory.feJavaScript:
+    label: 'Frontend JavaScript file'
+    category: clubdirectory.settings
+    description: ''
+    type: string
+    default: 'EXT:clubdirectory/Resources/Public/JavaScript/script.js'
+  clubdirectory.list.image.width:
+    label: 'List Image width'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '64c'
+  clubdirectory.list.image.height:
+    label: 'List Image height'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '64c'
+  clubdirectory.list.image.minWidth:
+    label: 'List Image minimum width'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '64'
+  clubdirectory.list.image.minHeight:
+    label: 'List Image minimum height'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '64'
+  clubdirectory.list.image.maxWidth:
+    label: 'List Image maximum width'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '64'
+  clubdirectory.list.image.maxHeight:
+    label: 'List Image maximum height'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '64'
+  clubdirectory.show.logo.width:
+    label: 'Show ation logo width'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '100c'
+  clubdirectory.show.logo.height:
+    label: 'Show ation logo height'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '100c'
+  clubdirectory.show.logo.minWidth:
+    label: 'Show ation logo minimum width'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '100'
+  clubdirectory.show.logo.minHeight:
+    label: 'Show ation logo minimum height'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '100'
+  clubdirectory.show.logo.maxWidth:
+    label: 'Show ation logo maximum width'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '100'
+  clubdirectory.show.logo.maxHeight:
+    label: 'Show ation logo maximum height'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '100'
+  clubdirectory.show.image.width:
+    label: 'Show Image width'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '320c'
+  clubdirectory.show.image.height:
+    label: 'Show Image height'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '280c'
+  clubdirectory.show.image.minWidth:
+    label: 'Show Image minimum width'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '320'
+  clubdirectory.show.image.minHeight:
+    label: 'Show Image minimum height'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '280'
+  clubdirectory.show.image.maxWidth:
+    label: 'Show Image maximum width'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '320'
+  clubdirectory.show.image.maxHeight:
+    label: 'Show Image maximum height'
+    category: clubdirectory.media
+    description: ''
+    type: string
+    default: '280'
+  clubdirectory.glossary2.mergeNumbers:
+    label: 'Merge Numbers in Glossary'
+    category: clubdirectory.glossary2
+    description: ''
+    type: bool
+    default: 1
+  clubdirectory.glossary2.showAllLink:
+    label: 'Show "All" Link in Glossary'
+    category: clubdirectory.glossary2
+    description: ''
+    type: bool
+    default: 1
