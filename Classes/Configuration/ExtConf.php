@@ -22,6 +22,8 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 #[Autoconfigure(constructor: 'create')]
 final readonly class ExtConf
 {
+    private const EXT_KEY = 'clubdirectory';
+
     private const DEFAULT_SETTINGS = [
         // General Settings
         'userGroup' => 0,
