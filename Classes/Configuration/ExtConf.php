@@ -59,6 +59,19 @@ final readonly class ExtConf
             );
         } catch (ExtensionConfigurationExtensionNotConfiguredException|ExtensionConfigurationPathDoesNotExistException) {
         }
+
+        return new self(
+            // General Settings
+            userGroup: (int)$extensionSettings['userGroup'],
+            poiCollectionPid: (int)$extensionSettings['poiCollectionPid'],
+            rootCategory: (int)$extensionSettings['rootCategory'],
+
+            // Email Settings
+            emailFromAddress: (string)$extensionSettings['emailFromAddress'],
+            emailFromName: (string)$extensionSettings['emailFromName'],
+            emailToAddress: (string)$extensionSettings['emailToAddress'],
+            emailToName: (string)$extensionSettings['emailToName'],
+        );
     }
 
     public function getUserGroup(): int
