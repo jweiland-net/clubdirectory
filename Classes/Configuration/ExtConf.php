@@ -11,44 +11,51 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Configuration;
 
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\SingletonInterface;
 
 /**
  * Class, which contains the configuration from ExtensionManager
  */
-class ExtConf implements SingletonInterface
+#[Autoconfigure(constructor: 'create')]
+final readonly class ExtConf
 {
-    protected int $userGroup = 0;
+    private const DEFAULT_SETTINGS = [
+        // General Settings
+        'userGroup' => 0,
+        'poiCollectionPid' => 0,
+        'rootCategory' => 0,
 
-    protected int $poiCollectionPid = 0;
+        // Email Settings
+        'emailFromAddress' => '',
+        'emailFromName' => '',
+        'emailToAddress' => '',
+        'emailToName' => '',
+    ];
 
-    protected int $rootCategory = 0;
+    public function __construct(
+        private int $userGroup = self::DEFAULT_SETTINGS['userGroup'],
+        private int $poiCollectionPid = self::DEFAULT_SETTINGS['poiCollectionPid'],
+        private int $rootCategory = self::DEFAULT_SETTINGS['rootCategory'],
+        private string $emailFromAddress = self::DEFAULT_SETTINGS['emailFromAddress'],
+        private string $emailFromName = self::DEFAULT_SETTINGS['emailFromName'],
+        private string $emailToAddress = self::DEFAULT_SETTINGS['emailToAddress'],
+        private string $emailToName = self::DEFAULT_SETTINGS['emailToName'],
+    ) {}
 
-    protected string $emailFromAddress = '';
-
-    protected string $emailFromName = '';
-
-    protected string $emailToAddress = '';
-
-    protected string $emailToName = '';
-
-    public function __construct(ExtensionConfiguration $extensionConfiguration)
+    public static function create(ExtensionConfiguration $extensionConfiguration): self
     {
+        $extensionSettings = self::DEFAULT_SETTINGS;
+
+        // Overwrite default extension settings with values from EXT_CONF
         try {
-            $extConf = $extensionConfiguration->get('clubdirectory');
-            if (is_array($extConf)) {
-                // call setter method foreach configuration entry
-                foreach ($extConf as $key => $value) {
-                    $methodName = 'set' . ucfirst($key);
-                    if (method_exists($this, $methodName)) {
-                        $this->$methodName((string)$value);
-                    }
-                }
-            }
-        } catch (ExtensionConfigurationExtensionNotConfiguredException | ExtensionConfigurationPathDoesNotExistException $e) {
+            $extensionSettings = array_merge(
+                $extensionSettings,
+                $extensionConfiguration->get(self::EXT_KEY),
+            );
+        } catch (ExtensionConfigurationExtensionNotConfiguredException|ExtensionConfigurationPathDoesNotExistException) {
         }
     }
 
@@ -57,29 +64,14 @@ class ExtConf implements SingletonInterface
         return $this->userGroup;
     }
 
-    public function setUserGroup(string $userGroup): void
-    {
-        $this->userGroup = (int)$userGroup;
-    }
-
     public function getPoiCollectionPid(): int
     {
         return $this->poiCollectionPid;
     }
 
-    public function setPoiCollectionPid(string $poiCollectionPid): void
-    {
-        $this->poiCollectionPid = (int)$poiCollectionPid;
-    }
-
     public function getRootCategory(): int
     {
         return $this->rootCategory;
-    }
-
-    public function setRootCategory(string $rootCategory): void
-    {
-        $this->rootCategory = (int)$rootCategory;
     }
 
     public function getEmailFromAddress(): string
@@ -98,11 +90,6 @@ class ExtConf implements SingletonInterface
         return $this->emailFromAddress;
     }
 
-    public function setEmailFromAddress(string $emailFromAddress): void
-    {
-        $this->emailFromAddress = $emailFromAddress;
-    }
-
     public function getEmailFromName(): string
     {
         if ($this->emailFromName === '') {
@@ -117,11 +104,6 @@ class ExtConf implements SingletonInterface
         return $this->emailFromName;
     }
 
-    public function setEmailFromName(string $emailFromName): void
-    {
-        $this->emailFromName = $emailFromName;
-    }
-
     public function getEmailToAddress(): string
     {
         if ($this->emailToAddress === '') {
@@ -131,18 +113,8 @@ class ExtConf implements SingletonInterface
         return $this->emailToAddress;
     }
 
-    public function setEmailToAddress(string $emailToAddress): void
-    {
-        $this->emailToAddress = $emailToAddress;
-    }
-
     public function getEmailToName(): string
     {
         return $this->emailToName;
-    }
-
-    public function setEmailToName(string $emailToName): void
-    {
-        $this->emailToName = $emailToName;
     }
 }
