@@ -7,6 +7,18 @@
 ChangeLog
 =========
 
+Version 8.0.0
+=============
+
+*    TYPO3 Version compatibility for 13 LTS
+*    Removed Version compatibility for 12 LTS and below
+*    Updated Test Suite
+*    Migrate clubdirectory plugins to CTypes
+*    Restructured ExtConf file
+*    SiteSets added and removed TypoScript configuration
+*    Migrated tests to "podman"
+*    Upgrade tests against MariaDB 10.4 to 10.5
+
 Version 7.0.1
 =============
 

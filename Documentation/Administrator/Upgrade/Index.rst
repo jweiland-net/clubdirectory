@@ -10,6 +10,14 @@ Upgrade
 If you upgrade `clubdirectory` to a newer version, please read this
 section carefully!
 
+Update to Version 8.0.0
+=======================
+
+This version supports TYPO3 version 13 LTS only. Lower version support removed.
+Restructured ExtConf file and added SiteSet for the extension. Used Dependency
+Injection wherever possible. Migrate clubdirectory plugins to CTypes and added
+new migration wizard.
+
 Update to Version 7.0.0
 =======================
 
