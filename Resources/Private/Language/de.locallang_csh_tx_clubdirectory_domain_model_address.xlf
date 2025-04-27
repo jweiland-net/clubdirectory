@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="title.description" approved="yes">
+        <source>Which kind of address it belongs to?</source>
+        <target state="final">Geben Sie den Typ der Adresse an.</target>
+      </trans-unit>
+      <trans-unit id="street.description" approved="yes">
+        <source>Type in the street name. Do not enter the house number.</source>
+        <target state="final">Trage den Straßennamen ein, jedoch ohne Hausnummer.</target>
+      </trans-unit>
+      <trans-unit id="house_number.description" approved="yes">
+        <source>Just the house number</source>
+        <target state="final">Nur die Hausnummer</target>
+      </trans-unit>
+      <trans-unit id="barrier_free.description" approved="yes">
+        <source>Does this address has a barrier free entry?</source>
+        <target state="final">Hat diese Adresse einen behindertengerechten Eingang?</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
