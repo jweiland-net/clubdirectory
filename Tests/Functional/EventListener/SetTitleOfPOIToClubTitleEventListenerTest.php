@@ -14,6 +14,7 @@ namespace JWeiland\Clubdirectory\Tests\Functional\EventListener;
 use Doctrine\DBAL\Driver\Exception;
 use JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
@@ -48,9 +49,7 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function callInvokePostProcessPoiCollectionRecordEvent(): void
     {
         $event = new PostProcessPoiCollectionRecordEvent(

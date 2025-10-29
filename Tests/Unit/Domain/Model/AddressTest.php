@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
 
 use JWeiland\Clubdirectory\Domain\Model\Address;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
@@ -19,10 +20,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class AddressTest extends UnitTestCase
 {
-    /**
-     * @var Address
-     */
-    protected $subject;
+    protected Address $subject;
 
     protected function setUp(): void
     {
@@ -36,9 +34,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getTitleInitiallyReturnsOrganizationAddress(): void
     {
         self::assertSame(
@@ -47,9 +43,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setTitleSetsTitle(): void
     {
         $this->subject->setTitle('foo bar');
@@ -60,9 +54,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getStreetInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
@@ -71,9 +63,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setStreetSetsStreet(): void
     {
         $this->subject->setStreet('foo bar');
@@ -84,9 +74,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getHouseNumberInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
@@ -95,9 +83,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setHouseNumberSetsHouseNumber(): void
     {
         $this->subject->setHouseNumber('foo bar');
@@ -108,9 +94,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getZipInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
@@ -119,9 +103,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setZipSetsZip(): void
     {
         $this->subject->setZip('foo bar');
@@ -132,9 +114,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getCityInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
@@ -143,9 +123,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setCitySetsCity(): void
     {
         $this->subject->setCity('foo bar');
@@ -156,9 +134,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getTelephoneInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
@@ -167,9 +143,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setTelephoneSetsTelephone(): void
     {
         $this->subject->setTelephone('foo bar');
@@ -180,9 +154,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getFaxInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
@@ -191,9 +163,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setFaxSetsFax(): void
     {
         $this->subject->setFax('foo bar');
@@ -204,9 +174,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getBarrierFreeInitiallyReturnsFalse(): void
     {
         self::assertFalse(
@@ -214,9 +182,7 @@ class AddressTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setBarrierFreeSetsBarrierFree(): void
     {
         $this->subject->setBarrierFree(true);
