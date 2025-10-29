@@ -217,11 +217,8 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.website',
             'config' => [
-                'type' => 'input',
+                'type' => 'link',
                 'size' => 30,
-                'eval' => 'trim',
-                'renderType' => 'inputLink',
-                'softref' => 'typolink',
             ],
         ],
         'members' => [
