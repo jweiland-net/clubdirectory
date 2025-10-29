@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+Version 8.0.1
+=============
+
+*    Fixed SiteSets name
+*    Fixed Plugin Preview
+
 Version 8.0.0
 =============
 

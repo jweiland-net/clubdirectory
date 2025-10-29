@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
 
 use JWeiland\Clubdirectory\Domain\Model\Search;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
@@ -20,10 +21,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class SearchTest extends UnitTestCase
 {
-    /**
-     * @var Search
-     */
-    protected $subject;
+    protected Search $subject;
 
     protected function setUp(): void
     {
@@ -35,9 +33,7 @@ class SearchTest extends UnitTestCase
         unset($this->subject);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getSearchWordInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
@@ -46,9 +42,7 @@ class SearchTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setSearchWordSetsSearchWord(): void
     {
         $this->subject->setSearchWord('foo bar');
@@ -59,9 +53,7 @@ class SearchTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getCategoryInitiallyReturnsZero(): void
     {
         self::assertSame(
@@ -70,9 +62,7 @@ class SearchTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setCategorySetsCategory(): void
     {
         $this->subject->setCategory(123456);
@@ -83,9 +73,7 @@ class SearchTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setOrderBySetsOrderBy(): void
     {
         $this->subject->setOrderBy('foo bar');
@@ -96,9 +84,7 @@ class SearchTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getOrderInitiallyReturnsAscending(): void
     {
         self::assertSame(
@@ -107,9 +93,7 @@ class SearchTest extends UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setOrderSetsSortingOrder(): void
     {
         $this->subject->setOrder('foo bar');
