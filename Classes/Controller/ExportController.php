@@ -92,8 +92,12 @@ class ExportController extends ActionController
 
     public function showAction(): ResponseInterface
     {
-        $clubs = $this->clubRepository->findAllForExport();
-        $this->moduleTemplate->assign('clubs', $clubs);
+        $this->moduleTemplate->assign(
+            'exportPath',
+            PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile),
+        );
+
+        $this->moduleTemplate->assign('clubs', $this->clubRepository->findAllForExport());
 
         return $this->moduleTemplate->renderResponse('Export/Show');
     }
