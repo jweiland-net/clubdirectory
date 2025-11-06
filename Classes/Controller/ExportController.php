@@ -95,7 +95,7 @@ class ExportController extends ActionController
         $clubs = $this->clubRepository->findAllForExport();
         $this->moduleTemplate->assign('clubs', $clubs);
 
-        return $this->moduleTemplate->renderResponse('Index/Show');
+        return $this->moduleTemplate->renderResponse('Export/Show');
     }
 
     /**
