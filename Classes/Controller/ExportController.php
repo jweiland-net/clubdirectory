@@ -14,7 +14,6 @@ namespace JWeiland\Clubdirectory\Controller;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Backend\Attribute\AsController;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Core\Environment;
@@ -25,8 +24,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Controller to export clubs as CSV
  */
-#[AsController]
-class ExportModuleController extends ActionController
+class ExportController extends ActionController
 {
     /**
      * In which directory we want to export club data
@@ -88,15 +86,19 @@ class ExportModuleController extends ActionController
         $this->moduleTemplate->assign('clubs', $clubs);
         $this->moduleTemplate->assign('storagePid', $storagePid);
 
-        return $this->moduleTemplate->renderResponse('Index');
+        return $this->moduleTemplate->renderResponse('Export/Index');
     }
 
     public function showAction(): ResponseInterface
     {
-        $clubs = $this->clubRepository->findAllForExport();
-        $this->moduleTemplate->assign('clubs', $clubs);
+        $this->moduleTemplate->assign(
+            'exportPath',
+            PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile),
+        );
 
-        return $this->moduleTemplate->renderResponse('Show');
+        $this->moduleTemplate->assign('clubs', $this->clubRepository->findAllForExport());
+
+        return $this->moduleTemplate->renderResponse('Export/Show');
     }
 
     /**

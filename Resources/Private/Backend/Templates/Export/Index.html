@@ -1,11 +1,11 @@
 <html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 
-<f:layout name="Module" />
+<f:layout name="Module"/>
 
 <f:section name="Content">
     <f:flashMessages/>
 
-	<h1>Clubdirectory: CSV-Export</h1>
+    <h1>Clubdirectory: CSV-Export</h1>
 
     <f:render section="InfoBox"/>
 
@@ -34,10 +34,12 @@
                 <p>There are some records found in following pages click here to show more.</p>
                 <p>
                     <f:for each="{storagePid}" as="storage">
-                        <a href="{f:uri.action(action: 'index', controller: 'ExportModule', additionalParams: '{id:storage.pid}')}" class="btn btn-default">
+                        <a href="{f:uri.action(action: 'index', controller: 'Export', additionalParams: '{id:storage.pid}')}" class="btn btn-default">
                             <span class="t3js-icon icon icon-size-small icon-state-default icon-apps-filetree-folder-default" data-identifier="apps-filetree-folder-default" aria-hidden="true" target="_blank">
                                 <span class="icon-markup">
-                                    <svg class="icon-color"><use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-document-view"></use></svg>
+                                    <svg class="icon-color">
+                                        <use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-document-view"></use>
+                                    </svg>
                                 </span>
                             </span>
                             View Records ({storage.pid})
@@ -62,15 +64,16 @@
             Download CSV-Export
         </a>
 
-        <a href="{f:uri.action(action: 'show', controller: 'ExportModule')}" class="btn btn-default">
+        <a href="{f:uri.action(action: 'show', controller: 'Export')}" class="btn btn-default">
             <span class="t3js-icon icon icon-size-small icon-state-default icon-apps-filetree-folder-default" data-identifier="apps-filetree-folder-default" aria-hidden="true" target="_blank">
                 <span class="icon-markup">
-                    <svg class="icon-color"><use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-document-view"></use></svg>
+                    <svg class="icon-color">
+                        <use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-document-view"></use>
+                    </svg>
                 </span>
             </span>
             View Records
         </a>
-
     </p>
 </f:section>
 </html>

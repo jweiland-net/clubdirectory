@@ -3,7 +3,6 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2013-03-28T08:36:00Z" product-name="clubdirectory">
 		<header/>
 		<body>
-
 			<trans-unit id="userGroup" xml:space="preserve">
 				<source>Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</source>
 			</trans-unit>
@@ -25,7 +24,6 @@
 			<trans-unit id="emailToName" xml:space="preserve">
 				<source>email to name: The recipients email name.</source>
 			</trans-unit>
-
 		</body>
 	</file>
 </xliff>

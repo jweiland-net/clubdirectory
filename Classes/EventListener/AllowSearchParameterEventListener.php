@@ -41,7 +41,7 @@ class AllowSearchParameterEventListener extends AbstractControllerEventListener
                 'district',
                 'category',
                 'subCategory',
-                'direction',
+                'order',
                 'orderBy',
             );
 
