@@ -25,8 +25,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Controller to export clubs as CSV
  */
-#[AsController]
-class ExportModuleController extends ActionController
+class ExportController extends ActionController
 {
     /**
      * In which directory we want to export club data
@@ -88,7 +87,7 @@ class ExportModuleController extends ActionController
         $this->moduleTemplate->assign('clubs', $clubs);
         $this->moduleTemplate->assign('storagePid', $storagePid);
 
-        return $this->moduleTemplate->renderResponse('Index');
+        return $this->moduleTemplate->renderResponse('Export/Index');
     }
 
     public function showAction(): ResponseInterface
@@ -96,7 +95,7 @@ class ExportModuleController extends ActionController
         $clubs = $this->clubRepository->findAllForExport();
         $this->moduleTemplate->assign('clubs', $clubs);
 
-        return $this->moduleTemplate->renderResponse('Show');
+        return $this->moduleTemplate->renderResponse('Index/Show');
     }
 
     /**
