@@ -1,15 +1,15 @@
 <html data-namespace-typo3-fluid="true" xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 
-<f:layout name="Module" />
+<f:layout name="Module"/>
 
 <f:section name="Content">
     <f:flashMessages/>
 
-	<h1>Clubdirectory: CSV-Export</h1>
+    <h1>Clubdirectory: CSV-Export</h1>
 
-	<f:be.infobox title="Information" state="-1" disableIcon="false">
-		Will only export clubs where postal address is filled
-	</f:be.infobox>
+    <f:be.infobox title="Information" state="-1" disableIcon="false">
+        Will only export clubs where postal address is filled
+    </f:be.infobox>
 
     <f:if condition="{clubs->f:count()} <= 1">
         <f:then>
@@ -25,40 +25,40 @@
                             <f:if condition="{i.isFirst}">
                                 <f:then>
                                     <thead>
-                                        <tr>
-                                            <f:for each="{club}" as="column">
-                                                <th>{column}</th>
-                                            </f:for>
-                                        </tr>
+                                    <tr>
+                                        <f:for each="{club}" as="column">
+                                            <th>{column}</th>
+                                        </f:for>
+                                    </tr>
                                     </thead>
                                 </f:then>
                                 <f:else>
                                     <tbody>
-                                        <tr class="nowrap">
-                                            <f:for each="{club}" as="row">
-                                                <td>{row}</td>
-                                            </f:for>
-                                        </tr>
+                                    <tr class="nowrap">
+                                        <f:for each="{club}" as="row">
+                                            <td>{row}</td>
+                                        </f:for>
+                                    </tr>
                                     </tbody>
                                 </f:else>
                             </f:if>
                         </f:for>
                         <tfoot>
-                            <tr>
-                                <td colspan="8">
-                                    <f:variable name="entries" value="{f:count(subject: '{clubs}')}"/>
-                                    <f:variable name="entries" value="{entries - 1}"/>
-                                     {entries}
-                                    <f:if condition="{entries} > 1">
-                                        <f:then>
-                                            Entries
-                                        </f:then>
-                                        <f:else>
-                                            Entry
-                                        </f:else>
-                                    </f:if>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="8">
+                                <f:variable name="entries" value="{f:count(subject: '{clubs}')}"/>
+                                <f:variable name="entries" value="{entries - 1}"/>
+                                {entries}
+                                <f:if condition="{entries} > 1">
+                                    <f:then>
+                                        Entries
+                                    </f:then>
+                                    <f:else>
+                                        Entry
+                                    </f:else>
+                                </f:if>
+                            </td>
+                        </tr>
                         </tfoot>
                     </table>
                 </div>
@@ -78,7 +78,9 @@
                 <a href="{f:uri.action(action: 'index', controller: 'ExportModule')}" class="btn btn-default">
                     <span class="t3js-icon icon icon-size-small icon-state-default icon-apps-filetree-folder-default" data-identifier="apps-filetree-folder-default" aria-hidden="true" target="_blank">
                         <span class="icon-markup">
-                            <svg class="icon-color"><use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-arrow-down-left"></use></svg>
+                            <svg class="icon-color">
+                                <use xlink:href="/_assets/1ee1d3e909b58d32e30dcea666dd3224/Icons/T3Icons/sprites/actions.svg#actions-arrow-down-left"></use>
+                            </svg>
                         </span>
                     </span>
                     Back to overview
