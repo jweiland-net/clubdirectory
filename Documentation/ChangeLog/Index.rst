@@ -7,23 +7,35 @@
 ChangeLog
 =========
 
+Version 8.0.2
+=============
+
+*   Repair search and filtering
+*   Repair CSV download in BE detail view
+*   Repair link to show detail action
+*   Repair backend module
+*   Remove userfunc from ext_localconf.php
+*   Remove deprecated and removed CSH lang files
+*   Upgrade sys_language_uid, hidden, starttime and endtime of TCA
+*   Use type page for pages in site setting definitions
+
 Version 8.0.1
 =============
 
-*    Fixed SiteSets name
-*    Fixed Plugin Preview
+*   Fixed SiteSets name
+*   Fixed Plugin Preview
 
 Version 8.0.0
 =============
 
-*    TYPO3 Version compatibility for 13 LTS
-*    Removed Version compatibility for 12 LTS and below
-*    Updated Test Suite
-*    Migrate clubdirectory plugins to CTypes
-*    Restructured ExtConf file
-*    SiteSets added and removed TypoScript configuration
-*    Migrated tests to "podman"
-*    Upgrade tests against MariaDB 10.4 to 10.5
+*   TYPO3 Version compatibility for 13 LTS
+*   Removed Version compatibility for 12 LTS and below
+*   Updated Test Suite
+*   Migrate clubdirectory plugins to CTypes
+*   Restructured ExtConf file
+*   SiteSets added and removed TypoScript configuration
+*   Migrated tests to "podman"
+*   Upgrade tests against MariaDB 10.4 to 10.5
 
 Version 7.0.1
 =============
