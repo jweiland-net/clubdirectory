@@ -73,7 +73,7 @@ class MapHelper
                     $address->setTxMaps2Uid($poiCollection);
                 } else {
                     foreach ($this->geoCodeService->getErrors() as $error) {
-                        $actionController->addFlashMessage($error->getMessage(), $error->getTitle(), $error->getSeverity()->value);
+                        $actionController->addFlashMessage($error->getMessage(), $error->getTitle(), $error->getSeverity());
                     }
 
                     return false;
