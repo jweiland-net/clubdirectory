@@ -40,7 +40,7 @@ class MapController extends ActionController
         return $this->htmlResponse();
     }
 
-    public function createAction(Club $club): void
+    public function createAction(Club $club): ResponseInterface
     {
         if ($this->frontendUserRepository->getCurrentFrontendUserUid()) {
             $this->view->assign('club', $club);
@@ -55,7 +55,7 @@ class MapController extends ActionController
             $this->addFlashMessage('There is no valid user logged in. So record was not saved');
         }
 
-        $this->redirect('list', 'Club');
+        return $this->redirect('list', 'Club');
     }
 
     #[Extbase\IgnoreValidation(['value' => 'club'])]
@@ -68,10 +68,10 @@ class MapController extends ActionController
         return $this->htmlResponse();
     }
 
-    public function updateAction(Club $club): void
+    public function updateAction(Club $club): ResponseInterface
     {
         if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
-            $this->errorAction();
+            return $this->errorAction();
         }
 
         $this->clubRepository->update($club);
@@ -82,6 +82,6 @@ class MapController extends ActionController
         );
         $club->setHidden(true);
 
-        $this->redirect('list', 'Club', null, ['club' => $club]);
+        return $this->redirect('list', 'Club', null, ['club' => $club]);
     }
 }

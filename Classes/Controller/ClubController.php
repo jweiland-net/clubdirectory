@@ -120,7 +120,7 @@ class ClubController extends ActionController
     }
 
     #[Extbase\Validate(['param' => 'club', 'validator' => ClubValidator::class])]
-    public function createAction(Club $club): void
+    public function createAction(Club $club): ResponseInterface
     {
         if ($this->frontendUserRepository->getCurrentFrontendUserRecord() !== []) {
             $feUser = $this->frontendUserRepository->findByUid(
@@ -144,11 +144,11 @@ class ClubController extends ActionController
             $this->clubRepository->update($club);
             $this->persistenceManager->persistAll();
 
-            $this->redirect('new', 'Map', 'clubdirectory', ['club' => $club]);
-        } else {
-            $this->addFlashMessage('There is no valid user logged in. So record was not saved');
-            $this->redirect('list');
+            return $this->redirect('new', 'Map', 'clubdirectory', ['club' => $club]);
         }
+
+        $this->addFlashMessage('There is no valid user logged in. So record was not saved');
+        return $this->redirect('list');
     }
 
     public function initializeEditAction(): void
@@ -230,12 +230,13 @@ class ClubController extends ActionController
         $this->emitInitializeControllerAction();
     }
 
-    public function activateAction(Club $club): void
+    public function activateAction(Club $club): ResponseInterface
     {
         $club->setHidden(false);
         $this->clubRepository->update($club);
         $this->addFlashMessage(LocalizationUtility::translate('clubActivated', 'clubdirectory'));
-        $this->redirect('list', 'Club');
+
+        return $this->redirect('list', 'Club');
     }
 
     /**
