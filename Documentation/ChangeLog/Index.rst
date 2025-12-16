@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+Version 8.0.3
+=============
+
+*   Retrieve FE user from request instead from TSFE
+*   Set return value for create and update actions
+
 Version 8.0.2
 =============
 
