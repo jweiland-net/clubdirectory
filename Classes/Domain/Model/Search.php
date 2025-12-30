@@ -94,8 +94,8 @@ class Search
     }
 
     /**
-     * Helper method to fill selectbox in fluid template {search.direction}
-     * Get order directions
+     * Helper method to fill selectbox in fluid template {search.order}
+     * Get sorting order
      */
     public function getSortingOrders(): array
     {

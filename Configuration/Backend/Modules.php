@@ -9,25 +9,23 @@ declare(strict_types=1);
  * LICENSE file that was distributed with this source code.
  */
 
-use JWeiland\Clubdirectory\Controller\ExportModuleController;
+use JWeiland\Clubdirectory\Controller\ExportController;
 
 /**
  * Definitions for modules provided by EXT:clubdirectory
  */
 return [
-    'club' => [
+    'web_clubdirectory' => [
         'parent' => 'web',
         'position' => ['after' => 'web_info'],
-        'access' => 'user',
+        'access' => 'user,group',
         'workspaces' => 'live',
         'path' => '/module/web/club',
         'labels' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_export.xlf',
         'iconIdentifier' => 'ext-clubdirectory-be-module-icon',
-        'extensionName' => 'clubdirectory',
+        'extensionName' => 'Clubdirectory',
         'controllerActions' => [
-            ExportModuleController::class => [
-                'index', 'show',
-            ],
+            ExportController::class => 'index, show',
         ],
     ],
 ];

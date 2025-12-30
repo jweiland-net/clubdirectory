@@ -8,7 +8,8 @@
     <f:if condition="{club.currentUserCanEditClub}">
         <p>
             <f:link.action action="edit" arguments="{club: club}" title="{f:translate(key: 'edit')}">
-                <span>{f:translate(key: "edit")}</span><span aria-hidden="true" class="icon-arrowright"></span>
+                <span>{f:translate(key: "edit")}</span>
+                <span aria-hidden="true" class="icon-arrowright"></span>
             </f:link.action>
         </p>
     </f:if>

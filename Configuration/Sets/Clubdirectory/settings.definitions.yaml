@@ -1,6 +1,6 @@
 categories:
   clubdirectory:
-    label: 'clubdirectory'
+    label: 'Clubdirectory'
   clubdirectory.templates:
     label: 'Templates'
     parent: clubdirectory
@@ -42,11 +42,12 @@ settings:
     description: 'Folder that stores all POIs'
     type: int
     default: 0
+
   clubdirectory.pidOfDetailPage:
     label: 'Pid of Detail Page'
     category: clubdirectory.settings
     description: 'Page with detail page plugin'
-    type: int
+    type: page
     default: 0
   clubdirectory.pageBrowser.itemsPerPage:
     label: 'Items per page for pagination'
@@ -58,14 +59,14 @@ settings:
     label: 'Pid of Maps2 Plugins'
     category: clubdirectory.settings
     description: 'Storage Page Uid of Maps2 Plugin'
-    type: int
+    type: page
     default: 0
   clubdirectory.updateReferenceIndex:
     label: 'Update Reference Index'
     category: clubdirectory.settings
     description: 'Enable or disable updating the reference index'
     type: bool
-    default: 1
+    default: true
   clubdirectory.newUploadPath:
     label: 'New upload path'
     category: clubdirectory.settings
@@ -191,10 +192,10 @@ settings:
     category: clubdirectory.glossary2
     description: ''
     type: bool
-    default: 1
+    default: true
   clubdirectory.glossary2.showAllLink:
     label: 'Show "All" Link in Glossary'
     category: clubdirectory.glossary2
     description: ''
     type: bool
-    default: 1
+    default: true

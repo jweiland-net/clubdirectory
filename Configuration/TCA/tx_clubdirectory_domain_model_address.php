@@ -56,7 +56,9 @@ return [
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => ['type' => 'language'],
+            'config' => [
+                'type' => 'language',
+            ],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
@@ -77,17 +79,11 @@ return [
         ],
         'hidden' => [
             'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.visible',
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
                 'renderType' => 'checkboxToggle',
-                'items' => [
-                    [
-                        'label' => '',
-                        1 => '',
-                        'invertStateDisplay' => true,
-                    ],
-                ],
+                'default' => 0,
             ],
         ],
         'cruser_id' => [
@@ -119,11 +115,6 @@ return [
             'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:starttime_formlabel',
             'config' => [
                 'type' => 'datetime',
-                'size' => 16,
-                'default' => 0,
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true,
-                ],
             ],
         ],
         'endtime' => [
@@ -131,11 +122,6 @@ return [
             'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:endtime_formlabel',
             'config' => [
                 'type' => 'datetime',
-                'size' => 16,
-                'default' => 0,
-                'behaviour' => [
-                    'allowLanguageSynchronization' => true,
-                ],
             ],
         ],
         'title' => [
