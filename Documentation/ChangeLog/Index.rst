@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 8.0.4
+=============
+
+*   [BUGFIX] Fixed Property Mapper with CheckFal validation issues
+
 Version 8.0.3
 =============
 
