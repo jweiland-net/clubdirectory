@@ -106,7 +106,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         PropertyMappingConfigurationInterface $configuration = null,
     ) {
         $this->initialize($configuration);
-        $originalSource = $source;
         $filesToProcess = [];
         $rightsConfiguration = [];
 
