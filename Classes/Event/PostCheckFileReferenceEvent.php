@@ -49,7 +49,7 @@ class PostCheckFileReferenceEvent
         return $this->key;
     }
 
-    public function getUploadedFile(): array
+    public function getUploadedFile(): UploadedFile
     {
         return $this->uploadedFile;
     }
