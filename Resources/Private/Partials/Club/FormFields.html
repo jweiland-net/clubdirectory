@@ -194,8 +194,8 @@
 </f:section>
 
 <f:section name="renderLabel">
-    <f:variable name="tableName">tx_clubdirectory_domain_model_{f:if(condition: domain, then: domain, else: 'club')}
-    </f:variable>
+    <f:variable name="tableName">tx_clubdirectory_domain_model_{f:if(condition: domain, then: domain, else: 'club')}</f:variable>
+
     <label for="{column}">
         {f:translate(key: "{tableName}.{column}")}
         <f:if condition="{mandatory}">
