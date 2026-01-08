@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 8.0.6
+=============
+
+*   [BUGFIX] Issue with frontend file upload in create and upload module fixed
+
 Version 8.0.5
 =============
 
