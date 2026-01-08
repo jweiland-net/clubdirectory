@@ -33,35 +33,17 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class UploadMultipleFilesConverter extends AbstractTypeConverter
 {
-    /**
-     * @var array<string>
-     */
-    protected $sourceTypes = ['array'];
+    protected array $sourceTypes = ['array'];
 
-    /**
-     * @var string
-     */
-    protected $targetType = ObjectStorage::class;
+    protected string $targetType = ObjectStorage::class;
 
-    /**
-     * @var int
-     */
-    protected $priority = 2;
+    protected int $priority = 2;
 
-    /**
-     * @var Folder
-     */
-    protected $uploadFolder;
+    protected Folder $uploadFolder;
 
-    /**
-     * @var PropertyMappingConfigurationInterface
-     */
-    protected $converterConfiguration = [];
+    protected array|PropertyMappingConfigurationInterface $converterConfiguration = [];
 
-    /**
-     * @var EventDispatcher
-     */
-    protected $eventDispatcher;
+    protected EventDispatcher $eventDispatcher;
 
     /**
      * Do not inject this property, as EXT:checkfaluploads may not be loaded

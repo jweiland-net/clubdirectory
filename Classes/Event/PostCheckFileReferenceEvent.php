@@ -25,10 +25,7 @@ class PostCheckFileReferenceEvent
 
     protected ?FileReference $alreadyPersistedImage = null;
 
-    /**
-     * @var Error|null
-     */
-    protected $error;
+    protected ?Error $error;
 
     public function __construct(
         array $source,
