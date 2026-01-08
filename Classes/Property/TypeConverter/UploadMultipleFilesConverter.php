@@ -184,7 +184,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         foreach ($source as $uploadedFile) {
             if ($uploadedFile instanceof FileReference) {
                 $references->attach($uploadedFile);
-            } else if ($uploadedFile instanceof UploadedFile) {
+            } elseif ($uploadedFile instanceof UploadedFile) {
                 $references->attach($this->getExtbaseFileReference($uploadedFile));
             }
         }
