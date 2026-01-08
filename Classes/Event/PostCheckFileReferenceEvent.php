@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Event;
 
+
+use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Error\Error;
 
@@ -20,9 +22,9 @@ class PostCheckFileReferenceEvent
 
     protected int $key = 0;
 
-    protected array $uploadedFile = [];
+    protected ?UploadedFile $uploadedFile = null;
 
-    protected FileReference $alreadyPersistedImage;
+    protected ?FileReference $alreadyPersistedImage = null;
 
     /**
      * @var Error|null
@@ -32,7 +34,7 @@ class PostCheckFileReferenceEvent
     public function __construct(
         array $source,
         int $key,
-        array $uploadedFile,
+        ?UploadedFile $uploadedFile = null,
         ?FileReference $alreadyPersistedImage = null,
     ) {
         $this->source = $source;
