@@ -14,6 +14,7 @@ namespace JWeiland\Clubdirectory\Property\TypeConverter;
 use JWeiland\Checkfaluploads\Service\FalUploadService;
 use JWeiland\Clubdirectory\Event\PostCheckFileReferenceEvent;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
+use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Folder;
@@ -85,13 +86,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     {
         // check if $source consists of uploaded files
         foreach ($source as $uploadedFile) {
-            if (!isset(
-                $uploadedFile['error'],
-                $uploadedFile['name'],
-                $uploadedFile['size'],
-                $uploadedFile['tmp_name'],
-                $uploadedFile['type'],
-            )) {
+            if (!$uploadedFile instanceof UploadedFile) {
                 return false;
             }
         }
@@ -141,15 +136,15 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             }
 
             // Check if uploaded file returns an error
-            if ($uploadedFile['error']) {
+            if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
                 return new Error(
-                    LocalizationUtility::translate('error.upload', 'clubdirectory') . $uploadedFile['error'],
+                    LocalizationUtility::translate('error.upload', 'clubdirectory') . $uploadedFile->getError(),
                     1396957314,
                 );
             }
 
             // Check if file extension is allowed
-            $fileParts = GeneralUtility::split_fileref($uploadedFile['name']);
+            $fileParts = GeneralUtility::split_fileref($uploadedFile->getClientFilename());
             if (!GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], $fileParts['fileext'])) {
                 return new Error(
                     LocalizationUtility::translate(
@@ -189,7 +184,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         foreach ($source as $uploadedFile) {
             if ($uploadedFile instanceof FileReference) {
                 $references->attach($uploadedFile);
-            } else {
+            } else if ($uploadedFile instanceof UploadedFile) {
                 $references->attach($this->getExtbaseFileReference($uploadedFile));
             }
         }
@@ -264,19 +259,32 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      * Check, if we have a valid uploaded file
      * Error = 4: No file uploaded
      */
-    protected function isValidUploadFile(array $uploadedFile): bool
+    protected function isValidUploadFile(UploadedFile $uploadedFile): bool
     {
-        if ((int)($uploadedFile['error'] ?? 0) !== 0) {
+
+        // upload must be successful
+        if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
             return false;
         }
 
-        return isset(
-            $uploadedFile['error'],
-            $uploadedFile['name'],
-            $uploadedFile['size'],
-            $uploadedFile['tmp_name'],
-            $uploadedFile['type'],
-        );
+        // filename must exist
+        if (trim((string)$uploadedFile->getClientFilename()) === '') {
+            return false;
+        }
+
+        // size must be greater than 0
+        if ($uploadedFile->getSize() === null || $uploadedFile->getSize() <= 0) {
+            return false;
+        }
+
+        // temp file / stream must exist
+        try {
+            $uploadedFile->getStream();
+        } catch (\RuntimeException) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -300,7 +308,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     /**
      * upload file and get a file reference object.
      */
-    protected function getExtbaseFileReference(array $source): FileReference
+    protected function getExtbaseFileReference(UploadedFile $source): FileReference
     {
         $extbaseFileReference = GeneralUtility::makeInstance(FileReference::class);
         $extbaseFileReference->setOriginalResource($this->getCoreFileReference($source));
@@ -311,7 +319,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     /**
      * Upload file and get a file reference object.
      */
-    protected function getCoreFileReference(array $source): \TYPO3\CMS\Core\Resource\FileReference
+    protected function getCoreFileReference(UploadedFile $source): \TYPO3\CMS\Core\Resource\FileReference
     {
         $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         $uploadedFile = $this->uploadFolder->addUploadedFile($source, DuplicationBehavior::RENAME);

@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Event;
 
-
 use TYPO3\CMS\Core\Http\UploadedFile;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Error\Error;
