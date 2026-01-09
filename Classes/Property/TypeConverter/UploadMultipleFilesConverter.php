@@ -29,7 +29,11 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * A for PropertyMapper to convert multiple file uploads into an array
+ * A TypeConverter for PropertyMapper to convert multiple file uploads into an array
+ *
+ * NOTE: This TypeConverter must NOT be registered via Symfony DI with the tag "extbase.type_converter".
+ * It is designed for explicit usage within the clubdirectory extension and should only be applied
+ * to specific properties manually via PropertyMappingConfiguration.
  */
 class UploadMultipleFilesConverter extends AbstractTypeConverter
 {
