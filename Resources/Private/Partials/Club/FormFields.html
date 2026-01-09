@@ -42,12 +42,11 @@
             </div>
             <f:if condition="{club.logo.0}">
                 <div class="form-group form-check">
-                    <f:form.checkbox property="logo.0.delete"
-                                     id="logoDelete"
-                                     class="form-check-input"
-                                     value="1"/>
-                    <label class="form-check-label" for="logoDelete">
-                        {f:translate(key: "deleteLogo")}
+                    <f:form.uploadDeleteCheckbox id="logoDelete"
+                                                 property="logo"
+                                                 fileReference="{club.logo.0}"/>
+                    <label class="form-check-label" for="imageDelete{globalIndex}">
+                        {f:translate(key: "deleteImage")}
                     </label>
                 </div>
             </f:if>
@@ -82,10 +81,9 @@
                 </div>
                 <f:if condition="{currentImage}">
                     <div class="form-group form-check">
-                        <f:form.checkbox property="images.{globalIndex}.delete"
-                                         id="imageDelete{globalIndex}"
-                                         class="form-check-input"
-                                         value="1"/>
+                        <f:form.uploadDeleteCheckbox id="imageDelete{globalIndex}"
+                                                     property="images"
+                                                     fileReference="{currentImage}"/>
                         <label class="form-check-label" for="imageDelete{globalIndex}">
                             {f:translate(key: "deleteImage")}
                         </label>
