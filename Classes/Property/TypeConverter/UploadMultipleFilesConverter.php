@@ -45,13 +45,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
     protected EventDispatcher $eventDispatcher;
 
-    /**
-     * Do not inject this property, as EXT:checkfaluploads may not be loaded
-     *
-     * @var FalUploadService
-     */
-    protected $falUploadService;
-
     public function injectEventDispatcher(EventDispatcher $eventDispatcher): void
     {
         $this->eventDispatcher = $eventDispatcher;
@@ -299,7 +292,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     }
 
     /**
-     * Upload file and get a file reference object.
+     * Upload the file and get a file reference object.
      */
     protected function getCoreFileReference(UploadedFile $source): \TYPO3\CMS\Core\Resource\FileReference
     {
@@ -320,15 +313,15 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     {
         /** @var PostCheckFileReferenceEvent $modifiedEvent */
         $modifiedEvent = $this->eventDispatcher->dispatch($event);
+
         return $modifiedEvent->getError();
     }
 
+    /**
+     * Do not inject this service, as checkfaluploads may not be loaded
+     */
     protected function getFalUploadService(): FalUploadService
     {
-        if ($this->falUploadService === null) {
-            $this->falUploadService = GeneralUtility::makeInstance(FalUploadService::class);
-        }
-
-        return $this->falUploadService;
+        return GeneralUtility::makeInstance(FalUploadService::class);
     }
 }
