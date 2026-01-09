@@ -254,9 +254,9 @@ class Club extends AbstractEntity
         return $currentUserCanEditThisClub;
     }
 
-    public function getLogo(): array
+    public function getLogo(): ObjectStorage
     {
-        return $this->logo->toArray();
+        return $this->logo;
     }
 
     public function getFirstLogo(): ?FileReference
