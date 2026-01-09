@@ -69,7 +69,7 @@ class AddFileUploadConfigurationEventListener extends AbstractControllerEventLis
         }
 
         $fileHandlingServiceConfiguration->addFileUploadConfiguration(
-            $fileUploadConfiguration
+            $fileUploadConfiguration,
         );
 
         $event->getArguments()
