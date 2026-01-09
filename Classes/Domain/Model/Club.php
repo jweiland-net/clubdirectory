@@ -265,11 +265,6 @@ class Club extends AbstractEntity
         return $this->logo->current();
     }
 
-    public function getOriginalLogo(): ObjectStorage
-    {
-        return $this->logo;
-    }
-
     public function setLogo(ObjectStorage $logo): void
     {
         $this->logo = $logo;
@@ -285,17 +280,7 @@ class Club extends AbstractEntity
         $this->logo->detach($logo);
     }
 
-    public function getImages(): array
-    {
-        $references = [];
-        foreach ($this->images as $image) {
-            $references[] = $image;
-        }
-
-        return $references;
-    }
-
-    public function getOriginalImages(): ObjectStorage
+    public function getImages(): ObjectStorage
     {
         return $this->images;
     }

@@ -3,17 +3,19 @@
       data-namespace-typo3-fluid="true">
 
 <div class="media mb-3">
-    <f:if condition="{club.logo.0}">
-        <f:image image="{club.logo.0}"
-                 class="mr-3"
-                 alt="{club.title}"
-                 width="{settings.show.logo.width}"
-                 height="{settings.show.logo.height}"
-                 minWidth="{settings.show.logo.minWidth}"
-                 maxWidth="{settings.show.logo.maxWidth}"
-                 minHeight="{settings.show.logo.minHeight}"
-                 maxHeight="{settings.show.logo.maxHeight}"
-        />
+    <f:if condition="{club.logo}">
+        <f:for each="{club.logo}" as="logo">
+            <f:image image="{logo}"
+                     class="mr-3"
+                     alt="{club.title}"
+                     width="{settings.show.logo.width}"
+                     height="{settings.show.logo.height}"
+                     minWidth="{settings.show.logo.minWidth}"
+                     maxWidth="{settings.show.logo.maxWidth}"
+                     minHeight="{settings.show.logo.minHeight}"
+                     maxHeight="{settings.show.logo.maxHeight}"
+            />
+        </f:for>
     </f:if>
     <div class="media-body">
         <h2 class="mt-0">{club.title}</h2>

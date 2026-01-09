@@ -26,13 +26,15 @@
     <f:render section="renderLabel" arguments="{column: 'logo'}"/>
 
     <div class="media mb-3">
-        <f:if condition="{club.logo.0}">
-            <f:image image="{club.logo.0}"
-                     class="mr-3"
-                     alt="{club.title}"
-                     width="{settings.list.image.width}"
-                     height="{settings.list.image.height}"
-            />
+        <f:if condition="{club.logo}">
+            <f:for each="{club.logo}" as="logo">
+                <f:image image="{logo}"
+                         class="mr-3"
+                         alt="{club.title}"
+                         width="{settings.list.image.width}"
+                         height="{settings.list.image.height}"
+                />
+            </f:for>
         </f:if>
         <div class="media-body">
             <div class="form-group">
@@ -40,15 +42,17 @@
                                class="form-control-file"
                                id="logo"/>
             </div>
-            <f:if condition="{club.logo.0}">
-                <div class="form-group form-check">
-                    <f:form.uploadDeleteCheckbox id="logoDelete"
-                                                 property="logo"
-                                                 fileReference="{club.logo.0}"/>
-                    <label class="form-check-label" for="imageDelete{globalIndex}">
-                        {f:translate(key: "deleteImage")}
-                    </label>
-                </div>
+            <f:if condition="{club.logo}">
+                <f:for each="{club.logo}" as="logo">
+                    <div class="form-group form-check">
+                        <f:form.uploadDeleteCheckbox id="logoDelete"
+                                                     property="logo"
+                                                     fileReference="{logo}"/>
+                        <label class="form-check-label" for="imageDelete{globalIndex}">
+                            {f:translate(key: "deleteImage")}
+                        </label>
+                    </div>
+                </f:for>
             </f:if>
         </div>
     </div>
