@@ -196,7 +196,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         }
 
         try {
-            $uploadFolder = $this->resourceFactory->getObjectFromCombinedIdentifier($combinedUploadFolderIdentifier);
+            $uploadFolder = $this->resourceFactory->getFolderObjectFromCombinedIdentifier($combinedUploadFolderIdentifier);
         } catch (ResourceDoesNotExistException $resourceDoesNotExistException) {
             [$storageUid] = GeneralUtility::trimExplode(':', $combinedUploadFolderIdentifier);
             $resourceStorage = $this->resourceFactory->getStorageObject((int)$storageUid);
