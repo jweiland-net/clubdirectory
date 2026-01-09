@@ -41,12 +41,10 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
     protected array|PropertyMappingConfigurationInterface $converterConfiguration = [];
 
-    protected EventDispatcher $eventDispatcher;
-
-    public function injectEventDispatcher(EventDispatcher $eventDispatcher): void
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
+    public function __construct(
+        protected readonly EventDispatcher $eventDispatcher,
+        protected readonly ResourceFactory $resourceFactory,
+    ) {}
 
     public function convertFrom(
         $source,
@@ -75,7 +73,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                 $key,
             );
 
-            // If no file was uploaded use the already persisted one
+            // If no file was uploaded, use the already persisted one
             if (!$this->isValidUploadFile($uploadedFile)) {
                 if (isset($uploadedFile['delete']) && $uploadedFile['delete'] === '1') {
                     $this->deleteFile($alreadyPersistedImage);
@@ -89,7 +87,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                 continue;
             }
 
-            // Check if uploaded file returns an error
+            // Check if an uploaded file returns an error
             if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
                 return new Error(
                     LocalizationUtility::translate('error.upload', 'clubdirectory') . $uploadedFile->getError(),
@@ -133,7 +131,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             }
         }
 
-        // Upload file and add it to ObjectStorage
+        // Upload a file and add it to ObjectStorage
         $references = GeneralUtility::makeInstance(ObjectStorage::class);
         foreach ($source as $uploadedFile) {
             if ($uploadedFile instanceof FileReference) {
@@ -197,12 +195,11 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             );
         }
 
-        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         try {
-            $uploadFolder = $resourceFactory->getObjectFromCombinedIdentifier($combinedUploadFolderIdentifier);
+            $uploadFolder = $this->resourceFactory->getObjectFromCombinedIdentifier($combinedUploadFolderIdentifier);
         } catch (ResourceDoesNotExistException $resourceDoesNotExistException) {
             [$storageUid] = GeneralUtility::trimExplode(':', $combinedUploadFolderIdentifier);
-            $resourceStorage = $resourceFactory->getStorageObject((int)$storageUid);
+            $resourceStorage = $this->resourceFactory->getStorageObject((int)$storageUid);
             $uploadFolder = $resourceStorage->createFolder($combinedUploadFolderIdentifier);
         }
 
@@ -210,7 +207,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     }
 
     /**
-     * Check, if we have a valid uploaded file
+     * Check if we have a valid uploaded file
      * Error = 4: No file uploaded
      */
     protected function isValidUploadFile(UploadedFile $uploadedFile): bool
@@ -242,7 +239,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     }
 
     /**
-     * If file is in our own upload folder we can delete it from filesystem and sys_file table.
+     * If a file is in our own upload folder, we can delete it from the filesystem and sys_file table.
      */
     protected function deleteFile(?FileReference $extbaseFileReference): void
     {
@@ -275,11 +272,10 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
      */
     protected function getCoreFileReference(UploadedFile $source): \TYPO3\CMS\Core\Resource\FileReference
     {
-        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         $uploadedFile = $this->uploadFolder->addUploadedFile($source, DuplicationBehavior::RENAME);
 
         // create Core FileReference
-        return $resourceFactory->createFileReferenceObject(
+        return $this->resourceFactory->createFileReferenceObject(
             [
                 'uid_local' => $uploadedFile->getUid(),
                 'uid_foreign' => uniqid('NEW_', true),
@@ -297,7 +293,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     }
 
     /**
-     * Do not inject this service, as checkfaluploads may not be loaded
+     * Do not inject this service, as extension "checkfaluploads" may not be loaded
      */
     protected function getFalUploadService(): FalUploadService
     {
