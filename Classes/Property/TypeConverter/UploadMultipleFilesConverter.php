@@ -37,12 +37,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class UploadMultipleFilesConverter extends AbstractTypeConverter
 {
-    protected array $sourceTypes = ['array'];
-
-    protected string $targetType = ObjectStorage::class;
-
-    protected int $priority = 2;
-
     protected Folder $uploadFolder;
 
     protected array|PropertyMappingConfigurationInterface $converterConfiguration = [];
