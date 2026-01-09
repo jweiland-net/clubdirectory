@@ -37,8 +37,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class UploadMultipleFilesConverter extends AbstractTypeConverter
 {
-    protected array|PropertyMappingConfigurationInterface $converterConfiguration = [];
-
     public function __construct(
         protected readonly EventDispatcher $eventDispatcher,
         protected readonly ResourceFactory $resourceFactory,
@@ -50,11 +48,16 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         array $convertedChildProperties = [],
         PropertyMappingConfigurationInterface $configuration = null,
     ) {
-        $this->initialize($configuration);
+        if (!$configuration instanceof PropertyMappingConfigurationInterface) {
+            throw new \InvalidArgumentException(
+                'Missing PropertyMapper configuration in UploadMultipleFilesConverter',
+                1604051720,
+            );
+        }
 
         $filesToProcess = [];
         $rightsConfiguration = [];
-        $uploadFolder = $this->createUploadFolder();
+        $uploadFolder = $this->createUploadFolder($configuration);
 
         foreach ($source as $sourceItem) {
             if ($sourceItem instanceof UploadedFile) {
@@ -69,7 +72,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
         foreach ($filesToProcess as $key => $uploadedFile) {
             $alreadyPersistedImage = $this->getAlreadyPersistedFileReferenceByPosition(
-                $this->getAlreadyPersistedImages(),
+                $this->getAlreadyPersistedImages($configuration),
                 $key,
             );
 
@@ -144,21 +147,9 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         return $references;
     }
 
-    protected function initialize(?PropertyMappingConfigurationInterface $configuration): void
+    protected function getAlreadyPersistedImages(PropertyMappingConfigurationInterface $configuration): ObjectStorage
     {
-        if (!$configuration instanceof PropertyMappingConfigurationInterface) {
-            throw new \InvalidArgumentException(
-                'Missing PropertyMapper configuration in UploadMultipleFilesConverter',
-                1604051720,
-            );
-        }
-
-        $this->converterConfiguration = $configuration;
-    }
-
-    protected function getAlreadyPersistedImages(): ObjectStorage
-    {
-        $alreadyPersistedImages = $this->converterConfiguration->getConfigurationValue(
+        $alreadyPersistedImages = $configuration->getConfigurationValue(
             self::class,
             'IMAGES',
         );
@@ -173,9 +164,9 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         return $alreadyPersistedFileReferences->toArray()[$position] ?? null;
     }
 
-    protected function getTypoScriptPluginSettings(): array
+    protected function getTypoScriptPluginSettings(PropertyMappingConfigurationInterface $configuration): array
     {
-        $settings = $this->converterConfiguration->getConfigurationValue(
+        $settings = $configuration->getConfigurationValue(
             self::class,
             'settings',
         );
@@ -183,9 +174,9 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         return $settings ?? [];
     }
 
-    protected function createUploadFolder(): Folder
+    protected function createUploadFolder(PropertyMappingConfigurationInterface $configuration): Folder
     {
-        $combinedUploadFolderIdentifier = $this->getTypoScriptPluginSettings()['new']['uploadFolder'] ?? '';
+        $combinedUploadFolderIdentifier = $this->getTypoScriptPluginSettings($configuration)['new']['uploadFolder'] ?? '';
         if ($combinedUploadFolderIdentifier === '') {
             throw new \InvalidArgumentException(
                 'You have forgotten to set an Upload Folder in TypoScript for clubdirectory',
