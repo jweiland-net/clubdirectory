@@ -37,8 +37,6 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class UploadMultipleFilesConverter extends AbstractTypeConverter
 {
-    protected Folder $uploadFolder;
-
     protected array|PropertyMappingConfigurationInterface $converterConfiguration = [];
 
     public function __construct(
@@ -53,8 +51,10 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         PropertyMappingConfigurationInterface $configuration = null,
     ) {
         $this->initialize($configuration);
+
         $filesToProcess = [];
         $rightsConfiguration = [];
+        $uploadFolder = $this->createUploadFolder();
 
         foreach ($source as $sourceItem) {
             if ($sourceItem instanceof UploadedFile) {
@@ -76,7 +76,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             // If no file was uploaded, use the already persisted one
             if (!$this->isValidUploadFile($uploadedFile)) {
                 if (isset($uploadedFile['delete']) && $uploadedFile['delete'] === '1') {
-                    $this->deleteFile($alreadyPersistedImage);
+                    $this->deleteFile($alreadyPersistedImage, $uploadFolder);
                     unset($source[$key]);
                 } elseif ($alreadyPersistedImage instanceof FileReference) {
                     $source[$key] = $alreadyPersistedImage;
@@ -137,7 +137,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             if ($uploadedFile instanceof FileReference) {
                 $references->attach($uploadedFile);
             } elseif ($uploadedFile instanceof UploadedFile) {
-                $references->attach($this->getExtbaseFileReference($uploadedFile));
+                $references->attach($this->getExtbaseFileReference($uploadedFile, $uploadFolder));
             }
         }
 
@@ -154,8 +154,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         }
 
         $this->converterConfiguration = $configuration;
-
-        $this->setUploadFolder();
     }
 
     protected function getAlreadyPersistedImages(): ObjectStorage
@@ -185,7 +183,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         return $settings ?? [];
     }
 
-    protected function setUploadFolder(): void
+    protected function createUploadFolder(): Folder
     {
         $combinedUploadFolderIdentifier = $this->getTypoScriptPluginSettings()['new']['uploadFolder'] ?? '';
         if ($combinedUploadFolderIdentifier === '') {
@@ -203,7 +201,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             $uploadFolder = $resourceStorage->createFolder($combinedUploadFolderIdentifier);
         }
 
-        $this->uploadFolder = $uploadFolder;
+        return $uploadFolder;
     }
 
     /**
@@ -241,12 +239,12 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     /**
      * If a file is in our own upload folder, we can delete it from the filesystem and sys_file table.
      */
-    protected function deleteFile(?FileReference $extbaseFileReference): void
+    protected function deleteFile(?FileReference $extbaseFileReference, Folder $uploadFolder): void
     {
         if ($extbaseFileReference instanceof FileReference) {
             $coreFileReference = $extbaseFileReference->getOriginalResource();
 
-            if ($coreFileReference->getStorage()->isWithinFolder($this->uploadFolder, $coreFileReference)) {
+            if ($coreFileReference->getStorage()->isWithinFolder($uploadFolder, $coreFileReference)) {
                 try {
                     $coreFileReference->getOriginalFile()->delete();
                 } catch (\Exception $exception) {
@@ -257,12 +255,12 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     }
 
     /**
-     * upload file and get a file reference object.
+     * Upload a file and get a file reference object.
      */
-    protected function getExtbaseFileReference(UploadedFile $source): FileReference
+    protected function getExtbaseFileReference(UploadedFile $source, Folder $uploadFolder): FileReference
     {
         $extbaseFileReference = GeneralUtility::makeInstance(FileReference::class);
-        $extbaseFileReference->setOriginalResource($this->getCoreFileReference($source));
+        $extbaseFileReference->setOriginalResource($this->getCoreFileReference($source, $uploadFolder));
 
         return $extbaseFileReference;
     }
@@ -270,9 +268,9 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     /**
      * Upload the file and get a file reference object.
      */
-    protected function getCoreFileReference(UploadedFile $source): \TYPO3\CMS\Core\Resource\FileReference
+    protected function getCoreFileReference(UploadedFile $source, Folder $uploadFolder): \TYPO3\CMS\Core\Resource\FileReference
     {
-        $uploadedFile = $this->uploadFolder->addUploadedFile($source, DuplicationBehavior::RENAME);
+        $uploadedFile = $uploadFolder->addUploadedFile($source, DuplicationBehavior::RENAME);
 
         // create Core FileReference
         return $this->resourceFactory->createFileReferenceObject(
