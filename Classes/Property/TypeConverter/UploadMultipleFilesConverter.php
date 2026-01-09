@@ -48,25 +48,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    /**
-     * This implementation always returns TRUE for this method.
-     *
-     * @param mixed  $source     the source data
-     * @param string $targetType the type to convert to.
-     * @return bool true if this TypeConverter can convert from $source to $targetType, FALSE otherwise.
-     */
-    public function canConvertFrom($source, string $targetType): bool
-    {
-        // check if $source consists of uploaded files
-        foreach ($source as $uploadedFile) {
-            if (!$uploadedFile instanceof UploadedFile) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public function convertFrom(
         $source,
         $targetType,
