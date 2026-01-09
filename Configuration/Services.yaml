@@ -16,30 +16,32 @@ services:
   JWeiland\Clubdirectory\Domain\Repository\FrontendUserRepository:
     public: true
 
-  # Called by makeInstance in our ClubController
-  JWeiland\Clubdirectory\Helper\HiddenObjectHelper:
-    public: true
-
-  JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener:
+  JWeiland\Clubdirectory\EventListener\AddFileUploadConfigurationEventListener:
     tags:
     - name: event.listener
-      event: JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent
+      event: JWeiland\Clubdirectory\Event\InitializeControllerActionEvent
 
-  JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
   JWeiland\Clubdirectory\EventListener\AddGlossaryEventListener:
     tags:
     - name: event.listener
       event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
       after: JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener
 
+  JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener:
+    tags:
+      - name: event.listener
+        event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
+
   JWeiland\Clubdirectory\EventListener\AllowSearchParameterEventListener:
     tags:
     - name: event.listener
       event: JWeiland\Clubdirectory\Event\InitializeControllerActionEvent
-  JWeiland\Clubdirectory\EventListener\AssignMediaTypeConverterEventListener:
+
+  JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener:
     tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\InitializeControllerActionEvent
+      - name: event.listener
+        event: JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent
+
+  # Called by makeInstance in our ClubController
+  JWeiland\Clubdirectory\Helper\HiddenObjectHelper:
+    public: true
