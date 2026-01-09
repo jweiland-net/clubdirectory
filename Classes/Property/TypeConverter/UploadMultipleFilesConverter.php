@@ -78,10 +78,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
             // If no file was uploaded, use the already persisted one
             if (!$this->isValidUploadFile($uploadedFile)) {
-                if (isset($uploadedFile['delete']) && $uploadedFile['delete'] === '1') {
-                    $this->deleteFile($alreadyPersistedImage, $uploadFolder);
-                    unset($source[$key]);
-                } elseif ($alreadyPersistedImage instanceof FileReference) {
+                if ($alreadyPersistedImage instanceof FileReference) {
                     $source[$key] = $alreadyPersistedImage;
                 } else {
                     unset($source[$key]);
@@ -225,24 +222,6 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         }
 
         return true;
-    }
-
-    /**
-     * If a file is in our own upload folder, we can delete it from the filesystem and sys_file table.
-     */
-    protected function deleteFile(?FileReference $extbaseFileReference, Folder $uploadFolder): void
-    {
-        if ($extbaseFileReference instanceof FileReference) {
-            $coreFileReference = $extbaseFileReference->getOriginalResource();
-
-            if ($coreFileReference->getStorage()->isWithinFolder($uploadFolder, $coreFileReference)) {
-                try {
-                    $coreFileReference->getOriginalFile()->delete();
-                } catch (\Exception $exception) {
-                    // Do nothing. File already deleted or not found
-                }
-            }
-        }
     }
 
     /**
