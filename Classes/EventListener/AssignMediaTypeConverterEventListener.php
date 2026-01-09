@@ -22,8 +22,6 @@ use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 
 class AssignMediaTypeConverterEventListener extends AbstractControllerEventListener
 {
-    protected ClubRepository $clubRepository;
-
     protected array $allowedControllerActions = [
         'Club' => [
             'create',
@@ -31,19 +29,20 @@ class AssignMediaTypeConverterEventListener extends AbstractControllerEventListe
         ],
     ];
 
-    public function __construct(ClubRepository $clubRepository)
-    {
-        $this->clubRepository = $clubRepository;
-    }
+    public function __construct(
+        protected ClubRepository $clubRepository
+    ) {}
 
     public function __invoke(InitializeControllerActionEvent $event): void
     {
-        if ($this->isValidRequest($event)) {
-            if ($event->getActionName() === 'create') {
-                $this->assignTypeConverterForCreateAction($event);
-            } else {
-                $this->assignTypeConverterForUpdateAction($event);
-            }
+        if (!$this->isValidRequest($event)) {
+            return;
+        }
+
+        if ($event->getActionName() === 'create') {
+            $this->assignTypeConverterForCreateAction($event);
+        } else {
+            $this->assignTypeConverterForUpdateAction($event);
         }
     }
 
