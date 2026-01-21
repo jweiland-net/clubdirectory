@@ -7,6 +7,11 @@
 ChangeLog
 =========
 
+Version 8.1.0
+=============
+
+*   [TASK] Simplify access restiction in Backend Module configuration
+
 Version 8.0.6
 =============
 
