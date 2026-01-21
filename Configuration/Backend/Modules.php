@@ -18,7 +18,7 @@ return [
     'web_clubdirectory' => [
         'parent' => 'web',
         'position' => ['after' => 'web_info'],
-        'access' => 'user,group',
+        'access' => 'user',
         'workspaces' => 'live',
         'path' => '/module/web/club',
         'labels' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_export.xlf',
