@@ -40,16 +40,21 @@ class HiddenObjectHelper
             && $request->hasArgument($argumentName)
         ) {
             $objectRaw = $request->getArgument($argumentName);
-            if (is_array($objectRaw)) {
-                // get object from form ($_POST)
-                $object = $repository->findHiddenObject((int)$objectRaw['__identity']);
-            } else {
-                // get object from UID
-                $object = $repository->findHiddenObject((int)$objectRaw);
+            $uid = 0;
+
+            if (is_array($objectRaw) && isset($objectRaw['__identity'])) {
+                $uid = (int)$objectRaw['__identity'];
+            } elseif (is_numeric($objectRaw)) {
+                $uid = (int)$objectRaw;
             }
 
-            if ($object instanceof AbstractEntity) {
-                $this->session->registerObject($object, (string)$object->getUid());
+            if ($uid > 0) {
+                // Ensure your repository method 'findHiddenObject' still works as expected
+                $object = $repository->findHiddenObject($uid);
+
+                if ($object instanceof AbstractEntity) {
+                    $this->session->registerObject($object, (string)$object->getUid());
+                }
             }
         }
     }
