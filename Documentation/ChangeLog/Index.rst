@@ -7,6 +7,12 @@
 ChangeLog
 =========
 
+Version 8.1.1
+=============
+
+*   [TASK] Improve robustness of hidden object resolution and event
+
+
 Version 8.1.0
 =============
 
