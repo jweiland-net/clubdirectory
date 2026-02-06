@@ -53,11 +53,28 @@ class Club extends AbstractEntity
      */
     protected ObjectStorage $feUsers;
 
+    #[Extbase\FileUpload([
+        'validation' => [
+            'required' => true,
+            'maxFiles' => 1,
+            'fileSize' => ['minimum' => '0K', 'maximum' => '14M'],
+            'mimeType' => ['allowedMimeTypes' => ['image/jpeg', 'image/png']],
+        ],
+        'uploadFolder' => '1:/user_upload/tx_clubdirectory/'
+    ])]
     /**
      * @var ObjectStorage<FileReference>
      */
     protected ObjectStorage $logo;
 
+    #[Extbase\FileUpload([
+        'validation' => [
+            'required' => false,
+            'fileSize' => ['minimum' => '0K', 'maximum' => '14M'],
+            'mimeType' => ['allowedMimeTypes' => ['image/jpeg', 'image/png']],
+        ],
+        'uploadFolder' => '1:/user_upload/tx_clubdirectory/'
+    ])]
     /**
      * @var ObjectStorage<FileReference>
      */

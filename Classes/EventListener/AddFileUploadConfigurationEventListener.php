@@ -15,6 +15,7 @@ use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\FileUploadConfiguration;
 use TYPO3\CMS\Extbase\Validation\Validator\FileExtensionValidator;
+use TYPO3\CMS\Extbase\Validation\Validator\FileSizeValidator;
 use TYPO3\CMS\Extbase\Validation\Validator\MimeTypeValidator;
 
 class AddFileUploadConfigurationEventListener extends AbstractControllerEventListener
@@ -28,13 +29,22 @@ class AddFileUploadConfigurationEventListener extends AbstractControllerEventLis
 
     public function __invoke(InitializeControllerActionEvent $event): void
     {
+        return;
         if (!$this->isValidRequest($event)) {
             return;
         }
 
+        // Set Required for new action
+        $fileRequired = $event->getActionName() === 'create';
+
         $mimeTypeValidator = $this->getMimeTypeValidator();
         $mimeTypeValidator->setOptions([
-            'allowedMimeTypes' => ['image/jpeg', 'image/png'],
+            'allowedMimeTypes' => ['image/jpeg', 'image/jpg', 'image/png'],
+        ]);
+
+        $fileSizeValidator = $this->getFileSizeValidator();
+        $fileSizeValidator->setOptions([
+            'maximum' => '5M',
         ]);
 
         $fileExtensionValidator = $this->getFileExtensionValidator();
@@ -52,30 +62,23 @@ class AddFileUploadConfigurationEventListener extends AbstractControllerEventLis
             );
         }
 
-        $fileHandlingServiceConfiguration = $event
-            ->getArguments()
-            ->getArgument('club')
-            ->getFileHandlingServiceConfiguration();
-
-        $fileUploadConfiguration = (new FileUploadConfiguration('logo'))
-            ->addValidator($mimeTypeValidator)
-            ->addValidator($fileExtensionValidator)
-            ->setMaxFiles(1)
-            ->setUploadFolder($uploadFolder);
-
-        // Set Required for new action
-        if ($event->getActionName() === 'create') {
-            $fileUploadConfiguration->setRequired();
+        $arguments = $event->getArguments();
+        if ($arguments->hasArgument('club')) {
+            /**
+            $club = $arguments->getArgument('club');
+            $fileHandlingServiceConfiguration = $club->getFileHandlingServiceConfiguration();
+            $fileHandlingServiceConfiguration->  (
+                (new FileUploadConfiguration('logo.0'))
+                    ->addValidator($mimeTypeValidator)
+                    ->addValidator($fileExtensionValidator)
+                    ->addValidator($fileSizeValidator)
+                    ->setMaxFiles(1)
+                    ->setUploadFolder($uploadFolder)
+                    ->setRequired($fileRequired)
+            );
+            $club->getPropertyMappingConfiguration()->skipProperties('logo.0');
+             **/
         }
-
-        $fileHandlingServiceConfiguration->addFileUploadConfiguration(
-            $fileUploadConfiguration,
-        );
-
-        $event->getArguments()
-            ->getArgument('club')
-            ->getPropertyMappingConfiguration()
-            ->skipProperties('logo');
     }
 
     protected function getMimeTypeValidator(): MimeTypeValidator
@@ -86,5 +89,10 @@ class AddFileUploadConfigurationEventListener extends AbstractControllerEventLis
     protected function getFileExtensionValidator(): FileExtensionValidator
     {
         return GeneralUtility::makeInstance(FileExtensionValidator::class);
+    }
+
+    private function getFileSizeValidator(): FileSizeValidator
+    {
+        return GeneralUtility::makeInstance(FileSizeValidator::class);
     }
 }

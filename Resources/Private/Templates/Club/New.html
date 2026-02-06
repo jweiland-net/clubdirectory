@@ -10,8 +10,7 @@
     <f:render partial="FormErrors" arguments="{object: club, type: 'club'}"/>
 
     <f:form action="create" enctype="multipart/form-data" name="club" object="{club}" class="extform withinfo">
-        <legend class="powermail_legend">{f:translate(key: "newEntry")}</legend>
-
+        <legend class="legend">{f:translate(key: "newEntry")}</legend>
         <f:render partial="Club/FormFields" arguments="{_all}"/>
 
         <div class="btn-group next submit">
