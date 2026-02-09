@@ -11,14 +11,15 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\EventListener;
 
+use JWeiland\Checkfaluploads\Service\FalUploadService;
 use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\FileUploadConfiguration;
-use TYPO3\CMS\Extbase\Validation\Validator\FileExtensionValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\FileSizeValidator;
-use TYPO3\CMS\Extbase\Validation\Validator\MimeTypeValidator;
+use TYPO3\CMS\Extbase\Error\Error;
 
-class AddFileUploadConfigurationEventListener extends AbstractControllerEventListener
+#[AsEventListener('clubdirectory/checkFalUploadsValidationEventListener')]
+class CheckFalUploadsValidationEventListener extends AbstractControllerEventListener
 {
     protected array $allowedControllerActions = [
         'Club' => [
@@ -29,70 +30,56 @@ class AddFileUploadConfigurationEventListener extends AbstractControllerEventLis
 
     public function __invoke(InitializeControllerActionEvent $event): void
     {
-        return;
-        if (!$this->isValidRequest($event)) {
+        if (!$this->isValidRequest($event) || !$this->isCheckFalUploadsAvailable()) {
             return;
         }
 
-        // Set Required for new action
-        $fileRequired = $event->getActionName() === 'create';
+        $request = $event->getRequest();
+        $club = $request->hasArgument('club') ? $request->getArgument('club') : '';
 
-        $mimeTypeValidator = $this->getMimeTypeValidator();
-        $mimeTypeValidator->setOptions([
-            'allowedMimeTypes' => ['image/jpeg', 'image/jpg', 'image/png'],
-        ]);
-
-        $fileSizeValidator = $this->getFileSizeValidator();
-        $fileSizeValidator->setOptions([
-            'maximum' => '5M',
-        ]);
-
-        $fileExtensionValidator = $this->getFileExtensionValidator();
-        $fileExtensionValidator->setOptions(['allowedFileExtensions' => ['jpg', 'jpeg', 'png']]);
-
-        // get TypoScript Configuration from event
-        $settings = $event->getSettings();
-
-        // get and assign upload path for logo from settings
-        $uploadFolder = $settings['new']['uploadFolder'] ?? '';
-        if ($uploadFolder === '') {
-            throw new \InvalidArgumentException(
-                'You have forgotten to set an Upload Folder in TypoScript for clubdirectory',
-                1603808777,
-            );
+        // Check Logo File Uploaded
+        if (isset($club['logo']) && is_array($club['logo']) && $club['logo'] !== []) {
+            $logoUploadError = $this->getFalUploadService()->checkFile($club, 'logo');
+            if ($logoUploadError instanceof Error) {
+                $this->addErrorToValidationResults($event, $logoUploadError, 'logo');
+            }
         }
 
+        // Check Images are Uploaded with Proper Rights
+        if (isset($club['images']) && is_array($club['images']) && $club['images'] !== []) {
+            $imageUploadError = $this->getFalUploadService()->checkFile($club, 'images');
+            if ($imageUploadError instanceof Error) {
+                $this->addErrorToValidationResults($event, $imageUploadError, 'images');
+            }
+        }
+    }
+
+    private function isCheckFalUploadsAvailable(): bool
+    {
+        if (ExtensionManagementUtility::isLoaded('checkfaluploads')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function addErrorToValidationResults(
+        InitializeControllerActionEvent $event,
+        Error $error,
+        string $property
+    ): void {
         $arguments = $event->getArguments();
+
         if ($arguments->hasArgument('club')) {
-            /**
-            $club = $arguments->getArgument('club');
-            $fileHandlingServiceConfiguration = $club->getFileHandlingServiceConfiguration();
-            $fileHandlingServiceConfiguration->  (
-                (new FileUploadConfiguration('logo.0'))
-                    ->addValidator($mimeTypeValidator)
-                    ->addValidator($fileExtensionValidator)
-                    ->addValidator($fileSizeValidator)
-                    ->setMaxFiles(1)
-                    ->setUploadFolder($uploadFolder)
-                    ->setRequired($fileRequired)
-            );
-            $club->getPropertyMappingConfiguration()->skipProperties('logo.0');
-             **/
+            $arguments->getArgument('club')
+                ->getValidationResults()
+                ->forProperty($property)
+                ->addError($error);
         }
     }
 
-    protected function getMimeTypeValidator(): MimeTypeValidator
+    private function getFalUploadService(): FalUploadService
     {
-        return GeneralUtility::makeInstance(MimeTypeValidator::class);
-    }
-
-    protected function getFileExtensionValidator(): FileExtensionValidator
-    {
-        return GeneralUtility::makeInstance(FileExtensionValidator::class);
-    }
-
-    private function getFileSizeValidator(): FileSizeValidator
-    {
-        return GeneralUtility::makeInstance(FileSizeValidator::class);
+        return GeneralUtility::makeInstance(FalUploadService::class);
     }
 }
