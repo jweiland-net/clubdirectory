@@ -19,6 +19,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
  * automatically. We have to do it manually here.
  * With fluid-form-VHs the $_GET request in browser URL will get extremely long.
  */
+#[AsEventListener('clubdirectory/allowSearchParameterEventListener')]
 class AllowSearchParameterEventListener extends AbstractControllerEventListener
 {
     protected array $allowedControllerActions = [
