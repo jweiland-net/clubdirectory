@@ -12,21 +12,21 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Event;
 
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
-use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
 /**
  * An event used within various initialize controller actions
  */
 class InitializeControllerActionEvent implements ControllerActionEventInterface
 {
-    protected Request $request;
+    protected RequestInterface $request;
 
     protected Arguments $arguments;
 
     protected array $settings = [];
 
     public function __construct(
-        Request $request,
+        RequestInterface $request,
         Arguments $arguments,
         array $settings,
     ) {
@@ -35,7 +35,7 @@ class InitializeControllerActionEvent implements ControllerActionEventInterface
         $this->settings = $settings;
     }
 
-    public function getRequest(): Request
+    public function getRequest(): RequestInterface
     {
         return $this->request;
     }
