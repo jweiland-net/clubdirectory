@@ -66,7 +66,7 @@ class CheckFalUploadsValidationEventListener extends AbstractControllerEventList
     private function addErrorToValidationResults(
         InitializeControllerActionEvent $event,
         Error $error,
-        string $property
+        string $property,
     ): void {
         $arguments = $event->getArguments();
 

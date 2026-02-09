@@ -60,7 +60,7 @@ class Club extends AbstractEntity
             'fileSize' => ['minimum' => '0K', 'maximum' => '14M'],
             'mimeType' => ['allowedMimeTypes' => ['image/jpeg', 'image/png']],
         ],
-        'uploadFolder' => '1:/user_upload/tx_clubdirectory/'
+        'uploadFolder' => '1:/user_upload/tx_clubdirectory/',
     ])]
     /**
      * @var ObjectStorage<FileReference>
@@ -73,7 +73,7 @@ class Club extends AbstractEntity
             'fileSize' => ['minimum' => '0K', 'maximum' => '14M'],
             'mimeType' => ['allowedMimeTypes' => ['image/jpeg', 'image/png']],
         ],
-        'uploadFolder' => '1:/user_upload/tx_clubdirectory/'
+        'uploadFolder' => '1:/user_upload/tx_clubdirectory/',
     ])]
     /**
      * @var ObjectStorage<FileReference>
