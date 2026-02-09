@@ -15,7 +15,7 @@ use JWeiland\Clubdirectory\Controller\ClubController;
 use JWeiland\Clubdirectory\Controller\MapController;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
 /**
  * Pre process controller actions which does not assign any variables to view.
@@ -35,13 +35,13 @@ class PreProcessControllerActionEvent implements ControllerActionEventInterface
 
     protected array $settings;
 
-    protected Request $request;
+    protected RequestInterface $request;
 
     public function __construct(
         ActionController $controller,
         ?Club $club,
         array $settings,
-        Request $request,
+        RequestInterface $request,
     ) {
         $this->controller = $controller;
         $this->club = $club;
@@ -64,7 +64,7 @@ class PreProcessControllerActionEvent implements ControllerActionEventInterface
         return $this->controller;
     }
 
-    public function getRequest(): Request
+    public function getRequest(): RequestInterface
     {
         return $this->request;
     }
