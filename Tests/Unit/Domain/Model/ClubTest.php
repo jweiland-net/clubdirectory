@@ -298,15 +298,6 @@ class ClubTest extends UnitTestCase
     }
 
     #[Test]
-    public function getLogoInitiallyReturnsEmptyArray(): void
-    {
-        self::assertSame(
-            [],
-            $this->subject->getLogo(),
-        );
-    }
-
-    #[Test]
     public function getFirstLogoInitiallyReturnsNull(): void
     {
         self::assertNull(
@@ -319,7 +310,7 @@ class ClubTest extends UnitTestCase
     {
         self::assertEquals(
             new ObjectStorage(),
-            $this->subject->getOriginalLogo(),
+            $this->subject->getLogo(),
         );
     }
 
@@ -334,7 +325,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalLogo(),
+            $this->subject->getLogo(),
         );
     }
 
@@ -351,7 +342,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalLogo(),
+            $this->subject->getLogo(),
         );
     }
 
@@ -370,67 +361,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalLogo(),
-        );
-    }
-
-    #[Test]
-    public function getImagesInitiallyReturnsArray(): void
-    {
-        self::assertEquals(
-            [],
-            $this->subject->getImages(),
-        );
-    }
-
-    #[Test]
-    public function setImagesSetsImages(): void
-    {
-        $object = new FileReference();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-
-        $this->subject->setImages($objectStorage);
-
-        self::assertSame(
-            [$object],
-            $this->subject->getImages(),
-        );
-    }
-
-    #[Test]
-    public function addImageAddsOneImage(): void
-    {
-        $objectStorage = new ObjectStorage();
-        $this->subject->setImages($objectStorage);
-
-        $object = new FileReference();
-        $this->subject->addImage($object);
-
-        $objectStorage->attach($object);
-
-        self::assertSame(
-            [$object],
-            $this->subject->getImages(),
-        );
-    }
-
-    #[Test]
-    public function removeImageRemovesOneImage(): void
-    {
-        $object = new FileReference();
-        $objectStorage = new ObjectStorage();
-        $objectStorage->attach($object);
-
-        $this->subject->setImages($objectStorage);
-
-        $this->subject->removeImage($object);
-
-        $objectStorage->detach($object);
-
-        self::assertSame(
-            [],
-            $this->subject->getImages(),
+            $this->subject->getLogo(),
         );
     }
 

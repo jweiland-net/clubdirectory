@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\EventListener;
 
 use JWeiland\Clubdirectory\Traits\ConnectionPoolTrait;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
@@ -20,6 +21,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
  * By default, the title of the address record will be used as POI title. That's wrong.
  * In this special case we have to update the POI title with the title from club record.
  */
+#[AsEventListener('clubdirectory/setTitleOfPOIToClubTitleEventListener')]
 class SetTitleOfPOIToClubTitleEventListener
 {
     use ConnectionPoolTrait;

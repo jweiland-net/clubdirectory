@@ -53,11 +53,28 @@ class Club extends AbstractEntity
      */
     protected ObjectStorage $feUsers;
 
+    #[Extbase\FileUpload([
+        'validation' => [
+            'required' => true,
+            'maxFiles' => 1,
+            'fileSize' => ['minimum' => '0K', 'maximum' => '14M'],
+            'mimeType' => ['allowedMimeTypes' => ['image/jpeg', 'image/png']],
+        ],
+        'uploadFolder' => '1:/user_upload/tx_clubdirectory/',
+    ])]
     /**
      * @var ObjectStorage<FileReference>
      */
     protected ObjectStorage $logo;
 
+    #[Extbase\FileUpload([
+        'validation' => [
+            'required' => false,
+            'fileSize' => ['minimum' => '0K', 'maximum' => '14M'],
+            'mimeType' => ['allowedMimeTypes' => ['image/jpeg', 'image/png']],
+        ],
+        'uploadFolder' => '1:/user_upload/tx_clubdirectory/',
+    ])]
     /**
      * @var ObjectStorage<FileReference>
      */
@@ -254,20 +271,15 @@ class Club extends AbstractEntity
         return $currentUserCanEditThisClub;
     }
 
-    public function getLogo(): array
+    public function getLogo(): ObjectStorage
     {
-        return $this->logo->toArray();
+        return $this->logo;
     }
 
     public function getFirstLogo(): ?FileReference
     {
         $this->logo->rewind();
         return $this->logo->current();
-    }
-
-    public function getOriginalLogo(): ObjectStorage
-    {
-        return $this->logo;
     }
 
     public function setLogo(ObjectStorage $logo): void
@@ -285,17 +297,7 @@ class Club extends AbstractEntity
         $this->logo->detach($logo);
     }
 
-    public function getImages(): array
-    {
-        $references = [];
-        foreach ($this->images as $image) {
-            $references[] = $image;
-        }
-
-        return $references;
-    }
-
-    public function getOriginalImages(): ObjectStorage
+    public function getImages(): ObjectStorage
     {
         return $this->images;
     }

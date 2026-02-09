@@ -39,7 +39,7 @@ class ClubValidator extends AbstractValidator
     {
         $this->removeEmptyAddresses($value);
         if (empty($value->getAddresses())) {
-            $this->addError('You have forgotten to set at least one address', 1399904889);
+            //$this->addError('You have forgotten to set at least one address', 1399904889);
         }
     }
 

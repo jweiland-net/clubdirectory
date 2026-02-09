@@ -72,7 +72,7 @@ settings:
     category: clubdirectory.settings
     description: 'Path for uploading assets for clubdirectory records'
     type: string
-    default: '1:user_upload/tx_clubdirectory/'
+    default: '1:/user_upload/tx_clubdirectory/'
   clubdirectory.feJavaScript:
     label: 'Frontend JavaScript file'
     category: clubdirectory.settings

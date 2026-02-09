@@ -3,53 +3,75 @@
       xmlns:maps2="http://typo3.org/ns/JWeiland/Maps2/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:render section="renderTextProperty" arguments="{property: 'title', column: 'title', mandatory: 1}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'title', column: 'title', mandatory: 1}"/>
+<f:comment>
 <f:render section="renderSelectProperty"
           arguments="{property: 'categories', column: 'categories', options: categories, size: 5, multiple: 1}"/>
-<f:render section="renderTextareaProperty" arguments="{property: 'activity', column: 'activity'}"/>
-<f:render section="renderTextareaProperty" arguments="{property: 'description', column: 'description'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'contactPerson', column: 'contactPerson'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'contactTimes', column: 'contactTimes'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'email', column: 'email'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'website', column: 'website'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'members', column: 'members'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'clubHome', column: 'clubHome'}"/>
-<f:render section="renderAddresses" arguments="{_all}"/>
-<f:render section="renderTextProperty" arguments="{property: 'facebook', column: 'facebook'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'twitter', column: 'twitter'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'instagram', column: 'instagram'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'tags', column: 'tags'}"/>
+<f:render section="renderTextareaProperty"
+          arguments="{property: 'activity', column: 'activity'}"/>
+<f:render section="renderTextareaProperty"
+          arguments="{property: 'description', column: 'description'}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'contactPerson', column: 'contactPerson'}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'contactTimes', column: 'contactTimes'}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'email', column: 'email'}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'website', column: 'website'}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'members', column: 'members'}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'clubHome', column: 'clubHome'}"/>
+<f:render section="renderAddresses"
+          arguments="{_all}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'facebook', column: 'facebook'}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'twitter', column: 'twitter'}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'instagram', column: 'instagram'}"/>
+<f:render section="renderTextProperty"
+          arguments="{property: 'tags', column: 'tags'}"/>
+</f:comment>
+<f:render section="renderLogo"
+          arguments="{club: club}"/>
 
-<f:render section="renderLogo" arguments="{club: club}"/>
+
 
 <f:section name="renderLogo">
     <f:render section="renderLabel" arguments="{column: 'logo'}"/>
 
     <div class="media mb-3">
-        <f:if condition="{club.logo.0}">
-            <f:image image="{club.logo.0}"
-                     class="mr-3"
-                     alt="{club.title}"
-                     width="{settings.list.image.width}"
-                     height="{settings.list.image.height}"
-            />
+        <f:if condition="{club.logo}">
+            <f:for each="{club.logo}" as="logo" iteration="i">
+                <f:image image="{logo}"
+                         class="mr-3"
+                         alt="{club.title}"
+                         width="{settings.list.image.width}"
+                         height="{settings.list.image.height}"
+                />
+            </f:for>
         </f:if>
         <div class="media-body">
             <div class="form-group">
                 <f:form.upload property="logo.0"
                                class="form-control-file"
                                id="logo"/>
+                <f:form.checkbox property="logo.0.rights" value="true"/>
             </div>
-            <f:if condition="{club.logo.0}">
-                <div class="form-group form-check">
-                    <f:form.checkbox property="logo.0.delete"
-                                     id="logoDelete"
-                                     class="form-check-input"
-                                     value="1"/>
-                    <label class="form-check-label" for="logoDelete">
-                        {f:translate(key: "deleteLogo")}
-                    </label>
-                </div>
+            <f:if condition="{club.logo}">
+                <f:for each="{club.logo}" as="logo">
+                    <div class="form-group form-check">
+                        <f:form.uploadDeleteCheckbox id="logoDelete"
+                                                     property="logo"
+                                                     fileReference="{logo}"/>
+                        <label class="form-check-label" for="imageDelete{globalIndex}">
+                            {f:translate(key: "deleteImage")}
+                        </label>
+                    </div>
+                </f:for>
             </f:if>
         </div>
     </div>
@@ -82,10 +104,9 @@
                 </div>
                 <f:if condition="{currentImage}">
                     <div class="form-group form-check">
-                        <f:form.checkbox property="images.{globalIndex}.delete"
-                                         id="imageDelete{globalIndex}"
-                                         class="form-check-input"
-                                         value="1"/>
+                        <f:form.uploadDeleteCheckbox id="imageDelete{globalIndex}"
+                                                     property="images"
+                                                     fileReference="{currentImage}"/>
                         <label class="form-check-label" for="imageDelete{globalIndex}">
                             {f:translate(key: "deleteImage")}
                         </label>

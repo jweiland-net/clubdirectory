@@ -19,32 +19,3 @@ services:
   # Called by makeInstance in our ClubController
   JWeiland\Clubdirectory\Helper\HiddenObjectHelper:
     public: true
-
-  JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent
-
-  JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
-  JWeiland\Clubdirectory\EventListener\AddGlossaryEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent
-      after: JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener
-
-  JWeiland\Clubdirectory\EventListener\AllowSearchParameterEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\InitializeControllerActionEvent
-  JWeiland\Clubdirectory\EventListener\AssignMediaTypeConverterEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\InitializeControllerActionEvent
-
-  JWeiland\Clubdirectory\EventListener\DeleteUploadedFilesEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent

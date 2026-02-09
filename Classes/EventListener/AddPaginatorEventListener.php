@@ -13,8 +13,10 @@ namespace JWeiland\Clubdirectory\EventListener;
 
 use JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent;
 use JWeiland\Clubdirectory\Pagination\ClubPagination;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 
+#[AsEventListener('clubdirectory/addPaginatorEventListener')]
 class AddPaginatorEventListener extends AbstractControllerEventListener
 {
     protected int $itemsPerPage = 15;

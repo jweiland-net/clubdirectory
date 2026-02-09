@@ -7,6 +7,16 @@
 ChangeLog
 =========
 
+Version 8.2.0
+=============
+
+*   [TASK] PSR-7 & Request Abstraction
+*   [TASK] Changed AddFileUploadConfigurationEventListener to
+    CheckFalUploadsValidationEventListener
+*   [TASK] Configuration & Cleanup, Attribute-based Registration
+*   [TASK] Stripped redundant manual tags from Configuration/Services.yaml to
+    leverage TYPO3's automatic tagging and prevent duplicate execution.
+
 Version 8.1.1
 =============
 

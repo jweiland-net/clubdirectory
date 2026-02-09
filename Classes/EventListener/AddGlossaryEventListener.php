@@ -14,8 +14,10 @@ namespace JWeiland\Clubdirectory\EventListener;
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
 use JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent;
 use JWeiland\Glossary2\Service\GlossaryService;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 
+#[AsEventListener('clubdirectory/addGlossaryEventListener')]
 class AddGlossaryEventListener extends AbstractControllerEventListener
 {
     protected GlossaryService $glossaryService;

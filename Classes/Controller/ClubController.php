@@ -30,7 +30,7 @@ use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Controller to list, show and edit clubs
+ * Controller to list, show, and edit clubs
  */
 class ClubController extends ActionController
 {
