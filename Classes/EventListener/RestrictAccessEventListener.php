@@ -36,6 +36,7 @@ final class RestrictAccessEventListener
         'Club' => [
             'edit',
             'update',
+            'activate',
         ],
         'Map' => [
             'edit',
