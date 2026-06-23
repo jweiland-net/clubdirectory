@@ -387,6 +387,10 @@
         <source>Instagram</source>
         <target state="needs-translation">Instagram</target>
       </trans-unit>
+      <trans-unit id="unauthorizedUser">
+        <source>You are not allowed to edit records that are not assigned to you.</source>
+        <target state="needs-translation">You are not allowed to edit records that are not assigned to you.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
