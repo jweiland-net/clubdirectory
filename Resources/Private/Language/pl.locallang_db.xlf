@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory" target-language="pl">
+    <header/>
+    <body>
+      <trans-unit id="plugin.clubdirectory.title">
+        <source>Club Directory</source>
+        <target state="needs-translation">Club Directory</target>
+      </trans-unit>
+      <trans-unit id="plugin.clubdirectory.description">
+        <source>Shows a list of club entries. Above all entries you will see an A-Z navigation to jump directly to an entry.</source>
+        <target state="needs-translation">Shows a list of club entries. Above all entries you will see an A-Z navigation to jump directly to an entry.</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.tabs.media">
+        <source>Media</source>
+        <target state="needs-translation">Media</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.tabs.social_media">
+        <source>Social Media</source>
+        <target state="needs-translation">Social Media</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.palettes.language">
+        <source>Language Settings</source>
+        <target state="needs-translation">Language Settings</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.palettes.contact">
+        <source>Contact</source>
+        <target state="needs-translation">Contact</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.palettes.location">
+        <source>Location</source>
+        <target state="needs-translation">Location</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club">
+        <source>Club</source>
+        <target state="needs-translation">Club</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.title">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.path_segment">
+        <source>Segment for URL</source>
+        <target state="needs-translation">Segment for URL</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.activity">
+        <source>Activity</source>
+        <target state="needs-translation">Activity</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactPerson">
+        <source>Contact Person</source>
+        <target state="needs-translation">Contact Person</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactTimes">
+        <source>Contact Times</source>
+        <target state="needs-translation">Contact Times</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.email">
+        <source>Email</source>
+        <target state="needs-translation">Email</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.website">
+        <source>Website</source>
+        <target state="needs-translation">Website</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.members">
+        <source>Members</source>
+        <target state="needs-translation">Members</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.clubHome">
+        <source>Club Home</source>
+        <target state="needs-translation">Club Home</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.description">
+        <source>Description</source>
+        <target state="needs-translation">Description</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.feUsers">
+        <source>Assign Frontend Users</source>
+        <target state="needs-translation">Assign Frontend Users</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.logo">
+        <source>Logo</source>
+        <target state="needs-translation">Logo</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.images">
+        <source>Images</source>
+        <target state="needs-translation">Images</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.facebook">
+        <source>Facebook</source>
+        <target state="needs-translation">Facebook</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.twitter">
+        <source>Twitter</source>
+        <target state="needs-translation">Twitter</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.instagram">
+        <source>Instagram</source>
+        <target state="needs-translation">Instagram</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.tags">
+        <source>Tags</source>
+        <target state="needs-translation">Tags</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.district">
+        <source>District</source>
+        <target state="needs-translation">District</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.addresses">
+        <source>Addresses</source>
+        <target state="needs-translation">Addresses</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address">
+        <source>Address</source>
+        <target state="needs-translation">Address</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.organizationAddress">
+        <source>Organization Address</source>
+        <target state="needs-translation">Organization Address</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.postAddress">
+        <source>Post Address</source>
+        <target state="needs-translation">Post Address</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.clubAddress">
+        <source>Club Address</source>
+        <target state="needs-translation">Club Address</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.street">
+        <source>Street</source>
+        <target state="needs-translation">Street</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.houseNumber">
+        <source>House Number</source>
+        <target state="needs-translation">House Number</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.zip">
+        <source>Zip</source>
+        <target state="needs-translation">Zip</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.city">
+        <source>City</source>
+        <target state="needs-translation">City</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.telephone">
+        <source>Telephone</source>
+        <target state="needs-translation">Telephone</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.fax">
+        <source>Fax</source>
+        <target state="needs-translation">Fax</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.barrierFree">
+        <source>Barrier Free</source>
+        <target state="needs-translation">Barrier Free</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.club">
+        <source>Related Club</source>
+        <target state="needs-translation">Related Club</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_district">
+        <source>District (clubs)</source>
+        <target state="needs-translation">District (clubs)</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_district.district">
+        <source>District</source>
+        <target state="needs-translation">District</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory" target-language="fr">
+    <header/>
+    <body>
+      <trans-unit id="district.description">
+        <source>Many cities are separated into districts. You can assign this club to such a district.</source>
+        <target state="needs-translation">Many cities are separated into districts. You can assign this club to such a district.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

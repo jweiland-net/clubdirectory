@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory" target-language="pt-BR">
+    <header/>
+    <body>
+      <trans-unit id="title.description">
+        <source>The title will be used as main header in detail view</source>
+        <target state="needs-translation">The title will be used as main header in detail view</target>
+      </trans-unit>
+      <trans-unit id="activity.description">
+        <source>Describe something about what your club offers</source>
+        <target state="needs-translation">Describe something about what your club offers</target>
+      </trans-unit>
+      <trans-unit id="contact_person.description">
+        <source>The name of the person who should be contacted in case of any questions</source>
+        <target state="needs-translation">The name of the person who should be contacted in case of any questions</target>
+      </trans-unit>
+      <trans-unit id="contact_times.description">
+        <source>In which time frame(s) an interested person can call/visit the club's contact person</source>
+        <target state="needs-translation">In which time frame(s) an interested person can call/visit the club's contact person</target>
+      </trans-unit>
+      <trans-unit id="email.description">
+        <source>Which email address can be used to contact the club?</source>
+        <target state="needs-translation">Which email address can be used to contact the club?</target>
+      </trans-unit>
+      <trans-unit id="website.description">
+        <source>The website of this club to find more information.</source>
+        <target state="needs-translation">The website of this club to find more information.</target>
+      </trans-unit>
+      <trans-unit id="members.description">
+        <source>How many members does this club currently have?</source>
+        <target state="needs-translation">How many members does this club currently have?</target>
+      </trans-unit>
+      <trans-unit id="club_home.description">
+        <source>The city/location where this club in located</source>
+        <target state="needs-translation">The city/location where this club in located</target>
+      </trans-unit>
+      <trans-unit id="description.description">
+        <source>A more detailed description of this club</source>
+        <target state="needs-translation">A more detailed description of this club</target>
+      </trans-unit>
+      <trans-unit id="fe_users.description">
+        <source>Define one or more FE Users, who is allowed to edit this club in FE.</source>
+        <target state="needs-translation">Define one or more FE Users, who is allowed to edit this club in FE.</target>
+      </trans-unit>
+      <trans-unit id="logo.description">
+        <source>You can define exactly one logo to this club</source>
+        <target state="needs-translation">You can define exactly one logo to this club</target>
+      </trans-unit>
+      <trans-unit id="images.description">
+        <source>Assign some additional images, if you want</source>
+        <target state="needs-translation">Assign some additional images, if you want</target>
+      </trans-unit>
+      <trans-unit id="facebook.description">
+        <source>Set Facebook URL of this club</source>
+        <target state="needs-translation">Set Facebook URL of this club</target>
+      </trans-unit>
+      <trans-unit id="twitter.description">
+        <source>Set Twitter URL of this club</source>
+        <target state="needs-translation">Set Twitter URL of this club</target>
+      </trans-unit>
+      <trans-unit id="instagram.description">
+        <source>Set Instagram URL of this club</source>
+        <target state="needs-translation">Set Instagram URL of this club</target>
+      </trans-unit>
+      <trans-unit id="tags.description">
+        <source>You can add some tags. That way this club will be found, if someone uses that tag in search.</source>
+        <target state="needs-translation">You can add some tags. That way this club will be found, if someone uses that tag in search.</target>
+      </trans-unit>
+      <trans-unit id="district.description">
+        <source>Many cities are separated into districts. You can assign this club to such a district.</source>
+        <target state="needs-translation">Many cities are separated into districts. You can assign this club to such a district.</target>
+      </trans-unit>
+      <trans-unit id="addresses.description">
+        <source>Assign one or more addresses</source>
+        <target state="needs-translation">Assign one or more addresses</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

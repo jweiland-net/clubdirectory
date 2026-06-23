@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-03-28T08:36:00Z" product-name="clubdirectory" target-language="sv-SE">
+    <header/>
+    <body>
+      <trans-unit id="userGroup" xml:space="preserve">
+				<source>Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</source>
+			<target state="needs-translation">Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</target></trans-unit>
+      <trans-unit id="poiCollectionPid" xml:space="preserve">
+				<source>PID for poiCollections: Define a storage pid where to store records of type Point of Interest.</source>
+			<target state="needs-translation">PID for poiCollections: Define a storage pid where to store records of type Point of Interest.</target></trans-unit>
+      <trans-unit id="rootCategory" xml:space="preserve">
+				<source>UID of root Category: In each club record you have the possibility to add one or more categories. In huge installations it's better to define a root category UID here to NOT show all categories.</source>
+			<target state="needs-translation">UID of root Category: In each club record you have the possibility to add one or more categories. In huge installations it's better to define a root category UID here to NOT show all categories.</target></trans-unit>
+      <trans-unit id="emailFromAddress" xml:space="preserve">
+				<source>email from address: The senders email address. If not given the extension tries to get one from INSTALL_TOOL.</source>
+			<target state="needs-translation">email from address: The senders email address. If not given the extension tries to get one from INSTALL_TOOL.</target></trans-unit>
+      <trans-unit id="emailFromName" xml:space="preserve">
+				<source>email from name: The senders email name. If not given the extension tries to get one from INSTALL_TOOL.</source>
+			<target state="needs-translation">email from name: The senders email name. If not given the extension tries to get one from INSTALL_TOOL.</target></trans-unit>
+      <trans-unit id="emailToAddress" xml:space="preserve">
+				<source>email to address: The recipients email address.</source>
+			<target state="needs-translation">email to address: The recipients email address.</target></trans-unit>
+      <trans-unit id="emailToName" xml:space="preserve">
+				<source>email to name: The recipients email name.</source>
+			<target state="needs-translation">email to name: The recipients email name.</target></trans-unit>
+    </body>
+  </file>
+</xliff>
