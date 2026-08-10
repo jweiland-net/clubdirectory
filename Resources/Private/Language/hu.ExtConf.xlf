@@ -5,25 +5,25 @@
     <body>
       <trans-unit id="userGroup" xml:space="preserve">
 				<source>Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</source>
-			<target state="needs-translation">Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</target></trans-unit>
+			<target state="translated">Felhasználócsoport: Adja meg, hogy melyik felhasználócsoport hozhat létre új klubot a frontendben.</target></trans-unit>
       <trans-unit id="poiCollectionPid" xml:space="preserve">
 				<source>PID for poiCollections: Define a storage pid where to store records of type Point of Interest.</source>
-			<target state="needs-translation">PID for poiCollections: Define a storage pid where to store records of type Point of Interest.</target></trans-unit>
+			<target state="translated">PID a poiCollections számára: Adja meg a tárolási PID-et, ahol a Point of Interest típusú rekordok tárolódnak.</target></trans-unit>
       <trans-unit id="rootCategory" xml:space="preserve">
 				<source>UID of root Category: In each club record you have the possibility to add one or more categories. In huge installations it's better to define a root category UID here to NOT show all categories.</source>
-			<target state="needs-translation">UID of root Category: In each club record you have the possibility to add one or more categories. In huge installations it's better to define a root category UID here to NOT show all categories.</target></trans-unit>
+			<target state="translated">Gyökérkategória UID: Minden klubrekordban lehetősége van egy vagy több kategória hozzáadására. Nagyobb telepítéseknél érdemes itt megadni a gyökérkategória UID-t, hogy NE az összes kategória jelenjen meg.</target></trans-unit>
       <trans-unit id="emailFromAddress" xml:space="preserve">
 				<source>email from address: The senders email address. If not given the extension tries to get one from INSTALL_TOOL.</source>
-			<target state="needs-translation">email from address: The senders email address. If not given the extension tries to get one from INSTALL_TOOL.</target></trans-unit>
+			<target state="translated">email feladó címe: A feladó e-mail címe. Ha nincs megadva, a bővítmény megpróbál egyet szerezni az INSTALL_TOOL-ból.</target></trans-unit>
       <trans-unit id="emailFromName" xml:space="preserve">
 				<source>email from name: The senders email name. If not given the extension tries to get one from INSTALL_TOOL.</source>
-			<target state="needs-translation">email from name: The senders email name. If not given the extension tries to get one from INSTALL_TOOL.</target></trans-unit>
+			<target state="translated">email feladó neve: A feladó e-mail neve. Ha nincs megadva, a bővítmény megpróbál egyet szerezni az INSTALL_TOOL-ból.</target></trans-unit>
       <trans-unit id="emailToAddress" xml:space="preserve">
 				<source>email to address: The recipients email address.</source>
-			<target state="needs-translation">email to address: The recipients email address.</target></trans-unit>
+			<target state="translated">email címzett címe: A címzett e-mail címe.</target></trans-unit>
       <trans-unit id="emailToName" xml:space="preserve">
 				<source>email to name: The recipients email name.</source>
-			<target state="needs-translation">email to name: The recipients email name.</target></trans-unit>
+			<target state="translated">email címzett neve: A címzett e-mail neve.</target></trans-unit>
     </body>
   </file>
 </xliff>
