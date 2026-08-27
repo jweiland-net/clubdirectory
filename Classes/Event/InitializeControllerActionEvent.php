@@ -55,6 +55,16 @@ class InitializeControllerActionEvent implements ControllerActionEventInterface
         return $this->arguments;
     }
 
+    public function setRequest(Request $request): void
+    {
+        $this->request = $request;
+    }
+
+    public function setArguments(Arguments $arguments): void
+    {
+        $this->arguments = $arguments;
+    }
+
     public function getSettings(): array
     {
         return $this->settings;
