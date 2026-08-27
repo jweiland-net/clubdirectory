@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
 
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use JWeiland\Clubdirectory\Domain\Model\District;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Test case for model District
@@ -41,7 +41,7 @@ class DistrictTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getDistrict()
+            $this->subject->getDistrict(),
         );
     }
 
@@ -54,7 +54,7 @@ class DistrictTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getDistrict()
+            $this->subject->getDistrict(),
         );
     }
 }

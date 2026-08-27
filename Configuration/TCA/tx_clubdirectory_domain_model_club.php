@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * This file is part of the package jweiland/clubdirectory.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE file that was distributed with this source code.
+ */
+
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club',
@@ -267,7 +275,7 @@ return [
                 'type' => 'file',
                 'minitems' => 0,
                 'maxitems' => 1,
-                'allowed' => 'common-image-types'
+                'allowed' => 'common-image-types',
             ],
         ],
         'images' => [
@@ -277,7 +285,7 @@ return [
                 'type' => 'file',
                 'minitems' => 0,
                 'maxitems' => 5,
-                'allowed' => 'common-image-types'
+                'allowed' => 'common-image-types',
             ],
         ],
         'facebook' => [

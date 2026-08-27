@@ -34,7 +34,7 @@ trait AddressTrait
             $title->value = $value;
             $title->label = LocalizationUtility::translate(
                 'tx_clubdirectory_domain_model_address.title.' . $value,
-                'clubdirectory'
+                'clubdirectory',
             );
             $titles[] = $title;
         }

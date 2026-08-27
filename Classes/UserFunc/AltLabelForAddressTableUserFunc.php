@@ -33,7 +33,7 @@ class AltLabelForAddressTableUserFunc
                     '%s (%d) - %s',
                     $club['title'],
                     $club['uid'],
-                    $parameters['title']
+                    $parameters['title'],
                 );
             }
         }
