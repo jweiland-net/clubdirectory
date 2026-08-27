@@ -42,14 +42,14 @@ class AllowSearchParameterEventListener extends AbstractControllerEventListener
                 'category',
                 'subCategory',
                 'direction',
-                'orderBy'
+                'orderBy',
             );
 
             $pmc->setTypeConverterOptions(
                 PersistentObjectConverter::class,
                 [
                     PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED => true,
-                ]
+                ],
             );
         }
     }

@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Model;
 
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Test case for model Search
@@ -42,7 +42,7 @@ class SearchTest extends UnitTestCase
     {
         self::assertSame(
             '',
-            $this->subject->getSearchWord()
+            $this->subject->getSearchWord(),
         );
     }
 
@@ -55,7 +55,7 @@ class SearchTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getSearchWord()
+            $this->subject->getSearchWord(),
         );
     }
 
@@ -66,7 +66,7 @@ class SearchTest extends UnitTestCase
     {
         self::assertSame(
             0,
-            $this->subject->getCategory()
+            $this->subject->getCategory(),
         );
     }
 
@@ -79,7 +79,7 @@ class SearchTest extends UnitTestCase
 
         self::assertSame(
             123456,
-            $this->subject->getCategory()
+            $this->subject->getCategory(),
         );
     }
 
@@ -92,7 +92,7 @@ class SearchTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getOrderBy()
+            $this->subject->getOrderBy(),
         );
     }
 
@@ -103,7 +103,7 @@ class SearchTest extends UnitTestCase
     {
         self::assertSame(
             QueryInterface::ORDER_ASCENDING,
-            $this->subject->getOrder()
+            $this->subject->getOrder(),
         );
     }
 
@@ -116,7 +116,7 @@ class SearchTest extends UnitTestCase
 
         self::assertSame(
             'foo bar',
-            $this->subject->getOrder()
+            $this->subject->getOrder(),
         );
     }
 }

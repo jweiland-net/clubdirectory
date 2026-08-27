@@ -46,8 +46,8 @@ class PathSegmentHelper
         $club->setPathSegment(
             $this->generatePathSegment(
                 $club->getBaseRecordForPathSegment(),
-                $club->getPid()
-            )
+                $club->getPid(),
+            ),
         );
     }
 
@@ -63,7 +63,7 @@ class PathSegmentHelper
             SlugHelper::class,
             'tx_clubdirectory_domain_model_club',
             'path_segment',
-            $config
+            $config,
         );
     }
 

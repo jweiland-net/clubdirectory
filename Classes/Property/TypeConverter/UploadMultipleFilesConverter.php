@@ -90,7 +90,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                 $uploadedFile['name'],
                 $uploadedFile['size'],
                 $uploadedFile['tmp_name'],
-                $uploadedFile['type']
+                $uploadedFile['type'],
             )) {
                 return false;
             }
@@ -103,14 +103,14 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         $source,
         $targetType,
         array $convertedChildProperties = [],
-        PropertyMappingConfigurationInterface $configuration = null
+        PropertyMappingConfigurationInterface $configuration = null,
     ) {
         $this->initialize($configuration);
         $originalSource = $source;
         foreach ($originalSource as $key => $uploadedFile) {
             $alreadyPersistedImage = $this->getAlreadyPersistedFileReferenceByPosition(
                 $this->getAlreadyPersistedImages(),
-                $key
+                $key,
             );
 
             // If no file was uploaded use the already persisted one
@@ -130,7 +130,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             if ($uploadedFile['error']) {
                 return new Error(
                     LocalizationUtility::translate('error.upload', 'clubdirectory') . $uploadedFile['error'],
-                    1396957314
+                    1396957314,
                 );
             }
 
@@ -143,9 +143,9 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                         'clubdirectory',
                         [
                             $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-                        ]
+                        ],
                     ),
-                    1402981282
+                    1402981282,
                 );
             }
 
@@ -183,7 +183,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         if ($configuration === null) {
             throw new \InvalidArgumentException(
                 'Missing PropertyMapper configuration in UploadMultipleFilesConverter',
-                1604051720
+                1604051720,
             );
         }
 
@@ -196,7 +196,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     {
         $alreadyPersistedImages = $this->converterConfiguration->getConfigurationValue(
             self::class,
-            'IMAGES'
+            'IMAGES',
         );
 
         return $alreadyPersistedImages instanceof ObjectStorage ? $alreadyPersistedImages : new ObjectStorage();
@@ -204,7 +204,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
 
     protected function getAlreadyPersistedFileReferenceByPosition(
         ObjectStorage $alreadyPersistedFileReferences,
-        int $position
+        int $position,
     ): ?FileReference {
         return $alreadyPersistedFileReferences->toArray()[$position] ?? null;
     }
@@ -213,7 +213,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
     {
         $settings = $this->converterConfiguration->getConfigurationValue(
             self::class,
-            'settings'
+            'settings',
         );
 
         return $settings ?? [];
@@ -225,7 +225,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
         if ($combinedUploadFolderIdentifier === '') {
             throw new \InvalidArgumentException(
                 'You have forgotten to set an Upload Folder in TypoScript for clubdirectory',
-                1603808777
+                1603808777,
             );
         }
 
@@ -256,7 +256,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
             $uploadedFile['name'],
             $uploadedFile['size'],
             $uploadedFile['tmp_name'],
-            $uploadedFile['type']
+            $uploadedFile['type'],
         );
     }
 
@@ -303,7 +303,7 @@ class UploadMultipleFilesConverter extends AbstractTypeConverter
                 'uid_local' => $uploadedFile->getUid(),
                 'uid_foreign' => uniqid('NEW_', true),
                 'uid' => uniqid('NEW_', true),
-            ]
+            ],
         );
     }
 

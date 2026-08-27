@@ -43,7 +43,7 @@ trait InitializeControllerTrait
         $this->hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
             $this->clubRepository,
             $this->request,
-            'club'
+            'club',
         );
     }
 }

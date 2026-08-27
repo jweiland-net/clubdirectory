@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
-use Psr\Http\Message\ResponseInterface;
 use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -47,7 +47,7 @@ class MapController extends ActionController
             $this->view->assign('club', $club);
             $this->mailHelper->sendMail(
                 $this->view->render(),
-                LocalizationUtility::translate('email.subject.create', 'clubdirectory')
+                LocalizationUtility::translate('email.subject.create', 'clubdirectory'),
             );
 
             $this->clubRepository->update($club);
@@ -88,7 +88,7 @@ class MapController extends ActionController
         $this->view->assign('club', $club);
         $this->mailHelper->sendMail(
             $this->view->render(),
-            LocalizationUtility::translate('email.subject.update', 'clubdirectory')
+            LocalizationUtility::translate('email.subject.update', 'clubdirectory'),
         );
         $club->setHidden(true);
 
@@ -100,7 +100,7 @@ class MapController extends ActionController
         $actionEvent = new InitializeControllerActionEvent(
             $this->request,
             $this->arguments,
-            $this->settings
+            $this->settings,
         );
         $this->eventDispatcher->dispatch($actionEvent);
 
