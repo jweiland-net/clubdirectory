@@ -59,11 +59,11 @@ use TYPO3\TestingFramework\Core\Testbase;
 
     $cache = new PhpFrontend(
         'core',
-        new NullBackend('production', [])
+        new NullBackend('production', []),
     );
     $packageManager = Bootstrap::createPackageManager(
         UnitTestPackageManager::class,
-        Bootstrap::createPackageCache($cache)
+        Bootstrap::createPackageCache($cache),
     );
 
     GeneralUtility::setSingletonInstance(PackageManager::class, $packageManager);
