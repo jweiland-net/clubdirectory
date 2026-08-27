@@ -64,11 +64,6 @@ class MapController extends ActionController
         $this->emitInitializeControllerAction();
     }
 
-    public function initializeUpdateAction(): void
-    {
-        $this->emitInitializeControllerAction();
-    }
-
     #[Extbase\IgnoreValidation(['value' => 'club'])]
     public function editAction(Club $club): ResponseInterface
     {
@@ -77,6 +72,11 @@ class MapController extends ActionController
         $this->view->assign('addressTitles', $this->getAddressTitles());
 
         return $this->htmlResponse();
+    }
+
+    public function initializeUpdateAction(): void
+    {
+        $this->emitInitializeControllerAction();
     }
 
     public function updateAction(Club $club): void
