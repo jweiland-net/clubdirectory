@@ -69,7 +69,7 @@ class ExtConf implements SingletonInterface
                     }
                 }
             }
-        } catch (ExtensionConfigurationExtensionNotConfiguredException | ExtensionConfigurationPathDoesNotExistException $e) {
+        } catch (ExtensionConfigurationExtensionNotConfiguredException|ExtensionConfigurationPathDoesNotExistException $e) {
         }
     }
 
