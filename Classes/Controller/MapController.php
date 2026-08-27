@@ -16,6 +16,7 @@ use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -58,6 +59,16 @@ class MapController extends ActionController
         $this->redirect('list', 'Club');
     }
 
+    public function initializeEditAction(): void
+    {
+        $this->emitInitializeControllerAction();
+    }
+
+    public function initializeUpdateAction(): void
+    {
+        $this->emitInitializeControllerAction();
+    }
+
     #[Extbase\IgnoreValidation(['value' => 'club'])]
     public function editAction(Club $club): ResponseInterface
     {
@@ -82,5 +93,19 @@ class MapController extends ActionController
         $club->setHidden(true);
 
         $this->redirect('list', 'Club', null, ['club' => $club]);
+    }
+
+    protected function emitInitializeControllerAction(): void
+    {
+        $actionEvent = new InitializeControllerActionEvent(
+            $this->request,
+            $this->arguments,
+            $this->settings
+        );
+        $this->eventDispatcher->dispatch($actionEvent);
+
+        $this->request = $actionEvent->getRequest();
+        $this->arguments = $actionEvent->getArguments();
+        $this->actionMethodName = $this->resolveActionMethodName();
     }
 }

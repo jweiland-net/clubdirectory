@@ -39,6 +39,11 @@ services:
     tags:
     - name: event.listener
       event: JWeiland\Clubdirectory\Event\InitializeControllerActionEvent
+  JWeiland\Clubdirectory\EventListener\RestrictAccessEventListener:
+    tags:
+    - name: event.listener
+      identifier: 'clubdirectory/restrictAccess'
+      event: JWeiland\Clubdirectory\Event\InitializeControllerActionEvent
 
   JWeiland\Clubdirectory\EventListener\DeleteUploadedFilesEventListener:
     tags:
