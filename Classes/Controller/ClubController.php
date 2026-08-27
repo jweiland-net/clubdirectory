@@ -253,13 +253,15 @@ class ClubController extends ActionController
 
     protected function emitInitializeControllerAction(): void
     {
-        $this->eventDispatcher->dispatch(
-            new InitializeControllerActionEvent(
-                $this->request,
-                $this->arguments,
-                $this->settings
-            )
+        $actionEvent = new InitializeControllerActionEvent(
+            $this->request,
+            $this->arguments,
+            $this->settings
         );
+        $this->eventDispatcher->dispatch($actionEvent);
+
+        $this->arguments = $actionEvent->getArguments();
+        $this->actionMethodName = $this->resolveActionMethodName();
     }
 
     protected function postProcessAndAssignFluidVariables(array $variables = []): void
