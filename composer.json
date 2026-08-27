@@ -54,13 +54,17 @@
 		"allow-plugins": {
 			"typo3/class-alias-loader": true,
 			"typo3/cms-composer-installers": true
+		},
+		"policy": {
+			"advisories": {
+				"block": false
+			}
 		}
 	},
 	"extra": {
 		"typo3/cms": {
 			"extension-key": "clubdirectory",
-			"app-dir": ".Build",
-			"web-dir": ".Build/public"
+			"web-dir": ".Build/web"
 		}
 	}
 }
