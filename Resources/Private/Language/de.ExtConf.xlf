@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-03-28T08:36:00Z" product-name="clubdirectory" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="userGroup" xml:space="preserve" approved="yes">
+				<source>Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</source>
+			<target state="final">Benutzergruppe: Definieren Sie eine Benutzergruppe, die einen neuen Club im Frontend erstellen darf.</target></trans-unit>
+      <trans-unit id="poiCollectionPid" xml:space="preserve" approved="yes">
+				<source>PID for poiCollections: Define a storage pid where to store records of type Point of Interest.</source>
+			<target state="final">PID für POI Sammlungen: Definieren Sie eine Speicher-PID wo Datensätze vom Typ Point of Interest gespeichert werden sollen.</target></trans-unit>
+      <trans-unit id="rootCategory" xml:space="preserve" approved="yes">
+				<source>UID of root Category: In each club record you have the possibility to add one or more categories. In huge installations it's better to define a root category UID here to NOT show all categories.</source>
+			<target state="final">UID der Hauptkategorie: In jedem Club-Datensatz haben Sie die Möglichkeit, eine oder mehrere Kategorien hinzuzufügen. In riesigen Installationen ist es besser, hier eine Root-Kategorie UID zu definieren, um NICHT alle Kategorien anzuzeigen.</target></trans-unit>
+      <trans-unit id="emailFromAddress" xml:space="preserve" approved="yes">
+				<source>email from address: The senders email address. If not given the extension tries to get one from INSTALL_TOOL.</source>
+			<target state="final">E-Mail von Adresse: Die E-Mail-Adresse des Absenders. Falls nicht angegeben versucht die Erweiterung eine von INSTALL_TOOL zu erhalten.</target></trans-unit>
+      <trans-unit id="emailFromName" xml:space="preserve" approved="yes">
+				<source>email from name: The senders email name. If not given the extension tries to get one from INSTALL_TOOL.</source>
+			<target state="final">E-Mail von Namen: Der Absender-E-Mail-Name. Falls nicht angegeben versucht die Erweiterung einen von INSTALL_TOOL zu erhalten.</target></trans-unit>
+      <trans-unit id="emailToAddress" xml:space="preserve" approved="yes">
+				<source>email to address: The recipients email address.</source>
+			<target state="final">An E-Mail-Adresse: Die E-Mail-Adresse des Empfängers.</target></trans-unit>
+      <trans-unit id="emailToName" xml:space="preserve" approved="yes">
+				<source>email to name: The recipients email name.</source>
+			<target state="final">An E-Mail-Name: Der E-Mail-Name des Empfängers.</target></trans-unit>
+    </body>
+  </file>
+</xliff>
