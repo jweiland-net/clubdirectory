@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="plugin.clubdirectory.title">
+        <source>Club Directory</source>
+        <target>crwdns305780:0crwdne305780:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.clubdirectory.description">
+        <source>Shows a list of club entries. Above all entries you will see an A-Z navigation to jump directly to an entry.</source>
+        <target>crwdns305782:0crwdne305782:0</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.tabs.media">
+        <source>Media</source>
+        <target>crwdns305784:0crwdne305784:0</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.tabs.social_media">
+        <source>Social Media</source>
+        <target>crwdns305786:0crwdne305786:0</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.palettes.language">
+        <source>Language Settings</source>
+        <target>crwdns305788:0crwdne305788:0</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.palettes.contact">
+        <source>Contact</source>
+        <target>crwdns305790:0crwdne305790:0</target>
+      </trans-unit>
+      <trans-unit id="clubdirectory.palettes.location">
+        <source>Location</source>
+        <target>crwdns305792:0crwdne305792:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club">
+        <source>Club</source>
+        <target>crwdns305794:0crwdne305794:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.title">
+        <source>Title</source>
+        <target>crwdns305796:0crwdne305796:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.path_segment">
+        <source>Segment for URL</source>
+        <target>crwdns305798:0crwdne305798:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.activity">
+        <source>Activity</source>
+        <target>crwdns305800:0crwdne305800:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactPerson">
+        <source>Contact Person</source>
+        <target>crwdns305802:0crwdne305802:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.contactTimes">
+        <source>Contact Times</source>
+        <target>crwdns305804:0crwdne305804:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.email">
+        <source>Email</source>
+        <target>crwdns305806:0crwdne305806:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.website">
+        <source>Website</source>
+        <target>crwdns305808:0crwdne305808:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.members">
+        <source>Members</source>
+        <target>crwdns305810:0crwdne305810:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.clubHome">
+        <source>Club Home</source>
+        <target>crwdns305812:0crwdne305812:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.description">
+        <source>Description</source>
+        <target>crwdns305814:0crwdne305814:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.feUsers">
+        <source>Assign Frontend Users</source>
+        <target>crwdns305816:0crwdne305816:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.logo">
+        <source>Logo</source>
+        <target>crwdns305818:0crwdne305818:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.images">
+        <source>Images</source>
+        <target>crwdns305820:0crwdne305820:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.facebook">
+        <source>Facebook</source>
+        <target>crwdns305822:0crwdne305822:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.twitter">
+        <source>Twitter</source>
+        <target>crwdns305824:0crwdne305824:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.instagram">
+        <source>Instagram</source>
+        <target>crwdns305826:0crwdne305826:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.tags">
+        <source>Tags</source>
+        <target>crwdns305828:0crwdne305828:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.district">
+        <source>District</source>
+        <target>crwdns305830:0crwdne305830:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_club.addresses">
+        <source>Addresses</source>
+        <target>crwdns305832:0crwdne305832:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address">
+        <source>Address</source>
+        <target>crwdns305834:0crwdne305834:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title">
+        <source>Title</source>
+        <target>crwdns305836:0crwdne305836:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.organizationAddress">
+        <source>Organization Address</source>
+        <target>crwdns305838:0crwdne305838:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.postAddress">
+        <source>Post Address</source>
+        <target>crwdns305840:0crwdne305840:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.title.clubAddress">
+        <source>Club Address</source>
+        <target>crwdns305842:0crwdne305842:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.street">
+        <source>Street</source>
+        <target>crwdns305844:0crwdne305844:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.houseNumber">
+        <source>House Number</source>
+        <target>crwdns305846:0crwdne305846:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.zip">
+        <source>Zip</source>
+        <target>crwdns305848:0crwdne305848:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.city">
+        <source>City</source>
+        <target>crwdns305850:0crwdne305850:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.telephone">
+        <source>Telephone</source>
+        <target>crwdns305852:0crwdne305852:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.fax">
+        <source>Fax</source>
+        <target>crwdns305854:0crwdne305854:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.barrierFree">
+        <source>Barrier Free</source>
+        <target>crwdns305856:0crwdne305856:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_address.club">
+        <source>Related Club</source>
+        <target>crwdns305858:0crwdne305858:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_district">
+        <source>District (clubs)</source>
+        <target>crwdns305860:0crwdne305860:0</target>
+      </trans-unit>
+      <trans-unit id="tx_clubdirectory_domain_model_district.district">
+        <source>District</source>
+        <target>crwdns305862:0crwdne305862:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
