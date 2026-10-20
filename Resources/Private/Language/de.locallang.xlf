@@ -389,7 +389,7 @@
       </trans-unit>
       <trans-unit id="unauthorizedUser">
         <source>You are not allowed to edit records that are not assigned to you.</source>
-        <target state="needs-translation">You are not allowed to edit records that are not assigned to you.</target>
+        <target state="translated">Sie sind nicht berechtigt, Datensätze zu bearbeiten, die Ihnen nicht zugeordnet sind.</target>
       </trans-unit>
     </body>
   </file>
