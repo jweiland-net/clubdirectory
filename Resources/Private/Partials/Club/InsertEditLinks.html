@@ -7,8 +7,9 @@
         <p>
             <f:link.action class="new"
                            action="new"
+                           controller="Management"
                            pluginName="Management"
-                           pageUid="{settings.pidOfDetailPage}"
+                           pageUid="{settings.pidOfManagementPage}"
                            title="{f:translate(key: 'newEntry')}">
                 <span>{f:translate(key: "newEntry")}</span>
             </f:link.action>
@@ -16,8 +17,9 @@
         <p>
             <f:link.action class="listMyClubs"
                            action="listMyClubs"
+                           controller="Management"
                            pluginName="Management"
-                           pageUid="{settings.pidOfDetailPage}"
+                           pageUid="{settings.pidOfManagementPage}"
                            title="{f:translate(key: 'listMyClubs')}">
                 <span>{f:translate(key: "listMyClubs")}</span>
             </f:link.action>
