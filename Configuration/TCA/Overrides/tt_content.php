@@ -37,4 +37,24 @@ ExtensionManagementUtility::addToAllTCAtypes(
     'after:subheader',
 );
 
+ExtensionUtility::registerPlugin(
+    'Clubdirectory',
+    'Management',
+    'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.management.title',
+    'ext-clubdirectory-wizard-icon',
+    'plugins',
+    'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.management.description',
+);
+
+ExtensionUtility::registerPlugin(
+    'Clubdirectory',
+    'Search',
+    'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.search.title',
+    'ext-clubdirectory-wizard-icon',
+    'plugins',
+    'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.search.description',
+);
+
 $GLOBALS['TCA']['tt_content']['types']['clubdirectory_clubdirectory']['previewRenderer'] = ClubDirectoryPluginPreview::class;
+$GLOBALS['TCA']['tt_content']['types']['clubdirectory_management']['previewRenderer'] = ClubDirectoryPluginPreview::class;
+$GLOBALS['TCA']['tt_content']['types']['clubdirectory_search']['previewRenderer'] = ClubDirectoryPluginPreview::class;

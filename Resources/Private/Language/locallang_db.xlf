@@ -9,6 +9,18 @@
 			<trans-unit id="plugin.clubdirectory.description">
 				<source>Shows a list of club entries. Above all entries you will see an A-Z navigation to jump directly to an entry.</source>
 			</trans-unit>
+			<trans-unit id="plugin.management.title">
+				<source>Club Directory Management</source>
+			</trans-unit>
+			<trans-unit id="plugin.management.description">
+				<source>Inserts a form to let frontend users create, edit and manage their own club entries.</source>
+			</trans-unit>
+			<trans-unit id="plugin.search.title">
+				<source>Club Directory Search</source>
+			</trans-unit>
+			<trans-unit id="plugin.search.description">
+				<source>Inserts a search form to find club entries by search word, category and district.</source>
+			</trans-unit>
 
 			<trans-unit id="clubdirectory.tabs.media">
 				<source>Media</source>
