@@ -25,6 +25,8 @@ plugin.tx_clubdirectory {
   settings {
     pidOfMaps2Plugin = {$clubdirectory.pidOfMaps2Plugin}
     pidOfDetailPage = {$clubdirectory.pidOfDetailPage}
+    pidOfSearchResults = {$clubdirectory.pidOfSearchResults}
+    pidOfManagementPage = {$clubdirectory.pidOfManagementPage}
     list {
       image {
         width = {$clubdirectory.list.image.width}
