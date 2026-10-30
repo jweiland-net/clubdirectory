@@ -2,7 +2,12 @@
       xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:form action="search" name="search" class="form-inline">
+<f:form action="listSearchResults"
+        controller="Search"
+        pluginName="Search"
+        pageUid="{settings.pidOfSearchResults}"
+        name="search"
+        class="form-inline">
     <div class="form-group">
         <f:form.textfield name="search[searchWord]" class="form-control" value="{search.searchWord}"/>
     </div>
