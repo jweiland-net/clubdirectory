@@ -50,6 +50,12 @@
 			<trans-unit id="settings.description.clubdirectory.storagePid">
 				<source>Folder that stores all POIs</source>
 			</trans-unit>
+			<trans-unit id="settings.clubdirectory.pidOfListPage">
+				<source>List Page</source>
+			</trans-unit>
+			<trans-unit id="settings.description.clubdirectory.pidOfListPage">
+				<source>Page UID with clubdirectory plugin to show the list of clubs</source>
+			</trans-unit>
 			<trans-unit id="settings.clubdirectory.pidOfDetailPage">
 				<source>Pid of Detail Page</source>
 			</trans-unit>

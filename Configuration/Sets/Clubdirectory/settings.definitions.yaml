@@ -29,6 +29,10 @@ settings:
     category: clubdirectory.pages
     type: page
     default: 0
+  clubdirectory.pidOfListPage:
+    category: clubdirectory.pages
+    type: page
+    default: 0
   clubdirectory.pidOfDetailPage:
     category: clubdirectory.pages
     type: page

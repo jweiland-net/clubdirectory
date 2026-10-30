@@ -24,6 +24,7 @@ plugin.tx_clubdirectory {
   }
   settings {
     pidOfMaps2Plugin = {$clubdirectory.pidOfMaps2Plugin}
+    pidOfListPage = {$clubdirectory.pidOfListPage}
     pidOfDetailPage = {$clubdirectory.pidOfDetailPage}
     pidOfSearchResults = {$clubdirectory.pidOfSearchResults}
     pidOfManagementPage = {$clubdirectory.pidOfManagementPage}

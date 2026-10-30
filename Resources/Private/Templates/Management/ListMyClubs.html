@@ -7,7 +7,11 @@
 <f:section name="main">
     <f:flashMessages/>
 
-    <f:link.action action="list" pageUid="{settings.pidOfListPage}" title="{f:translate(key: 'backToList')}">
+    <f:link.action action="list"
+                   controller="Club"
+                   pluginName="Clubdirectory"
+                   pageUid="{settings.pidOfListPage}"
+                   title="{f:translate(key: 'backToList')}">
         {f:translate(key: 'backToList')}
     </f:link.action>
 
