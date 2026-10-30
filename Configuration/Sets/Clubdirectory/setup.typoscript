@@ -73,10 +73,6 @@ plugin.tx_clubdirectory {
   }
 }
 
-module.tx_clubdirectory {
-  persistence < plugin.tx_clubdirectory.persistence
-}
-
 plugin.tx_clubdirectory._CSS_DEFAULT_STYLE (
   textarea.f3-form-error {
     background-color:#FF9F9F;
