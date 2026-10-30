@@ -14,7 +14,9 @@ if (!defined('TYPO3')) {
 }
 
 use JWeiland\Clubdirectory\Controller\ClubController;
+use JWeiland\Clubdirectory\Controller\ManagementController;
 use JWeiland\Clubdirectory\Controller\MapController;
+use JWeiland\Clubdirectory\Controller\SearchController;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
@@ -26,16 +28,41 @@ ExtensionUtility::configurePlugin(
     'Clubdirectory',
     'Clubdirectory',
     [
-        ClubController::class => 'list, listMyClubs, show, new, create, edit, update, search, activate',
+        ClubController::class => 'list, show',
+    ],
+    // non-cacheable actions
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
+ExtensionUtility::configurePlugin(
+    'Clubdirectory',
+    'Management',
+    [
+        ManagementController::class => 'listMyClubs, new, create, edit, update, activate',
         MapController::class => 'new, create, edit, update',
     ],
     // non-cacheable actions
     [
-        ClubController::class => 'create, update, search, activate',
+        ManagementController::class => 'listMyClubs, edit, create, update, activate',
         MapController::class => 'create, update',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
+
+ExtensionUtility::configurePlugin(
+    'Clubdirectory',
+    'Search',
+    [
+        SearchController::class => 'show, listSearchResults',
+    ],
+    // non-cacheable actions
+    [
+        SearchController::class => 'listSearchResults',
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
+);
+
 
 try {
     $extConf = GeneralUtility::makeInstance(ExtensionConfiguration::class);
