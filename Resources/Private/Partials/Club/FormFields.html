@@ -20,80 +20,84 @@
 <f:render section="renderTextProperty" arguments="{property: 'instagram', column: 'instagram'}"/>
 <f:render section="renderTextProperty" arguments="{property: 'tags', column: 'tags'}"/>
 
-<f:render section="renderLogo" arguments="{club: club}"/>
+<f:render section="renderLogo" arguments="{_all}"/>
+<f:render section="renderImages" arguments="{_all}"/>
 
 <f:section name="renderLogo">
     <f:render section="renderLabel" arguments="{column: 'logo'}"/>
 
-    <div class="media mb-3">
-        <f:if condition="{club.logo.0}">
-            <f:image image="{club.logo.0}"
+    <f:for each="{club.logo}" as="logo" iteration="iterator">
+        <div class="media mb-3">
+            <f:image image="{logo}"
                      class="mr-3"
                      alt="{club.title}"
                      width="{settings.list.image.width}"
                      height="{settings.list.image.height}"
             />
-        </f:if>
-        <div class="media-body">
-            <div class="form-group">
-                <f:form.upload property="logo.0"
-                               class="form-control-file"
-                               id="logo"/>
-            </div>
-            <f:if condition="{club.logo.0}">
+            <div class="media-body">
                 <div class="form-group form-check">
-                    <f:form.checkbox property="logo.0.delete"
-                                     id="logoDelete"
-                                     class="form-check-input"
-                                     value="1"/>
-                    <label class="form-check-label" for="logoDelete">
+                    <f:form.uploadDeleteCheckbox property="logo"
+                                                 fileReference="{logo}"
+                                                 id="logoDelete{iterator.index}"
+                                                 class="form-check-input"/>
+                    <label class="form-check-label" for="logoDelete{iterator.index}">
                         {f:translate(key: "deleteLogo")}
                     </label>
                 </div>
-            </f:if>
+            </div>
         </div>
+    </f:for>
+
+    <div class="form-group">
+        <f:form.upload property="logo"
+                       class="form-control-file"
+                       id="logo"
+                       additionalAttributes="{accept: 'image/gif,image/jpeg,image/png', aria-describedby: 'logoHelp'}"/>
+        <f:render section="renderHelpMessage" arguments="{property: 'logo'}"/>
     </div>
+
+    <f:if condition="{isCheckFalUploadsLoaded}">
+        <f:render partial="Club/UploadRights" arguments="{property: 'logo'}"/>
+    </f:if>
 </f:section>
 
 <f:section name="renderImages">
     <f:render section="renderLabel" arguments="{column: 'images'}"/>
 
-    <f:for each="{0: 1, 1: 2, 2: 3, 3: 4, 4: 5}" as="number" key="globalIndex">
-        <f:variable name="currentImage" value=""/>
-        <f:for each="{club.images}" as="image" key="imageIndex">
-            <f:if condition="{globalIndex}=={imageIndex}">
-                <f:variable name="currentImage">{image}</f:variable>
-            </f:if>
-        </f:for>
+    <f:for each="{club.images}" as="image" iteration="iterator">
         <div class="media mb-3">
-            <f:if condition="{currentImage}">
-                <f:image image="{currentImage}"
-                         class="mr-3"
-                         alt="{club.title}"
-                         width="{settings.list.image.width}"
-                         height="{settings.list.image.height}"
-                />
-            </f:if>
+            <f:image image="{image}"
+                     class="mr-3"
+                     alt="{club.title}"
+                     width="{settings.list.image.width}"
+                     height="{settings.list.image.height}"
+            />
             <div class="media-body">
-                <div class="form-group">
-                    <f:form.upload property="images.{globalIndex}"
-                                   class="form-control-file"
-                                   id="images_{globalIndex}"/>
+                <div class="form-group form-check">
+                    <f:form.uploadDeleteCheckbox property="images"
+                                                 fileReference="{image}"
+                                                 id="imageDelete{iterator.index}"
+                                                 class="form-check-input"/>
+                    <label class="form-check-label" for="imageDelete{iterator.index}">
+                        {f:translate(key: "deleteImage")}
+                    </label>
                 </div>
-                <f:if condition="{currentImage}">
-                    <div class="form-group form-check">
-                        <f:form.checkbox property="images.{globalIndex}.delete"
-                                         id="imageDelete{globalIndex}"
-                                         class="form-check-input"
-                                         value="1"/>
-                        <label class="form-check-label" for="imageDelete{globalIndex}">
-                            {f:translate(key: "deleteImage")}
-                        </label>
-                    </div>
-                </f:if>
             </div>
         </div>
     </f:for>
+
+    <div class="form-group">
+        <f:form.upload property="images"
+                       multiple="1"
+                       class="form-control-file"
+                       id="images"
+                       additionalAttributes="{accept: 'image/gif,image/jpeg,image/png', aria-describedby: 'imagesHelp'}"/>
+        <f:render section="renderHelpMessage" arguments="{property: 'images'}"/>
+    </div>
+
+    <f:if condition="{isCheckFalUploadsLoaded}">
+        <f:render partial="Club/UploadRights" arguments="{property: 'images'}"/>
+    </f:if>
 </f:section>
 
 <f:section name="renderTextProperty">

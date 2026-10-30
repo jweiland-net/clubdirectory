@@ -39,12 +39,3 @@ services:
     tags:
     - name: event.listener
       event: JWeiland\Clubdirectory\Event\InitializeControllerActionEvent
-  JWeiland\Clubdirectory\EventListener\AssignMediaTypeConverterEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\InitializeControllerActionEvent
-
-  JWeiland\Clubdirectory\EventListener\DeleteUploadedFilesEventListener:
-    tags:
-    - name: event.listener
-      event: JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent

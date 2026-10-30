@@ -22,6 +22,7 @@ use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
 use JWeiland\Clubdirectory\Domain\Validator\ClubValidator;
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -67,6 +68,7 @@ class ManagementController extends ActionController
             'club' => $club,
             'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
             'addressTitles' => $this->getAddressTitles(),
+            'isCheckFalUploadsLoaded' => ExtensionManagementUtility::isLoaded('checkfaluploads'),
         ]);
 
         return $this->htmlResponse();
@@ -123,6 +125,7 @@ class ManagementController extends ActionController
             'club' => $club,
             'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
             'addressTitles' => $this->getAddressTitles(),
+            'isCheckFalUploadsLoaded' => ExtensionManagementUtility::isLoaded('checkfaluploads'),
         ]);
 
         return $this->htmlResponse();

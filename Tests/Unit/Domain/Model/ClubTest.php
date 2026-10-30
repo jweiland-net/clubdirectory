@@ -298,10 +298,10 @@ class ClubTest extends UnitTestCase
     }
 
     #[Test]
-    public function getLogoInitiallyReturnsEmptyArray(): void
+    public function getLogoInitiallyReturnsObjectStorage(): void
     {
-        self::assertSame(
-            [],
+        self::assertEquals(
+            new ObjectStorage(),
             $this->subject->getLogo(),
         );
     }
@@ -311,15 +311,6 @@ class ClubTest extends UnitTestCase
     {
         self::assertNull(
             $this->subject->getFirstLogo(),
-        );
-    }
-
-    #[Test]
-    public function getOriginalLogoInitiallyReturnsObjectStorage(): void
-    {
-        self::assertEquals(
-            new ObjectStorage(),
-            $this->subject->getOriginalLogo(),
         );
     }
 
@@ -334,7 +325,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalLogo(),
+            $this->subject->getLogo(),
         );
     }
 
@@ -351,7 +342,7 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalLogo(),
+            $this->subject->getLogo(),
         );
     }
 
@@ -370,15 +361,15 @@ class ClubTest extends UnitTestCase
 
         self::assertSame(
             $objectStorage,
-            $this->subject->getOriginalLogo(),
+            $this->subject->getLogo(),
         );
     }
 
     #[Test]
-    public function getImagesInitiallyReturnsArray(): void
+    public function getImagesInitiallyReturnsObjectStorage(): void
     {
         self::assertEquals(
-            [],
+            new ObjectStorage(),
             $this->subject->getImages(),
         );
     }
@@ -393,7 +384,7 @@ class ClubTest extends UnitTestCase
         $this->subject->setImages($objectStorage);
 
         self::assertSame(
-            [$object],
+            $objectStorage,
             $this->subject->getImages(),
         );
     }
@@ -410,7 +401,7 @@ class ClubTest extends UnitTestCase
         $objectStorage->attach($object);
 
         self::assertSame(
-            [$object],
+            $objectStorage,
             $this->subject->getImages(),
         );
     }
@@ -429,7 +420,7 @@ class ClubTest extends UnitTestCase
         $objectStorage->detach($object);
 
         self::assertSame(
-            [],
+            $objectStorage,
             $this->subject->getImages(),
         );
     }

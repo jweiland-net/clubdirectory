@@ -222,13 +222,13 @@
 				<source>Enter URL to Instagram.</source>
 			</trans-unit>
 			<trans-unit id="cshlogo">
-				<source>Upload the logo file (jpg,gif,png) in a square formatting.</source>
+				<source>Upload the logo file (jpg, gif, png, max. 4 MB) in a square formatting. To replace an existing logo, mark it for deletion and upload a new one.</source>
 			</trans-unit>
 			<trans-unit id="cshtags">
 				<source>Enter further tags for the alphabetic list view.</source>
 			</trans-unit>
-			<trans-unit id="cshimages_0">
-				<source>Upload max. 5 image files (jpg,gif,png). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
+			<trans-unit id="cshimages">
+				<source>Upload max. 5 image files (jpg, gif, png, max. 4 MB each). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
 			</trans-unit>
 			<trans-unit id="altTextMapImg">
 				<source>Map</source>
@@ -279,13 +279,6 @@
 			</trans-unit>
 			<trans-unit id="email.value">
 				<source>Value</source>
-			</trans-unit>
-
-			<trans-unit id="error.upload">
-				<source>Something went wrong with your uploaded files. Please try again. Error: </source>
-			</trans-unit>
-			<trans-unit id="error.fileExtension">
-				<source>You only can upload files with following file extensions: %1$s</source>
 			</trans-unit>
 
 			<trans-unit id="mapview">
