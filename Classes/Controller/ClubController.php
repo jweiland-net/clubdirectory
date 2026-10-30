@@ -43,6 +43,11 @@ class ClubController extends ActionController
         protected PersistenceManagerInterface $persistenceManager,
     ) {}
 
+    public function initializeListAction(): void
+    {
+        $this->preProcessControllerAction();
+    }
+
     public function listAction(string $letter = ''): ResponseInterface
     {
         $this->postProcessAndAssignFluidVariables([
@@ -58,6 +63,11 @@ class ClubController extends ActionController
         ]);
 
         return $this->htmlResponse();
+    }
+
+    public function initializeShowAction(): void
+    {
+        $this->preProcessControllerAction();
     }
 
     /**
