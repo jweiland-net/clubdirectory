@@ -5,13 +5,19 @@
 <f:security.ifHasRole role="{allowedUserGroup}">
     <div>
         <p>
-            <f:link.action class="new" action="new" pageUid="{settings.pidOfDetailPage}"
+            <f:link.action class="new"
+                           action="new"
+                           pluginName="Management"
+                           pageUid="{settings.pidOfDetailPage}"
                            title="{f:translate(key: 'newEntry')}">
                 <span>{f:translate(key: "newEntry")}</span>
             </f:link.action>
         </p>
         <p>
-            <f:link.action class="listMyClubs" action="listMyClubs" pageUid="{settings.pidOfDetailPage}"
+            <f:link.action class="listMyClubs"
+                           action="listMyClubs"
+                           pluginName="Management"
+                           pageUid="{settings.pidOfDetailPage}"
                            title="{f:translate(key: 'listMyClubs')}">
                 <span>{f:translate(key: "listMyClubs")}</span>
             </f:link.action>
