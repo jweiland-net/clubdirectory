@@ -55,10 +55,6 @@
                        additionalAttributes="{accept: 'image/gif,image/jpeg,image/png', aria-describedby: 'logoHelp'}"/>
         <f:render section="renderHelpMessage" arguments="{property: 'logo'}"/>
     </div>
-
-    <f:if condition="{isCheckFalUploadsLoaded}">
-        <f:render partial="Club/UploadRights" arguments="{property: 'logo'}"/>
-    </f:if>
 </f:section>
 
 <f:section name="renderImages">
@@ -94,10 +90,6 @@
                        additionalAttributes="{accept: 'image/gif,image/jpeg,image/png', aria-describedby: 'imagesHelp'}"/>
         <f:render section="renderHelpMessage" arguments="{property: 'images'}"/>
     </div>
-
-    <f:if condition="{isCheckFalUploadsLoaded}">
-        <f:render partial="Club/UploadRights" arguments="{property: 'images'}"/>
-    </f:if>
 </f:section>
 
 <f:section name="renderTextProperty">
