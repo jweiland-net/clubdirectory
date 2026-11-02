@@ -104,8 +104,7 @@ class ManagementController extends ActionController
             return $this->redirect('new', 'Map', 'clubdirectory', ['club' => $club]);
         }
 
-        $this->addFlashMessage('There is no valid user logged in. So record was not saved');
-        return $this->redirectToClubList();
+        return $this->redirectToClubList('There is no valid user logged in. So record was not saved');
     }
 
     /**
@@ -197,8 +196,9 @@ class ManagementController extends ActionController
     {
         $club->setHidden(false);
         $this->clubRepository->update($club);
-        $this->addFlashMessage(LocalizationUtility::translate('clubActivated', 'clubdirectory'));
 
-        return $this->redirectToClubList();
+        return $this->redirectToClubList(
+            (string)LocalizationUtility::translate('clubActivated', 'clubdirectory'),
+        );
     }
 }

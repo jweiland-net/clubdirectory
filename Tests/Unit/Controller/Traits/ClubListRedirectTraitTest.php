@@ -11,10 +11,14 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Unit\Controller\Traits;
 
+use JWeiland\Clubdirectory\Controller\ClubController;
 use JWeiland\Clubdirectory\Controller\Traits\ClubListRedirectTrait;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -27,6 +31,8 @@ class ClubListRedirectTraitTest extends UnitTestCase
     private const LIST_URI = 'https://www.example.com/clubs?tx_clubdirectory_clubdirectory%5Baction%5D=list';
 
     protected UriBuilder&MockObject $uriBuilder;
+
+    protected FlashMessageService&MockObject $flashMessageService;
 
     protected function setUp(): void
     {
@@ -42,11 +48,13 @@ class ClubListRedirectTraitTest extends UnitTestCase
             ->method('uriFor')
             ->with('list', [], 'Club', 'Clubdirectory', 'Clubdirectory')
             ->willReturn(self::LIST_URI);
+
+        $this->flashMessageService = $this->createMock(FlashMessageService::class);
     }
 
     protected function tearDown(): void
     {
-        unset($this->uriBuilder);
+        unset($this->uriBuilder, $this->flashMessageService);
 
         parent::tearDown();
     }
@@ -54,7 +62,7 @@ class ClubListRedirectTraitTest extends UnitTestCase
     /**
      * @param array<string, mixed> $settings
      */
-    private function redirectToClubList(array $settings): ResponseInterface
+    private function redirectToClubList(array $settings, string $flashMessage = ''): ResponseInterface
     {
         $controller = new class ($this->uriBuilder, $settings) extends ActionController {
             use ClubListRedirectTrait;
@@ -68,13 +76,14 @@ class ClubListRedirectTraitTest extends UnitTestCase
                 $this->settings = $settings;
             }
 
-            public function callRedirectToClubList(): ResponseInterface
+            public function callRedirectToClubList(string $flashMessage): ResponseInterface
             {
-                return $this->redirectToClubList();
+                return $this->redirectToClubList($flashMessage);
             }
         };
+        $controller->injectInternalFlashMessageService($this->flashMessageService);
 
-        return $controller->callRedirectToClubList();
+        return $controller->callRedirectToClubList($flashMessage);
     }
 
     #[Test]
@@ -103,5 +112,43 @@ class ClubListRedirectTraitTest extends UnitTestCase
 
         self::assertSame(303, $response->getStatusCode());
         self::assertSame(self::LIST_URI, $response->getHeaderLine('Location'));
+    }
+
+    #[Test]
+    public function redirectToClubListAddsFlashMessageToQueueOfListPlugin(): void
+    {
+        $flashMessageQueue = $this->createMock(FlashMessageQueue::class);
+        $flashMessageQueue
+            ->expects(self::once())
+            ->method('enqueue')
+            ->with(self::callback(
+                static fn(FlashMessage $flashMessage): bool => $flashMessage->getMessage() === 'Club activated'
+                    && $flashMessage->isSessionMessage(),
+            ));
+        $this->flashMessageService
+            ->expects(self::once())
+            ->method('getMessageQueueByIdentifier')
+            ->with(ClubController::FLASH_MESSAGE_QUEUE_IDENTIFIER)
+            ->willReturn($flashMessageQueue);
+        $this->uriBuilder
+            ->method('setTargetPageUid')
+            ->willReturnSelf();
+
+        $response = $this->redirectToClubList(['pidOfListPage' => '72'], 'Club activated');
+
+        self::assertSame(self::LIST_URI, $response->getHeaderLine('Location'));
+    }
+
+    #[Test]
+    public function redirectToClubListWithoutFlashMessageKeepsQueueUntouched(): void
+    {
+        $this->flashMessageService
+            ->expects(self::never())
+            ->method('getMessageQueueByIdentifier');
+        $this->uriBuilder
+            ->method('setTargetPageUid')
+            ->willReturnSelf();
+
+        $this->redirectToClubList(['pidOfListPage' => '72']);
     }
 }

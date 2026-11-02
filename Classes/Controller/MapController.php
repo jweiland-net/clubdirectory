@@ -62,25 +62,25 @@ class MapController extends ActionController
 
     public function createAction(Club $club): ResponseInterface
     {
-        if ($this->frontendUserRepository->getCurrentFrontendUserUid()) {
-            $this->clubRepository->update($club);
-            // The moderation token of the mail signs the "tstamp" of the persisted club
-            $this->persistenceManager->persistAll();
-
-            $this->view->assignMultiple([
-                'club' => $club,
-                'moderationToken' => $this->clubAccessService->generateModerationToken((int)$club->getUid()),
-            ]);
-            $this->mailHelper->sendMail(
-                $this->view->render(),
-                LocalizationUtility::translate('email.subject.create', 'clubdirectory'),
-            );
-
-            $this->addFlashMessage(LocalizationUtility::translate('clubCreated', 'clubdirectory'));
-        } else {
-            $this->addFlashMessage('There is no valid user logged in. So record was not saved');
+        if (!$this->frontendUserRepository->getCurrentFrontendUserUid()) {
+            return $this->redirectToClubList('There is no valid user logged in. So record was not saved');
         }
 
-        return $this->redirectToClubList();
+        $this->clubRepository->update($club);
+        // The moderation token of the mail signs the "tstamp" of the persisted club
+        $this->persistenceManager->persistAll();
+
+        $this->view->assignMultiple([
+            'club' => $club,
+            'moderationToken' => $this->clubAccessService->generateModerationToken((int)$club->getUid()),
+        ]);
+        $this->mailHelper->sendMail(
+            $this->view->render(),
+            LocalizationUtility::translate('email.subject.create', 'clubdirectory'),
+        );
+
+        return $this->redirectToClubList(
+            (string)LocalizationUtility::translate('clubCreated', 'clubdirectory'),
+        );
     }
 }

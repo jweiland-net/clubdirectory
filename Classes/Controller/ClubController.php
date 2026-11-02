@@ -37,6 +37,12 @@ class ClubController extends ActionController
     use PostProcessFluidVariablesTrait;
     use PreProcessControllerActionTrait;
 
+    /**
+     * Queue of this plugin. Other plugins add messages, before they redirect
+     * to the club list.
+     */
+    public const FLASH_MESSAGE_QUEUE_IDENTIFIER = 'extbase.flashmessages.tx_clubdirectory_clubdirectory';
+
     public function __construct(
         protected DistrictRepository $districtRepository,
         protected PersistenceManagerInterface $persistenceManager,
@@ -50,6 +56,8 @@ class ClubController extends ActionController
 
     public function listAction(string $letter = ''): ResponseInterface
     {
+        $this->disablePageCacheForFlashMessages();
+
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $this->clubRepository->findFilteredBy(
                 (int)$this->settings['category'],
@@ -87,10 +95,30 @@ class ClubController extends ActionController
             );
         }
 
+        $this->disablePageCacheForFlashMessages();
+
         $this->postProcessAndAssignFluidVariables([
             'club' => $clubObject,
         ]);
 
         return $this->htmlResponse();
+    }
+
+    /**
+     * Flash messages belong to the current visitor. They must not be stored
+     * in the page cache, which is shared with other visitors. The messages
+     * are not flushed here, as the template renders them. The page cache
+     * gets written after rendering, so disabling the cache in an action is
+     * early enough. The next request is cached again.
+     */
+    protected function disablePageCacheForFlashMessages(): void
+    {
+        if ($this->getFlashMessageQueue()->getAllMessages() === []) {
+            return;
+        }
+
+        $this->request->getAttribute('frontend.cache.instruction')?->disableCache(
+            'EXT:clubdirectory: Flash messages of the club list must not be cached',
+        );
     }
 }
