@@ -117,6 +117,19 @@
     </div>
 </f:section>
 
+<f:section name="renderTelephoneProperty">
+    <div class="form-group">
+        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
+        <f:form.textfield type="tel"
+                          property="{property}"
+                          class="form-control"
+                          id="{property}"
+                          additionalAttributes="{aria-describedby: '{property}Help'}"
+        />
+        <f:render section="renderHelpMessage" arguments="{property: property}"/>
+    </div>
+</f:section>
+
 <f:section name="renderSingleSelectProperty">
     <div class="form-group">
         <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
@@ -208,8 +221,8 @@
               arguments="{property: '{prefix}.houseNumber', column: 'houseNumber', domain: 'address'}"/>
     <f:render section="renderTextProperty" arguments="{property: '{prefix}.zip', column: 'zip', domain: 'address'}"/>
     <f:render section="renderTextProperty" arguments="{property: '{prefix}.city', column: 'city', domain: 'address'}"/>
-    <f:render section="renderTextProperty" arguments="{property: '{prefix}.telephone', column: 'telephone', domain: 'address'}"/>
-    <f:render section="renderTextProperty" arguments="{property: '{prefix}.fax', column: 'fax', domain: 'address'}"/>
+    <f:render section="renderTelephoneProperty" arguments="{property: '{prefix}.telephone', column: 'telephone', domain: 'address'}"/>
+    <f:render section="renderTelephoneProperty" arguments="{property: '{prefix}.fax', column: 'fax', domain: 'address'}"/>
     <f:render section="renderCheckboxProperty"
               arguments="{property: '{prefix}.barrierFree', column: 'barrierFree', domain: 'address'}"/>
 
