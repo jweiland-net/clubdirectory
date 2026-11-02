@@ -3,9 +3,6 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2013-03-28T08:36:00Z" product-name="clubdirectory" target-language="sr">
     <header/>
     <body>
-      <trans-unit id="userGroup" xml:space="preserve">
-				<source>Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</source>
-			<target state="needs-translation">Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</target></trans-unit>
       <trans-unit id="poiCollectionPid" xml:space="preserve">
 				<source>PID for poiCollections: Define a storage pid where to store records of type Point of Interest.</source>
 			<target state="needs-translation">PID for poiCollections: Define a storage pid where to store records of type Point of Interest.</target></trans-unit>
