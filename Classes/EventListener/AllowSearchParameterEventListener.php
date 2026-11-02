@@ -14,7 +14,6 @@ namespace JWeiland\Clubdirectory\EventListener;
 use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
 use JWeiland\Clubdirectory\Traits\IsValidEventListenerRequestTrait;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
-use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 /**
  * The search arguments are also transferred by GET (e.g. links of the page browser),
@@ -55,12 +54,5 @@ final readonly class AllowSearchParameterEventListener
 
         // Ignore unknown arguments like the removed "subCategory" in old links
         $propertyMappingConfiguration->skipUnknownProperties();
-
-        $propertyMappingConfiguration->setTypeConverterOptions(
-            PersistentObjectConverter::class,
-            [
-                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED => true,
-            ],
-        );
     }
 }

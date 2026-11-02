@@ -26,7 +26,6 @@ use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Property\Exception as PropertyMapperException;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
-use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
@@ -124,21 +123,6 @@ class AllowSearchParameterEventListenerTest extends FunctionalTestCase
         self::assertTrue($this->getPropertyMappingConfiguration($event)->shouldSkipUnknownProperties());
     }
 
-    #[Test]
-    public function invokeAllowsCreationOfPersistentObjects(): void
-    {
-        $event = $this->createEvent('Search', 'listSearchResults');
-
-        (new AllowSearchParameterEventListener())($event);
-
-        self::assertTrue(
-            $this->getPropertyMappingConfiguration($event)->getConfigurationValue(
-                PersistentObjectConverter::class,
-                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
-            ),
-        );
-    }
-
     public static function otherControllerActionDataProvider(): array
     {
         return [
@@ -163,12 +147,6 @@ class AllowSearchParameterEventListenerTest extends FunctionalTestCase
         $propertyMappingConfiguration = $this->getPropertyMappingConfiguration($event);
         self::assertFalse($propertyMappingConfiguration->shouldMap('searchWord'));
         self::assertFalse($propertyMappingConfiguration->shouldSkipUnknownProperties());
-        self::assertNull(
-            $propertyMappingConfiguration->getConfigurationValue(
-                PersistentObjectConverter::class,
-                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
-            ),
-        );
     }
 
     #[Test]
