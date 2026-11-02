@@ -191,6 +191,10 @@
         <source>List my Clubs</source>
         <target state="translated">Klubjaim listázása</target>
       </trans-unit>
+      <trans-unit id="listMyClubs.accessDenied">
+        <source>You do not have access to visit this page</source>
+        <target state="needs-translation">You do not have access to visit this page</target>
+      </trans-unit>
       <trans-unit id="create">
         <source>Create</source>
         <target state="translated">Létrehozás</target>
@@ -200,12 +204,12 @@
         <target state="translated">Szerkesztés</target>
       </trans-unit>
       <trans-unit id="clubCreated">
-        <source>Club created</source>
-        <target state="translated">Klub létrehozva</target>
+        <source>Thank you! Your club has been saved. It will be visible in the club directory as soon as it has been checked and released by the administrator. No further action is required, unless you are asked for changes.</source>
+        <target state="needs-translation">Thank you! Your club has been saved. It will be visible in the club directory as soon as it has been checked and released by the administrator. No further action is required, unless you are asked for changes.</target>
       </trans-unit>
       <trans-unit id="clubUpdated">
-        <source>Club updated</source>
-        <target state="translated">Klub frissítve</target>
+        <source>Thank you! Your changes have been saved. Until they have been checked and released by the administrator, the club is not visible in the club directory.</source>
+        <target state="needs-translation">Thank you! Your changes have been saved. Until they have been checked and released by the administrator, the club is not visible in the club directory.</target>
       </trans-unit>
       <trans-unit id="clubActivated">
         <source>The club was activated and is now visible in frontend</source>
@@ -219,17 +223,53 @@
         <source>Delete Image</source>
         <target state="translated">Kép törlése</target>
       </trans-unit>
-      <trans-unit id="hint">
-        <source>Hint</source>
-        <target state="translated">Tipp</target>
+      <trans-unit id="error.addresses.missing">
+        <source>Please enter at least one address.</source>
+        <target state="needs-translation">Please enter at least one address.</target>
+      </trans-unit>
+      <trans-unit id="error.address.incomplete">
+        <source>%s: Please enter at least street, ZIP and city.</source>
+        <target state="needs-translation">%s: Please enter at least street, ZIP and city.</target>
+      </trans-unit>
+      <trans-unit id="error.geocoding.noPositionsFound.title">
+        <source>Address not found</source>
+        <target state="needs-translation">Address not found</target>
+      </trans-unit>
+      <trans-unit id="error.geocoding.noPositionsFound.body">
+        <source>The position of the address "%s" could not be determined. Please check street, house number, ZIP and city.</source>
+        <target state="needs-translation">The position of the address "%s" could not be determined. Please check street, house number, ZIP and city.</target>
+      </trans-unit>
+      <trans-unit id="error.geocoding.requestDenied.title">
+        <source>Address lookup not authorized</source>
+        <target state="needs-translation">Address lookup not authorized</target>
+      </trans-unit>
+      <trans-unit id="error.geocoding.requestDenied.body">
+        <source>The position of the address "%s" could not be determined, because this server is currently not authorized for address lookups at the map service. Your input was not saved. Please inform the website administrator.</source>
+        <target state="needs-translation">The position of the address "%s" could not be determined, because this server is currently not authorized for address lookups at the map service. Your input was not saved. Please inform the website administrator.</target>
+      </trans-unit>
+      <trans-unit id="error.geocoding.serviceError.title">
+        <source>Map service not available</source>
+        <target state="needs-translation">Map service not available</target>
+      </trans-unit>
+      <trans-unit id="error.geocoding.serviceError.body">
+        <source>The position of the address "%s" could not be determined, because the map service is currently not available. Your input was not saved. Please try again later or inform the website administrator.</source>
+        <target state="needs-translation">The position of the address "%s" could not be determined, because the map service is currently not available. Your input was not saved. Please try again later or inform the website administrator.</target>
+      </trans-unit>
+      <trans-unit id="addressNumber">
+        <source>Address %d</source>
+        <target state="needs-translation">Address %d</target>
+      </trans-unit>
+      <trans-unit id="pleaseChoose">
+        <source>Please choose</source>
+        <target state="needs-translation">Please choose</target>
       </trans-unit>
       <trans-unit id="cshtitle">
         <source>The title is mandatory</source>
         <target state="translated">A cím megadása kötelező</target>
       </trans-unit>
       <trans-unit id="cshcategories">
-        <source>Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</source>
-        <target state="translated">Kérjük, válassza ki a klub kategóriáját. Többszörös kijelölés a Control billentyű nyomva tartásával | Ctrl |</target>
+        <source>Please select the category of the club. Multiple selection by holding down the Ctrl key (Cmd on macOS).</source>
+        <target state="needs-translation">Please select the category of the club. Multiple selection by holding down the Ctrl key (Cmd on macOS).</target>
       </trans-unit>
       <trans-unit id="cshactivity">
         <source>Describe the activities/goals of the club.</source>
@@ -252,8 +292,8 @@
         <target state="translated">Adja meg a klub vagy a kapcsolattartó e-mail címét.</target>
       </trans-unit>
       <trans-unit id="cshwebsite">
-        <source>If the club has a website, it may be entered here.</source>
-        <target state="translated">Ha a klubnak van weboldala, az itt adható meg.</target>
+        <source>If the club has a website, enter its complete address including https://.</source>
+        <target state="needs-translation">If the club has a website, enter its complete address including https://.</target>
       </trans-unit>
       <trans-unit id="cshmembers">
         <source>Enter the number of members of the club.</source>
@@ -276,28 +316,28 @@
         <target state="translated">Adjon meg egy további címtípust a klubhoz az összes címadat megadásával.</target>
       </trans-unit>
       <trans-unit id="cshfacebook">
-        <source>Enter URL to facebook.</source>
-        <target state="translated">Adja meg a facebook URL-t.</target>
+        <source>Enter the complete URL to Facebook including https://.</source>
+        <target state="needs-translation">Enter the complete URL to Facebook including https://.</target>
       </trans-unit>
       <trans-unit id="cshtwitter">
-        <source>Enter URL to twitter.</source>
-        <target state="translated">Adja meg a twitter URL-t.</target>
+        <source>Enter the complete URL to Twitter including https://.</source>
+        <target state="needs-translation">Enter the complete URL to Twitter including https://.</target>
       </trans-unit>
       <trans-unit id="cshinstagram">
-        <source>Enter URL to Instagram.</source>
-        <target state="translated">Adja meg az Instagram URL-t.</target>
+        <source>Enter the complete URL to Instagram including https://.</source>
+        <target state="needs-translation">Enter the complete URL to Instagram including https://.</target>
       </trans-unit>
       <trans-unit id="cshlogo">
-        <source>Upload the logo file (jpg,gif,png) in a square formatting.</source>
-        <target state="translated">Töltse fel a logófájlt (jpg,gif,png) négyzetes formátumban.</target>
+        <source>Upload the logo file (jpg, gif, png, max. 4 MB) in a square formatting. To replace an existing logo, mark it for deletion and upload a new one.</source>
+        <target state="needs-translation">Upload the logo file (jpg, gif, png, max. 4 MB) in a square formatting. To replace an existing logo, mark it for deletion and upload a new one.</target>
       </trans-unit>
       <trans-unit id="cshtags">
         <source>Enter further tags for the alphabetic list view.</source>
         <target state="translated">Adjon meg további címkéket az ábécérendes listanézetéhez.</target>
       </trans-unit>
-      <trans-unit id="cshimages_0">
-        <source>Upload max. 5 image files (jpg,gif,png). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
-        <target state="translated">Töltsön fel legfeljebb 5 képfájlt (jpg,gif,png). Kérjük, használjon azonos képméreteket (pl. 3:2, 3:4), ha egynél több képet tölt fel.</target>
+      <trans-unit id="cshimages">
+        <source>Upload max. 5 image files (jpg, gif, png, max. 4 MB each). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
+        <target state="needs-translation">Upload max. 5 image files (jpg, gif, png, max. 4 MB each). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</target>
       </trans-unit>
       <trans-unit id="altTextMapImg">
         <source>Map</source>
@@ -362,14 +402,6 @@
       <trans-unit id="email.value">
         <source>Value</source>
         <target state="translated">Érték</target>
-      </trans-unit>
-      <trans-unit id="error.upload">
-        <source>Something went wrong with your uploaded files. Please try again. Error: </source>
-        <target state="translated">Hiba történt a feltöltött fájljaival. Kérjük, próbálja újra. Hiba: </target>
-      </trans-unit>
-      <trans-unit id="error.fileExtension">
-        <source>You only can upload files with following file extensions: %1$s</source>
-        <target state="translated">Csak a következő fájlkiterjesztésű fájlokat töltheti fel: %1$s</target>
       </trans-unit>
       <trans-unit id="mapview">
         <source>Map View</source>
