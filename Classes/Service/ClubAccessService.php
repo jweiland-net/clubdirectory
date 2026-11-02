@@ -25,7 +25,8 @@ use TYPO3\CMS\Extbase\Mvc\RequestInterface;
  *
  * The edit and activate links in the notification mails are signed with a
  * "moderationToken". It authorizes the administrator, who is never logged
- * in as the frontend user who owns the club.
+ * in as the frontend user who owns the club. As the token signs the
+ * "tstamp" of the club, too, only the links of the latest mail are valid.
  */
 readonly class ClubAccessService
 {
@@ -57,9 +58,16 @@ readonly class ClubAccessService
         return is_numeric($argument) ? (int)$argument : 0;
     }
 
+    /**
+     * The token signs the club UID and the current "tstamp" of the club
+     * record. So a token gets invalid as soon as the club was changed again.
+     * Generate the token after the club was persisted.
+     */
     public function generateModerationToken(int $clubUid): string
     {
-        return $this->hashService->hmac((string)$clubUid, self::MODERATION_TOKEN_SECRET);
+        $payload = $this->getModerationTokenPayload($clubUid);
+
+        return $payload === '' ? '' : $this->hashService->hmac($payload, self::MODERATION_TOKEN_SECRET);
     }
 
     /**
@@ -76,7 +84,9 @@ readonly class ClubAccessService
             return '';
         }
 
-        return $this->hashService->validateHmac((string)$clubUid, self::MODERATION_TOKEN_SECRET, $moderationToken)
+        $payload = $this->getModerationTokenPayload($clubUid);
+
+        return $payload !== '' && $this->hashService->validateHmac($payload, self::MODERATION_TOKEN_SECRET, $moderationToken)
             ? $moderationToken
             : '';
     }
@@ -120,6 +130,30 @@ readonly class ClubAccessService
         }
 
         return true;
+    }
+
+    /**
+     * Returns "<club UID>:<tstamp>" or an empty string, if the club does not exist
+     */
+    private function getModerationTokenPayload(int $clubUid): string
+    {
+        if ($clubUid <= 0) {
+            return '';
+        }
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_CLUB);
+        $queryBuilder->getRestrictions()->removeAll()->add(new DeletedRestriction());
+
+        $timestamp = $queryBuilder
+            ->select('tstamp')
+            ->from(self::TABLE_CLUB)
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($clubUid, Connection::PARAM_INT)),
+            )
+            ->executeQuery()
+            ->fetchOne();
+
+        return $timestamp === false ? '' : $clubUid . ':' . (int)$timestamp;
     }
 
     private function isAddressOfClub(mixed $address, int $clubUid): bool

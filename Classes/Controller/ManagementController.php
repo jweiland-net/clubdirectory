@@ -128,7 +128,8 @@ class ManagementController extends ActionController
 
     /**
      * The "moderationToken" of the signed mail link is passed to the form,
-     * so that the administrator is allowed to submit the form, too.
+     * so that the administrator is allowed to submit the form, too. It is
+     * validated against the "tstamp" of the club before it gets updated.
      */
     #[Extbase\IgnoreValidation(['value' => 'club'])]
     public function editAction(Club $club): ResponseInterface
@@ -165,7 +166,10 @@ class ManagementController extends ActionController
             return $this->forwardBackWithGeocodingError($geocodingFailure);
         }
 
+        $club->setHidden(true);
         $this->clubRepository->update($club);
+        // The moderation token of the mail signs the "tstamp" of the persisted club
+        $this->persistenceManager->persistAll();
 
         $this->postProcessAndAssignFluidVariables([
             'club' => $club,
@@ -177,7 +181,6 @@ class ManagementController extends ActionController
             LocalizationUtility::translate('email.subject.update', 'clubdirectory'),
         );
 
-        $club->setHidden(true);
         $this->addFlashMessage(LocalizationUtility::translate('clubUpdated', 'clubdirectory'));
 
         return $this->redirect('listMyClubs');

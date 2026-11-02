@@ -24,7 +24,9 @@ use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
- * Test case for the methods of ClubAccessService without database access
+ * Test case for the methods of ClubAccessService without database access.
+ * Moderation tokens sign the "tstamp" of the club record, so they are
+ * tested in the functional test case.
  */
 class ClubAccessServiceTest extends UnitTestCase
 {
@@ -91,57 +93,9 @@ class ClubAccessServiceTest extends UnitTestCase
     }
 
     #[Test]
-    public function generateModerationTokenReturnsDifferentTokensForDifferentClubs(): void
+    public function generateModerationTokenWithoutClubUidReturnsEmptyString(): void
     {
-        $token = $this->subject->generateModerationToken(1);
-
-        self::assertNotSame('', $token);
-        self::assertSame($token, $this->subject->generateModerationToken(1));
-        self::assertNotSame($token, $this->subject->generateModerationToken(2));
-    }
-
-    #[Test]
-    public function generateModerationTokenDependsOnEncryptionKey(): void
-    {
-        $token = $this->subject->generateModerationToken(1);
-
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] = 'another-encryption-key';
-
-        self::assertNotSame($token, $this->subject->generateModerationToken(1));
-    }
-
-    #[Test]
-    public function getValidModerationTokenWithValidTokenReturnsToken(): void
-    {
-        $token = $this->subject->generateModerationToken(1);
-
-        self::assertSame(
-            $token,
-            $this->subject->getValidModerationToken($this->createRequest(['moderationToken' => $token]), 1),
-        );
-    }
-
-    #[Test]
-    public function getValidModerationTokenWithTamperedTokenReturnsEmptyString(): void
-    {
-        $token = $this->subject->generateModerationToken(1);
-        $tamperedToken = substr($token, 0, -1) . ($token[-1] === 'a' ? 'b' : 'a');
-
-        self::assertSame(
-            '',
-            $this->subject->getValidModerationToken($this->createRequest(['moderationToken' => $tamperedToken]), 1),
-        );
-    }
-
-    #[Test]
-    public function getValidModerationTokenWithTokenOfAnotherClubReturnsEmptyString(): void
-    {
-        $token = $this->subject->generateModerationToken(2);
-
-        self::assertSame(
-            '',
-            $this->subject->getValidModerationToken($this->createRequest(['moderationToken' => $token]), 1),
-        );
+        self::assertSame('', $this->subject->generateModerationToken(0));
     }
 
     #[Test]
@@ -165,22 +119,18 @@ class ClubAccessServiceTest extends UnitTestCase
     #[Test]
     public function getValidModerationTokenWithArrayTokenReturnsEmptyString(): void
     {
-        $token = $this->subject->generateModerationToken(1);
-
         self::assertSame(
             '',
-            $this->subject->getValidModerationToken($this->createRequest(['moderationToken' => [$token]]), 1),
+            $this->subject->getValidModerationToken($this->createRequest(['moderationToken' => ['token']]), 1),
         );
     }
 
     #[Test]
     public function getValidModerationTokenWithoutClubUidReturnsEmptyString(): void
     {
-        $token = $this->subject->generateModerationToken(0);
-
         self::assertSame(
             '',
-            $this->subject->getValidModerationToken($this->createRequest(['moderationToken' => $token]), 0),
+            $this->subject->getValidModerationToken($this->createRequest(['moderationToken' => 'token']), 0),
         );
     }
 }

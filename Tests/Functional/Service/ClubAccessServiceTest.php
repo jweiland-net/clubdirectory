@@ -241,4 +241,123 @@ class ClubAccessServiceTest extends FunctionalTestCase
             ),
         );
     }
+
+    private function updateTimestampOfClub(int $clubUid, int $timestamp): void
+    {
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_clubdirectory_domain_model_club')
+            ->update('tx_clubdirectory_domain_model_club', ['tstamp' => $timestamp], ['uid' => $clubUid]);
+    }
+
+    private function isValidModerationToken(string $moderationToken, int $clubUid): bool
+    {
+        $request = $this->createExtbaseRequest('Management', 'activate', [
+            'club' => $clubUid,
+            'moderationToken' => $moderationToken,
+        ]);
+
+        return $this->createSubject()->getValidModerationToken($request, $clubUid) === $moderationToken;
+    }
+
+    #[Test]
+    public function generateModerationTokenReturnsDifferentTokensForDifferentClubs(): void
+    {
+        $token = $this->createSubject()->generateModerationToken(self::VISIBLE_CLUB);
+
+        self::assertNotSame('', $token);
+        self::assertSame($token, $this->createSubject()->generateModerationToken(self::VISIBLE_CLUB));
+        self::assertNotSame($token, $this->createSubject()->generateModerationToken(self::FOREIGN_CLUB));
+    }
+
+    #[Test]
+    public function generateModerationTokenForHiddenClubReturnsToken(): void
+    {
+        self::assertNotSame('', $this->createSubject()->generateModerationToken(self::HIDDEN_CLUB));
+    }
+
+    #[Test]
+    public function generateModerationTokenForDeletedClubReturnsEmptyString(): void
+    {
+        self::assertSame('', $this->createSubject()->generateModerationToken(self::DELETED_CLUB));
+    }
+
+    #[Test]
+    public function generateModerationTokenForUnknownClubReturnsEmptyString(): void
+    {
+        self::assertSame('', $this->createSubject()->generateModerationToken(99999));
+    }
+
+    #[Test]
+    public function generateModerationTokenDependsOnTimestampOfClub(): void
+    {
+        $token = $this->createSubject()->generateModerationToken(self::VISIBLE_CLUB);
+
+        $this->updateTimestampOfClub(self::VISIBLE_CLUB, 1762000001);
+
+        self::assertNotSame($token, $this->createSubject()->generateModerationToken(self::VISIBLE_CLUB));
+    }
+
+    #[Test]
+    public function generateModerationTokenDependsOnEncryptionKey(): void
+    {
+        $token = $this->createSubject()->generateModerationToken(self::VISIBLE_CLUB);
+
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['encryptionKey'] = 'another-encryption-key';
+
+        self::assertNotSame($token, $this->createSubject()->generateModerationToken(self::VISIBLE_CLUB));
+    }
+
+    #[Test]
+    public function getValidModerationTokenWithValidTokenReturnsToken(): void
+    {
+        $token = $this->createSubject()->generateModerationToken(self::HIDDEN_CLUB);
+
+        self::assertTrue($this->isValidModerationToken($token, self::HIDDEN_CLUB));
+    }
+
+    #[Test]
+    public function getValidModerationTokenWithTokenOfOutdatedTimestampReturnsEmptyString(): void
+    {
+        $token = $this->createSubject()->generateModerationToken(self::HIDDEN_CLUB);
+
+        // The club was changed again, so only the token of the new mail is valid
+        $this->updateTimestampOfClub(self::HIDDEN_CLUB, 1762000001);
+
+        self::assertFalse($this->isValidModerationToken($token, self::HIDDEN_CLUB));
+        self::assertTrue(
+            $this->isValidModerationToken(
+                $this->createSubject()->generateModerationToken(self::HIDDEN_CLUB),
+                self::HIDDEN_CLUB,
+            ),
+        );
+    }
+
+    #[Test]
+    public function getValidModerationTokenWithTamperedTokenReturnsEmptyString(): void
+    {
+        $token = $this->createSubject()->generateModerationToken(self::HIDDEN_CLUB);
+        $tamperedToken = substr($token, 0, -1) . ($token[-1] === 'a' ? 'b' : 'a');
+
+        self::assertFalse($this->isValidModerationToken($tamperedToken, self::HIDDEN_CLUB));
+    }
+
+    #[Test]
+    public function getValidModerationTokenWithTokenOfAnotherClubReturnsEmptyString(): void
+    {
+        $token = $this->createSubject()->generateModerationToken(self::FOREIGN_CLUB);
+
+        self::assertFalse($this->isValidModerationToken($token, self::VISIBLE_CLUB));
+    }
+
+    #[Test]
+    public function getValidModerationTokenForDeletedClubReturnsEmptyString(): void
+    {
+        $token = $this->createSubject()->generateModerationToken(self::VISIBLE_CLUB);
+
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_clubdirectory_domain_model_club')
+            ->update('tx_clubdirectory_domain_model_club', ['deleted' => 1], ['uid' => self::VISIBLE_CLUB]);
+
+        self::assertFalse($this->isValidModerationToken($token, self::VISIBLE_CLUB));
+    }
 }

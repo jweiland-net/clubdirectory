@@ -263,6 +263,23 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     }
 
     #[Test]
+    public function activateWithModerationTokenOfOutdatedMailDeniesAccess(): void
+    {
+        $this->loginUser();
+        $token = $this->getModerationToken(self::HIDDEN_CLUB);
+
+        // The club was updated again after the mail with this token was sent
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_clubdirectory_domain_model_club')
+            ->update('tx_clubdirectory_domain_model_club', ['tstamp' => 1762000001], ['uid' => self::HIDDEN_CLUB]);
+
+        $this->assertAccessDenied($this->createEvent('Management', 'activate', [
+            'club' => (string)self::HIDDEN_CLUB,
+            'moderationToken' => $token,
+        ]));
+    }
+
+    #[Test]
     public function activateWithModerationTokenOfAnotherClubDeniesAccess(): void
     {
         $this->loginUser(self::OWNER);

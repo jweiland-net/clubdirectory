@@ -19,6 +19,7 @@ use JWeiland\Clubdirectory\Service\ClubAccessService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
@@ -33,6 +34,7 @@ class MapController extends ActionController
 
     public function __construct(
         protected ClubAccessService $clubAccessService,
+        protected PersistenceManagerInterface $persistenceManager,
     ) {}
 
     public function initializeNewAction(): void
@@ -59,6 +61,10 @@ class MapController extends ActionController
     public function createAction(Club $club): ResponseInterface
     {
         if ($this->frontendUserRepository->getCurrentFrontendUserUid()) {
+            $this->clubRepository->update($club);
+            // The moderation token of the mail signs the "tstamp" of the persisted club
+            $this->persistenceManager->persistAll();
+
             $this->view->assignMultiple([
                 'club' => $club,
                 'moderationToken' => $this->clubAccessService->generateModerationToken((int)$club->getUid()),
@@ -68,7 +74,6 @@ class MapController extends ActionController
                 LocalizationUtility::translate('email.subject.create', 'clubdirectory'),
             );
 
-            $this->clubRepository->update($club);
             $this->addFlashMessage(LocalizationUtility::translate('clubCreated', 'clubdirectory'));
         } else {
             $this->addFlashMessage('There is no valid user logged in. So record was not saved');
