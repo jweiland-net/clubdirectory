@@ -121,7 +121,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
                 [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING],
                 true,
             )) {
-                $search->setOrderBy(QueryInterface::ORDER_ASCENDING);
+                $search->setOrder(QueryInterface::ORDER_ASCENDING);
             }
 
             $query->setOrderings([
