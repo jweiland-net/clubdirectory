@@ -19,8 +19,6 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Repository to get and search for categories stored in sys_category
- *
- * @method QueryResultInterface findByParent(int $parentCategoryUid)
  */
 class CategoryRepository extends Repository
 {
