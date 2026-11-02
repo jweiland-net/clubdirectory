@@ -10,6 +10,26 @@ Upgrade
 If you upgrade `clubdirectory` to a newer version, please read this
 section carefully!
 
+Update to Version 8.1.4
+=======================
+
+File `ext_tables.sql` has been removed. TYPO3 13 creates all columns from
+TCA now. Column `barrier_free` of table
+`tx_clubdirectory_domain_model_address` changes from VARCHAR to
+SMALLINT. In strict SQL mode this change fails, if there are records with
+an empty or non-numeric value in this column.
+
+Please execute the upgrade wizard
+`clubdirectory_barrierFreeToIntegerUpdate` first. It sets all invalid
+values to `0`. After that use "Analyze Database Structure" in the
+Install Tool (or `vendor/bin/typo3 extension:setup`) to change the
+column type.
+
+..  code-block:: bash
+
+    vendor/bin/typo3 upgrade:run clubdirectory_barrierFreeToIntegerUpdate
+    vendor/bin/typo3 extension:setup
+
 Update to Version 8.0.0
 =======================
 
