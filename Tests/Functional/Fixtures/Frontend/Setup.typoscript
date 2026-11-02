@@ -1,0 +1,10 @@
+@import 'EXT:clubdirectory/Configuration/Sets/Clubdirectory/setup.typoscript'
+
+page = PAGE
+page {
+  10 = EXTBASEPLUGIN
+  10 {
+    extensionName = Clubdirectory
+    pluginName = Clubdirectory
+  }
+}

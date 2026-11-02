@@ -1,0 +1,9 @@
+clubdirectory {
+  templateRootPath = EXT:clubdirectory/Resources/Private/Templates/
+  partialRootPath = EXT:clubdirectory/Resources/Private/Partials/
+  layoutRootPath = EXT:clubdirectory/Resources/Private/Layouts/
+  storagePid = 1
+  pidOfListPage = 1
+  pidOfDetailPage = 1
+  pidOfManagementPage = 1
+}

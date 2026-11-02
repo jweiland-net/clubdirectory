@@ -35,10 +35,10 @@ class AddressTest extends UnitTestCase
     }
 
     #[Test]
-    public function getTitleInitiallyReturnsOrganizationAddress(): void
+    public function getTitleInitiallyReturnsEmptyString(): void
     {
         self::assertSame(
-            'organizationAddress',
+            '',
             $this->subject->getTitle(),
         );
     }
