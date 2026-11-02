@@ -3,9 +3,6 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2013-03-28T08:36:00Z" product-name="clubdirectory" target-language="hu">
     <header/>
     <body>
-      <trans-unit id="userGroup" xml:space="preserve">
-				<source>Usergroup: Define a usergroup which is allowed to create a new club in Frontend.</source>
-			<target state="translated">Felhasználócsoport: Adja meg, hogy melyik felhasználócsoport hozhat létre új klubot a frontendben.</target></trans-unit>
       <trans-unit id="poiCollectionPid" xml:space="preserve">
 				<source>PID for poiCollections: Define a storage pid where to store records of type Point of Interest.</source>
 			<target state="translated">PID a poiCollections számára: Adja meg a tárolási PID-et, ahol a Point of Interest típusú rekordok tárolódnak.</target></trans-unit>
