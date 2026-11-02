@@ -22,7 +22,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
- * Test case for ClubRepository::findBySearch()
+ * Test case for ClubRepository
  */
 class ClubRepositoryTest extends FunctionalTestCase
 {
@@ -320,5 +320,37 @@ class ClubRepositoryTest extends FunctionalTestCase
             [],
             $this->get(ClubRepository::class)->findBySearch($this->createSearch())->toArray(),
         );
+    }
+
+    public static function glossaryFilterDataProvider(): array
+    {
+        return [
+            'without filter' => [0, 0, ['Athletics club', 'Brass band', 'Chess club', 'Drama group']],
+            'category' => [1, 0, ['Athletics club', 'Chess club']],
+            'district' => [0, 1, ['Athletics club', 'Brass band']],
+            'category and district' => [1, 1, ['Athletics club']],
+            'category without clubs in district' => [2, 2, ['Chess club']],
+        ];
+    }
+
+    /**
+     * @param string[] $expectedTitles
+     */
+    #[Test]
+    #[DataProvider('glossaryFilterDataProvider')]
+    public function getQueryBuilderToFindAllEntriesRespectsCategoryAndDistrict(
+        int $category,
+        int $district,
+        array $expectedTitles,
+    ): void {
+        // glossary2 sets the SELECT part
+        $titles = $this->createSubject()
+            ->getQueryBuilderToFindAllEntries($category, $district)
+            ->select('c.title')
+            ->orderBy('c.title')
+            ->executeQuery()
+            ->fetchFirstColumn();
+
+        self::assertSame($expectedTitles, $titles);
     }
 }

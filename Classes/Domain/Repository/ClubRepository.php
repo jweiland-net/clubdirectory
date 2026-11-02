@@ -176,7 +176,10 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         }
 
         if ($district !== 0) {
-            $queryBuilder->andWhere($queryBuilder->expr()->eq('c.district', $district));
+            $queryBuilder->andWhere($queryBuilder->expr()->eq(
+                'c.district',
+                $queryBuilder->createNamedParameter($district, Connection::PARAM_INT),
+            ));
         }
 
         return $queryBuilder;

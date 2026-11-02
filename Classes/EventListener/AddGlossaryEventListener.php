@@ -40,7 +40,10 @@ class AddGlossaryEventListener extends AbstractControllerEventListener
             $event->addFluidVariable(
                 'glossar',
                 $this->glossaryService->buildGlossary(
-                    $this->clubRepository->getQueryBuilderToFindAllEntries(),
+                    $this->clubRepository->getQueryBuilderToFindAllEntries(
+                        (int)($event->getSettings()['category'] ?? 0),
+                        (int)($event->getSettings()['district'] ?? 0),
+                    ),
                     $this->getOptions($event),
                     $event->getRequest(),
                 ),
