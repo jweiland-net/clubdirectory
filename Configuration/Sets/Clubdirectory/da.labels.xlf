@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="EXT:clubdirectory/Configuration/Sets/Clubdirectory/labels.xlf" date="2026-10-30T12:00:00Z" product-name="clubdirectory" target-language="da">
+    <header/>
+    <body>
+      <trans-unit id="label">
+        <source>Club Directory</source>
+        <target state="needs-translation">Club Directory</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory">
+        <source>Clubdirectory</source>
+        <target state="needs-translation">Clubdirectory</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.templates">
+        <source>Templates</source>
+        <target state="needs-translation">Templates</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.pages">
+        <source>Pages</source>
+        <target state="needs-translation">Pages</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.settings">
+        <source>Settings</source>
+        <target state="needs-translation">Settings</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.media">
+        <source>Image Sizes</source>
+        <target state="needs-translation">Image Sizes</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.glossary2">
+        <source>Glossary2</source>
+        <target state="needs-translation">Glossary2</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.templateRootPath">
+        <source>Templates</source>
+        <target state="needs-translation">Templates</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.templateRootPath">
+        <source>Path to template root</source>
+        <target state="needs-translation">Path to template root</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.partialRootPath">
+        <source>Partials</source>
+        <target state="needs-translation">Partials</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.partialRootPath">
+        <source>Path to partial root</source>
+        <target state="needs-translation">Path to partial root</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.layoutRootPath">
+        <source>Layouts</source>
+        <target state="needs-translation">Layouts</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.layoutRootPath">
+        <source>Path to layout root</source>
+        <target state="needs-translation">Path to layout root</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.storagePid">
+        <source>Default storage PID</source>
+        <target state="needs-translation">Default storage PID</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.storagePid">
+        <source>Folder that stores all POIs</source>
+        <target state="needs-translation">Folder that stores all POIs</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfListPage">
+        <source>List Page</source>
+        <target state="needs-translation">List Page</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfListPage">
+        <source>Page UID with clubdirectory plugin to show the list of clubs</source>
+        <target state="needs-translation">Page UID with clubdirectory plugin to show the list of clubs</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfDetailPage">
+        <source>Pid of Detail Page</source>
+        <target state="needs-translation">Pid of Detail Page</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfDetailPage">
+        <source>Page with detail page plugin</source>
+        <target state="needs-translation">Page with detail page plugin</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfSearchResults">
+        <source>Search Results Page</source>
+        <target state="needs-translation">Search Results Page</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfSearchResults">
+        <source>Page UID with clubdirectory search plugin to show search results</source>
+        <target state="needs-translation">Page UID with clubdirectory search plugin to show search results</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfManagementPage">
+        <source>Management Page</source>
+        <target state="needs-translation">Management Page</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfManagementPage">
+        <source>Page UID with clubdirectory management plugin to manage own clubs</source>
+        <target state="needs-translation">Page UID with clubdirectory management plugin to manage own clubs</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfMaps2Plugin">
+        <source>Pid of Maps2 Plugins</source>
+        <target state="needs-translation">Pid of Maps2 Plugins</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfMaps2Plugin">
+        <source>Storage Page Uid of Maps2 Plugin</source>
+        <target state="needs-translation">Storage Page Uid of Maps2 Plugin</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.userGroup">
+        <source>Usergroup Uid</source>
+        <target state="needs-translation">Usergroup Uid</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.userGroup">
+        <source>The user group allowed to create new clubs. This determines the rendering of the links to create a club and to list the own clubs, and of the list of own clubs.</source>
+        <target state="needs-translation">The user group allowed to create new clubs. This determines the rendering of the links to create a club and to list the own clubs, and of the list of own clubs.</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pageBrowser.itemsPerPage">
+        <source>Items per page for pagination</source>
+        <target state="needs-translation">Items per page for pagination</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pageBrowser.itemsPerPage">
+        <source>Number of results that needs to be shown on listing page</source>
+        <target state="needs-translation">Number of results that needs to be shown on listing page</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.newUploadPath">
+        <source>New upload path</source>
+        <target state="needs-translation">New upload path</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.newUploadPath">
+        <source>Path for uploading assets for clubdirectory records</source>
+        <target state="needs-translation">Path for uploading assets for clubdirectory records</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.width">
+        <source>List Image width</source>
+        <target state="needs-translation">List Image width</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.height">
+        <source>List Image height</source>
+        <target state="needs-translation">List Image height</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.minWidth">
+        <source>List Image minimum width</source>
+        <target state="needs-translation">List Image minimum width</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.minHeight">
+        <source>List Image minimum height</source>
+        <target state="needs-translation">List Image minimum height</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.maxWidth">
+        <source>List Image maximum width</source>
+        <target state="needs-translation">List Image maximum width</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.maxHeight">
+        <source>List Image maximum height</source>
+        <target state="needs-translation">List Image maximum height</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.width">
+        <source>Show action logo width</source>
+        <target state="needs-translation">Show action logo width</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.height">
+        <source>Show action logo height</source>
+        <target state="needs-translation">Show action logo height</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.minWidth">
+        <source>Show action logo minimum width</source>
+        <target state="needs-translation">Show action logo minimum width</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.minHeight">
+        <source>Show action logo minimum height</source>
+        <target state="needs-translation">Show action logo minimum height</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.maxWidth">
+        <source>Show action logo maximum width</source>
+        <target state="needs-translation">Show action logo maximum width</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.maxHeight">
+        <source>Show action logo maximum height</source>
+        <target state="needs-translation">Show action logo maximum height</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.width">
+        <source>Show Image width</source>
+        <target state="needs-translation">Show Image width</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.height">
+        <source>Show Image height</source>
+        <target state="needs-translation">Show Image height</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.minWidth">
+        <source>Show Image minimum width</source>
+        <target state="needs-translation">Show Image minimum width</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.minHeight">
+        <source>Show Image minimum height</source>
+        <target state="needs-translation">Show Image minimum height</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.maxWidth">
+        <source>Show Image maximum width</source>
+        <target state="needs-translation">Show Image maximum width</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.maxHeight">
+        <source>Show Image maximum height</source>
+        <target state="needs-translation">Show Image maximum height</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.glossary2.mergeNumbers">
+        <source>Merge Numbers in Glossary</source>
+        <target state="needs-translation">Merge Numbers in Glossary</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.glossary2.showAllLink">
+        <source>Show "All" Link in Glossary</source>
+        <target state="needs-translation">Show "All" Link in Glossary</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
