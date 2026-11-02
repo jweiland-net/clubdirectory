@@ -47,7 +47,6 @@ final readonly class AllowSearchParameterEventListener
 
         $propertyMappingConfiguration->allowProperties(
             'searchWord',
-            'letter',
             'district',
             'category',
             'order',
