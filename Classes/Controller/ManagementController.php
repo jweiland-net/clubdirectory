@@ -14,7 +14,6 @@ namespace JWeiland\Clubdirectory\Controller;
 use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
-use JWeiland\Clubdirectory\Controller\Traits\PostProcessControllerActionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\PostProcessFluidVariablesTrait;
 use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
@@ -37,7 +36,6 @@ class ManagementController extends ActionController
     use ControllerInjectionTrait;
     use InitializeControllerTrait;
     use PostProcessFluidVariablesTrait;
-    use PostProcessControllerActionTrait;
     use PreProcessControllerActionTrait;
 
     public function __construct(
