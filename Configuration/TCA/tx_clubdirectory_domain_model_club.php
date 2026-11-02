@@ -168,6 +168,7 @@ return [
         'fe_users' => [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.feUsers',
+            'l10n_mode' => 'exclude',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
@@ -239,6 +240,7 @@ return [
         'district' => [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.district',
+            'l10n_mode' => 'exclude',
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
