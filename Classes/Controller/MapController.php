@@ -81,8 +81,9 @@ class MapController extends ActionController
 
     public function updateAction(Club $club): ResponseInterface
     {
-        if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
-            return $this->errorAction();
+        $geocodingFailure = $this->mapHelper->addMapRecord($club);
+        if ($geocodingFailure !== null) {
+            return $this->forwardBackWithGeocodingError($geocodingFailure);
         }
 
         $this->clubRepository->update($club);

@@ -13,6 +13,10 @@ namespace JWeiland\Clubdirectory\Controller\Traits;
 
 use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Helper\GeocodingFailure;
+use JWeiland\Maps2\Client\ClientErrorEnum;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
@@ -74,5 +78,27 @@ trait AddressTrait
         }
 
         $this->request = $this->request->withArgument('club', $requestArgument);
+    }
+
+    /**
+     * Forward back to the club form, which keeps all submitted values.
+     * Only "no positions found" is caused by the user input. For all other
+     * errors the user can not do anything, so we show a hint for the admin.
+     */
+    protected function forwardBackWithGeocodingError(GeocodingFailure $geocodingFailure): ResponseInterface
+    {
+        $labelPrefix = 'error.geocoding.' . match ($geocodingFailure->error?->type) {
+            ClientErrorEnum::NO_POSITIONS_FOUND => 'noPositionsFound',
+            ClientErrorEnum::REQUEST_DENIED => 'requestDenied',
+            default => 'serviceError',
+        };
+
+        $this->addFlashMessage(
+            (string)LocalizationUtility::translate($labelPrefix . '.body', 'clubdirectory', [$geocodingFailure->address->getAddress()]),
+            (string)LocalizationUtility::translate($labelPrefix . '.title', 'clubdirectory'),
+            ContextualFeedbackSeverity::ERROR,
+        );
+
+        return $this->forwardToReferringRequest() ?? $this->redirect('listMyClubs', 'Management');
     }
 }

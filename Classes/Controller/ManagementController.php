@@ -92,8 +92,9 @@ class ManagementController extends ActionController
             $club->addFeUser($feUser);
             $club->setHidden(true);
 
-            if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
-                $this->errorAction();
+            $geocodingFailure = $this->mapHelper->addMapRecord($club);
+            if ($geocodingFailure !== null) {
+                return $this->forwardBackWithGeocodingError($geocodingFailure);
             }
 
             $this->clubRepository->add($club);
@@ -148,8 +149,9 @@ class ManagementController extends ActionController
     #[Extbase\Validate(['param' => 'club', 'validator' => ClubValidator::class])]
     public function updateAction(Club $club): ResponseInterface
     {
-        if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
-            $this->errorAction();
+        $geocodingFailure = $this->mapHelper->addMapRecord($club);
+        if ($geocodingFailure !== null) {
+            return $this->forwardBackWithGeocodingError($geocodingFailure);
         }
 
         $this->clubRepository->update($club);

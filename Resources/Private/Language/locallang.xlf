@@ -176,6 +176,24 @@
 			<trans-unit id="error.address.incomplete">
 				<source>%s: Please enter at least street, ZIP and city.</source>
 			</trans-unit>
+			<trans-unit id="error.geocoding.noPositionsFound.title">
+				<source>Address not found</source>
+			</trans-unit>
+			<trans-unit id="error.geocoding.noPositionsFound.body">
+				<source>The position of the address "%s" could not be determined. Please check street, house number, ZIP and city.</source>
+			</trans-unit>
+			<trans-unit id="error.geocoding.requestDenied.title">
+				<source>Address lookup not authorized</source>
+			</trans-unit>
+			<trans-unit id="error.geocoding.requestDenied.body">
+				<source>The position of the address "%s" could not be determined, because this server is currently not authorized for address lookups at the map service. Your input was not saved. Please inform the website administrator.</source>
+			</trans-unit>
+			<trans-unit id="error.geocoding.serviceError.title">
+				<source>Map service not available</source>
+			</trans-unit>
+			<trans-unit id="error.geocoding.serviceError.body">
+				<source>The position of the address "%s" could not be determined, because the map service is currently not available. Your input was not saved. Please try again later or inform the website administrator.</source>
+			</trans-unit>
 			<trans-unit id="addressNumber">
 				<source>Address %d</source>
 			</trans-unit>
