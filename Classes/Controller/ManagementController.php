@@ -135,7 +135,6 @@ class ManagementController extends ActionController
         }
 
         $requestArgument = $this->request->getArgument('club');
-        $this->removeEmptyPropertyFromRequest('categories', $requestArgument);
         $this->removeEmptyAddressesFromRequest($requestArgument);
 
         $this->preProcessControllerAction();
@@ -177,18 +176,5 @@ class ManagementController extends ActionController
         $this->addFlashMessage(LocalizationUtility::translate('clubActivated', 'clubdirectory'));
 
         return $this->redirect('list', 'Club');
-    }
-
-    /**
-     * Sometimes Extbase tries to map an empty value like 0 to UID 0.
-     * As there is no record with UID 0 a Mapping Error occurs.
-     * To prevent that, we remove these kind of properties out of request directly.
-     */
-    protected function removeEmptyPropertyFromRequest(string $property, array &$requestArgument): void
-    {
-        if (empty($requestArgument[$property])) {
-            unset($requestArgument[$property]);
-            $this->request = $this->request->withArgument('club', $requestArgument);
-        }
     }
 }
