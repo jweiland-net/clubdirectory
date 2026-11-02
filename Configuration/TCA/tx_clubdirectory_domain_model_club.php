@@ -60,77 +60,6 @@ return [
     ],
 
     'columns' => [
-        'sys_language_uid' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'language',
-            ],
-        ],
-        'l10n_parent' => [
-            'displayCond' => 'FIELD:sys_language_uid:>:0',
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
-            'config' => [
-                'type' => 'group',
-                'allowed' => 'tx_clubdirectory_domain_model_club',
-                'size' => 1,
-                'maxitems' => 1,
-                'minitems' => 0,
-            ],
-        ],
-        'l10n_diffsource' => [
-            'config' => [
-                'type' => 'passthrough',
-                'default' => '',
-            ],
-        ],
-        'hidden' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
-            'config' => [
-                'type' => 'check',
-                'renderType' => 'checkboxToggle',
-                'default' => 0,
-            ],
-        ],
-        'cruser_id' => [
-            'label' => 'cruser_id',
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
-        'pid' => [
-            'label' => 'pid',
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
-        'crdate' => [
-            'label' => 'crdate',
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
-        'tstamp' => [
-            'label' => 'tstamp',
-            'config' => [
-                'type' => 'passthrough',
-            ],
-        ],
-        'starttime' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:starttime_formlabel',
-            'config' => [
-                'type' => 'datetime',
-            ],
-        ],
-        'endtime' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:endtime_formlabel',
-            'config' => [
-                'type' => 'datetime',
-            ],
-        ],
         'title' => [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.title',
@@ -340,15 +269,6 @@ return [
                     'showPossibleLocalizationRecords' => 1,
                     'showAllLocalizationLink' => 1,
                 ],
-            ],
-        ],
-        'notes' => [
-            'exclude' => true,
-            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.description',
-            'config' => [
-                'type' => 'text',
-                'rows' => 5,
-                'cols' => 40,
             ],
         ],
     ],
