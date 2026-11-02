@@ -15,6 +15,7 @@ use JWeiland\Clubdirectory\Configuration\ExtConf;
 use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
+use JWeiland\Maps2\Domain\Model\Position;
 use JWeiland\Maps2\Domain\Repository\PoiCollectionRepository;
 use JWeiland\Maps2\Service\GeoCodeService;
 use JWeiland\Maps2\Service\MapService;
@@ -37,35 +38,59 @@ class MapHelper
      * Creates a POI record at the geocoded position for each club address
      * which does not have one yet.
      *
+     * All addresses are geocoded first. POI records are only created, if
+     * all addresses were found. Otherwise, the club will not be saved and
+     * already created POI records would be orphaned.
+     *
      * @return GeocodingFailure|null The first address which could not be geocoded. NULL, if all addresses have a POI.
      */
     public function addMapRecord(Club $club): ?GeocodingFailure
     {
+        $positions = new \SplObjectStorage();
         foreach ($club->getOriginalAddresses() as $address) {
             if (!$this->isMapRecordRequired($address)) {
                 continue;
             }
 
-            $geoCodeResult = $this->geoCodeService->getGeoCodeResult($address->getAddress());
-            $position = $geoCodeResult->getFirstPosition();
-            if ($position === null) {
-                // The provider message may contain sensitive data like the server IP. Log it only.
-                $this->logger->warning('Address "' . $address->getAddress() . '" could not be geocoded.', [
-                    'error' => $geoCodeResult->error?->message,
-                ]);
-                return new GeocodingFailure($address, $geoCodeResult->error);
+            $position = $this->geocodeAddress($address);
+            if ($position instanceof GeocodingFailure) {
+                return $position;
             }
 
-            $address->setTxMaps2Uid($this->poiCollectionRepository->findByIdentifier(
-                $this->mapService->createNewPoiCollection(
-                    $this->extConf->getPoiCollectionPid(),
-                    $position,
-                    ['title' => $this->getPoiCollectionTitle($club)],
-                ),
-            ));
+            $positions->attach($address, $position);
+        }
+
+        foreach ($positions as $address) {
+            $this->attachPoiCollection($address, $positions[$address], $club);
         }
 
         return null;
+    }
+
+    protected function geocodeAddress(Address $address): Position|GeocodingFailure
+    {
+        $geoCodeResult = $this->geoCodeService->getGeoCodeResult($address->getAddress());
+        $position = $geoCodeResult->getFirstPosition();
+        if ($position === null) {
+            // The provider message may contain sensitive data like the server IP. Log it only.
+            $this->logger->warning('Address "' . $address->getAddress() . '" could not be geocoded.', [
+                'error' => $geoCodeResult->error?->message,
+            ]);
+            return new GeocodingFailure($address, $geoCodeResult->error);
+        }
+
+        return $position;
+    }
+
+    protected function attachPoiCollection(Address $address, Position $position, Club $club): void
+    {
+        $address->setTxMaps2Uid($this->poiCollectionRepository->findByIdentifier(
+            $this->mapService->createNewPoiCollection(
+                $this->extConf->getPoiCollectionPid(),
+                $position,
+                ['title' => $this->getPoiCollectionTitle($club)],
+            ),
+        ));
     }
 
     /**

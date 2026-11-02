@@ -268,6 +268,36 @@ class MapHelperTest extends UnitTestCase
     }
 
     #[Test]
+    public function addMapRecordWithValidAndNonexistentAddressCreatesNoPoiCollection(): void
+    {
+        $validAddress = $this->createAddress('organizationAddress');
+        $nonexistentAddress = $this->createAddress('postAddress', '99999', 'Nowhere');
+
+        $this->geoCodeServiceMock
+            ->expects(self::exactly(2))
+            ->method('getGeoCodeResult')
+            ->willReturnOnConsecutiveCalls(
+                $this->createGeoCodeResult($this->createPosition()),
+                new GeoCodeResult(),
+            );
+
+        // A POI of the valid address would be orphaned, as the club will not be saved
+        $this->mapServiceMock
+            ->expects(self::never())
+            ->method('createNewPoiCollection');
+
+        $this->poiCollectionRepositoryMock
+            ->expects(self::never())
+            ->method('findByIdentifier');
+
+        $geocodingFailure = $this->subject->addMapRecord($this->createClub($validAddress, $nonexistentAddress));
+
+        self::assertSame($nonexistentAddress, $geocodingFailure?->address);
+        self::assertNull($validAddress->getTxMaps2Uid());
+        self::assertNull($nonexistentAddress->getTxMaps2Uid());
+    }
+
+    #[Test]
     public function addMapRecordWithoutZipSkipsAddress(): void
     {
         $this->geoCodeServiceMock
