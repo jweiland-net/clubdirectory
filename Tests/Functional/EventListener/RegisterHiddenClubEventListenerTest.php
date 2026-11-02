@@ -18,9 +18,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
-use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -43,17 +41,6 @@ class RegisterHiddenClubEventListenerTest extends FunctionalTestCase
         parent::setUp();
 
         $this->importCSVDataSet(__DIR__ . '/../Fixtures/ClubAccess.csv');
-
-        // GlossaryService, a dependency of ClubRepository, reads its settings from ConfigurationManager
-        $GLOBALS['TYPO3_REQUEST'] = (new ServerRequest('https://www.example.com/'))
-            ->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_BE);
-    }
-
-    protected function tearDown(): void
-    {
-        unset($GLOBALS['TYPO3_REQUEST']);
-
-        parent::tearDown();
     }
 
     private function isClubRegisteredInSession(int $clubUid): bool
