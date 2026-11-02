@@ -123,18 +123,6 @@ Settings
 
     Number of clubs shown on one page of the list and the search results.
 
-..  confval:: clubdirectory.updateReferenceIndex
-    :name: site-setting-updatereferenceindex
-    :type: bool
-    :default: true
-
-    Update the reference index while saving clubs in frontend.
-
-    ..  note::
-        The TypoScript of the site set currently sets
-        `plugin.tx_clubdirectory.persistence.updateReferenceIndex = 1`
-        without reading this setting.
-
 ..  confval:: clubdirectory.newUploadPath
     :name: site-setting-newuploadpath
     :type: string

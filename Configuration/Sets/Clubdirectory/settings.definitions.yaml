@@ -54,10 +54,6 @@ settings:
     category: clubdirectory.settings
     type: int
     default: 10
-  clubdirectory.updateReferenceIndex:
-    category: clubdirectory.settings
-    type: bool
-    default: true
   clubdirectory.newUploadPath:
     category: clubdirectory.settings
     type: string

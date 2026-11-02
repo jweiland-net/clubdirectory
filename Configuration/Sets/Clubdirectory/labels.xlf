@@ -86,12 +86,6 @@
 			<trans-unit id="settings.description.clubdirectory.pageBrowser.itemsPerPage">
 				<source>Number of results that needs to be shown on listing page</source>
 			</trans-unit>
-			<trans-unit id="settings.clubdirectory.updateReferenceIndex">
-				<source>Update Reference Index</source>
-			</trans-unit>
-			<trans-unit id="settings.description.clubdirectory.updateReferenceIndex">
-				<source>Enable or disable updating the reference index</source>
-			</trans-unit>
 			<trans-unit id="settings.clubdirectory.newUploadPath">
 				<source>New upload path</source>
 			</trans-unit>

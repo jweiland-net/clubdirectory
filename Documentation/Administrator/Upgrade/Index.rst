@@ -126,6 +126,17 @@ Further set :confval:`poiCollectionPid <ext-conf-poicollectionpid>` to the
 storage folder for the POI records which are created from the club
 addresses.
 
+..  _upgrade-9-0-0-update-reference-index:
+
+Site setting updateReferenceIndex removed
+-----------------------------------------
+
+The site setting `clubdirectory.updateReferenceIndex` has been removed.
+The site set always sets `persistence.updateReferenceIndex = 1`. To
+disable it, override
+`plugin.tx_clubdirectory.persistence.updateReferenceIndex` with your own
+TypoScript.
+
 ..  _upgrade-9-0-0-templates:
 
 Template overrides
