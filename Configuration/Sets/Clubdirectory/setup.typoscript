@@ -1,7 +1,3 @@
-page.includeJSFooter {
-  clubdirectory = {$clubdirectory.feJavaScript}
-}
-
 plugin.tx_clubdirectory {
   view {
     templateRootPaths {

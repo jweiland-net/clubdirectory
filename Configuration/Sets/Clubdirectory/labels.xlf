@@ -98,9 +98,6 @@
 			<trans-unit id="settings.description.clubdirectory.newUploadPath">
 				<source>Path for uploading assets for clubdirectory records</source>
 			</trans-unit>
-			<trans-unit id="settings.clubdirectory.feJavaScript">
-				<source>Frontend JavaScript file</source>
-			</trans-unit>
 			<trans-unit id="settings.clubdirectory.list.image.width">
 				<source>List Image width</source>
 			</trans-unit>
