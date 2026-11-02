@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
+use JWeiland\Clubdirectory\Controller\Traits\ClubListRedirectTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Controller\Traits\PostProcessFluidVariablesTrait;
@@ -34,6 +35,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 class ManagementController extends ActionController
 {
     use AddressTrait;
+    use ClubListRedirectTrait;
     use ControllerInjectionTrait;
     use InitializeControllerTrait;
     use PostProcessFluidVariablesTrait;
@@ -103,7 +105,7 @@ class ManagementController extends ActionController
         }
 
         $this->addFlashMessage('There is no valid user logged in. So record was not saved');
-        return $this->redirect('listMyClubs');
+        return $this->redirectToClubList();
     }
 
     /**
@@ -197,6 +199,6 @@ class ManagementController extends ActionController
         $this->clubRepository->update($club);
         $this->addFlashMessage(LocalizationUtility::translate('clubActivated', 'clubdirectory'));
 
-        return $this->redirect('listMyClubs');
+        return $this->redirectToClubList();
     }
 }

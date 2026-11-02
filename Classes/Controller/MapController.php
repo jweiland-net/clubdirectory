@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
+use JWeiland\Clubdirectory\Controller\Traits\ClubListRedirectTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
@@ -28,6 +29,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class MapController extends ActionController
 {
+    use ClubListRedirectTrait;
     use ControllerInjectionTrait;
     use InitializeControllerTrait;
     use PreProcessControllerActionTrait;
@@ -79,6 +81,6 @@ class MapController extends ActionController
             $this->addFlashMessage('There is no valid user logged in. So record was not saved');
         }
 
-        return $this->redirect('listMyClubs', 'Management');
+        return $this->redirectToClubList();
     }
 }
