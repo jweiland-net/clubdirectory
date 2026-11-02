@@ -6,14 +6,20 @@
 <p>{f:translate(key: 'email.body.update')}</p>
 <p>
     <f:link.action action="edit"
-                   controller="Club"
+                   controller="Management"
+                   extensionName="Clubdirectory"
+                   pluginName="Management"
+                   pageUid="{settings.pidOfManagementPage}"
                    absolute="1"
                    arguments="{club: club}">
         {f:translate(key: 'email.editRecord')}
     </f:link.action>
     <br>
     <f:link.action action="activate"
-                   controller="Club"
+                   controller="Management"
+                   extensionName="Clubdirectory"
+                   pluginName="Management"
+                   pageUid="{settings.pidOfManagementPage}"
                    absolute="1"
                    arguments="{club: club}">
         {f:translate(key: 'email.activateRecord')}

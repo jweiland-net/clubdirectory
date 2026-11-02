@@ -56,7 +56,7 @@ class MapController extends ActionController
             $this->addFlashMessage('There is no valid user logged in. So record was not saved');
         }
 
-        return $this->redirect('list', 'Club');
+        return $this->redirect('listMyClubs', 'Management');
     }
 
     public function initializeEditAction(): void
@@ -94,7 +94,7 @@ class MapController extends ActionController
         );
         $club->setHidden(true);
 
-        return $this->redirect('list', 'Club', null, ['club' => $club]);
+        return $this->redirect('listMyClubs', 'Management');
     }
 
     protected function emitInitializeControllerAction(): void
