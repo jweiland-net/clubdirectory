@@ -43,8 +43,6 @@ final readonly class RegisterHiddenClubEventListener
         'Map' => [
             'new',
             'create',
-            'edit',
-            'update',
         ],
     ];
 

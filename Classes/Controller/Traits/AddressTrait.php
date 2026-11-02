@@ -21,8 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Trait with a method to translate the three different address types
- * Currently used in Club- and MapController
+ * Trait with methods to prepare the addresses of a club for the club form
  */
 trait AddressTrait
 {

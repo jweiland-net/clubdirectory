@@ -41,8 +41,6 @@ final readonly class RestrictAccessEventListener
         'Map' => [
             'new',
             'create',
-            'edit',
-            'update',
         ],
     ];
 

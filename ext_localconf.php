@@ -40,12 +40,12 @@ ExtensionUtility::configurePlugin(
     'Management',
     [
         ManagementController::class => 'listMyClubs, new, create, edit, update, activate',
-        MapController::class => 'new, create, edit, update',
+        MapController::class => 'new, create',
     ],
     // non-cacheable actions
     [
         ManagementController::class => 'listMyClubs, edit, create, update, activate',
-        MapController::class => 'new, create, edit, update',
+        MapController::class => 'new, create',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );

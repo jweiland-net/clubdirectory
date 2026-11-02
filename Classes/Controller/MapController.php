@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
-use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
@@ -22,13 +21,13 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Controller to edit map records. Just after saving a club.
+ * Controller to confirm the map positions of a new club. Changes of
+ * existing clubs incl. their map positions are done in ManagementController.
  */
 class MapController extends ActionController
 {
     use ControllerInjectionTrait;
     use InitializeControllerTrait;
-    use AddressTrait;
     use PreProcessControllerActionTrait;
 
     public function initializeNewAction(): void
@@ -66,44 +65,6 @@ class MapController extends ActionController
         } else {
             $this->addFlashMessage('There is no valid user logged in. So record was not saved');
         }
-
-        return $this->redirect('listMyClubs', 'Management');
-    }
-
-    public function initializeEditAction(): void
-    {
-        $this->preProcessControllerAction();
-    }
-
-    public function initializeUpdateAction(): void
-    {
-        $this->preProcessControllerAction();
-    }
-
-    #[Extbase\IgnoreValidation(['value' => 'club'])]
-    public function editAction(Club $club): ResponseInterface
-    {
-        $this->view->assign('club', $club);
-        $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
-        $this->view->assign('addressTitles', $this->getAddressTitles());
-
-        return $this->htmlResponse();
-    }
-
-    public function updateAction(Club $club): ResponseInterface
-    {
-        $geocodingFailure = $this->mapHelper->addMapRecord($club);
-        if ($geocodingFailure !== null) {
-            return $this->forwardBackWithGeocodingError($geocodingFailure);
-        }
-
-        $this->clubRepository->update($club);
-        $this->view->assign('club', $club);
-        $this->mailHelper->sendMail(
-            $this->view->render(),
-            LocalizationUtility::translate('email.subject.update', 'clubdirectory'),
-        );
-        $club->setHidden(true);
 
         return $this->redirect('listMyClubs', 'Management');
     }
