@@ -45,6 +45,7 @@ Manual covering TYPO3 extension clubdirectory
     Installation/Index
     Configuration/Index
     Administrator/Index
+    Developer/Index
     KnownProblems/Index
     ChangeLog/Index
     Links

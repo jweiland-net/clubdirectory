@@ -12,4 +12,6 @@
     <inventory id="t3install" url="https://docs.typo3.org/m/typo3/guide-installation/main/en-us/"/>
     <inventory id="t3sitepackage" url="https://docs.typo3.org/m/typo3/tutorial-sitepackage/main/en-us/"/>
     <inventory id="t3viewhelper" url="https://docs.typo3.org/other/typo3/view-helper-reference/main/en-us/"/>
+    <inventory id="maps2" url="https://docs.typo3.org/p/jweiland/maps2/main/en-us/"/>
+    <inventory id="checkfaluploads" url="https://docs.typo3.org/p/jweiland/checkfaluploads/main/en-us/"/>
 </guides>

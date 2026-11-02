@@ -1,104 +1,89 @@
 ..  include:: /Includes.rst.txt
 
 
-..  _configuration:
+..  _configuration-typoscript:
 
-=============
-Configuration
-=============
+==========
+TypoScript
+==========
 
 ..  tip::
 
-    You must configure the extension maps2 first to run this extension correctly.
+    You must configure the extension maps2 first to run this extension
+    correctly. See the :ref:`maps2 documentation <maps2:start>`.
 
-    `Maps2 Documentation <https://docs.typo3.org/p/jweiland/maps2/master/en-us/>`_
+The site set `jweiland/clubdirectory` adds the TypoScript of all plugins
+to `plugin.tx_clubdirectory`. Please change the values with the
+:ref:`site settings <site-settings>` instead of overriding the TypoScript.
 
+..  _configuration-typoscript-mapping:
 
-View
-====
+Site settings in TypoScript
+===========================
 
-view.templateRootPaths
-----------------------
+The site settings are available in TypoScript as follows:
 
-Default: Value from Constants *EXT:clubdirectory/Resources/Private/Templates/*
+`view.templateRootPaths.1`
+    :confval:`site-setting-templaterootpath`
 
-You can override our Templates with your own SitePackage extension. We prefer
-to change this value in TS Constants.
+`view.partialRootPaths.2`
+    :confval:`site-setting-partialrootpath`
 
-view.partialRootPaths
----------------------
+`view.layoutRootPath.1`
+    :confval:`site-setting-layoutrootpath`
 
-Default: Value from Constants *EXT:clubdirectory/Resources/Private/Partials/*
+`persistence.storagePid`
+    :confval:`site-setting-storagepid`
 
-You can override our Partials with your own SitePackage extension. We prefer
-to change this value in TS Constants.
+`settings.pidOfListPage`
+    :confval:`site-setting-pidoflistpage`
 
-view.layoutsRootPaths
----------------------
+`settings.pidOfDetailPage`
+    :confval:`site-setting-pidofdetailpage`
 
-Default: Value from Constants *EXT:clubdirectory/Resources/Layouts/Templates/*
+`settings.pidOfSearchResults`
+    :confval:`site-setting-pidofsearchresults`
 
-You can override our Layouts with your own SitePackage extension. We prefer
-to change this value in TS Constants.
+`settings.pidOfManagementPage`
+    :confval:`site-setting-pidofmanagementpage`
 
+`settings.pidOfMaps2Plugin`
+    :confval:`site-setting-pidofmaps2plugin`
 
-Persistence
-===========
+`settings.new.uploadFolder`
+    :confval:`site-setting-newuploadpath`
 
-persistence.storagePid
-----------------------
+`settings.pageBrowser.itemsPerPage`
+    :confval:`site-setting-itemsperpage`
 
-Set this value to a Storage Folder (PID) where you have stored the records.
+`settings.glossary.mergeNumbers`
+    :confval:`site-setting-glossary2-mergenumbers`
 
-Example: `plugin.tx_clubdirectory.settings.pidOfMaps2Plugin = 21,45,3234`
+`settings.glossary.showAllLink`
+    :confval:`site-setting-glossary2-showalllink`
 
+`settings.list.image.*`, `settings.show.*`
+    :ref:`site-settings-media`
 
-Settings
-========
+The partial root path `1` is reserved for the partials of maps2, which
+render the map in the club form.
 
-settings.pidOfMaps2Plugin
--------------------------
+..  _configuration-typoscript-uncached:
 
-Default: 0
+Uncached plugin for logged-in users
+===================================
 
-Example: `plugin.tx_clubdirectory.settings.pidOfMaps2Plugin = 12`
+The list and the detail view render links depending on the logged-in
+frontend user, e.g. the edit link for the owner of a club. As the page
+cache only varies by usergroup, the site set replaces
+`tt_content.clubdirectory_clubdirectory.20` by a `COA_INT` with the
+`EXTBASEPLUGIN` of the `Clubdirectory` plugin within the condition
+`[frontend.user.isLoggedIn]`. Anonymous visitors still get the cached
+page.
 
-Define the page UID where the EXT:maps2 plugin is located to show an address
-on a map.
+If you modify `tt_content.clubdirectory_clubdirectory.20` in your site
+package, keep this condition in mind.
 
-setting.pidOfDetailPage
------------------------
-
-Default: 0
-
-Example: `plugin.tx_clubdirectory.settings.pidOfDetailPage = 84`
-
-Often it is useful to move the detail view onto a separate page for
-design/layout reasons.
-
-settings.glossary.mergeNumbers
-------------------------------
-
-Default: 1
-
-Example: `plugin.tx_clubdirectory.settings.glossary.mergeNumbers = 0`
-
-Merge record titles starting with numbers to `0-9` in glossary.
-
-settings.glossary.showAllLink
------------------------------
-
-Default: 1
-
-Example: `plugin.tx_clubdirectory.settings.glossary.showAllLink = 0`
-
-Prepend an additional button in front of the glossary to show all records again.
-
-settings.pageBrowser.itemsPerPage
----------------------------------
-
-Default: 15
-
-Example: `plugin.tx_clubdirectory.settings.pageBrowser.itemsPerPage = 20`
-
-Reduce result of records to this value for a page
+All actions of the `Club Directory Management` plugin, except the empty
+form of the `new` action, and the search results of the
+`Club Directory Search` plugin are not cached at all.

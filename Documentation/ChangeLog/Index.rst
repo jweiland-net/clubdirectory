@@ -7,6 +7,81 @@
 ChangeLog
 =========
 
+..  _changelog-9-0-0:
+
+Version 9.0.0
+=============
+
+This version contains breaking changes. Please read
+:ref:`upgrade-9-0-0` before updating.
+
+Breaking changes:
+
+*   [!!!][TASK] Split the Clubdirectory plugin into the plugins
+    `Clubdirectory` (list, show), `Management` (own clubs, new, edit,
+    activate) and `Search` (search form, search results)
+*   [!!!][TASK] Use Extbase file upload handling for logo and images.
+    Remove `UploadMultipleFilesConverter`, `PostCheckFileReferenceEvent`,
+    `AssignMediaTypeConverterEventListener` and
+    `DeleteUploadedFilesEventListener`
+*   [!!!][TASK] Remove the checkfaluploads checkbox from the templates
+*   [!!!][TASK] Remove the jQuery UI dialog script for form hints and the
+    site setting `clubdirectory.feJavaScript`
+*   [!!!][TASK] Separate the address cleanup from the club validation
+*   [!!!][TASK] Write out all club form fields without sections
+*   [!!!][TASK] Remove `InitializeControllerActionEvent`. The arguments of
+    `PreProcessControllerActionEvent` have changed
+*   [TASK] Remove `ext_tables.sql`. TYPO3 creates all columns from TCA
+    now. Run the upgrade wizard before the database analyzer
+
+Security:
+
+*   [SECURITY] Restrict the club management to the owners of a club
+*   [SECURITY] Allow the activation by the administrator only
+*   [SECURITY] Sign the club `tstamp` in moderation tokens, so old mail
+    links expire
+
+Features and tasks:
+
+*   [FEATURE] Add site settings for the list page, the search results page
+    and the management page
+*   [TASK] Require maps2 12.2.1 or higher
+*   [TASK] Suggest jweiland/checkfaluploads 6.x
+*   [TASK] Generate a unique path segment like DataHandler, without the
+    club UID
+*   [TASK] Restrict MapController to the creation of clubs. The map of an
+    existing club is edited in the club form
+*   [TASK] Add upgrade wizard `clubdirectory_barrierFreeToIntegerUpdate`
+*   [TASK] Remove TCA columns created by TYPO3 core
+*   [TASK] Move all labels of the site set into a translatable `labels.xlf`
+*   [TASK] Add tests for club access, moderation and helpers
+
+Bugfixes:
+
+*   [BUGFIX] Register the Management and Search plugins as content elements
+*   [BUGFIX] Submit search forms to the search results page and remove the
+    obsolete cHash condition
+*   [BUGFIX] Fix links in mails and redirects to the management plugin
+*   [BUGFIX] Link edit in detail view to the management plugin
+*   [BUGFIX] Redirect to the club list of the list plugin
+*   [BUGFIX] Show a meaningful message, if an address can not be geocoded
+*   [BUGFIX] Do not render the map without POI record
+*   [BUGFIX] Use the club title as POI title only
+*   [BUGFIX] Show 404 page for hidden or unknown clubs
+*   [BUGFIX] Allow sorting search results by title only
+*   [BUGFIX] Fix invalid search order
+*   [BUGFIX] Render the club plugin uncached for logged-in users
+*   [BUGFIX] Explain the moderation in created and updated messages
+*   [BUGFIX] Show the activity of the club in mails
+*   [BUGFIX] Allow removing all categories of a club
+*   [BUGFIX] Split select fields into single and multiple variant
+*   [BUGFIX] Add telephone field to the address form
+*   [BUGFIX] Render email, telephone and fax fields with their HTML5 types
+*   [BUGFIX] Clean up help text of categories field
+*   [BUGFIX] Use selected page as storage in export module
+*   [BUGFIX] Handle select values as array in address label
+*   [BUGFIX] Add site set labels to Crowdin configuration
+
 Version 8.1.3
 =============
 

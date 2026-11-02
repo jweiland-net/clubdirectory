@@ -11,31 +11,57 @@ Target group: **Editors**
 
 #.  Select a page where you want to insert clubdirectory
 
-#.  Insert a new content element of type: `Insert Plugin`
+#.  Insert a new content element of type `Club Directory` from the tab
+    :guilabel:`Plugins` of the content element wizard.
 
-#.  On tab `Plugin` select `Clubs` from selectbox.
-
-#.  Confirm reload to load special input fields for our extension (FlexForm).
+#.  On tab :guilabel:`Plugin` configure the options of the plugin.
 
 #.  Save
+
+..  _user-manual-plugins:
+
+Plugins
+=======
+
+`Club Directory`
+    Shows the list of clubs with an A-Z navigation and the detail view of
+    a club.
+
+`Club Directory Management`
+    Lets logged-in frontend users create, edit and manage their own clubs.
+    New and changed clubs are hidden until the administrator activates
+    them, see :ref:`moderation`.
+
+`Club Directory Search`
+    Shows the search form and the search results.
+
+Your administrator configures on which pages these plugins are placed, see
+:ref:`site-settings-pages`.
+
+..  _user-manual-plugin-options:
 
 Plugin Options
 ==============
 
-Show Glossary
--------------
+The following options are available for the plugin `Club Directory`.
 
-You can decide to show A-Z links above or not.
+Show A-Z links
+--------------
 
-Show All link
--------------
+You can decide to show A-Z links above or not. Whether an additional
+All-link is prepended is configured by your administrator in the site
+setting :confval:`clubdirectory.glossary2.showAllLink
+<site-setting-glossary2-showalllink>`.
 
-You can decide to prepend an All-link to A-Z links or not.
-
-Show entries of category
-------------------------
+Category
+--------
 
 Sometimes it makes sense to reduce list of club entries to a given category.
+
+Choose a district
+-----------------
+
+Reduce the list of club entries to a given district.
 
 Club Record
 ===========

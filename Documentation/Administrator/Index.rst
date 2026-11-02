@@ -15,5 +15,6 @@ Administrator manual
     :maxdepth: 2
     :titlesonly:
 
+    Moderation/Index
     Routes/Index
     Upgrade/Index
