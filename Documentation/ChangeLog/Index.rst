@@ -39,6 +39,9 @@ Breaking changes:
     setting `clubdirectory.userGroup`. It controls the visibility of the
     links to create a club and to list the own clubs, and of the list of
     the own clubs
+*   [!!!][TASK] Remove the deprecated search property `subCategory`. Use
+    `search[category]` instead. Old links with `search[subCategory]` are
+    ignored
 *   [TASK] Remove `ext_tables.sql`. TYPO3 creates all columns from TCA
     now. Run the upgrade wizard before the database analyzer
 

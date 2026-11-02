@@ -159,6 +159,24 @@ user outside of this group can still call the actions to create a club
 directly. Restrict the access of the management page to the same
 usergroup in the page properties. See :ref:`moderation-access`.
 
+..  _upgrade-9-0-0-sub-category:
+
+Search property subCategory removed
+-----------------------------------
+
+The deprecated property `subCategory` of the search model has been
+removed. The methods :php:`Search::getSubCategory()` and
+:php:`Search::setSubCategory()` do not exist anymore. If you use them in
+your own templates or code, use :php:`Search::getCategory()` and
+:php:`Search::setCategory()` instead.
+
+Links and search forms have to submit the category as
+`search[category]` instead of `search[subCategory]`.
+
+Old URLs still containing `search[subCategory]` do not result in an
+exception. The parameter is ignored, so the search results are not
+filtered by this category anymore.
+
 ..  _upgrade-9-0-0-page-tsconfig:
 
 Page TSconfig removed
