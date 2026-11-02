@@ -24,6 +24,7 @@ plugin.tx_clubdirectory {
     pidOfDetailPage = {$clubdirectory.pidOfDetailPage}
     pidOfSearchResults = {$clubdirectory.pidOfSearchResults}
     pidOfManagementPage = {$clubdirectory.pidOfManagementPage}
+    userGroup = {$clubdirectory.userGroup}
     list {
       image {
         width = {$clubdirectory.list.image.width}

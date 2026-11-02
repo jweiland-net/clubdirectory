@@ -15,13 +15,20 @@
         {f:translate(key: 'backToList')}
     </f:link.action>
 
-    <f:if condition="{clubs}">
+    <f:security.ifHasRole role="{settings.userGroup}">
         <f:then>
-            <f:render partial="Club/List" arguments="{clubs: clubs}"/>
+            <f:if condition="{clubs}">
+                <f:then>
+                    <f:render partial="Club/List" arguments="{clubs: clubs}"/>
+                </f:then>
+                <f:else>
+                    <div class="noResults">{f:translate(key: "noResults")}</div>
+                </f:else>
+            </f:if>
         </f:then>
         <f:else>
-            <div class="noResults">{f:translate(key: "noResults")}</div>
+            <div class="accessDenied">{f:translate(key: 'listMyClubs.accessDenied')}</div>
         </f:else>
-    </f:if>
+    </f:security.ifHasRole>
 </f:section>
 </html>

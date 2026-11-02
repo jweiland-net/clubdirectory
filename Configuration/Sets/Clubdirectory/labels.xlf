@@ -80,6 +80,12 @@
 			<trans-unit id="settings.description.clubdirectory.pidOfMaps2Plugin">
 				<source>Storage Page Uid of Maps2 Plugin</source>
 			</trans-unit>
+			<trans-unit id="settings.clubdirectory.userGroup">
+				<source>Usergroup Uid</source>
+			</trans-unit>
+			<trans-unit id="settings.description.clubdirectory.userGroup">
+				<source>The user group allowed to create new clubs. This determines the rendering of the links to create a club and to list the own clubs, and of the list of own clubs.</source>
+			</trans-unit>
 			<trans-unit id="settings.clubdirectory.pageBrowser.itemsPerPage">
 				<source>Items per page for pagination</source>
 			</trans-unit>

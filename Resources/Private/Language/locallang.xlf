@@ -147,6 +147,9 @@
 			<trans-unit id="listMyClubs">
 				<source>List my Clubs</source>
 			</trans-unit>
+			<trans-unit id="listMyClubs.accessDenied">
+				<source>You do not have access to visit this page</source>
+			</trans-unit>
 			<trans-unit id="create">
 				<source>Create</source>
 			</trans-unit>

@@ -49,6 +49,10 @@ settings:
     category: clubdirectory.pages
     type: page
     default: 0
+  clubdirectory.userGroup:
+    category: clubdirectory.pages
+    type: int
+    default: 1
 
   clubdirectory.pageBrowser.itemsPerPage:
     category: clubdirectory.settings
