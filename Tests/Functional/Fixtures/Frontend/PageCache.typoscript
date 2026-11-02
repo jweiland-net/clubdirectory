@@ -1,0 +1,4 @@
+# The clubs are stored in a folder. So clearing the cache of the
+# storage page (tag "pageId_2") does not clear the list page.
+clubdirectory.storagePid = 2
+clubdirectory.pageBrowser.itemsPerPage = 15

@@ -19,6 +19,7 @@ use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
+use JWeiland\Clubdirectory\Service\ClubCacheService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -44,6 +45,7 @@ class ClubController extends ActionController
     public const FLASH_MESSAGE_QUEUE_IDENTIFIER = 'extbase.flashmessages.tx_clubdirectory_clubdirectory';
 
     public function __construct(
+        protected ClubCacheService $clubCacheService,
         protected DistrictRepository $districtRepository,
         protected PersistenceManagerInterface $persistenceManager,
         protected ErrorController $errorController,
@@ -57,11 +59,12 @@ class ClubController extends ActionController
     public function listAction(string $letter = ''): ResponseInterface
     {
         $this->disablePageCacheForFlashMessages();
+        $this->clubCacheService->addCacheTagsForClubList($this->request);
 
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $this->clubRepository->findFilteredBy(
-                (int)$this->settings['category'],
-                (int)$this->settings['district'],
+                (int)($this->settings['category'] ?? 0),
+                (int)($this->settings['district'] ?? 0),
                 $letter,
             ),
             'categories' => $this->categoryRepository->getCategories(),
@@ -96,6 +99,7 @@ class ClubController extends ActionController
         }
 
         $this->disablePageCacheForFlashMessages();
+        $this->clubCacheService->addCacheTagsForClub($this->request, $club);
 
         $this->postProcessAndAssignFluidVariables([
             'club' => $clubObject,

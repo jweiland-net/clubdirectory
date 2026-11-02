@@ -17,6 +17,7 @@ use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Service\ClubAccessService;
+use JWeiland\Clubdirectory\Service\ClubCacheService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -36,6 +37,7 @@ class MapController extends ActionController
 
     public function __construct(
         protected ClubAccessService $clubAccessService,
+        protected ClubCacheService $clubCacheService,
         protected PersistenceManagerInterface $persistenceManager,
     ) {}
 
@@ -69,6 +71,7 @@ class MapController extends ActionController
         $this->clubRepository->update($club);
         // The moderation token of the mail signs the "tstamp" of the persisted club
         $this->persistenceManager->persistAll();
+        $this->clubCacheService->flushCachesOfClub((int)$club->getUid());
 
         $this->view->assignMultiple([
             'club' => $club,

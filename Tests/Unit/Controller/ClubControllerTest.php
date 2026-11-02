@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\Tests\Unit\Controller;
 
 use JWeiland\Clubdirectory\Controller\ClubController;
 use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
+use JWeiland\Clubdirectory\Service\ClubCacheService;
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
@@ -70,6 +71,7 @@ class ClubControllerTest extends UnitTestCase
         );
 
         $controller = new class (
+            $this->createMock(ClubCacheService::class),
             $this->createMock(DistrictRepository::class),
             $this->createMock(PersistenceManagerInterface::class),
             $this->createMock(ErrorController::class),

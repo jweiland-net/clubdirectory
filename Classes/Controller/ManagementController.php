@@ -22,6 +22,7 @@ use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
 use JWeiland\Clubdirectory\Domain\Validator\ClubValidator;
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use JWeiland\Clubdirectory\Service\ClubAccessService;
+use JWeiland\Clubdirectory\Service\ClubCacheService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -43,6 +44,7 @@ class ManagementController extends ActionController
 
     public function __construct(
         protected ClubAccessService $clubAccessService,
+        protected ClubCacheService $clubCacheService,
         protected DistrictRepository $districtRepository,
         protected PathSegmentHelper $pathSegmentHelper,
         protected PersistenceManagerInterface $persistenceManager,
@@ -171,6 +173,8 @@ class ManagementController extends ActionController
         $this->clubRepository->update($club);
         // The moderation token of the mail signs the "tstamp" of the persisted club
         $this->persistenceManager->persistAll();
+        // Remove the hidden club from cached list and detail pages
+        $this->clubCacheService->flushCachesOfClub((int)$club->getUid());
 
         $this->postProcessAndAssignFluidVariables([
             'club' => $club,
@@ -196,6 +200,8 @@ class ManagementController extends ActionController
     {
         $club->setHidden(false);
         $this->clubRepository->update($club);
+        $this->persistenceManager->persistAll();
+        $this->clubCacheService->flushCachesOfClub((int)$club->getUid());
 
         return $this->redirectToClubList(
             (string)LocalizationUtility::translate('clubActivated', 'clubdirectory'),
