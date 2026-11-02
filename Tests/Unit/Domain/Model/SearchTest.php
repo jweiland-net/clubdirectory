@@ -76,10 +76,21 @@ class SearchTest extends UnitTestCase
     #[Test]
     public function setOrderBySetsOrderBy(): void
     {
-        $this->subject->setOrderBy('foo bar');
+        $this->subject->setOrderBy('title');
 
         self::assertSame(
-            'foo bar',
+            'title',
+            $this->subject->getOrderBy(),
+        );
+    }
+
+    #[Test]
+    public function setOrderByWithInvalidValueSetsTitle(): void
+    {
+        $this->subject->setOrderBy('feUsers.password');
+
+        self::assertSame(
+            'title',
             $this->subject->getOrderBy(),
         );
     }
@@ -96,10 +107,21 @@ class SearchTest extends UnitTestCase
     #[Test]
     public function setOrderSetsSortingOrder(): void
     {
+        $this->subject->setOrder(QueryInterface::ORDER_DESCENDING);
+
+        self::assertSame(
+            QueryInterface::ORDER_DESCENDING,
+            $this->subject->getOrder(),
+        );
+    }
+
+    #[Test]
+    public function setOrderWithInvalidValueSetsAscending(): void
+    {
         $this->subject->setOrder('foo bar');
 
         self::assertSame(
-            'foo bar',
+            QueryInterface::ORDER_ASCENDING,
             $this->subject->getOrder(),
         );
     }

@@ -19,6 +19,19 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  */
 class Search
 {
+    /**
+     * Only these properties are allowed to sort the search result by.
+     * The first one is used as fallback for invalid values.
+     */
+    protected const ALLOWED_ORDER_BY = [
+        'title',
+    ];
+
+    protected const ALLOWED_ORDER = [
+        QueryInterface::ORDER_ASCENDING,
+        QueryInterface::ORDER_DESCENDING,
+    ];
+
     protected string $searchWord = '';
 
     protected int $category = 0;
@@ -78,9 +91,15 @@ class Search
         return $this->orderBy;
     }
 
+    /**
+     * The value is used as property name of the query orderings. Prevent
+     * sorting by arbitrary properties and invalid property names.
+     */
     public function setOrderBy(string $orderBy): void
     {
-        $this->orderBy = $orderBy;
+        $this->orderBy = in_array($orderBy, self::ALLOWED_ORDER_BY, true)
+            ? $orderBy
+            : self::ALLOWED_ORDER_BY[0];
     }
 
     public function getOrder(): string
@@ -90,7 +109,9 @@ class Search
 
     public function setOrder(string $order): void
     {
-        $this->order = $order;
+        $this->order = in_array($order, self::ALLOWED_ORDER, true)
+            ? $order
+            : QueryInterface::ORDER_ASCENDING;
     }
 
     /**

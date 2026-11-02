@@ -114,20 +114,10 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             }
         }
 
-        // Set ordering
-        if ($search->getOrderBy()) {
-            if (!in_array(
-                $search->getOrder(),
-                [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING],
-                true,
-            )) {
-                $search->setOrder(QueryInterface::ORDER_ASCENDING);
-            }
-
-            $query->setOrderings([
-                $search->getOrderBy() => $search->getOrder(),
-            ]);
-        }
+        // Search restricts orderBy and order to allowed values
+        $query->setOrderings([
+            $search->getOrderBy() => $search->getOrder(),
+        ]);
 
         return $constraints !== [] ? $query->matching($query->logicalAnd(...$constraints))->execute() : $query->execute();
     }
