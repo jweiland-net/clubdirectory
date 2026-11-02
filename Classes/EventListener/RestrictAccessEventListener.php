@@ -22,6 +22,9 @@ use TYPO3\CMS\Frontend\Controller\ErrorController;
 /**
  * Restrict access to controller actions, if the logged-in user tries to
  * access records of clubs which are not assigned to him.
+ * A valid "moderationToken" of the signed mail links grants access to the
+ * club without login. "activate" is allowed with a valid token only, so
+ * owners can not activate their own clubs and bypass the moderation.
  * Access will be denied with the 403 error handling of the site. Do not
  * forward to Extbase's errorAction: on POST requests it forwards back to the
  * referring action, which will be denied again (InfiniteLoopException).
@@ -86,11 +89,21 @@ final readonly class RestrictAccessEventListener
             return false;
         }
 
-        if ($clubUid > 0 && !$this->clubAccessService->canManageClub($clubUid)) {
+        if ($clubUid > 0 && !$this->isClubAccessAllowed($controllerActionEvent, $clubUid)) {
             return false;
         }
 
         return !is_array($clubArgument) || $this->clubAccessService->hasOnlyRecordsOfClub($clubArgument, $clubUid);
+    }
+
+    private function isClubAccessAllowed(PreProcessControllerActionEvent $controllerActionEvent, int $clubUid): bool
+    {
+        if ($this->clubAccessService->getValidModerationToken($controllerActionEvent->getRequest(), $clubUid) !== '') {
+            return true;
+        }
+
+        return $controllerActionEvent->getActionName() !== 'activate'
+            && $this->clubAccessService->canManageClub($clubUid);
     }
 
     private function isNewClubAllowed(PreProcessControllerActionEvent $controllerActionEvent): bool

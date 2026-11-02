@@ -15,6 +15,7 @@ use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Service\ClubAccessService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -29,6 +30,10 @@ class MapController extends ActionController
     use ControllerInjectionTrait;
     use InitializeControllerTrait;
     use PreProcessControllerActionTrait;
+
+    public function __construct(
+        protected ClubAccessService $clubAccessService,
+    ) {}
 
     public function initializeNewAction(): void
     {
@@ -54,7 +59,10 @@ class MapController extends ActionController
     public function createAction(Club $club): ResponseInterface
     {
         if ($this->frontendUserRepository->getCurrentFrontendUserUid()) {
-            $this->view->assign('club', $club);
+            $this->view->assignMultiple([
+                'club' => $club,
+                'moderationToken' => $this->clubAccessService->generateModerationToken((int)$club->getUid()),
+            ]);
             $this->mailHelper->sendMail(
                 $this->view->render(),
                 LocalizationUtility::translate('email.subject.create', 'clubdirectory'),

@@ -12,14 +12,20 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Service;
 
 use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
 /**
  * Checks, if the current user is allowed to manage a club in frontend.
  * Hidden clubs are respected, as new and updated clubs are hidden until
  * they get activated.
+ *
+ * The edit and activate links in the notification mails are signed with a
+ * "moderationToken". It authorizes the administrator, who is never logged
+ * in as the frontend user who owns the club.
  */
 readonly class ClubAccessService
 {
@@ -29,9 +35,14 @@ readonly class ClubAccessService
 
     private const TABLE_CLUB_USER_MM = 'tx_clubdirectory_club_user_mm';
 
+    private const MODERATION_TOKEN_SECRET = 'clubdirectory/club-moderation-link';
+
+    private const MODERATION_TOKEN_ARGUMENT = 'moderationToken';
+
     public function __construct(
         private ConnectionPool $connectionPool,
         private Context $context,
+        private HashService $hashService,
     ) {}
 
     /**
@@ -44,6 +55,30 @@ readonly class ClubAccessService
         }
 
         return is_numeric($argument) ? (int)$argument : 0;
+    }
+
+    public function generateModerationToken(int $clubUid): string
+    {
+        return $this->hashService->hmac((string)$clubUid, self::MODERATION_TOKEN_SECRET);
+    }
+
+    /**
+     * Returns the "moderationToken" argument of the request, if it was
+     * generated for the given club. Else an empty string is returned.
+     */
+    public function getValidModerationToken(RequestInterface $request, int $clubUid): string
+    {
+        $moderationToken = $request->hasArgument(self::MODERATION_TOKEN_ARGUMENT)
+            ? $request->getArgument(self::MODERATION_TOKEN_ARGUMENT)
+            : '';
+
+        if ($clubUid <= 0 || !is_string($moderationToken) || $moderationToken === '') {
+            return '';
+        }
+
+        return $this->hashService->validateHmac((string)$clubUid, self::MODERATION_TOKEN_SECRET, $moderationToken)
+            ? $moderationToken
+            : '';
     }
 
     /**

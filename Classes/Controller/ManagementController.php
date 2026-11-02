@@ -20,6 +20,7 @@ use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
 use JWeiland\Clubdirectory\Domain\Validator\ClubValidator;
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
+use JWeiland\Clubdirectory\Service\ClubAccessService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
@@ -39,6 +40,7 @@ class ManagementController extends ActionController
     use PreProcessControllerActionTrait;
 
     public function __construct(
+        protected ClubAccessService $clubAccessService,
         protected DistrictRepository $districtRepository,
         protected PathSegmentHelper $pathSegmentHelper,
         protected PersistenceManagerInterface $persistenceManager,
@@ -124,6 +126,10 @@ class ManagementController extends ActionController
         $this->preProcessControllerAction();
     }
 
+    /**
+     * The "moderationToken" of the signed mail link is passed to the form,
+     * so that the administrator is allowed to submit the form, too.
+     */
     #[Extbase\IgnoreValidation(['value' => 'club'])]
     public function editAction(Club $club): ResponseInterface
     {
@@ -133,6 +139,7 @@ class ManagementController extends ActionController
             'club' => $club,
             'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
             'addressTitles' => $this->getAddressTitles(),
+            'moderationToken' => $this->clubAccessService->getValidModerationToken($this->request, (int)$club->getUid()),
         ]);
 
         return $this->htmlResponse();
@@ -162,6 +169,7 @@ class ManagementController extends ActionController
 
         $this->postProcessAndAssignFluidVariables([
             'club' => $club,
+            'moderationToken' => $this->clubAccessService->generateModerationToken((int)$club->getUid()),
         ]);
 
         $this->mailHelper->sendMail(
