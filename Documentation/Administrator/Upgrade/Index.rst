@@ -137,6 +137,51 @@ disable it, override
 `plugin.tx_clubdirectory.persistence.updateReferenceIndex` with your own
 TypoScript.
 
+..  _upgrade-9-0-0-user-group:
+
+Extension setting userGroup removed
+-----------------------------------
+
+The extension setting `userGroup` and the template variable
+`allowedUserGroup` have been removed. The setting only controlled the
+visibility of the links to create a new club and to list the own clubs.
+These links are shown to every logged-in frontend user now
+(:html:`<f:security.ifAuthenticated>` in
+:file:`Partials/Club/InsertEditLinks.html`).
+
+The access to the club management is protected by the
+`RestrictAccessEventListener` and the page access of the management page.
+Restrict the management page to the usergroup of the club owners, if not
+every frontend user should create clubs. If the links should be shown to
+a specific usergroup only, override the partial
+:file:`Partials/Club/InsertEditLinks.html` in your site package. See
+:ref:`moderation-access`.
+
+..  _upgrade-9-0-0-page-tsconfig:
+
+Page TSconfig removed
+---------------------
+
+The extension does not add `TCEFORM` page TSconfig based on the extension
+settings `rootCategory` and `userGroup` anymore. Without it, the backend
+offers the categories on root level in the plugin and the club records
+and all frontend users in the field :guilabel:`Assign Frontend Users`.
+
+Add the page TSconfig to your site package to restore the previous
+restrictions, see :ref:`page-tsconfig`. The extension setting
+:confval:`rootCategory <ext-conf-rootcategory>` only affects the category
+lists in the frontend now.
+
+..  _upgrade-9-0-0-page-cache:
+
+Page cache of list and detail pages
+-----------------------------------
+
+The list and detail pages are tagged with the cache tags of the clubs and
+are flushed after saving a club. You can remove a `TCEMAIN.clearCacheCmd`,
+which you have configured for these pages only because of
+`clubdirectory`. See :ref:`moderation-flow`.
+
 ..  _upgrade-9-0-0-templates:
 
 Template overrides
@@ -331,7 +376,8 @@ f:section. Please check your templates, if you have overwritten them.
 We have remove form.objectContext VH with no replacement. Please have a look
 into our new templates and adopt your templates accordingly.
 
-In case of TYPO3 9 you should execute the Slug Updater Wizard of
-clubdirectory in Installtool, to fill path_segments for better slugs.
+In case of TYPO3 9 you should execute the upgrade wizard
+`clubdirectoryUpdateSlug` of clubdirectory in Installtool, to fill
+path_segments for better slugs.
 
 As we have modified a lot of PHP classes you should clear all caches.

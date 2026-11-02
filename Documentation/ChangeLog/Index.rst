@@ -31,6 +31,11 @@ Breaking changes:
 *   [!!!][TASK] Write out all club form fields without sections
 *   [!!!][TASK] Remove `InitializeControllerActionEvent`. The arguments of
     `PreProcessControllerActionEvent` have changed
+*   [!!!][TASK] Remove the site setting
+    `clubdirectory.updateReferenceIndex`
+*   [!!!][TASK] Remove the page TSconfig for categories and frontend users
+    from :file:`ext_localconf.php`
+*   [!!!][TASK] Remove the extension setting `userGroup`
 *   [TASK] Remove `ext_tables.sql`. TYPO3 creates all columns from TCA
     now. Run the upgrade wizard before the database analyzer
 
@@ -81,6 +86,10 @@ Bugfixes:
 *   [BUGFIX] Use selected page as storage in export module
 *   [BUGFIX] Handle select values as array in address label
 *   [BUGFIX] Add site set labels to Crowdin configuration
+*   [BUGFIX] Restore the identifier `clubdirectoryUpdateSlug` of the slug
+    upgrade wizard
+*   [BUGFIX] Show flash messages on the club list
+*   [BUGFIX] Tag club pages to clear them after changes
 
 Version 8.1.3
 =============

@@ -22,8 +22,9 @@ Requirements
 *   A page with the plugin `Clubdirectory` for the list of clubs,
     configured in :confval:`clubdirectory.pidOfListPage
     <site-setting-pidoflistpage>`.
-*   The frontend usergroup of the club owners in
-    :confval:`userGroup <ext-conf-usergroup>`.
+*   Optional: an access restriction of the management page to the
+    frontend usergroup of the club owners, see
+    :ref:`moderation-access`.
 *   The receiver and sender of the notification mails in
     :confval:`emailToAddress <ext-conf-emailtoaddress>` and
     :confval:`emailFromAddress <ext-conf-emailfromaddress>`.
@@ -53,11 +54,21 @@ Moderation flow
 
 #.  After confirming the map, the administrator gets a mail with the data
     of the club and two links: one to edit and one to activate the club.
-    The user is redirected to the list page.
+    The user is redirected to the list page, which shows a message about
+    the pending moderation.
 
 #.  The administrator opens the edit link to check and correct the club,
     or the activate link to publish it. After the activation the
-    administrator is redirected to the list page.
+    administrator is redirected to the list page, which shows a
+    confirmation message.
+
+The list page is not cached, while it shows such a message. The
+`Clubdirectory` plugin tags its cached list pages with
+`tx_clubdirectory_domain_model_club` and its detail pages with
+`tx_clubdirectory_domain_model_club_<uid>`. Saving a club in frontend or
+backend flushes these tags, so new, activated and changed clubs are shown
+right away. A `TCEMAIN.clearCacheCmd` for the list and detail pages is
+not required anymore.
 
 Each time an owner changes a club, the club is hidden again and the
 administrator gets a new mail with new links. The map position of an
@@ -108,6 +119,15 @@ in both links and the hidden field `moderationToken` in
 Access control and error pages
 ==============================
 
+*   The links to create a new club and to list the own clubs are shown to
+    every logged-in frontend user (partial
+    :file:`Partials/Club/InsertEditLinks.html`).
+*   Every logged-in frontend user with access to the management page can
+    create a club. To allow this for a specific usergroup only, restrict
+    the access of the management page to this group. Override the partial
+    :file:`Partials/Club/InsertEditLinks.html` in your site package, if the
+    links should be shown to this group only, e.g. with
+    :html:`<f:security.ifHasRole role="...">`.
 *   Only frontend users assigned to the club (field
     :guilabel:`Assign Frontend Users` of the club record) and backend
     administrators are allowed to edit and update a club.

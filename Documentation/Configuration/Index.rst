@@ -14,4 +14,5 @@ This chapter describes the various configuration settings of clubdirectory.
 
     Extension/Index
     SiteSettings/Index
+    PageTsConfig/Index
     TypoScript/Index

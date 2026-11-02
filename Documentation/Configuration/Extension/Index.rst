@@ -15,16 +15,6 @@ in :guilabel:`Admin Tools > Settings > Extension Configuration`.
 Tab: Basic
 ==========
 
-..  confval:: userGroup
-    :name: ext-conf-usergroup
-    :type: int
-    :default: 0
-
-    If you will allow for frontend users to create and edit their own club
-    records you have to assign them a frontend usergroup and add this group
-    UID to this property. The links to create a new club and to list the
-    own clubs are shown to members of this usergroup only.
-
 ..  confval:: poiCollectionPid
     :name: ext-conf-poicollectionpid
     :type: int
@@ -43,9 +33,15 @@ Tab: Basic
     :type: int
     :default: 0
 
-    If you have many sys_category records with huge trees in your TYPO3
-    project, it may make sense to reduce the category trees in our plugins
-    to a parent category UID (root UID).
+    UID of the parent category of the club categories. The frontend shows
+    the direct child categories of this category only: in the category
+    selection of the club form of the Management plugin and in the category
+    filter of the list and search forms.
+
+    ..  versionchanged:: 9.0.0
+        This setting does not restrict the categories in the backend
+        anymore. Restrict the category tree of the plugin and of the club
+        records with page TSconfig, see :ref:`page-tsconfig`.
 
 ..  confval:: emailFromAddress
     :name: ext-conf-emailfromaddress
