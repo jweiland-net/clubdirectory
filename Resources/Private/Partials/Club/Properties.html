@@ -91,6 +91,17 @@
 
         <f:render section="renderProperty" arguments="{transKey: 'members', value: club.members}"/>
         <f:render section="renderProperty" arguments="{transKey: 'clubHome', value: club.clubHome}"/>
+
+        <f:if condition="{club.categories}">
+            <dt>{f:translate(key: "tx_clubdirectory_domain_model_club.categories")}</dt>
+            <dd>
+                <f:for each="{club.categories}" as="category" iteration="iterator">
+                    {category.title}<f:if condition="{iterator.isLast}"><f:else>,</f:else></f:if>
+                </f:for>
+            </dd>
+        </f:if>
+
+        <f:render section="renderProperty" arguments="{transKey: 'tags', value: club.tags}"/>
     </dl>
 </div>
 
