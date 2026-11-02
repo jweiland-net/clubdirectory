@@ -74,6 +74,11 @@ class ManagementController extends ActionController
 
     public function initializeCreateAction(): void
     {
+        if ($this->request->hasArgument('club')) {
+            $requestArgument = $this->request->getArgument('club');
+            $this->removeEmptyAddressesFromRequest($requestArgument);
+        }
+
         $this->preProcessControllerAction();
     }
 

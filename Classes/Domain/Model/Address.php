@@ -20,8 +20,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 class Address extends AbstractEntity
 {
-    #[Extbase\Validate(['validator' => 'NotEmpty'])]
-    protected string $title = 'organizationAddress';
+    protected string $title = '';
 
     protected string $street = '';
 

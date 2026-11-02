@@ -330,7 +330,7 @@ return [
                 'type' => 'inline',
                 'foreign_table' => 'tx_clubdirectory_domain_model_address',
                 'foreign_field' => 'club',
-                'minitems' => 0,
+                'minitems' => 1,
                 'maxitems' => 3,
                 'appearance' => [
                     'collapseAll' => true,

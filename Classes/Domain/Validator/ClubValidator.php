@@ -11,12 +11,16 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Validator;
 
+use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 /**
- * We use the domain based validator to check against at least one address
- * and remove empty addresses.
+ * Validates that a club has at least one address and that each address
+ * contains at least street, zip and city.
+ *
+ * Addresses without an address type are already removed from the request
+ * by AddressTrait::removeEmptyAddressesFromRequest().
  */
 class ClubValidator extends AbstractValidator
 {
@@ -29,37 +33,46 @@ class ClubValidator extends AbstractValidator
     protected $acceptsEmptyValues = false;
 
     /**
-     * Checks if the given property ($propertyValue) is not empty (NULL, empty string, empty array or empty object).
-     *
-     * If at least one error occurred, the result is FALSE.
-     *
      * @param Club $value The value that should be validated
      */
-    public function isValid($value): void
+    public function isValid(mixed $value): void
     {
-        $this->removeEmptyAddresses($value);
-        if (empty($value->getAddresses())) {
-            $this->addError('You have forgotten to set at least one address', 1399904889);
+        $addresses = $value->getAddresses();
+        if ($addresses === []) {
+            $this->addError(
+                $this->translateErrorMessage('error.addresses.missing', 'clubdirectory'),
+                1399904889,
+            );
+            return;
+        }
+
+        foreach ($addresses as $address) {
+            $this->validateAddress($address);
         }
     }
 
-    /**
-     * If a customer has assigned less than 3 addresses to a club,
-     * we have to remove these empty addresses before saving to DB.
-     *
-     * @param Club $club
-     */
-    protected function removeEmptyAddresses(Club $club): void
+    protected function validateAddress(Address $address): void
     {
-        foreach ($club->getAddresses() as $address) {
-            if (
-                empty($address->getStreet())
-                && empty($address->getHouseNumber())
-                && empty($address->getZip())
-                && empty($address->getCity())
-            ) {
-                $club->removeAddress($address);
-            }
+        if (
+            trim($address->getStreet()) !== ''
+            && trim($address->getZip()) !== ''
+            && trim($address->getCity()) !== ''
+        ) {
+            return;
         }
+
+        $addressType = $this->translateErrorMessage(
+            'tx_clubdirectory_domain_model_address.title.' . $address->getTitle(),
+            'clubdirectory',
+        );
+
+        $this->addError(
+            $this->translateErrorMessage(
+                'error.address.incomplete',
+                'clubdirectory',
+                [$addressType !== '' ? $addressType : $address->getTitle()],
+            ),
+            1793606614,
+        );
     }
 }

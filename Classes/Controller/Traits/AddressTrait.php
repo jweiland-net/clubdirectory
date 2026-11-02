@@ -57,24 +57,19 @@ trait AddressTrait
     }
 
     /**
-     * Remove empty addresses from request before Property Mapping starts,
-     * to prevent inserting empty addresses into DB
+     * The form always renders 3 address blocks. Remove all addresses without
+     * an address type from request before property mapping starts. Already
+     * persisted addresses without an address type will be removed from club.
      */
     protected function removeEmptyAddressesFromRequest(array &$requestArgument): void
     {
-        if (isset($requestArgument['addresses']) && is_array($requestArgument['addresses'])) {
-            foreach ($requestArgument['addresses'] as $key => $address) {
-                // Only remove addresses which were not persisted before.
-                // We will remove persisted addresses later on in editAction()
-                if (
-                    !isset($address['__identity'])
-                    && empty($address['street'])
-                    && empty($address['house_number'])
-                    && empty($address['zip'])
-                    && empty($address['city'])
-                ) {
-                    unset($requestArgument['addresses'][$key]);
-                }
+        if (!is_array($requestArgument['addresses'] ?? null)) {
+            return;
+        }
+
+        foreach ($requestArgument['addresses'] as $key => $address) {
+            if (empty($address['title'])) {
+                unset($requestArgument['addresses'][$key]);
             }
         }
 

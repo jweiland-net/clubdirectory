@@ -170,6 +170,12 @@
 				<source>Delete Image</source>
 				<target>Bild entfernen</target>
 			</trans-unit>
+			<trans-unit id="error.addresses.missing">
+				<source>Please enter at least one address.</source>
+			</trans-unit>
+			<trans-unit id="error.address.incomplete">
+				<source>%s: Please enter at least street, ZIP and city.</source>
+			</trans-unit>
 			<trans-unit id="pleaseChoose">
 				<source>Please choose</source>
 			</trans-unit>
