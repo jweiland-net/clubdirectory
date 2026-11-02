@@ -60,12 +60,35 @@ class MapHelper
                 $this->mapService->createNewPoiCollection(
                     $this->extConf->getPoiCollectionPid(),
                     $position,
-                    ['title' => sprintf('%s (%d) - %s', $club->getTitle(), (int)$club->getUid(), $address->getTitle())],
+                    ['title' => $this->getPoiCollectionTitle($club, $address)],
                 ),
             ));
         }
 
         return null;
+    }
+
+    /**
+     * A new club has no UID while its POI records are created. Call this
+     * method after the club was persisted to add the UID to the POI titles.
+     * The changed POI records will be persisted by Extbase.
+     */
+    public function updatePoiCollectionTitles(Club $club): void
+    {
+        foreach ($club->getOriginalAddresses() as $address) {
+            $poiCollection = $address->getTxMaps2Uid();
+            if (!$poiCollection instanceof PoiCollection || $poiCollection->_isNew()) {
+                continue;
+            }
+
+            $poiCollection->setTitle($this->getPoiCollectionTitle($club, $address));
+            $this->poiCollectionRepository->update($poiCollection);
+        }
+    }
+
+    protected function getPoiCollectionTitle(Club $club, Address $address): string
+    {
+        return sprintf('%s (%d) - %s', $club->getTitle(), (int)$club->getUid(), $address->getTitle());
     }
 
     /**

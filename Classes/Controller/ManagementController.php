@@ -97,22 +97,29 @@ class ManagementController extends ActionController
                 return $this->forwardBackWithGeocodingError($geocodingFailure);
             }
 
-            $this->clubRepository->add($club);
-
-            $this->pathSegmentHelper->setGeneratorFields([
-                'title',
-                'uid',
-            ]);
-            $this->pathSegmentHelper->updatePathSegmentForClub($club);
-
-            $this->clubRepository->update($club);
-            $this->persistenceManager->persistAll();
+            $this->persistNewClub($club);
 
             return $this->redirect('new', 'Map', 'clubdirectory', ['club' => $club]);
         }
 
         $this->addFlashMessage('There is no valid user logged in. So record was not saved');
         return $this->redirect('list');
+    }
+
+    /**
+     * The club UID and PID are required for the unique path segment and the
+     * POI titles. They are available after the first persistAll() only.
+     */
+    protected function persistNewClub(Club $club): void
+    {
+        $this->clubRepository->add($club);
+        $this->persistenceManager->persistAll();
+
+        $this->pathSegmentHelper->updatePathSegmentForClub($club);
+        $this->mapHelper->updatePoiCollectionTitles($club);
+
+        $this->clubRepository->update($club);
+        $this->persistenceManager->persistAll();
     }
 
     public function initializeEditAction(): void

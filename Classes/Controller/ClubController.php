@@ -19,7 +19,6 @@ use JWeiland\Clubdirectory\Controller\Traits\PostProcessFluidVariablesTrait;
 use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
-use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -39,7 +38,6 @@ class ClubController extends ActionController
 
     public function __construct(
         protected DistrictRepository $districtRepository,
-        protected PathSegmentHelper $pathSegmentHelper,
         protected PersistenceManagerInterface $persistenceManager,
     ) {}
 
