@@ -14,8 +14,8 @@ namespace JWeiland\Clubdirectory\Controller;
 use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
+use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
-use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -29,6 +29,12 @@ class MapController extends ActionController
     use ControllerInjectionTrait;
     use InitializeControllerTrait;
     use AddressTrait;
+    use PreProcessControllerActionTrait;
+
+    public function initializeNewAction(): void
+    {
+        $this->preProcessControllerAction();
+    }
 
     /**
      * As club was already validated in ClubController create/update there can't be any errors. So ignore validation.
@@ -39,6 +45,11 @@ class MapController extends ActionController
         $this->view->assign('club', $club);
 
         return $this->htmlResponse();
+    }
+
+    public function initializeCreateAction(): void
+    {
+        $this->preProcessControllerAction();
     }
 
     public function createAction(Club $club): ResponseInterface
@@ -61,12 +72,12 @@ class MapController extends ActionController
 
     public function initializeEditAction(): void
     {
-        $this->emitInitializeControllerAction();
+        $this->preProcessControllerAction();
     }
 
     public function initializeUpdateAction(): void
     {
-        $this->emitInitializeControllerAction();
+        $this->preProcessControllerAction();
     }
 
     #[Extbase\IgnoreValidation(['value' => 'club'])]
@@ -95,19 +106,5 @@ class MapController extends ActionController
         $club->setHidden(true);
 
         return $this->redirect('listMyClubs', 'Management');
-    }
-
-    protected function emitInitializeControllerAction(): void
-    {
-        $actionEvent = new InitializeControllerActionEvent(
-            $this->request,
-            $this->arguments,
-            $this->settings,
-        );
-        $this->eventDispatcher->dispatch($actionEvent);
-
-        $this->request = $actionEvent->getRequest();
-        $this->arguments = $actionEvent->getArguments();
-        $this->actionMethodName = $this->resolveActionMethodName();
     }
 }

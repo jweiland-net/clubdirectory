@@ -25,7 +25,6 @@ class AddGlossaryEventListener extends AbstractControllerEventListener
     protected array $allowedControllerActions = [
         'Club' => [
             'list',
-            'search',
         ],
     ];
 

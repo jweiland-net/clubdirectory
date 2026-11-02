@@ -11,129 +11,96 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\EventListener;
 
-use JWeiland\Clubdirectory\Domain\Model\Club;
-use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
-use JWeiland\Clubdirectory\Event\ControllerActionEventInterface;
-use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
-use Psr\Http\Message\ServerRequestInterface;
+use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
+use JWeiland\Clubdirectory\Service\ClubAccessService;
+use JWeiland\Clubdirectory\Traits\IsValidEventListenerRequestTrait;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
-use TYPO3\CMS\Core\Messaging\FlashMessageQueue;
-use TYPO3\CMS\Core\Messaging\FlashMessageService;
-use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
-use TYPO3\CMS\Extbase\Service\ExtensionService;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
 
 /**
- * Restrict access to certain controller actions if logged-in user tries to access other user's records.
+ * Restrict access to controller actions, if the logged-in user tries to
+ * access records of clubs which are not assigned to him.
+ * Access will be denied with the 403 error handling of the site. Do not
+ * forward to Extbase's errorAction: on POST requests it forwards back to the
+ * referring action, which will be denied again (InfiniteLoopException).
  */
 #[AsEventListener('clubdirectory/restrictAccess')]
-final class RestrictAccessEventListener
+final readonly class RestrictAccessEventListener
 {
-    protected const ALLOWED_CONTROLLER_ACTIONS = [
-        'Club' => [
+    use IsValidEventListenerRequestTrait;
+
+    private const ALLOWED_CONTROLLER_ACTIONS = [
+        'Management' => [
+            'create',
             'edit',
             'update',
             'activate',
         ],
         'Map' => [
+            'new',
+            'create',
             'edit',
             'update',
         ],
     ];
 
-    private ?ServerRequestInterface $request = null;
+    /**
+     * Only these actions are allowed to be called with a club which was not persisted yet
+     */
+    private const NEW_CLUB_CONTROLLER_ACTIONS = [
+        'Management' => [
+            'create',
+        ],
+    ];
 
     public function __construct(
-        private readonly FlashMessageService $flashMessageService,
-        private readonly ClubRepository $clubRepository,
-        private readonly ExtensionService $extensionService,
+        private ClubAccessService $clubAccessService,
+        private ErrorController $errorController,
     ) {}
 
-    public function __invoke(InitializeControllerActionEvent $controllerActionEvent): void
+    /**
+     * @throws PropagateResponseException
+     */
+    public function __invoke(PreProcessControllerActionEvent $controllerActionEvent): void
     {
-        if (!$this->isValidRequest($controllerActionEvent)) {
+        if (!$this->isValidRequest($controllerActionEvent) || $this->isAccessAllowed($controllerActionEvent)) {
             return;
         }
 
-        $this->request = $controllerActionEvent->getRequest();
-
-        if ($this->isAccessAllowed($controllerActionEvent)) {
-            return;
-        }
-
-        $controllerActionEvent->setRequest(
-            $this->request->withControllerActionName('error'),
-        );
-
-        $controllerActionEvent->setArguments(
-            GeneralUtility::makeInstance(Arguments::class),
+        throw new PropagateResponseException(
+            $this->errorController->accessDeniedAction(
+                $controllerActionEvent->getRequest(),
+                (string)LocalizationUtility::translate('unauthorizedUser', 'clubdirectory'),
+            ),
+            1762090800,
         );
     }
 
-    private function isAccessAllowed(InitializeControllerActionEvent $controllerActionEvent): bool
+    private function isAccessAllowed(PreProcessControllerActionEvent $controllerActionEvent): bool
     {
         $request = $controllerActionEvent->getRequest();
+        $clubArgument = $request->hasArgument('club') ? $request->getArgument('club') : null;
+        $clubUid = $this->clubAccessService->getIdentity($clubArgument);
 
-        if (!$request->hasArgument('club')) {
-            return true;
-        }
-
-        $clubArgument = $request->getArgument('club');
-        $clubUid = is_array($clubArgument)
-            ? (int)($clubArgument['__identity'] ?? 0)
-            : (int)$clubArgument;
-
-        if (
-            $clubUid > 0
-            && ($club = $this->clubRepository->findHiddenObject($clubUid))
-            && $club instanceof Club
-            && $club->getCurrentUserCanEditClub() === false
-        ) {
-            $this->addFlashMessage(LocalizationUtility::translate('unauthorizedUser', 'clubdirectory'));
-
+        if ($clubUid === 0 && !$this->isNewClubAllowed($controllerActionEvent)) {
             return false;
         }
 
-        return true;
-    }
-
-    private function addFlashMessage(string $messageBody): void
-    {
-        $flashMessage = GeneralUtility::makeInstance(
-            FlashMessage::class,
-            $messageBody,
-            '',
-            ContextualFeedbackSeverity::ERROR,
-            true,
-        );
-
-        $this->getFlashMessageQueue()->enqueue($flashMessage);
-    }
-
-    private function getFlashMessageQueue(?string $identifier = null): FlashMessageQueue
-    {
-        if ($identifier === null) {
-            $pluginNamespace = $this->extensionService->getPluginNamespace(
-                $this->request->getControllerExtensionName(),
-                $this->request->getPluginName(),
-            );
-            $identifier = 'extbase.flashmessages.' . $pluginNamespace;
+        if ($clubUid > 0 && !$this->clubAccessService->canManageClub($clubUid)) {
+            return false;
         }
 
-        return $this->flashMessageService->getMessageQueueByIdentifier($identifier);
+        return !is_array($clubArgument) || $this->clubAccessService->hasOnlyRecordsOfClub($clubArgument, $clubUid);
     }
 
-    protected function isValidRequest(ControllerActionEventInterface $event): bool
+    private function isNewClubAllowed(PreProcessControllerActionEvent $controllerActionEvent): bool
     {
-        return
-            array_key_exists($event->getControllerName(), self::ALLOWED_CONTROLLER_ACTIONS)
-            && in_array(
-                $event->getActionName(),
-                self::ALLOWED_CONTROLLER_ACTIONS[$event->getControllerName()],
-                true,
-            );
+        return in_array(
+            $controllerActionEvent->getActionName(),
+            self::NEW_CLUB_CONTROLLER_ACTIONS[$controllerActionEvent->getControllerName()] ?? [],
+            true,
+        );
     }
 }

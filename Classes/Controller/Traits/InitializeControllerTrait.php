@@ -11,21 +11,12 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller\Traits;
 
-use JWeiland\Clubdirectory\Helper\HiddenObjectHelper;
-
 /**
  * Trait to initialize the view in controllers.
  * It adds tt_content data and ExtConf object to view
  */
 trait InitializeControllerTrait
 {
-    protected HiddenObjectHelper $hiddenObjectHelper;
-
-    public function injectHiddenObjectHelper(HiddenObjectHelper $hiddenObjectHelper): void
-    {
-        $this->hiddenObjectHelper = $hiddenObjectHelper;
-    }
-
     protected function initializeView($view): void
     {
         $view->assign('data', $this->request->getAttribute('currentContentObject')->data);
@@ -39,11 +30,5 @@ trait InitializeControllerTrait
         if (empty($this->settings['pidOfDetailPage'])) {
             $this->settings['pidOfDetailPage'] = null;
         }
-
-        $this->hiddenObjectHelper->registerHiddenObjectInExtbaseSession(
-            $this->clubRepository,
-            $this->request,
-            'club',
-        );
     }
 }
