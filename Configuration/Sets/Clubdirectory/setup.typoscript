@@ -80,3 +80,16 @@ plugin.tx_clubdirectory._CSS_DEFAULT_STYLE (
     border: 1px #FF0000 solid;
   }
 )
+
+# The list and detail view render links for the logged-in frontend user
+# (e.g. edit link for the owner of a club). The page cache only varies by
+# usergroup, so render the plugin uncached as soon as a user is logged in.
+[frontend.user.isLoggedIn]
+  tt_content.clubdirectory_clubdirectory.20 >
+  tt_content.clubdirectory_clubdirectory.20 = COA_INT
+  tt_content.clubdirectory_clubdirectory.20.10 = EXTBASEPLUGIN
+  tt_content.clubdirectory_clubdirectory.20.10 {
+    extensionName = Clubdirectory
+    pluginName = Clubdirectory
+  }
+[END]
