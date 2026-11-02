@@ -60,7 +60,7 @@ class MapHelper
                 $this->mapService->createNewPoiCollection(
                     $this->extConf->getPoiCollectionPid(),
                     $position,
-                    ['title' => $this->getPoiCollectionTitle($club, $address)],
+                    ['title' => $this->getPoiCollectionTitle($club)],
                 ),
             ));
         }
@@ -69,13 +69,13 @@ class MapHelper
     }
 
     /**
-     * Extbase does not call the DataHandler, so the column synchronization
-     * of maps2 is not executed for clubs saved in frontend. Set the title on
-     * our own with the "overrideFieldValues" API of maps2.
+     * Use the club title as POI title, as SetTitleOfPOIToClubTitleEventListener
+     * does for clubs saved in backend. Extbase does not call the DataHandler,
+     * so set the title with the "overrideFieldValues" API of maps2.
      */
-    protected function getPoiCollectionTitle(Club $club, Address $address): string
+    protected function getPoiCollectionTitle(Club $club): string
     {
-        return $club->getTitle() . ' - ' . $address->getTitle();
+        return $club->getTitle();
     }
 
     /**

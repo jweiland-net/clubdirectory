@@ -1,3 +1,5 @@
 "tx_clubdirectory_domain_model_club",,,,,,,,,,
-,"uid","pid","tstamp","hidden","title","activity"
-,1,1,1676388751,0,"Swimmingclub","Go swimming"
+,"uid","pid","tstamp","hidden","deleted","title","activity"
+,1,1,1676388751,0,0,"Swimmingclub","Go swimming"
+,2,1,1676388751,1,0,"Hidden club","Go hiking"
+,3,1,1676388751,0,1,"Deleted club","Go climbing"

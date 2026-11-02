@@ -148,7 +148,7 @@ class MapHelperTest extends UnitTestCase
             ->with(
                 self::identicalTo(self::POI_COLLECTION_PID),
                 self::identicalTo($position),
-                self::identicalTo(['title' => 'Swimming club - organizationAddress']),
+                self::identicalTo(['title' => 'Swimming club']),
             )
             ->willReturn(12);
 
@@ -167,21 +167,27 @@ class MapHelperTest extends UnitTestCase
     }
 
     #[Test]
-    public function addMapRecordWithMultipleAddressesUsesTitleOfEachAddress(): void
+    public function addMapRecordWithMultipleAddressesUsesClubTitleForEachPoi(): void
     {
         $organizationAddress = $this->createAddress('organizationAddress');
         $postAddress = $this->createAddress('postAddress');
+        $poiCollectionUids = [21, 22];
 
         $this->geoCodeServiceMock
             ->method('getGeoCodeResult')
             ->willReturn($this->createGeoCodeResult($this->createPosition()));
 
+        // The POI title is the club title only, as in backend. Never the address key.
         $this->mapServiceMock
             ->expects(self::exactly(2))
             ->method('createNewPoiCollection')
-            ->willReturnCallback(static fn(int $pid, Position $position, array $overrideFieldValues): int => match ($overrideFieldValues['title']) {
-                'Swimming club - organizationAddress' => 21,
-                'Swimming club - postAddress' => 22,
+            ->with(
+                self::identicalTo(self::POI_COLLECTION_PID),
+                self::isInstanceOf(Position::class),
+                self::identicalTo(['title' => 'Swimming club']),
+            )
+            ->willReturnCallback(static function () use (&$poiCollectionUids): int {
+                return array_shift($poiCollectionUids);
             });
 
         $this->poiCollectionRepositoryMock

@@ -26,12 +26,11 @@ if (ExtensionManagementUtility::isLoaded('maps2')) {
                 'extKey' => 'clubdirectory',
                 'property' => 'poiCollectionPid',
             ],
-            'synchronizeColumns' => [
-                [
-                    'foreignColumnName' => 'title',
-                    'poiCollectionColumnName' => 'title',
-                ],
-            ],
+            // The title of the address is a key like "clubAddress". The POI
+            // title is set to the club title by
+            // SetTitleOfPOIToClubTitleEventListener. Keep the empty key, else
+            // maps2 informs about using the address as POI title.
+            'synchronizeColumns' => [],
         ],
     );
 }

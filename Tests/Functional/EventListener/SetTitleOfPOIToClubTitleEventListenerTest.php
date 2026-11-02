@@ -85,4 +85,45 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
             $poiRecord['title'],
         );
     }
+
+    private function dispatchEventForClub(int $clubUid): void
+    {
+        call_user_func($this->subject, new PostProcessPoiCollectionRecordEvent(
+            'tx_maps2_domain_model_poicollection',
+            123,
+            'tx_clubdirectory_domain_model_address',
+            [
+                'title' => 'clubAddress',
+                'club' => $clubUid,
+            ],
+            [],
+        ));
+    }
+
+    private function getPoiTitle(): string
+    {
+        return (string)$this->getConnectionPool()
+            ->getConnectionForTable('tx_maps2_domain_model_poicollection')
+            ->select(['title'], 'tx_maps2_domain_model_poicollection', ['uid' => 123])
+            ->fetchOne();
+    }
+
+    #[Test]
+    public function invokeWithHiddenClubSetsClubTitle(): void
+    {
+        // Clubs saved in frontend are hidden until the administrator activates them
+        $this->dispatchEventForClub(2);
+
+        self::assertSame('Hidden club', $this->getPoiTitle());
+    }
+
+    #[Test]
+    public function invokeWithDeletedClubKeepsPoiTitle(): void
+    {
+        $titleBefore = $this->getPoiTitle();
+
+        $this->dispatchEventForClub(3);
+
+        self::assertSame($titleBefore, $this->getPoiTitle());
+    }
 }

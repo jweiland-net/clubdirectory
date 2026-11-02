@@ -14,6 +14,7 @@ namespace JWeiland\Clubdirectory\EventListener;
 use JWeiland\Clubdirectory\Traits\ConnectionPoolTrait;
 use JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
@@ -54,11 +55,15 @@ class SetTitleOfPOIToClubTitleEventListener
     }
 
     /**
+     * Clubs are hidden until they are activated. Their POI needs the club
+     * title, too. So respect the deleted flag only.
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     protected function getClubRecord(int $clubUid): array
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');
+        $queryBuilder->getRestrictions()->removeAll()->add(new DeletedRestriction());
         $club = $queryBuilder
             ->select('uid', 'title')
             ->from('tx_clubdirectory_domain_model_club')
