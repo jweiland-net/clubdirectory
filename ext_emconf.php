@@ -24,6 +24,7 @@ $EM_CONF[$_EXTKEY] = [
         ],
         'conflicts' => [],
         'suggests' => [
+            'checkfaluploads' => '6.0.0-6.99.99',
         ],
     ],
 ];
