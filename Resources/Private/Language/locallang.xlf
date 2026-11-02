@@ -174,7 +174,7 @@
 				<source>The title is mandatory</source>
 			</trans-unit>
 			<trans-unit id="cshcategories">
-				<source>Please select the category of the club. Multiple selection by holding down the Control key | Ctrl |</source>
+				<source>Please select the category of the club. Multiple selection by holding down the Ctrl key (Cmd on macOS).</source>
 			</trans-unit>
 			<trans-unit id="cshactivity">
 				<source>Describe the activities/goals of the club.</source>
