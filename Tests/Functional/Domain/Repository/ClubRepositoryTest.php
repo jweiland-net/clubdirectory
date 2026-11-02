@@ -240,6 +240,29 @@ class ClubRepositoryTest extends FunctionalTestCase
         );
     }
 
+    public static function likeWildcardDataProvider(): array
+    {
+        return [
+            'percent sign' => ['%'],
+            'underscore' => ['_'],
+            'underscore within word' => ['Ch_ss'],
+            'percent sign within word' => ['Ath%club'],
+        ];
+    }
+
+    /**
+     * No club contains "%" or "_", so the wildcards must not match anything
+     */
+    #[Test]
+    #[DataProvider('likeWildcardDataProvider')]
+    public function findBySearchWithLikeWildcardInSearchWordSearchesLiterally(string $searchWord): void
+    {
+        self::assertSame(
+            [],
+            $this->findTitlesBySearch($this->createSearch($searchWord)),
+        );
+    }
+
     public static function excludedClubDataProvider(): array
     {
         return [

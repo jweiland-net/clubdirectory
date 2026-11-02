@@ -184,6 +184,10 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
 
     protected function getConstraintForSearchWord(QueryInterface $query, string $searchWord): OrInterface
     {
+        // Search for "%" and "_" literally. Same as Connection::escapeLikeWildcards(),
+        // which matches the default escape character "\" of ExpressionBuilder::like()
+        $searchWord = addcslashes($searchWord, '_%');
+
         // strtolower is not UTF-8 compatible
         $longStreetSearch = $searchWord;
         $smallStreetSearch = $searchWord;
