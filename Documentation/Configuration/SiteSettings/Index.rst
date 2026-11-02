@@ -22,6 +22,7 @@ configuration. All settings can be changed in the backend module
       pidOfDetailPage: 21
       pidOfSearchResults: 22
       pidOfManagementPage: 23
+      userGroup: 2
 
 ..  _site-settings-templates:
 
@@ -110,6 +111,21 @@ settings to find the page of the responsible plugin.
     :default: 0
 
     Page with a maps2 plugin to show an address of a club on a map.
+
+..  confval:: clubdirectory.userGroup
+    :name: site-setting-usergroup
+    :type: int
+    :default: 1
+
+    UID of the frontend usergroup allowed to create new clubs. Only members
+    of this group see the links to create a new club and to list the own
+    clubs (partial :file:`Partials/Club/InsertEditLinks.html`) and the list
+    of the own clubs (:file:`Templates/Management/ListMyClubs.html`). All
+    other users get a message, that they have no access to this page.
+
+    This setting controls the rendering of the templates only, it is not an
+    access check on the server. Restrict the access of the management page
+    to this group, too. See :ref:`moderation-access`.
 
 ..  _site-settings-settings:
 

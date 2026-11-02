@@ -22,8 +22,9 @@ Requirements
 *   A page with the plugin `Clubdirectory` for the list of clubs,
     configured in :confval:`clubdirectory.pidOfListPage
     <site-setting-pidoflistpage>`.
-*   Optional: an access restriction of the management page to the
-    frontend usergroup of the club owners, see
+*   The frontend usergroup of the club owners in
+    :confval:`clubdirectory.userGroup <site-setting-usergroup>` and an
+    access restriction of the management page to this group, see
     :ref:`moderation-access`.
 *   The receiver and sender of the notification mails in
     :confval:`emailToAddress <ext-conf-emailtoaddress>` and
@@ -120,14 +121,15 @@ Access control and error pages
 ==============================
 
 *   The links to create a new club and to list the own clubs are shown to
-    every logged-in frontend user (partial
-    :file:`Partials/Club/InsertEditLinks.html`).
-*   Every logged-in frontend user with access to the management page can
-    create a club. To allow this for a specific usergroup only, restrict
-    the access of the management page to this group. Override the partial
-    :file:`Partials/Club/InsertEditLinks.html` in your site package, if the
-    links should be shown to this group only, e.g. with
-    :html:`<f:security.ifHasRole role="...">`.
+    members of the usergroup configured in
+    :confval:`clubdirectory.userGroup <site-setting-usergroup>` only
+    (:html:`<f:security.ifHasRole>` in the partial
+    :file:`Partials/Club/InsertEditLinks.html`). The list of the own clubs
+    shows a message to all other users, that they have no access.
+*   This setting controls the rendering of the templates only. Every
+    logged-in frontend user with access to the management page can call
+    the actions to create a club. Restrict the access of the management
+    page to the same usergroup in the page properties.
 *   Only frontend users assigned to the club (field
     :guilabel:`Assign Frontend Users` of the club record) and backend
     administrators are allowed to edit and update a club.

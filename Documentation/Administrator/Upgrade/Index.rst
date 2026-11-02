@@ -139,23 +139,25 @@ TypoScript.
 
 ..  _upgrade-9-0-0-user-group:
 
-Extension setting userGroup removed
------------------------------------
+Extension setting userGroup moved to the site settings
+------------------------------------------------------
 
-The extension setting `userGroup` and the template variable
-`allowedUserGroup` have been removed. The setting only controlled the
-visibility of the links to create a new club and to list the own clubs.
-These links are shown to every logged-in frontend user now
-(:html:`<f:security.ifAuthenticated>` in
-:file:`Partials/Club/InsertEditLinks.html`).
+The extension setting `userGroup` has been moved to the site setting
+:confval:`clubdirectory.userGroup <site-setting-usergroup>`. The template
+variable `allowedUserGroup` has been removed, use `{settings.userGroup}`
+in your own templates instead. Set the UID of the usergroup of the club
+owners in the site settings of your site, the default is `1`.
 
-The access to the club management is protected by the
-`RestrictAccessEventListener` and the page access of the management page.
-Restrict the management page to the usergroup of the club owners, if not
-every frontend user should create clubs. If the links should be shown to
-a specific usergroup only, override the partial
-:file:`Partials/Club/InsertEditLinks.html` in your site package. See
-:ref:`moderation-access`.
+The setting controls the visibility of the links to create a new club and
+to list the own clubs (:html:`<f:security.ifHasRole>` in
+:file:`Partials/Club/InsertEditLinks.html`) and of the list in
+:file:`Templates/Management/ListMyClubs.html`. Users not in this group get
+a message, that they have no access to this page.
+
+The setting is not an access check on the server. A logged-in frontend
+user outside of this group can still call the actions to create a club
+directly. Restrict the access of the management page to the same
+usergroup in the page properties. See :ref:`moderation-access`.
 
 ..  _upgrade-9-0-0-page-tsconfig:
 
