@@ -11,34 +11,46 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Pagination;
 
-use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Pagination\PaginationInterface;
 use TYPO3\CMS\Core\Pagination\PaginatorInterface;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
 
+/**
+ * Pagination of the club list and the search results. The page links keep
+ * all arguments of the current plugin request, like "letter" or "search".
+ */
 class ClubPagination implements PaginationInterface
 {
-    protected string $pluginNamespace = 'tx_clubdirectory_clubdirectory';
+    protected const IGNORED_ARGUMENTS = [
+        '@extension',
+        '@subpackage',
+        '@controller',
+        '@action',
+        '@format',
+        'extension',
+        'plugin',
+        'controller',
+        'action',
+    ];
 
     protected PaginatorInterface $paginator;
 
     protected array $arguments = [];
 
-    public function __construct(PaginatorInterface $paginator)
+    /**
+     * PaginationInterface defines the constructor with the paginator only,
+     * so the arguments of the Extbase request (GET merged with POST) are optional.
+     *
+     * @param array<string, mixed> $pluginArguments
+     */
+    public function __construct(PaginatorInterface $paginator, array $pluginArguments = [])
     {
         $this->paginator = $paginator;
-        $pluginArguments = $this->getPluginArguments($this->pluginNamespace);
 
         foreach ($pluginArguments as $argumentName => $argument) {
-            if ($argumentName[0] === '_' && $argumentName[1] === '_') {
-                continue;
-            }
-
-            if (in_array($argumentName, ['@extension', '@subpackage', '@controller', '@action', '@format'], true)) {
-                continue;
-            }
-
-            if (in_array($argumentName, ['extension', 'plugin', 'controller', 'action'], true)) {
+            $argumentName = (string)$argumentName;
+            if (str_starts_with($argumentName, '__')
+                || in_array($argumentName, self::IGNORED_ARGUMENTS, true)
+            ) {
                 continue;
             }
 
@@ -122,21 +134,6 @@ class ClubPagination implements PaginationInterface
         }
 
         return $this->paginator->getKeyOfLastPaginatedItem() + 1;
-    }
-
-    public function getPluginArguments($pluginNamespace): array
-    {
-        $request = $this->getRequestFromGlobalScope();
-        $getMergedWithPost = $request->getQueryParams()[$pluginNamespace] ?? [];
-        $postArgument = $request->getParsedBody()[$pluginNamespace] ?? [];
-        ArrayUtility::mergeRecursiveWithOverrule($getMergedWithPost, $postArgument);
-
-        return $getMergedWithPost;
-    }
-
-    public function getRequestFromGlobalScope(): ServerRequestInterface
-    {
-        return $GLOBALS['TYPO3_REQUEST'];
     }
 
     public function getAllPageNumbers(): array

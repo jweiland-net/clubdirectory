@@ -40,7 +40,10 @@ class AddPaginatorEventListener extends AbstractControllerEventListener
             $event->addFluidVariable('actionName', $event->getActionName());
             $event->addFluidVariable('paginator', $paginator);
             $event->addFluidVariable('clubs', $paginator->getPaginatedItems());
-            $event->addFluidVariable('pagination', new ClubPagination($paginator));
+            $event->addFluidVariable('pagination', new ClubPagination(
+                $paginator,
+                $event->getRequest()->getArguments(),
+            ));
         }
     }
 
