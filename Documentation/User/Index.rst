@@ -57,11 +57,27 @@ Category
 --------
 
 Sometimes it makes sense to reduce list of club entries to a given category.
+The A-Z links only contain letters of clubs in this category.
 
 Choose a district
 -----------------
 
-Reduce the list of club entries to a given district.
+Reduce the list of club entries to a given district. The A-Z links only
+contain letters of clubs in this district.
+
+..  _user-manual-detail-view:
+
+Detail view of a club
+=====================
+
+The detail view shows the properties of the club, including its
+categories and tags, and its addresses. Addresses with a POI record link
+to a map, see :confval:`clubdirectory.pidOfMaps2Plugin
+<site-setting-pidofmaps2plugin>`.
+
+The search results and the list of own clubs of the plugin
+`Club Directory Management` link to the detail view of the plugin
+`Club Directory`.
 
 Club Record
 ===========

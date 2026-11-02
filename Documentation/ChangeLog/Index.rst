@@ -44,6 +44,11 @@ Breaking changes:
     ignored
 *   [TASK] Remove `ext_tables.sql`. TYPO3 creates all columns from TCA
     now. Run the upgrade wizard before the database analyzer
+*   [!!!][BUGFIX] Pass the arguments of the plugin request into
+    `ClubPagination`. The constructor is
+    `__construct(PaginatorInterface $paginator, array $pluginArguments
+    = [])` now. The public methods `getPluginArguments()` and
+    `getRequestFromGlobalScope()` have been removed
 
 Security:
 
@@ -56,6 +61,8 @@ Features and tasks:
 
 *   [FEATURE] Add site settings for the list page, the search results page
     and the management page
+*   [FEATURE] Add the optional district to the club form
+*   [FEATURE] Show categories and tags in the detail view
 *   [TASK] Require maps2 12.2.1 or higher
 *   [TASK] Suggest jweiland/checkfaluploads 6.x
 *   [TASK] Generate a unique path segment like DataHandler, without the
@@ -66,6 +73,10 @@ Features and tasks:
 *   [TASK] Remove TCA columns created by TYPO3 core
 *   [TASK] Move all labels of the site set into a translatable `labels.xlf`
 *   [TASK] Add tests for club access, moderation and helpers
+*   [TASK] Replace the deprecated magic finder
+    `CategoryRepository::findByParent()` and remove its `@method`
+    annotation
+*   [TASK] Allow `null` in `Club::setDistrict()`
 
 Bugfixes:
 
@@ -96,6 +107,15 @@ Bugfixes:
     upgrade wizard
 *   [BUGFIX] Show flash messages on the club list
 *   [BUGFIX] Tag club pages to clear them after changes
+*   [BUGFIX] Exclude owners and district of clubs from translation, see
+    :ref:`upgrade-9-0-0-translations`
+*   [BUGFIX] Create POI records only if all addresses were found
+*   [BUGFIX] Keep the search arguments in the page browser, so page 2 of
+    the search results works
+*   [BUGFIX] Hide the last page link on the last page
+*   [BUGFIX] Link the search results and the own clubs to the detail view
+    of the Clubdirectory plugin
+*   [BUGFIX] Respect category and district of the plugin in the glossary
 
 Version 8.1.3
 =============

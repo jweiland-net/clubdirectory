@@ -126,6 +126,29 @@ Further set :confval:`poiCollectionPid <ext-conf-poicollectionpid>` to the
 storage folder for the POI records which are created from the club
 addresses.
 
+The map links of the detail view point to the page in the site setting
+:confval:`clubdirectory.pidOfMaps2Plugin <site-setting-pidofmaps2plugin>`.
+Add the storage folder of the POI records to the storage folders of the
+maps2 plugin on this page. Otherwise the map shows no marker.
+
+..  _upgrade-9-0-0-translations:
+
+Owners and district of translated clubs
+---------------------------------------
+
+The columns `fe_users` (:guilabel:`Assign Frontend Users`) and `district`
+of table `tx_clubdirectory_domain_model_club` are excluded from
+translation now (`l10n_mode = exclude`). Translated clubs use the owners
+and the district of the club in default language. The backend does not
+show these fields in translated records anymore.
+
+Existing translations still contain their own, often empty values in the
+database. DataHandler synchronizes them on the next save of the club in
+default language. Please save all translated clubs in default language
+once, either in the backend or with your own script using DataHandler.
+Until then, a translated club may show no district and its owners may
+not get the edit link.
+
 ..  _upgrade-9-0-0-update-reference-index:
 
 Site setting updateReferenceIndex removed
@@ -252,6 +275,24 @@ site package, please compare them with the original files. Especially:
     setting to include your own JavaScript, include it in your site
     package now.
 
+*   :file:`Partials/Club/FormFields.html` contains the new select field
+    `district`. The actions `new` and `edit` of the Management plugin
+    assign the variable `districts`.
+
+*   The detail link in :file:`Partials/Club/List.html` sets the arguments
+    `controller="Club"`, `pluginName="Clubdirectory"` and
+    `extensionName="Clubdirectory"`, as the partial is rendered by all
+    three plugins. Without them, the detail links of the search results
+    and of the own clubs do not work.
+
+*   :file:`Partials/Club/Properties.html` shows the categories and the
+    tags of the club.
+
+*   The condition of the "last" link in
+    :file:`Partials/Component/Pagination.html` uses
+    `{paginator.currentPageNumber}` now. `ClubPagination` does not
+    provide the current page number.
+
 ..  _upgrade-9-0-0-checkfaluploads:
 
 Rights checkbox of checkfaluploads
@@ -327,6 +368,20 @@ Removed and changed PHP API
 *   `Club::getOriginalLogo()` and `Club::getOriginalImages()` have been
     removed. `Club::getLogo()` and `Club::getImages()` return the
     :php:`ObjectStorage` now.
+*   `Club::setDistrict()` accepts `null` to remove the district.
+*   `ClubPagination` does not read the arguments from the global request
+    anymore. The constructor has a second argument for the arguments of
+    the current plugin request:
+    :php:`__construct(PaginatorInterface $paginator, array
+    $pluginArguments = [])`. The public methods `getPluginArguments()`
+    and `getRequestFromGlobalScope()` have been removed. If you create a
+    `ClubPagination` in your own code, pass
+    :php:`$request->getArguments()` of the Extbase request. Otherwise
+    the page links lose the arguments of the plugin, e.g. the search.
+*   The magic finder `CategoryRepository::findByParent()` is not used
+    anymore and its `@method` annotation has been removed. Use
+    `CategoryRepository::getCategories()` to get the categories of the
+    configured root category.
 
 ..  _upgrade-9-0-0-caches:
 

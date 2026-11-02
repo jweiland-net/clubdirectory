@@ -41,14 +41,16 @@ Moderation flow
 
 #.  A logged-in frontend user fills out the club form. The form requires at
     least one address. For each chosen address type street, ZIP and city
-    are required.
+    are required. The district is optional. The form offers the district
+    records of the storage folder of the club records.
 
 #.  `clubdirectory` geocodes each address with maps2. If an address can
     not be found, the user is asked to check the address. If the map
     service rejects the request (e.g. an API key restricted to other IP
     addresses) or is not available, the user gets a hint to inform the
     administrator. The technical message of the map service is written to
-    the TYPO3 log only.
+    the TYPO3 log only. The POI records are created only, if all addresses
+    of the club were found.
 
 #.  The club is saved as hidden record and assigned to the frontend user.
     In the next step the user can correct the position of the map marker.

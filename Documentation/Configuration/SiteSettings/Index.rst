@@ -110,7 +110,14 @@ settings to find the page of the responsible plugin.
     :type: page
     :default: 0
 
-    Page with a maps2 plugin to show an address of a club on a map.
+    Page with the maps2 plugin :ref:`Maps2: Show map
+    <maps2:plugins-show-map>`. In the detail view each address of a club
+    with a POI record links to this page to show the address on a map.
+
+    The storage folders of this maps2 plugin must include the storage
+    folder of the POI records, configured in the extension setting
+    :confval:`poiCollectionPid <ext-conf-poicollectionpid>`. Otherwise
+    maps2 does not find the POI record and the map shows no marker.
 
 ..  confval:: clubdirectory.userGroup
     :name: site-setting-usergroup

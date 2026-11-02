@@ -24,6 +24,16 @@ Tab: Basic
     maps2 POI record for each address automatically. Define the UID of a
     storage folder where these records should be stored.
 
+    All addresses of a club are geocoded first. The POI records are created
+    only, if all addresses were found. Otherwise, the user is asked to
+    check the address and no POI record is created.
+
+    Add this storage folder to the storage folders of the maps2 plugin on
+    the page configured in the site setting
+    :confval:`clubdirectory.pidOfMaps2Plugin
+    <site-setting-pidofmaps2plugin>`. Otherwise the map of this plugin
+    shows no marker.
+
     How addresses are geocoded and which API keys are required is
     described in the documentation of
     :ref:`maps2 <maps2:extensionsettings>`.
