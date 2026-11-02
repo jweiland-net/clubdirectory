@@ -1,0 +1,11 @@
+"pages",,,,,
+,"uid","pid","title","slug","doktype"
+,1,0,"Clubs","/",1
+,2,1,"Storage","/storage",254
+"be_users",,,,,
+,"uid","pid","username","password","admin"
+,1,0,"admin","secret",1
+"tx_clubdirectory_domain_model_club",,,,,,
+,"uid","pid","hidden","deleted","title","path_segment"
+,1,2,0,0,"Swimming club","swimming-club"
+,2,2,0,0,"Rowing club","rowing-club"

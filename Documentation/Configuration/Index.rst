@@ -13,4 +13,6 @@ This chapter describes the various configuration settings of clubdirectory.
     :maxdepth: 2
 
     Extension/Index
+    SiteSettings/Index
+    PageTsConfig/Index
     TypoScript/Index

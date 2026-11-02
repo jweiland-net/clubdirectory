@@ -6,6 +6,8 @@
 <f:layout name="Default"/>
 
 <f:section name="main">
+    <f:flashMessages/>
+
     <f:render partial="FormErrors" arguments="{object: club, type: 'club'}"/>
 
     <f:form action="create" name="club" object="{club}" enctype="multipart/form-data">
@@ -19,9 +21,11 @@
                 </dd>
             </dl>
 
-            <f:render partial="Maps2/EditPoiCollection"
-                      section="editMap"
-                      arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', title: '{address.street} {address.houseNumber}, {address.zip}{address.city}', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}"/>
+            <f:if condition="{address.txMaps2Uid}">
+                <f:render partial="Maps2/EditPoiCollection"
+                          section="editMap"
+                          arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}"/>
+            </f:if>
         </f:for>
         <f:form.submit value="{f:translate(key: 'create')}"/>
     </f:form>

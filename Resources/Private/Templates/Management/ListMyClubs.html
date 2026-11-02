@@ -1,0 +1,34 @@
+<html lang="en"
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default"/>
+
+<f:section name="main">
+    <f:flashMessages/>
+
+    <f:link.action action="list"
+                   controller="Club"
+                   pluginName="Clubdirectory"
+                   pageUid="{settings.pidOfListPage}"
+                   title="{f:translate(key: 'backToList')}">
+        {f:translate(key: 'backToList')}
+    </f:link.action>
+
+    <f:security.ifHasRole role="{settings.userGroup}">
+        <f:then>
+            <f:if condition="{clubs}">
+                <f:then>
+                    <f:render partial="Club/List" arguments="{clubs: clubs}"/>
+                </f:then>
+                <f:else>
+                    <div class="noResults">{f:translate(key: "noResults")}</div>
+                </f:else>
+            </f:if>
+        </f:then>
+        <f:else>
+            <div class="accessDenied">{f:translate(key: 'listMyClubs.accessDenied')}</div>
+        </f:else>
+    </f:security.ifHasRole>
+</f:section>
+</html>

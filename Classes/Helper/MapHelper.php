@@ -12,75 +12,108 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Helper;
 
 use JWeiland\Clubdirectory\Configuration\ExtConf;
+use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Maps2\Domain\Model\PoiCollection;
 use JWeiland\Maps2\Domain\Model\Position;
 use JWeiland\Maps2\Domain\Repository\PoiCollectionRepository;
 use JWeiland\Maps2\Service\GeoCodeService;
 use JWeiland\Maps2\Service\MapService;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use Psr\Log\LoggerInterface;
 
 /**
  * Helper class to attach POI records of EXT:maps2 to club addresses.
  */
 class MapHelper
 {
-    protected GeoCodeService $geoCodeService;
-
-    protected MapService $mapService;
-
-    protected PoiCollectionRepository $poiCollectionRepository;
-
-    protected ExtConf $extConf;
-
     public function __construct(
-        GeoCodeService $geoCodeService,
-        MapService $mapService,
-        PoiCollectionRepository $poiCollectionRepository,
-        ExtConf $extConf,
-    ) {
-        $this->geoCodeService = $geoCodeService;
-        $this->mapService = $mapService;
-        $this->poiCollectionRepository = $poiCollectionRepository;
-        $this->extConf = $extConf;
+        protected readonly GeoCodeService $geoCodeService,
+        protected readonly MapService $mapService,
+        protected readonly PoiCollectionRepository $poiCollectionRepository,
+        protected readonly ExtConf $extConf,
+        protected readonly LoggerInterface $logger,
+    ) {}
+
+    /**
+     * Creates a POI record at the geocoded position for each club address
+     * which does not have one yet.
+     *
+     * All addresses are geocoded first. POI records are only created, if
+     * all addresses were found. Otherwise, the club will not be saved and
+     * already created POI records would be orphaned.
+     *
+     * @return GeocodingFailure|null The first address which could not be geocoded. NULL, if all addresses have a POI.
+     */
+    public function addMapRecord(Club $club): ?GeocodingFailure
+    {
+        $positions = new \SplObjectStorage();
+        foreach ($club->getOriginalAddresses() as $address) {
+            if (!$this->isMapRecordRequired($address)) {
+                continue;
+            }
+
+            $position = $this->geocodeAddress($address);
+            if ($position instanceof GeocodingFailure) {
+                return $position;
+            }
+
+            $positions->attach($address, $position);
+        }
+
+        foreach ($positions as $address) {
+            $this->attachPoiCollection($address, $positions[$address], $club);
+        }
+
+        return null;
+    }
+
+    protected function geocodeAddress(Address $address): Position|GeocodingFailure
+    {
+        $geoCodeResult = $this->geoCodeService->getGeoCodeResult($address->getAddress());
+        $position = $geoCodeResult->getFirstPosition();
+        if ($position === null) {
+            // The provider message may contain sensitive data like the server IP. Log it only.
+            $this->logger->warning('Address "' . $address->getAddress() . '" could not be geocoded.', [
+                'error' => $geoCodeResult->error?->message,
+            ]);
+            return new GeocodingFailure($address, $geoCodeResult->error);
+        }
+
+        return $position;
+    }
+
+    protected function attachPoiCollection(Address $address, Position $position, Club $club): void
+    {
+        $address->setTxMaps2Uid($this->poiCollectionRepository->findByIdentifier(
+            $this->mapService->createNewPoiCollection(
+                $this->extConf->getPoiCollectionPid(),
+                $position,
+                ['title' => $this->getPoiCollectionTitle($club)],
+            ),
+        ));
     }
 
     /**
-     * If no POI record was connected with a club address we try to create one.
-     * If no POI record could be created or address could not be found, this method returns false.
+     * Use the club title as POI title, as SetTitleOfPOIToClubTitleEventListener
+     * does for clubs saved in backend. Extbase does not call the DataHandler,
+     * so set the title with the "overrideFieldValues" API of maps2.
      */
-    public function addMapRecordIfPossible(Club $club, ActionController $actionController): bool
+    protected function getPoiCollectionTitle(Club $club): string
     {
-        foreach ($club->getOriginalAddresses() as $address) {
-            // add a new poi record if empty
-            if ($address->getTxMaps2Uid() === null && $address->getZip() && $address->getCity()) {
-                $position = $this->geoCodeService->getFirstFoundPositionByAddress($address->getAddress());
-                if ($position instanceof Position) {
-                    $poiCollectionUid = $this->mapService->createNewPoiCollection(
-                        $this->extConf->getPoiCollectionPid(),
-                        $position,
-                        [
-                            'title' => sprintf(
-                                '%s (%d) - %s',
-                                $club->getTitle(),
-                                $club->getUid(),
-                                $address->getTitle(),
-                            ),
-                        ],
-                    );
-                    /** @var PoiCollection $poiCollection */
-                    $poiCollection = $this->poiCollectionRepository->findByIdentifier($poiCollectionUid);
-                    $address->setTxMaps2Uid($poiCollection);
-                } else {
-                    foreach ($this->geoCodeService->getErrors() as $error) {
-                        $actionController->addFlashMessage($error->getMessage(), $error->getTitle(), $error->getSeverity());
-                    }
+        return $club->getTitle();
+    }
 
-                    return false;
-                }
-            }
-        }
+    /**
+     * A POI which was not persisted yet must be replaced, too. It can only
+     * originate from property mapping of the maps2 form fields without
+     * __identity and contains neither collection type nor a valid position.
+     */
+    protected function isMapRecordRequired(Address $address): bool
+    {
+        $poiCollection = $address->getTxMaps2Uid();
 
-        return true;
+        return (!$poiCollection instanceof PoiCollection || $poiCollection->_isNew())
+            && $address->getZip() !== ''
+            && $address->getCity() !== '';
     }
 }

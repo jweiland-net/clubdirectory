@@ -13,12 +13,15 @@ namespace JWeiland\Clubdirectory\Controller\Traits;
 
 use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Clubdirectory\Domain\Model\Club;
+use JWeiland\Clubdirectory\Helper\GeocodingFailure;
+use JWeiland\Maps2\Client\ClientErrorEnum;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Trait with a method to translate the three different address types
- * Currently used in Club- and MapController
+ * Trait with methods to prepare the addresses of a club for the club form
  */
 trait AddressTrait
 {
@@ -57,27 +60,44 @@ trait AddressTrait
     }
 
     /**
-     * Remove empty addresses from request before Property Mapping starts,
-     * to prevent inserting empty addresses into DB
+     * The form always renders 3 address blocks. Remove all addresses without
+     * an address type from request before property mapping starts. Already
+     * persisted addresses without an address type will be removed from club.
      */
     protected function removeEmptyAddressesFromRequest(array &$requestArgument): void
     {
-        if (isset($requestArgument['addresses']) && is_array($requestArgument['addresses'])) {
-            foreach ($requestArgument['addresses'] as $key => $address) {
-                // Only remove addresses which were not persisted before.
-                // We will remove persisted addresses later on in editAction()
-                if (
-                    !isset($address['__identity'])
-                    && empty($address['street'])
-                    && empty($address['house_number'])
-                    && empty($address['zip'])
-                    && empty($address['city'])
-                ) {
-                    unset($requestArgument['addresses'][$key]);
-                }
+        if (!is_array($requestArgument['addresses'] ?? null)) {
+            return;
+        }
+
+        foreach ($requestArgument['addresses'] as $key => $address) {
+            if (empty($address['title'])) {
+                unset($requestArgument['addresses'][$key]);
             }
         }
 
         $this->request = $this->request->withArgument('club', $requestArgument);
+    }
+
+    /**
+     * Forward back to the club form, which keeps all submitted values.
+     * Only "no positions found" is caused by the user input. For all other
+     * errors the user can not do anything, so we show a hint for the admin.
+     */
+    protected function forwardBackWithGeocodingError(GeocodingFailure $geocodingFailure): ResponseInterface
+    {
+        $labelPrefix = 'error.geocoding.' . match ($geocodingFailure->error?->type) {
+            ClientErrorEnum::NO_POSITIONS_FOUND => 'noPositionsFound',
+            ClientErrorEnum::REQUEST_DENIED => 'requestDenied',
+            default => 'serviceError',
+        };
+
+        $this->addFlashMessage(
+            (string)LocalizationUtility::translate($labelPrefix . '.body', 'clubdirectory', [$geocodingFailure->address->getAddress()]),
+            (string)LocalizationUtility::translate($labelPrefix . '.title', 'clubdirectory'),
+            ContextualFeedbackSeverity::ERROR,
+        );
+
+        return $this->forwardToReferringRequest() ?? $this->redirect('listMyClubs', 'Management');
     }
 }

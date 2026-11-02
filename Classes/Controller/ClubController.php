@@ -14,281 +14,114 @@ namespace JWeiland\Clubdirectory\Controller;
 use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
+use JWeiland\Clubdirectory\Controller\Traits\PostProcessFluidVariablesTrait;
+use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
-use JWeiland\Clubdirectory\Domain\Validator\ClubValidator;
-use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
-use JWeiland\Clubdirectory\Event\PostProcessFluidVariablesEvent;
-use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
-use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
+use JWeiland\Clubdirectory\Service\ClubCacheService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
-use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
 
 /**
  * Controller to list, show and edit clubs
  */
 class ClubController extends ActionController
 {
+    use AddressTrait;
     use ControllerInjectionTrait;
     use InitializeControllerTrait;
-    use AddressTrait;
+    use PostProcessFluidVariablesTrait;
+    use PreProcessControllerActionTrait;
 
-    protected DistrictRepository $districtRepository;
+    /**
+     * Queue of this plugin. Other plugins add messages, before they redirect
+     * to the club list.
+     */
+    public const FLASH_MESSAGE_QUEUE_IDENTIFIER = 'extbase.flashmessages.tx_clubdirectory_clubdirectory';
 
-    protected PathSegmentHelper $pathSegmentHelper;
+    public function __construct(
+        protected ClubCacheService $clubCacheService,
+        protected DistrictRepository $districtRepository,
+        protected PersistenceManagerInterface $persistenceManager,
+        protected ErrorController $errorController,
+    ) {}
 
-    protected PersistenceManagerInterface $persistenceManager;
-
-    public function injectDistrictRepository(DistrictRepository $districtRepository): void
+    public function initializeListAction(): void
     {
-        $this->districtRepository = $districtRepository;
-    }
-
-    public function injectPathSegmentHelper(PathSegmentHelper $pathSegmentHelper): void
-    {
-        $this->pathSegmentHelper = $pathSegmentHelper;
-    }
-
-    public function injectPersistenceManager(PersistenceManagerInterface $persistenceManager): void
-    {
-        $this->persistenceManager = $persistenceManager;
+        $this->preProcessControllerAction();
     }
 
     public function listAction(string $letter = ''): ResponseInterface
     {
+        $this->disablePageCacheForFlashMessages();
+        $this->clubCacheService->addCacheTagsForClubList($this->request);
+
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $this->clubRepository->findFilteredBy(
-                (int)$this->settings['category'],
-                (int)$this->settings['district'],
+                (int)($this->settings['category'] ?? 0),
+                (int)($this->settings['district'] ?? 0),
                 $letter,
             ),
             'categories' => $this->categoryRepository->getCategories(),
             'districts' => $this->districtRepository->findAll(),
             'search' => GeneralUtility::makeInstance(Search::class),
-            'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
 
         return $this->htmlResponse();
     }
 
-    public function listMyClubsAction(): ResponseInterface
+    public function initializeShowAction(): void
     {
-        $this->postProcessAndAssignFluidVariables([
-            'clubs' => $this->clubRepository->findByFeUser($this->frontendUserRepository->getCurrentFrontendUserUid()),
-            'allowedUserGroup' => $this->extConf->getUserGroup(),
-        ]);
-
-        return $this->htmlResponse();
+        $this->preProcessControllerAction();
     }
 
     /**
-     * We are using int to prevent calling any Validator
+     * We are using int to prevent calling any Validator.
+     * Hidden (not activated yet) and unknown clubs result in the 404 error
+     * handling of the site.
+     *
+     * @throws PropagateResponseException
      */
     public function showAction(int $club): ResponseInterface
     {
-        $this->postProcessAndAssignFluidVariables([
-            'club' => $this->clubRepository->findByIdentifier($club),
-        ]);
-
-        return $this->htmlResponse();
-    }
-
-    public function newAction(): ResponseInterface
-    {
-        $this->preProcessControllerAction();
-
-        $club = GeneralUtility::makeInstance(Club::class);
-        $this->fillAddressesUpToMaximum($club);
-
-        $this->postProcessAndAssignFluidVariables([
-            'club' => $club,
-            'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
-            'addressTitles' => $this->getAddressTitles(),
-        ]);
-
-        return $this->htmlResponse();
-    }
-
-    public function initializeCreateAction(): void
-    {
-        $this->emitInitializeControllerAction();
-    }
-
-    #[Extbase\Validate(['param' => 'club', 'validator' => ClubValidator::class])]
-    public function createAction(Club $club): ResponseInterface
-    {
-        if ($this->frontendUserRepository->getCurrentFrontendUserRecord() !== []) {
-            $feUser = $this->frontendUserRepository->findByUid(
-                $this->frontendUserRepository->getCurrentFrontendUserUid(),
+        $clubObject = $this->clubRepository->findByIdentifier($club);
+        if (!$clubObject instanceof Club) {
+            throw new PropagateResponseException(
+                $this->errorController->pageNotFoundAction($this->request, 'Club not found'),
+                1762098000,
             );
-            $club->addFeUser($feUser);
-            $club->setHidden(true);
-
-            if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
-                $this->errorAction();
-            }
-
-            $this->clubRepository->add($club);
-
-            $this->pathSegmentHelper->setGeneratorFields([
-                'title',
-                'uid',
-            ]);
-            $this->pathSegmentHelper->updatePathSegmentForClub($club);
-
-            $this->clubRepository->update($club);
-            $this->persistenceManager->persistAll();
-
-            return $this->redirect('new', 'Map', 'clubdirectory', ['club' => $club]);
         }
 
-        $this->addFlashMessage('There is no valid user logged in. So record was not saved');
-        return $this->redirect('list');
-    }
-
-    public function initializeEditAction(): void
-    {
-        $this->emitInitializeControllerAction();
-    }
-
-    #[Extbase\IgnoreValidation(['value' => 'club'])]
-    public function editAction(Club $club): ResponseInterface
-    {
-        $this->fillAddressesUpToMaximum($club);
+        $this->disablePageCacheForFlashMessages();
+        $this->clubCacheService->addCacheTagsForClub($this->request, $club);
 
         $this->postProcessAndAssignFluidVariables([
-            'club' => $club,
-            'categories' => $this->categoryRepository->findByParent($this->extConf->getRootCategory()),
-            'addressTitles' => $this->getAddressTitles(),
+            'club' => $clubObject,
         ]);
 
         return $this->htmlResponse();
-    }
-
-    public function initializeUpdateAction(): void
-    {
-        if (!$this->request->hasArgument('club')) {
-            return;
-        }
-
-        $requestArgument = $this->request->getArgument('club');
-        $this->removeEmptyPropertyFromRequest('categories', $requestArgument);
-        $this->removeEmptyAddressesFromRequest($requestArgument);
-
-        $this->emitInitializeControllerAction();
-    }
-
-    #[Extbase\Validate(['param' => 'club', 'validator' => ClubValidator::class])]
-    public function updateAction(Club $club): ResponseInterface
-    {
-        if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
-            $this->errorAction();
-        }
-
-        $this->clubRepository->update($club);
-
-        $this->postProcessAndAssignFluidVariables([
-            'club' => $club,
-        ]);
-
-        $this->mailHelper->sendMail(
-            $this->view->render(),
-            LocalizationUtility::translate('email.subject.update', 'clubdirectory'),
-        );
-
-        $club->setHidden(true);
-        $this->addFlashMessage(LocalizationUtility::translate('clubUpdated', 'clubdirectory'));
-
-        return $this->redirect('listMyClubs');
-    }
-
-    public function initializeSearchAction(): void
-    {
-        $this->emitInitializeControllerAction();
-    }
-
-    public function searchAction(Search $search): ResponseInterface
-    {
-        $this->postProcessAndAssignFluidVariables([
-            'clubs' => $this->clubRepository->findBySearch($search),
-            'categories' => $this->categoryRepository->getCategories(),
-            'districts' => $this->districtRepository->findAll(),
-            'search' => $search,
-            'allowedUserGroup' => $this->extConf->getUserGroup(),
-        ]);
-
-        return $this->htmlResponse();
-    }
-
-    public function initializeActivateAction(): void
-    {
-        $this->emitInitializeControllerAction();
-    }
-
-    public function activateAction(Club $club): ResponseInterface
-    {
-        $club->setHidden(false);
-        $this->clubRepository->update($club);
-        $this->addFlashMessage(LocalizationUtility::translate('clubActivated', 'clubdirectory'));
-
-        return $this->redirect('list', 'Club');
     }
 
     /**
-     * Sometimes Extbase tries to map an empty value like 0 to UID 0.
-     * As there is no record with UID 0 a Mapping Error occurs.
-     * To prevent that, we remove these kind of properties out of request directly.
+     * Flash messages belong to the current visitor. They must not be stored
+     * in the page cache, which is shared with other visitors. The messages
+     * are not flushed here, as the template renders them. The page cache
+     * gets written after rendering, so disabling the cache in an action is
+     * early enough. The next request is cached again.
      */
-    protected function removeEmptyPropertyFromRequest(string $property, array &$requestArgument): void
+    protected function disablePageCacheForFlashMessages(): void
     {
-        if (empty($requestArgument[$property])) {
-            unset($requestArgument[$property]);
-            $this->request = $this->request->withArgument('club', $requestArgument);
+        if ($this->getFlashMessageQueue()->getAllMessages() === []) {
+            return;
         }
-    }
 
-    protected function emitInitializeControllerAction(): void
-    {
-        $actionEvent = new InitializeControllerActionEvent(
-            $this->request,
-            $this->arguments,
-            $this->settings,
-        );
-        $this->eventDispatcher->dispatch($actionEvent);
-
-        $this->request = $actionEvent->getRequest();
-        $this->arguments = $actionEvent->getArguments();
-        $this->actionMethodName = $this->resolveActionMethodName();
-    }
-
-    protected function postProcessAndAssignFluidVariables(array $variables = []): void
-    {
-        /** @var PostProcessFluidVariablesEvent $event */
-        $event = $this->eventDispatcher->dispatch(
-            new PostProcessFluidVariablesEvent(
-                $this->request,
-                $this->settings,
-                $variables,
-            ),
-        );
-
-        $this->view->assignMultiple($event->getFluidVariables());
-    }
-
-    protected function preProcessControllerAction(?Club $club = null): void
-    {
-        $this->eventDispatcher->dispatch(
-            new PreProcessControllerActionEvent(
-                $this,
-                $club,
-                $this->settings,
-                $this->request,
-            ),
+        $this->request->getAttribute('frontend.cache.instruction')?->disableCache(
+            'EXT:clubdirectory: Flash messages of the club list must not be cached',
         );
     }
 }

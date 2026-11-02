@@ -12,10 +12,10 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Updates;
 
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
-use JWeiland\Clubdirectory\Traits\ConnectionPoolTrait;
 use TYPO3\CMS\Core\Database\Connection;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Attribute\UpgradeWizard;
 use TYPO3\CMS\Install\Updates\DatabaseUpdatedPrerequisite;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
@@ -23,30 +23,17 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 /**
  * Updater to fill empty slug columns of clubdirectory records
  */
-#[UpgradeWizard('myUpgradeWizard')]
-class ClubdirectorySlugUpdater implements UpgradeWizardInterface
+#[UpgradeWizard('clubdirectoryUpdateSlug')]
+final readonly class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 {
-    use ConnectionPoolTrait;
+    private const TABLE_NAME = 'tx_clubdirectory_domain_model_club';
 
-    protected string $tableName = 'tx_clubdirectory_domain_model_club';
+    private const FIELD_NAME = 'path_segment';
 
-    protected string $fieldName = 'path_segment';
-
-    protected PathSegmentHelper $pathSegmentHelper;
-
-    public function __construct(PathSegmentHelper $pathSegmentHelper = null)
-    {
-        $this->pathSegmentHelper = $pathSegmentHelper;
-    }
-
-    /**
-     * Return the identifier for this wizard
-     * This should be the same string as used in the ext_localconf class registration
-     */
-    public function getIdentifier(): string
-    {
-        return 'clubdirectoryUpdateSlug';
-    }
+    public function __construct(
+        private ConnectionPool $connectionPool,
+        private PathSegmentHelper $pathSegmentHelper,
+    ) {}
 
     public function getTitle(): string
     {
@@ -55,85 +42,79 @@ class ClubdirectorySlugUpdater implements UpgradeWizardInterface
 
     public function getDescription(): string
     {
-        return 'Update empty slug column "path_segment" of clubdirectory records with an URI compatible version of the title';
+        return 'Update empty slug column "path_segment" of clubdirectory records with an URI compatible version '
+            . 'of the title';
     }
 
     public function updateNecessary(): bool
     {
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
-        $queryBuilder->getRestrictions()->removeAll();
-        $queryBuilder->getRestrictions()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+        $queryBuilder = $this->getQueryBuilderForRecordsWithEmptySlug();
 
-        $amountOfRecordsWithEmptySlug = $queryBuilder
+        return (bool)$queryBuilder
             ->count('*')
-            ->from($this->tableName)
-            ->where(
-                $queryBuilder->expr()->or(
-                    $queryBuilder->expr()->eq(
-                        $this->fieldName,
-                        $queryBuilder->createNamedParameter('', Connection::PARAM_STR),
-                    ),
-                    $queryBuilder->expr()->isNull(
-                        $this->fieldName,
-                    ),
-                ),
-            )
             ->executeQuery()
             ->fetchOne();
-
-        return (bool)$amountOfRecordsWithEmptySlug;
     }
 
-    /**
-     * Performs the accordant updates.
-     */
     public function executeUpdate(): bool
     {
-        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable($this->tableName);
-        $queryBuilder->getRestrictions()->removeAll();
-        $queryBuilder->getRestrictions()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
-
-        $statement = $queryBuilder
+        $statement = $this->getQueryBuilderForRecordsWithEmptySlug()
             ->select('uid', 'pid', 'title')
-            ->from($this->tableName)
-            ->where(
-                $queryBuilder->expr()->or(
-                    $queryBuilder->expr()->eq(
-                        $this->fieldName,
-                        $queryBuilder->createNamedParameter('', Connection::PARAM_STR),
-                    ),
-                    $queryBuilder->expr()->isNull(
-                        $this->fieldName,
-                    ),
-                ),
-            )
             ->executeQuery();
 
-        $connection = $this->getConnectionPool()->getConnectionForTable($this->tableName);
+        $connection = $this->connectionPool->getConnectionForTable(self::TABLE_NAME);
         while ($recordToUpdate = $statement->fetchAssociative()) {
-            if ((string)$recordToUpdate['title'] !== '') {
-                $connection->update(
-                    $this->tableName,
-                    [
-                        $this->fieldName => $this->pathSegmentHelper->generatePathSegment(
-                            $recordToUpdate,
-                            (int)$recordToUpdate['pid'],
-                        ),
-                    ],
-                    [
-                        'uid' => (int)$recordToUpdate['uid'],
-                    ],
-                );
+            if ((string)$recordToUpdate['title'] === '') {
+                continue;
             }
+
+            $connection->update(
+                self::TABLE_NAME,
+                [
+                    self::FIELD_NAME => $this->pathSegmentHelper->generatePathSegment(
+                        $recordToUpdate,
+                        (int)$recordToUpdate['pid'],
+                    ),
+                ],
+                [
+                    'uid' => (int)$recordToUpdate['uid'],
+                ],
+            );
         }
 
         return true;
     }
 
+    /**
+     * @return string[]
+     */
     public function getPrerequisites(): array
     {
         return [
             DatabaseUpdatedPrerequisite::class,
         ];
+    }
+
+    /**
+     * Returns a QueryBuilder with FROM and WHERE parts set. The caller has
+     * to add the SELECT or COUNT part.
+     */
+    private function getQueryBuilderForRecordsWithEmptySlug(): QueryBuilder
+    {
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_NAME);
+        $queryBuilder->getRestrictions()->removeAll();
+        $queryBuilder->getRestrictions()->add(new DeletedRestriction());
+
+        return $queryBuilder
+            ->from(self::TABLE_NAME)
+            ->where(
+                $queryBuilder->expr()->or(
+                    $queryBuilder->expr()->eq(
+                        self::FIELD_NAME,
+                        $queryBuilder->createNamedParameter('', Connection::PARAM_STR),
+                    ),
+                    $queryBuilder->expr()->isNull(self::FIELD_NAME),
+                ),
+            );
     }
 }

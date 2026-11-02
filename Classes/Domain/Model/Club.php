@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Model;
 
 use JWeiland\Clubdirectory\Domain\Repository\FrontendUserRepository;
+use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
@@ -54,13 +55,79 @@ class Club extends AbstractEntity
     protected ObjectStorage $feUsers;
 
     /**
+     * The uploadFolder will be overridden by ApplyUploadFolderEventListener with
+     * the TypoScript setting "settings.new.uploadFolder".
+     * Modifying the FileUpload is described here:
+     * @link https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/13.3/Feature-103511-IntroduceExtbaseFileUploadHandling.html#modifying-existing-configuration
+     *
      * @var ObjectStorage<FileReference>
      */
+    #[Extbase\FileUpload([
+        'validation' => [
+            'required' => false,
+            'maxFiles' => 1,
+            'fileSize' => [
+                'minimum' => '0K',
+                'maximum' => '4M',
+            ],
+            'mimeType' => [
+                'allowedMimeTypes' => [
+                    'image/gif',
+                    'image/jpeg',
+                    'image/png',
+                ],
+            ],
+            'fileExtension' => [
+                'allowedFileExtensions' => [
+                    'gif',
+                    'jpg',
+                    'jpeg',
+                    'png',
+                ],
+            ],
+        ],
+        'uploadFolder' => '1:/user_upload/tx_clubdirectory/',
+        'duplicationBehavior' => DuplicationBehavior::RENAME,
+        'createUploadFolderIfNotExist' => true,
+    ])]
     protected ObjectStorage $logo;
 
     /**
+     * The uploadFolder will be overridden by ApplyUploadFolderEventListener with
+     * the TypoScript setting "settings.new.uploadFolder".
+     * Modifying the FileUpload is described here:
+     * @link https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/13.3/Feature-103511-IntroduceExtbaseFileUploadHandling.html#modifying-existing-configuration
+     *
      * @var ObjectStorage<FileReference>
      */
+    #[Extbase\FileUpload([
+        'validation' => [
+            'required' => false,
+            'maxFiles' => 5,
+            'fileSize' => [
+                'minimum' => '0K',
+                'maximum' => '4M',
+            ],
+            'mimeType' => [
+                'allowedMimeTypes' => [
+                    'image/gif',
+                    'image/jpeg',
+                    'image/png',
+                ],
+            ],
+            'fileExtension' => [
+                'allowedFileExtensions' => [
+                    'gif',
+                    'jpg',
+                    'jpeg',
+                    'png',
+                ],
+            ],
+        ],
+        'uploadFolder' => '1:/user_upload/tx_clubdirectory/',
+        'duplicationBehavior' => DuplicationBehavior::RENAME,
+        'createUploadFolderIfNotExist' => true,
+    ])]
     protected ObjectStorage $images;
 
     protected string $facebook = '';
@@ -254,9 +321,12 @@ class Club extends AbstractEntity
         return $currentUserCanEditThisClub;
     }
 
-    public function getLogo(): array
+    /**
+     * @return ObjectStorage<FileReference>
+     */
+    public function getLogo(): ObjectStorage
     {
-        return $this->logo->toArray();
+        return $this->logo;
     }
 
     public function getFirstLogo(): ?FileReference
@@ -265,11 +335,9 @@ class Club extends AbstractEntity
         return $this->logo->current();
     }
 
-    public function getOriginalLogo(): ObjectStorage
-    {
-        return $this->logo;
-    }
-
+    /**
+     * @param ObjectStorage<FileReference> $logo
+     */
     public function setLogo(ObjectStorage $logo): void
     {
         $this->logo = $logo;
@@ -285,21 +353,17 @@ class Club extends AbstractEntity
         $this->logo->detach($logo);
     }
 
-    public function getImages(): array
-    {
-        $references = [];
-        foreach ($this->images as $image) {
-            $references[] = $image;
-        }
-
-        return $references;
-    }
-
-    public function getOriginalImages(): ObjectStorage
+    /**
+     * @return ObjectStorage<FileReference>
+     */
+    public function getImages(): ObjectStorage
     {
         return $this->images;
     }
 
+    /**
+     * @param ObjectStorage<FileReference> $images
+     */
     public function setImages(ObjectStorage $images): void
     {
         $this->images = $images;
@@ -360,7 +424,10 @@ class Club extends AbstractEntity
         return $this->district;
     }
 
-    public function setDistrict(District $district): void
+    /**
+     * The district is optional. The empty option of the frontend form maps to NULL.
+     */
+    public function setDistrict(?District $district): void
     {
         $this->district = $district;
     }

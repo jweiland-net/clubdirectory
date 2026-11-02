@@ -4,3 +4,7 @@ files:
     translation: /%original_path%/%two_letters_code%.%original_file_name%
     ignore:
       - /**/%two_letters_code%.%original_file_name%
+  - source: /Configuration/Sets/*/labels.xlf
+    translation: /%original_path%/%two_letters_code%.%original_file_name%
+    ignore:
+      - /**/%two_letters_code%.%original_file_name%

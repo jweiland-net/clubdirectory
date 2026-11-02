@@ -11,24 +11,40 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
-use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
+use JWeiland\Clubdirectory\Controller\Traits\ClubListRedirectTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
+use JWeiland\Clubdirectory\Controller\Traits\PreProcessControllerActionTrait;
 use JWeiland\Clubdirectory\Domain\Model\Club;
-use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
+use JWeiland\Clubdirectory\Service\ClubAccessService;
+use JWeiland\Clubdirectory\Service\ClubCacheService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Controller to edit map records. Just after saving a club.
+ * Controller to confirm the map positions of a new club. Changes of
+ * existing clubs incl. their map positions are done in ManagementController.
  */
 class MapController extends ActionController
 {
+    use ClubListRedirectTrait;
     use ControllerInjectionTrait;
     use InitializeControllerTrait;
-    use AddressTrait;
+    use PreProcessControllerActionTrait;
+
+    public function __construct(
+        protected ClubAccessService $clubAccessService,
+        protected ClubCacheService $clubCacheService,
+        protected PersistenceManagerInterface $persistenceManager,
+    ) {}
+
+    public function initializeNewAction(): void
+    {
+        $this->preProcessControllerAction();
+    }
 
     /**
      * As club was already validated in ClubController create/update there can't be any errors. So ignore validation.
@@ -41,72 +57,33 @@ class MapController extends ActionController
         return $this->htmlResponse();
     }
 
+    public function initializeCreateAction(): void
+    {
+        $this->preProcessControllerAction();
+    }
+
     public function createAction(Club $club): ResponseInterface
     {
-        if ($this->frontendUserRepository->getCurrentFrontendUserUid()) {
-            $this->view->assign('club', $club);
-            $this->mailHelper->sendMail(
-                $this->view->render(),
-                LocalizationUtility::translate('email.subject.create', 'clubdirectory'),
-            );
-
-            $this->clubRepository->update($club);
-            $this->addFlashMessage(LocalizationUtility::translate('clubCreated', 'clubdirectory'));
-        } else {
-            $this->addFlashMessage('There is no valid user logged in. So record was not saved');
-        }
-
-        return $this->redirect('list', 'Club');
-    }
-
-    public function initializeEditAction(): void
-    {
-        $this->emitInitializeControllerAction();
-    }
-
-    public function initializeUpdateAction(): void
-    {
-        $this->emitInitializeControllerAction();
-    }
-
-    #[Extbase\IgnoreValidation(['value' => 'club'])]
-    public function editAction(Club $club): ResponseInterface
-    {
-        $this->view->assign('club', $club);
-        $this->view->assign('categories', $this->categoryRepository->findByParent($this->extConf->getRootCategory()));
-        $this->view->assign('addressTitles', $this->getAddressTitles());
-
-        return $this->htmlResponse();
-    }
-
-    public function updateAction(Club $club): ResponseInterface
-    {
-        if ($this->mapHelper->addMapRecordIfPossible($club, $this) === false) {
-            return $this->errorAction();
+        if (!$this->frontendUserRepository->getCurrentFrontendUserUid()) {
+            return $this->redirectToClubList('There is no valid user logged in. So record was not saved');
         }
 
         $this->clubRepository->update($club);
-        $this->view->assign('club', $club);
+        // The moderation token of the mail signs the "tstamp" of the persisted club
+        $this->persistenceManager->persistAll();
+        $this->clubCacheService->flushCachesOfClub((int)$club->getUid());
+
+        $this->view->assignMultiple([
+            'club' => $club,
+            'moderationToken' => $this->clubAccessService->generateModerationToken((int)$club->getUid()),
+        ]);
         $this->mailHelper->sendMail(
             $this->view->render(),
-            LocalizationUtility::translate('email.subject.update', 'clubdirectory'),
+            LocalizationUtility::translate('email.subject.create', 'clubdirectory'),
         );
-        $club->setHidden(true);
 
-        return $this->redirect('list', 'Club', null, ['club' => $club]);
-    }
-
-    protected function emitInitializeControllerAction(): void
-    {
-        $actionEvent = new InitializeControllerActionEvent(
-            $this->request,
-            $this->arguments,
-            $this->settings,
+        return $this->redirectToClubList(
+            (string)LocalizationUtility::translate('clubCreated', 'clubdirectory'),
         );
-        $this->eventDispatcher->dispatch($actionEvent);
-
-        $this->request = $actionEvent->getRequest();
-        $this->arguments = $actionEvent->getArguments();
-        $this->actionMethodName = $this->resolveActionMethodName();
     }
 }

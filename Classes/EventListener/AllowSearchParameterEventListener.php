@@ -11,46 +11,48 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\EventListener;
 
-use JWeiland\Clubdirectory\Event\InitializeControllerActionEvent;
-use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use JWeiland\Clubdirectory\Event\PreProcessControllerActionEvent;
+use JWeiland\Clubdirectory\Traits\IsValidEventListenerRequestTrait;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
 
-/*
- * We have build our own form-tag for search plugin, so extbase will not configure PropertyMappingConfiguration
- * automatically. We have to do it manually here.
- * With fluid-form-VHs the $_GET request in browser URL will get extremely long.
+/**
+ * The search arguments are also transferred by GET (e.g. links of the page browser),
+ * so Extbase can not configure the PropertyMappingConfiguration by trusted properties.
+ * We have to do it manually here.
  */
-class AllowSearchParameterEventListener extends AbstractControllerEventListener
+#[AsEventListener(
+    identifier: 'clubdirectory/allow-search-parameter',
+)]
+final readonly class AllowSearchParameterEventListener
 {
-    protected array $allowedControllerActions = [
-        'Club' => [
-            'search',
+    use IsValidEventListenerRequestTrait;
+
+    private const ALLOWED_CONTROLLER_ACTIONS = [
+        'Search' => [
+            'listSearchResults',
         ],
     ];
 
-    public function __invoke(InitializeControllerActionEvent $event): void
+    public function __invoke(PreProcessControllerActionEvent $controllerActionEvent): void
     {
-        if ($this->isValidRequest($event)) {
-            $pmc = $event->getArguments()
-                ->getArgument('search')
-                ->getPropertyMappingConfiguration();
-
-            // ToDo: Remove subCategory with next major version
-            $pmc->allowProperties(
-                'searchWord',
-                'letter',
-                'district',
-                'category',
-                'subCategory',
-                'order',
-                'orderBy',
-            );
-
-            $pmc->setTypeConverterOptions(
-                PersistentObjectConverter::class,
-                [
-                    PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED => true,
-                ],
-            );
+        if (!$this->isValidRequest($controllerActionEvent)) {
+            return;
         }
+
+        $propertyMappingConfiguration = $controllerActionEvent
+            ->getArguments()
+            ->getArgument('search')
+            ->getPropertyMappingConfiguration();
+
+        $propertyMappingConfiguration->allowProperties(
+            'searchWord',
+            'district',
+            'category',
+            'order',
+            'orderBy',
+        );
+
+        // Ignore unknown arguments like the removed "subCategory" in old links
+        $propertyMappingConfiguration->skipUnknownProperties();
     }
 }

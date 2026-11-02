@@ -28,8 +28,8 @@
 		"source": "https://github.com/jweiland-net/clubdirectory"
 	},
 	"require": {
-		"jweiland/glossary2": ">=7.0.0",
-		"jweiland/maps2": ">=12.0.0",
+		"jweiland/glossary2": ">=7.0.7",
+		"jweiland/maps2": ">=12.2.1",
 		"typo3/cms-core": "^13.4",
 		"typo3/cms-redirects": "^13.4"
 	},
@@ -43,6 +43,9 @@
 	},
 	"replace": {
 		"typo3-ter/clubdirectory": "self.version"
+	},
+	"suggest": {
+		"jweiland/checkfaluploads": "Adds a mandatory rights checkbox to the logo/images upload fields in clubdirectory's frontend forms. Requires at least version 6.0.0."
 	},
 	"autoload": {
 		"psr-4": {

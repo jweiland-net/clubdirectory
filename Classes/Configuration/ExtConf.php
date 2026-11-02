@@ -26,7 +26,6 @@ final readonly class ExtConf
 
     private const DEFAULT_SETTINGS = [
         // General Settings
-        'userGroup' => 0,
         'poiCollectionPid' => 0,
         'rootCategory' => 0,
 
@@ -38,7 +37,6 @@ final readonly class ExtConf
     ];
 
     public function __construct(
-        private int $userGroup = self::DEFAULT_SETTINGS['userGroup'],
         private int $poiCollectionPid = self::DEFAULT_SETTINGS['poiCollectionPid'],
         private int $rootCategory = self::DEFAULT_SETTINGS['rootCategory'],
         private string $emailFromAddress = self::DEFAULT_SETTINGS['emailFromAddress'],
@@ -62,7 +60,6 @@ final readonly class ExtConf
 
         return new self(
             // General Settings
-            userGroup: (int)$extensionSettings['userGroup'],
             poiCollectionPid: (int)$extensionSettings['poiCollectionPid'],
             rootCategory: (int)$extensionSettings['rootCategory'],
 
@@ -72,11 +69,6 @@ final readonly class ExtConf
             emailToAddress: (string)$extensionSettings['emailToAddress'],
             emailToName: (string)$extensionSettings['emailToName'],
         );
-    }
-
-    public function getUserGroup(): int
-    {
-        return $this->userGroup;
     }
 
     public function getPoiCollectionPid(): int

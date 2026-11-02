@@ -8,72 +8,90 @@ Extension Settings
 ==================
 
 Some general settings for `clubdirectory` can be configured
-in *Admin Tools -> Settings*.
+in :guilabel:`Admin Tools > Settings > Extension Configuration`.
+
+..  _extensionSettings-tab-basic:
 
 Tab: Basic
 ==========
 
-userGroup
----------
+..  confval:: poiCollectionPid
+    :name: ext-conf-poicollectionpid
+    :type: int
+    :default: 0
 
-Default: 0
+    While saving a club in frontend we geocode its addresses and create a
+    maps2 POI record for each address automatically. Define the UID of a
+    storage folder where these records should be stored.
 
-If you will allow for frontend users to create and edit their own club records
-you have to assign them a frontend usergroup and add this group UID to this
-property.
+    All addresses of a club are geocoded first. The POI records are created
+    only, if all addresses were found. Otherwise, the user is asked to
+    check the address and no POI record is created.
 
-poiCollectionPid
-----------------
+    Add this storage folder to the storage folders of the maps2 plugin on
+    the page configured in the site setting
+    :confval:`clubdirectory.pidOfMaps2Plugin
+    <site-setting-pidofmaps2plugin>`. Otherwise the map of this plugin
+    shows no marker.
 
-Default: 0
+    How addresses are geocoded and which API keys are required is
+    described in the documentation of
+    :ref:`maps2 <maps2:extensionsettings>`.
 
-Only valid, if you have installed EXT:maps2, too.
+..  confval:: rootCategory
+    :name: ext-conf-rootcategory
+    :type: int
+    :default: 0
 
-While creating location records we catch the address and automatically create
-a maps2 record for you. Define a storage PID where we should store these
-records.
+    UID of the parent category of the club categories. The frontend shows
+    the direct child categories of this category only: in the category
+    selection of the club form of the Management plugin and in the category
+    filter of the list and search forms.
 
-rootCategory
-------------
+    ..  versionchanged:: 9.0.0
+        This setting does not restrict the categories in the backend
+        anymore. Restrict the category tree of the plugin and of the club
+        records with page TSconfig, see :ref:`page-tsconfig`.
 
-Default: 0
+..  confval:: emailFromAddress
+    :name: ext-conf-emailfromaddress
+    :type: string
+    :default: empty (use `defaultMailFromAddress` of the TYPO3 mail settings)
 
-If you have many sys_category records with huge trees in your TYPO3 project,
-it may make sense to reduce the category trees in our Plugins to a parent
-category UID (root UID).
+    Clubs created or changed in frontend are hidden until the administrator
+    activates them. The administrator is informed by mail. Add the email
+    address of the sender of this mail.
 
-emailFromAddress
-----------------
+    If this value and `$GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress']`
+    are empty, saving a club in frontend ends with an exception.
 
-Default: empty (use value from INSTALL_TOOL)
+..  confval:: emailFromName
+    :name: ext-conf-emailfromname
+    :type: string
+    :default: empty (use `defaultMailFromName` of the TYPO3 mail settings)
 
-With clubdirectory you can give your website visitors the possibility to
-create new events. These created records will be hidden by default. Add an
-email address of the sender, if a new record was created over the frontend.
+    Name of the sender of the mail to the administrator.
 
-emailFromName
--------------
+    If this value and `$GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromName']`
+    are empty, saving a club in frontend ends with an exception.
 
-Default: empty (use value from INSTALL_TOOL)
+..  confval:: emailToAddress
+    :name: ext-conf-emailtoaddress
+    :type: string
+    :default: empty
+    :required: true
 
-With clubdirectory you can give your website visitors the possibility to create
-new events. These created records will be hidden by default. Add a name
-of the sender, if a new record was created over the frontend.
+    Email address of the administrator, who receives the mails about
+    created and changed clubs. These mails contain the links to check and
+    activate the club, see :ref:`moderation`.
 
-emailToAddress
---------------
+    There is no fallback for this value. If it is empty, saving a club in
+    frontend ends with an exception.
 
-Default: empty
+..  confval:: emailToName
+    :name: ext-conf-emailtoname
+    :type: string
+    :default: empty
 
-With clubdirectory you can give your website visitors the possibility to create
-new events. These created records will be hidden by default. Add an email
-address of the receiver, if a new record was created over the frontend.
-
-emailToName
------------
-
-Default: empty
-
-With clubdirectory you can give your website visitors the possibility to
-create new events. These created records will be hidden by default. Add a name
-of the receiver, if a new record was created over the frontend.
+    Name of the administrator, who receives the mails about created and
+    changed clubs.

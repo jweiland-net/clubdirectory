@@ -7,9 +7,11 @@
                project-repository="https://github.com/jweiland-net/clubdirectory"
                project-issues="https://github.com/jweiland-net/clubdirectory/issues" edit-on-github-branch="main"
                edit-on-github="jweiland-net/clubdirectory" typo3-core-preferred="stable"/>
-    <project title="clubdirectory" release="8.1" version="8.1.3" copyright="since 2013 by jweiland.net"/>
+    <project title="clubdirectory" release="9.0" version="9.0.0" copyright="since 2013 by jweiland.net"/>
     <inventory id="t3coreapi" url="https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/"/>
     <inventory id="t3install" url="https://docs.typo3.org/m/typo3/guide-installation/main/en-us/"/>
     <inventory id="t3sitepackage" url="https://docs.typo3.org/m/typo3/tutorial-sitepackage/main/en-us/"/>
     <inventory id="t3viewhelper" url="https://docs.typo3.org/other/typo3/view-helper-reference/main/en-us/"/>
+    <inventory id="maps2" url="https://docs.typo3.org/p/jweiland/maps2/main/en-us/"/>
+    <inventory id="checkfaluploads" url="https://docs.typo3.org/p/jweiland/checkfaluploads/main/en-us/"/>
 </guides>

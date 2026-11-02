@@ -20,22 +20,42 @@ class AltLabelForAddressTableUserFunc
 {
     public function setAddressLabel(array &$parameters = []): void
     {
-        // Set title as a fallback. It was cleared by TYPO3 just before this UserFunc was called.
-        $parameters['title'] = is_array($parameters['row']['title'])
-            ? (string)($parameters['row']['title'][0] ?? '')
-            : (string)($parameters['row']['title'] ?? '');
+        $row = is_array($parameters['row'] ?? null) ? $parameters['row'] : [];
 
-        // Column "club" can be empty, if hidden by an Integrator or if shown as inline in club record
-        if ((int)($parameters['row']['club'] ?? 0) > 0) {
-            $club = BackendUtility::getRecord('tx_clubdirectory_domain_model_club', $parameters['row']['club']);
-            if ($parameters['title'] !== '') {
-                $parameters['title'] = sprintf(
-                    '%s (%d) - %s',
-                    $club['title'],
-                    $club['uid'],
-                    $parameters['title'],
-                );
-            }
+        // Set title as a fallback. It was cleared by TYPO3 just before this UserFunc was called.
+        $parameters['title'] = $this->getScalarValue($row, 'title');
+
+        // Column "club" can be empty, if hidden by an Integrator or if shown as inline in club record.
+        // For new inline records the parent UID may still be a "NEW..." placeholder.
+        $clubUid = (int)$this->getScalarValue($row, 'club');
+        if ($clubUid <= 0 || $parameters['title'] === '') {
+            return;
         }
+
+        $club = BackendUtility::getRecord('tx_clubdirectory_domain_model_club', $clubUid);
+        if ($club === null) {
+            return;
+        }
+
+        $parameters['title'] = sprintf(
+            '%s (%d) - %s',
+            (string)($club['title'] ?? ''),
+            (int)$club['uid'],
+            $parameters['title'],
+        );
+    }
+
+    /**
+     * FormEngine (TcaSelectItems) provides select values as array, while
+     * BackendUtility::getRecordTitle() provides the raw DB value.
+     */
+    private function getScalarValue(array $row, string $column): string
+    {
+        $value = $row[$column] ?? '';
+        if (is_array($value)) {
+            $value = reset($value);
+        }
+
+        return is_scalar($value) ? (string)$value : '';
     }
 }

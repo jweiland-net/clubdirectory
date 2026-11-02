@@ -6,16 +6,22 @@
 <p>{f:translate(key: 'email.body.create')}</p>
 <p>
     <f:link.action action="edit"
-                   controller="Club"
+                   controller="Management"
+                   extensionName="Clubdirectory"
+                   pluginName="Management"
+                   pageUid="{settings.pidOfManagementPage}"
                    absolute="1"
-                   arguments="{club: club}">
+                   arguments="{club: club, moderationToken: moderationToken}">
         {f:translate(key: 'email.editRecord')}
     </f:link.action>
     <br>
     <f:link.action action="activate"
-                   controller="Club"
+                   controller="Management"
+                   extensionName="Clubdirectory"
+                   pluginName="Management"
+                   pageUid="{settings.pidOfManagementPage}"
                    absolute="1"
-                   arguments="{club: club}">
+                   arguments="{club: club, moderationToken: moderationToken}">
         {f:translate(key: 'email.activateRecord')}
     </f:link.action>
 </p>
@@ -39,7 +45,7 @@
         <td>
             <f:translate key="tx_clubdirectory_domain_model_club.activity"/>
         </td>
-        <td>{club.actitity}</td>
+        <td>{club.activity}</td>
     </tr>
     <tr>
         <td>

@@ -1,217 +1,330 @@
 <html lang="en"
       xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:maps2="http://typo3.org/ns/JWeiland/Maps2/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:render section="renderTextProperty" arguments="{property: 'title', column: 'title', mandatory: 1}"/>
-<f:render section="renderSelectProperty"
-          arguments="{property: 'categories', column: 'categories', options: categories, size: 5, multiple: 1}"/>
-<f:render section="renderTextareaProperty" arguments="{property: 'activity', column: 'activity'}"/>
-<f:render section="renderTextareaProperty" arguments="{property: 'description', column: 'description'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'contactPerson', column: 'contactPerson'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'contactTimes', column: 'contactTimes'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'email', column: 'email'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'website', column: 'website'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'members', column: 'members'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'clubHome', column: 'clubHome'}"/>
-<f:render section="renderAddresses" arguments="{_all}"/>
-<f:render section="renderTextProperty" arguments="{property: 'facebook', column: 'facebook'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'twitter', column: 'twitter'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'instagram', column: 'instagram'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'tags', column: 'tags'}"/>
-
-<f:render section="renderLogo" arguments="{club: club}"/>
-
-<f:section name="renderLogo">
-    <f:render section="renderLabel" arguments="{column: 'logo'}"/>
-
-    <div class="media mb-3">
-        <f:if condition="{club.logo.0}">
-            <f:image image="{club.logo.0}"
-                     class="mr-3"
-                     alt="{club.title}"
-                     width="{settings.list.image.width}"
-                     height="{settings.list.image.height}"
-            />
-        </f:if>
-        <div class="media-body">
-            <div class="form-group">
-                <f:form.upload property="logo.0"
-                               class="form-control-file"
-                               id="logo"/>
-            </div>
-            <f:if condition="{club.logo.0}">
-                <div class="form-group form-check">
-                    <f:form.checkbox property="logo.0.delete"
-                                     id="logoDelete"
-                                     class="form-check-input"
-                                     value="1"/>
-                    <label class="form-check-label" for="logoDelete">
-                        {f:translate(key: "deleteLogo")}
-                    </label>
-                </div>
-            </f:if>
-        </div>
-    </div>
-</f:section>
-
-<f:section name="renderImages">
-    <f:render section="renderLabel" arguments="{column: 'images'}"/>
-
-    <f:for each="{0: 1, 1: 2, 2: 3, 3: 4, 4: 5}" as="number" key="globalIndex">
-        <f:variable name="currentImage" value=""/>
-        <f:for each="{club.images}" as="image" key="imageIndex">
-            <f:if condition="{globalIndex}=={imageIndex}">
-                <f:variable name="currentImage">{image}</f:variable>
-            </f:if>
-        </f:for>
-        <div class="media mb-3">
-            <f:if condition="{currentImage}">
-                <f:image image="{currentImage}"
-                         class="mr-3"
-                         alt="{club.title}"
-                         width="{settings.list.image.width}"
-                         height="{settings.list.image.height}"
-                />
-            </f:if>
-            <div class="media-body">
-                <div class="form-group">
-                    <f:form.upload property="images.{globalIndex}"
-                                   class="form-control-file"
-                                   id="images_{globalIndex}"/>
-                </div>
-                <f:if condition="{currentImage}">
-                    <div class="form-group form-check">
-                        <f:form.checkbox property="images.{globalIndex}.delete"
-                                         id="imageDelete{globalIndex}"
-                                         class="form-check-input"
-                                         value="1"/>
-                        <label class="form-check-label" for="imageDelete{globalIndex}">
-                            {f:translate(key: "deleteImage")}
-                        </label>
-                    </div>
-                </f:if>
-            </div>
-        </div>
-    </f:for>
-</f:section>
-
-<f:section name="renderTextProperty">
-    <div class="form-group">
-        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
-        <f:form.textfield property="{property}"
-                          class="form-control"
-                          id="{property}"
-                          additionalAttributes="{aria-describedby: '{property}Help'}"
-        />
-        <f:render section="renderHelpMessage" arguments="{property: property}"/>
-    </div>
-</f:section>
-
-<f:section name="renderSelectProperty">
-    <div class="form-group">
-        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
-        <f:form.select
-            property="{property}"
-            class="form-control"
-            id="{property}"
-            options="{options}"
-            size="{f:if(condition: size, then: size, else: 1)}"
-            multiple="{f:if(condition: multiple, then: 1, else: 0)}"
-            optionValueField="{f:if(condition: optionValueField, then: optionValueField, else: 'uid')}"
-            optionLabelField="{f:if(condition: optionLabelField, then: optionLabelField, else: 'title')}"
-            sortByOptionLabel="1"
-            prependOptionLabel="{f:translate(key: 'pleaseChoose')}"
-            prependOptionValue=""/>
-        <f:render section="renderHelpMessage" arguments="{property: property}"/>
-    </div>
-</f:section>
-
-<f:section name="renderTextareaProperty">
-    <div class="form-group">
-        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
-        <f:form.textarea property="{property}"
-                         class="form-control"
-                         id="{property}"
-                         rows="5"
-                         cols="50"/>
-        <f:render section="renderHelpMessage" arguments="{property: property}"/>
-    </div>
-</f:section>
-
-<f:section name="renderCheckboxProperty">
-    <div class="form-check">
-        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
-        <f:form.checkbox property="{property}"
-                         id="{property}_{index}"
-                         class="form-check-input"
-                         value="1"/>
-        <f:render section="renderHelpMessage" arguments="{property: property}"/>
-    </div>
-</f:section>
-
-<f:section name="renderMaps2Property">
-    <div class="form-group">
-        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
-        <input type="hidden" name="tx_clubdirectory_clubdirectory[club][addresses][{index}][__identity]"
-               value="{address.uid}"/>
-        <f:render partial="Maps2/EditPoiCollection"
-                  section="editMap"
-                  arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', title: '{address.street} {address.houseNumber}, {address.zip}{address.city}', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}"/>
-        <f:render section="renderHelpMessage" arguments="{property: property}"/>
-    </div>
-</f:section>
-
-<f:section name="renderAddresses">
-    <div class="form-group">
-        <f:render section="renderLabel" arguments="{column: 'addresses', domain: domain}"/>
-        <f:for each="{club.addresses}" as="address" key="index">
-            <f:render section="renderAddressProperties"
-                      arguments="{addressTitles: addressTitles, address: address, index: index}"/>
-        </f:for>
-        <f:render section="renderHelpMessage" arguments="{property: property}"/>
-    </div>
-</f:section>
-
-<f:section name="renderAddressProperties">
-    <f:variable name="prefix">addresses.{index}</f:variable>
-
-    <f:render section="renderSelectProperty"
-              arguments="{property: '{prefix}.title', column: 'title', domain: 'address', options: addressTitles, optionValueField: 'value', optionLabelField: 'label'}"/>
-    <f:render section="renderTextProperty"
-              arguments="{property: '{prefix}.street', column: 'street', domain: 'address'}"/>
-    <f:render section="renderTextProperty"
-              arguments="{property: '{prefix}.houseNumber', column: 'houseNumber', domain: 'address'}"/>
-    <f:render section="renderTextProperty" arguments="{property: '{prefix}.zip', column: 'zip', domain: 'address'}"/>
-    <f:render section="renderTextProperty" arguments="{property: '{prefix}.city', column: 'city', domain: 'address'}"/>
-    <f:render section="renderTextProperty" arguments="{property: '{prefix}.fax', column: 'fax', domain: 'address'}"/>
-    <f:render section="renderCheckboxProperty"
-              arguments="{property: '{prefix}.barrierFree', column: 'barrierFree', domain: 'address'}"/>
-
-    <f:if condition="{address.txMaps2Uid}">
-        <f:render section="renderMaps2Property" arguments="{_all}"/>
-    </f:if>
-</f:section>
-
-<f:section name="renderLabel">
-    <f:variable name="tableName">tx_clubdirectory_domain_model_{f:if(condition: domain, then: domain, else: 'club')}</f:variable>
-
-    <label for="{column}">
-        {f:translate(key: "{tableName}.{column}")}
-        <f:if condition="{mandatory}">
-            <span class="required">*</span>
-        </f:if>
+<div class="form-group">
+    <label for="title">
+        {f:translate(key: 'tx_clubdirectory_domain_model_club.title')}
+        <span class="required">*</span>
     </label>
-</f:section>
+    <f:form.textfield property="title"
+                      id="title"
+                      class="form-control"
+                      required="1"
+                      aria-describedby="titleHelp"/>
+    <small id="titleHelp" class="form-text text-muted">{f:translate(key: 'cshtitle')}</small>
+</div>
 
-<f:section name="renderHelpMessage">
-    <f:variable name="helpMessage">
-        <f:spaceless>
-            <f:translate key="csh{property}"/>
-        </f:spaceless>
-    </f:variable>
-    <f:if condition="{helpMessage}">
-        <small id="{property}Help" class="form-text text-muted">{helpMessage}</small>
-    </f:if>
-</f:section>
+<div class="form-group">
+    <label for="categories">{f:translate(key: 'tx_clubdirectory_domain_model_club.categories')}</label>
+    <f:form.select property="categories"
+                   id="categories"
+                   class="form-control"
+                   options="{categories}"
+                   optionValueField="uid"
+                   optionLabelField="title"
+                   sortByOptionLabel="1"
+                   multiple="1"
+                   size="5"
+                   aria-describedby="categoriesHelp"/>
+    <small id="categoriesHelp" class="form-text text-muted">{f:translate(key: 'cshcategories')}</small>
+</div>
+
+<div class="form-group">
+    <label for="activity">{f:translate(key: 'tx_clubdirectory_domain_model_club.activity')}</label>
+    <f:form.textarea property="activity"
+                     id="activity"
+                     class="form-control"
+                     rows="5"
+                     aria-describedby="activityHelp"/>
+    <small id="activityHelp" class="form-text text-muted">{f:translate(key: 'cshactivity')}</small>
+</div>
+
+<div class="form-group">
+    <label for="description">{f:translate(key: 'tx_clubdirectory_domain_model_club.description')}</label>
+    <f:form.textarea property="description"
+                     id="description"
+                     class="form-control"
+                     rows="5"
+                     aria-describedby="descriptionHelp"/>
+    <small id="descriptionHelp" class="form-text text-muted">{f:translate(key: 'cshdescription')}</small>
+</div>
+
+<div class="form-group">
+    <label for="contactPerson">{f:translate(key: 'tx_clubdirectory_domain_model_club.contactPerson')}</label>
+    <f:form.textfield property="contactPerson"
+                      id="contactPerson"
+                      class="form-control"
+                      aria-describedby="contactPersonHelp"/>
+    <small id="contactPersonHelp" class="form-text text-muted">{f:translate(key: 'cshcontactPerson')}</small>
+</div>
+
+<div class="form-group">
+    <label for="contactTimes">{f:translate(key: 'tx_clubdirectory_domain_model_club.contactTimes')}</label>
+    <f:form.textfield property="contactTimes"
+                      id="contactTimes"
+                      class="form-control"
+                      aria-describedby="contactTimesHelp"/>
+    <small id="contactTimesHelp" class="form-text text-muted">{f:translate(key: 'cshcontactTimes')}</small>
+</div>
+
+<div class="form-group">
+    <label for="email">{f:translate(key: 'tx_clubdirectory_domain_model_club.email')}</label>
+    <f:form.textfield type="email"
+                      property="email"
+                      id="email"
+                      class="form-control"
+                      aria-describedby="emailHelp"/>
+    <small id="emailHelp" class="form-text text-muted">{f:translate(key: 'cshemail')}</small>
+</div>
+
+<div class="form-group">
+    <label for="website">{f:translate(key: 'tx_clubdirectory_domain_model_club.website')}</label>
+    <f:form.textfield type="url"
+                      property="website"
+                      id="website"
+                      class="form-control"
+                      aria-describedby="websiteHelp"/>
+    <small id="websiteHelp" class="form-text text-muted">{f:translate(key: 'cshwebsite')}</small>
+</div>
+
+<div class="form-group">
+    <label for="members">{f:translate(key: 'tx_clubdirectory_domain_model_club.members')}</label>
+    <f:form.textfield property="members"
+                      id="members"
+                      class="form-control"
+                      aria-describedby="membersHelp"/>
+    <small id="membersHelp" class="form-text text-muted">{f:translate(key: 'cshmembers')}</small>
+</div>
+
+<div class="form-group">
+    <label for="clubHome">{f:translate(key: 'tx_clubdirectory_domain_model_club.clubHome')}</label>
+    <f:form.textfield property="clubHome"
+                      id="clubHome"
+                      class="form-control"
+                      aria-describedby="clubHomeHelp"/>
+    <small id="clubHomeHelp" class="form-text text-muted">{f:translate(key: 'cshclubHome')}</small>
+</div>
+
+<div class="form-group">
+    <label for="district">{f:translate(key: 'tx_clubdirectory_domain_model_club.district')}</label>
+    <f:form.select property="district"
+                   id="district"
+                   class="form-control"
+                   options="{districts}"
+                   optionValueField="uid"
+                   optionLabelField="district"
+                   prependOptionLabel="{f:translate(key: 'pleaseChoose')}"
+                   prependOptionValue=""/>
+</div>
+
+<fieldset class="form-group">
+    <legend class="h5">{f:translate(key: 'tx_clubdirectory_domain_model_club.addresses')}</legend>
+    <f:for each="{club.addresses}" as="address" key="index" iteration="iterator">
+        <fieldset class="form-group">
+            <legend class="h6">{f:translate(key: 'addressNumber', arguments: {0: iterator.cycle})}</legend>
+
+            <div class="form-group">
+                <label for="addresses.{index}.title">
+                    {f:translate(key: 'tx_clubdirectory_domain_model_address.title')}
+                </label>
+                <f:form.select property="addresses.{index}.title"
+                               id="addresses.{index}.title"
+                               class="form-control"
+                               options="{addressTitles}"
+                               optionValueField="value"
+                               optionLabelField="label"
+                               sortByOptionLabel="1"
+                               prependOptionLabel="{f:translate(key: 'pleaseChoose')}"
+                               prependOptionValue=""
+                               aria-describedby="addresses.{index}.titleHelp"/>
+                <small id="addresses.{index}.titleHelp" class="form-text text-muted">
+                    {f:translate(key: 'cshtitle_{index}')}
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="addresses.{index}.street">
+                    {f:translate(key: 'tx_clubdirectory_domain_model_address.street')}
+                </label>
+                <f:form.textfield property="addresses.{index}.street"
+                                  id="addresses.{index}.street"
+                                  class="form-control"
+                                  autocomplete="off"/>
+            </div>
+
+            <div class="form-group">
+                <label for="addresses.{index}.houseNumber">
+                    {f:translate(key: 'tx_clubdirectory_domain_model_address.houseNumber')}
+                </label>
+                <f:form.textfield property="addresses.{index}.houseNumber"
+                                  id="addresses.{index}.houseNumber"
+                                  class="form-control"
+                                  autocomplete="off"/>
+            </div>
+
+            <div class="form-group">
+                <label for="addresses.{index}.zip">
+                    {f:translate(key: 'tx_clubdirectory_domain_model_address.zip')}
+                </label>
+                <f:form.textfield property="addresses.{index}.zip"
+                                  id="addresses.{index}.zip"
+                                  class="form-control"
+                                  inputmode="numeric"
+                                  pattern="\d{4,5}"
+                                  autocomplete="off"/>
+            </div>
+
+            <div class="form-group">
+                <label for="addresses.{index}.city">
+                    {f:translate(key: 'tx_clubdirectory_domain_model_address.city')}
+                </label>
+                <f:form.textfield property="addresses.{index}.city"
+                                  id="addresses.{index}.city"
+                                  class="form-control"
+                                  autocomplete="off"/>
+            </div>
+
+            <div class="form-group">
+                <label for="addresses.{index}.telephone">
+                    {f:translate(key: 'tx_clubdirectory_domain_model_address.telephone')}
+                </label>
+                <f:form.textfield type="tel"
+                                  property="addresses.{index}.telephone"
+                                  id="addresses.{index}.telephone"
+                                  class="form-control"
+                                  autocomplete="off"/>
+            </div>
+
+            <div class="form-group">
+                <label for="addresses.{index}.fax">
+                    {f:translate(key: 'tx_clubdirectory_domain_model_address.fax')}
+                </label>
+                <f:form.textfield type="tel"
+                                  property="addresses.{index}.fax"
+                                  id="addresses.{index}.fax"
+                                  class="form-control"
+                                  autocomplete="off"/>
+            </div>
+
+            <div class="form-group form-check">
+                <f:form.checkbox property="addresses.{index}.barrierFree"
+                                 id="addresses.{index}.barrierFree"
+                                 class="form-check-input"
+                                 value="1"/>
+                <label class="form-check-label" for="addresses.{index}.barrierFree">
+                    {f:translate(key: 'tx_clubdirectory_domain_model_address.barrierFree')}
+                </label>
+            </div>
+
+            <f:if condition="{address.txMaps2Uid}">
+                <div class="form-group">
+                    <f:render partial="Maps2/EditPoiCollection"
+                              section="editMap"
+                              arguments="{poiCollection: address.txMaps2Uid, property: 'addresses.{index}.txMaps2Uid', override: {settings: {mapWidth: '100%', mapHeight: '300', zoom: '14'}}}"/>
+                </div>
+            </f:if>
+        </fieldset>
+    </f:for>
+</fieldset>
+
+<div class="form-group">
+    <label for="facebook">{f:translate(key: 'tx_clubdirectory_domain_model_club.facebook')}</label>
+    <f:form.textfield type="url"
+                      property="facebook"
+                      id="facebook"
+                      class="form-control"
+                      aria-describedby="facebookHelp"/>
+    <small id="facebookHelp" class="form-text text-muted">{f:translate(key: 'cshfacebook')}</small>
+</div>
+
+<div class="form-group">
+    <label for="twitter">{f:translate(key: 'tx_clubdirectory_domain_model_club.twitter')}</label>
+    <f:form.textfield type="url"
+                      property="twitter"
+                      id="twitter"
+                      class="form-control"
+                      aria-describedby="twitterHelp"/>
+    <small id="twitterHelp" class="form-text text-muted">{f:translate(key: 'cshtwitter')}</small>
+</div>
+
+<div class="form-group">
+    <label for="instagram">{f:translate(key: 'tx_clubdirectory_domain_model_club.instagram')}</label>
+    <f:form.textfield type="url"
+                      property="instagram"
+                      id="instagram"
+                      class="form-control"
+                      aria-describedby="instagramHelp"/>
+    <small id="instagramHelp" class="form-text text-muted">{f:translate(key: 'cshinstagram')}</small>
+</div>
+
+<div class="form-group">
+    <label for="tags">{f:translate(key: 'tx_clubdirectory_domain_model_club.tags')}</label>
+    <f:form.textfield property="tags"
+                      id="tags"
+                      class="form-control"
+                      aria-describedby="tagsHelp"/>
+    <small id="tagsHelp" class="form-text text-muted">{f:translate(key: 'cshtags')}</small>
+</div>
+
+<label for="logo">{f:translate(key: 'tx_clubdirectory_domain_model_club.logo')}</label>
+<f:for each="{club.logo}" as="logo" iteration="iterator">
+    <div class="media mb-3">
+        <f:image image="{logo}"
+                 class="mr-3"
+                 alt="{club.title}"
+                 width="{settings.list.image.width}"
+                 height="{settings.list.image.height}"/>
+        <div class="media-body">
+            <div class="form-group form-check">
+                <f:form.uploadDeleteCheckbox property="logo"
+                                             fileReference="{logo}"
+                                             id="logoDelete{iterator.index}"
+                                             class="form-check-input"/>
+                <label class="form-check-label" for="logoDelete{iterator.index}">
+                    {f:translate(key: 'deleteLogo')}
+                </label>
+            </div>
+        </div>
+    </div>
+</f:for>
+<div class="form-group">
+    <f:form.upload property="logo"
+                   id="logo"
+                   class="form-control-file"
+                   accept="image/gif,image/jpeg,image/png"
+                   aria-describedby="logoHelp"/>
+    <small id="logoHelp" class="form-text text-muted">{f:translate(key: 'cshlogo')}</small>
+</div>
+
+<label for="images">{f:translate(key: 'tx_clubdirectory_domain_model_club.images')}</label>
+<f:for each="{club.images}" as="image" iteration="iterator">
+    <div class="media mb-3">
+        <f:image image="{image}"
+                 class="mr-3"
+                 alt="{club.title}"
+                 width="{settings.list.image.width}"
+                 height="{settings.list.image.height}"/>
+        <div class="media-body">
+            <div class="form-group form-check">
+                <f:form.uploadDeleteCheckbox property="images"
+                                             fileReference="{image}"
+                                             id="imageDelete{iterator.index}"
+                                             class="form-check-input"/>
+                <label class="form-check-label" for="imageDelete{iterator.index}">
+                    {f:translate(key: 'deleteImage')}
+                </label>
+            </div>
+        </div>
+    </div>
+</f:for>
+<div class="form-group">
+    <f:form.upload property="images"
+                   id="images"
+                   class="form-control-file"
+                   multiple="1"
+                   accept="image/gif,image/jpeg,image/png"
+                   aria-describedby="imagesHelp"/>
+    <small id="imagesHelp" class="form-text text-muted">{f:translate(key: 'cshimages')}</small>
+</div>
 </html>

@@ -102,10 +102,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         if ($search->getSearchWord()) {
             $constraints[] = $this->getConstraintForSearchWord($query, $search->getSearchWord());
         } else {
-            if ($search->getSubCategory()) {
-                // @ToDo: getSubCategory is deprecated. Remove with next major release
-                $constraints[] = $query->contains('categories', $search->getSubCategory());
-            } elseif ($search->getCategory()) {
+            if ($search->getCategory()) {
                 $constraints[] = $query->contains('categories', $search->getCategory());
             }
 
@@ -114,20 +111,10 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
             }
         }
 
-        // Set ordering
-        if ($search->getOrderBy()) {
-            if (!in_array(
-                $search->getOrder(),
-                [QueryInterface::ORDER_ASCENDING, QueryInterface::ORDER_DESCENDING],
-                true,
-            )) {
-                $search->setOrderBy(QueryInterface::ORDER_ASCENDING);
-            }
-
-            $query->setOrderings([
-                $search->getOrderBy() => $search->getOrder(),
-            ]);
-        }
+        // Search restricts orderBy and order to allowed values
+        $query->setOrderings([
+            $search->getOrderBy() => $search->getOrder(),
+        ]);
 
         return $constraints !== [] ? $query->matching($query->logicalAnd(...$constraints))->execute() : $query->execute();
     }
@@ -189,7 +176,10 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         }
 
         if ($district !== 0) {
-            $queryBuilder->andWhere($queryBuilder->expr()->eq('c.district', $district));
+            $queryBuilder->andWhere($queryBuilder->expr()->eq(
+                'c.district',
+                $queryBuilder->createNamedParameter($district, Connection::PARAM_INT),
+            ));
         }
 
         return $queryBuilder;
@@ -197,6 +187,10 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
 
     protected function getConstraintForSearchWord(QueryInterface $query, string $searchWord): OrInterface
     {
+        // Search for "%" and "_" literally. Same as Connection::escapeLikeWildcards(),
+        // which matches the default escape character "\" of ExpressionBuilder::like()
+        $searchWord = addcslashes($searchWord, '_%');
+
         // strtolower is not UTF-8 compatible
         $longStreetSearch = $searchWord;
         $smallStreetSearch = $searchWord;
