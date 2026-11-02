@@ -11,6 +11,22 @@
         <source>Shows a list of club entries. Above all entries you will see an A-Z navigation to jump directly to an entry.</source>
         <target>crwdns305782:0crwdne305782:0</target>
       </trans-unit>
+      <trans-unit id="plugin.management.title">
+        <source>Club Directory Management</source>
+        <target>crwdns418647:0crwdne418647:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.management.description">
+        <source>Inserts a form to let frontend users create, edit and manage their own club entries.</source>
+        <target>crwdns418649:0crwdne418649:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.search.title">
+        <source>Club Directory Search</source>
+        <target>crwdns418651:0crwdne418651:0</target>
+      </trans-unit>
+      <trans-unit id="plugin.search.description">
+        <source>Inserts a search form to find club entries by search word, category and district.</source>
+        <target>crwdns418653:0crwdne418653:0</target>
+      </trans-unit>
       <trans-unit id="clubdirectory.tabs.media">
         <source>Media</source>
         <target>crwdns305784:0crwdne305784:0</target>
