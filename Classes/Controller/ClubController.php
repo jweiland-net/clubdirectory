@@ -70,7 +70,6 @@ class ClubController extends ActionController
             'categories' => $this->categoryRepository->getCategories(),
             'districts' => $this->districtRepository->findAll(),
             'search' => GeneralUtility::makeInstance(Search::class),
-            'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
 
         return $this->htmlResponse();

@@ -54,7 +54,6 @@ class ManagementController extends ActionController
     {
         $this->postProcessAndAssignFluidVariables([
             'clubs' => $this->clubRepository->findByFeUser($this->frontendUserRepository->getCurrentFrontendUserUid()),
-            'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
 
         return $this->htmlResponse();

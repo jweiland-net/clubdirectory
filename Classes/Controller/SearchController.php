@@ -50,7 +50,6 @@ class SearchController extends ActionController
             'categories' => $this->categoryRepository->getCategories(),
             'districts' => $this->districtRepository->findAll(),
             'search' => GeneralUtility::makeInstance(Search::class),
-            'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
 
         return $this->htmlResponse();
@@ -68,7 +67,6 @@ class SearchController extends ActionController
             'categories' => $this->categoryRepository->getCategories(),
             'districts' => $this->districtRepository->findAll(),
             'search' => $search,
-            'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
 
         return $this->htmlResponse();
