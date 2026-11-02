@@ -10,7 +10,7 @@
 <f:render section="renderTextareaProperty" arguments="{property: 'description', column: 'description'}"/>
 <f:render section="renderTextProperty" arguments="{property: 'contactPerson', column: 'contactPerson'}"/>
 <f:render section="renderTextProperty" arguments="{property: 'contactTimes', column: 'contactTimes'}"/>
-<f:render section="renderTextProperty" arguments="{property: 'email', column: 'email'}"/>
+<f:render section="renderEmailProperty" arguments="{property: 'email', column: 'email'}"/>
 <f:render section="renderTextProperty" arguments="{property: 'website', column: 'website'}"/>
 <f:render section="renderTextProperty" arguments="{property: 'members', column: 'members'}"/>
 <f:render section="renderTextProperty" arguments="{property: 'clubHome', column: 'clubHome'}"/>
@@ -96,6 +96,19 @@
     <div class="form-group">
         <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
         <f:form.textfield property="{property}"
+                          class="form-control"
+                          id="{property}"
+                          additionalAttributes="{aria-describedby: '{property}Help'}"
+        />
+        <f:render section="renderHelpMessage" arguments="{property: property}"/>
+    </div>
+</f:section>
+
+<f:section name="renderEmailProperty">
+    <div class="form-group">
+        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
+        <f:form.textfield type="email"
+                          property="{property}"
                           class="form-control"
                           id="{property}"
                           additionalAttributes="{aria-describedby: '{property}Help'}"
