@@ -102,10 +102,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         if ($search->getSearchWord()) {
             $constraints[] = $this->getConstraintForSearchWord($query, $search->getSearchWord());
         } else {
-            if ($search->getSubCategory()) {
-                // @ToDo: getSubCategory is deprecated. Remove with next major release
-                $constraints[] = $query->contains('categories', $search->getSubCategory());
-            } elseif ($search->getCategory()) {
+            if ($search->getCategory()) {
                 $constraints[] = $query->contains('categories', $search->getCategory());
             }
 

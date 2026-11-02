@@ -38,8 +38,6 @@ class Search
 
     protected int $district = 0;
 
-    protected int $subCategory = 0;
-
     protected string $orderBy = 'title';
 
     protected string $order = QueryInterface::ORDER_ASCENDING;
@@ -72,18 +70,6 @@ class Search
     public function setDistrict(int $district): void
     {
         $this->district = $district;
-    }
-
-    public function getSubCategory(): int
-    {
-        trigger_error('Using getSubCategory is deprecated and will be removed with next major release', E_USER_DEPRECATED);
-        return $this->subCategory;
-    }
-
-    public function setSubCategory(int $subCategory): void
-    {
-        trigger_error('Using setSubCategory is deprecated and will be removed with next major release', E_USER_DEPRECATED);
-        $this->subCategory = $subCategory;
     }
 
     public function getOrderBy(): string

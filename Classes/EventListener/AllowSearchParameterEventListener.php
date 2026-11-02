@@ -45,16 +45,17 @@ final readonly class AllowSearchParameterEventListener
             ->getArgument('search')
             ->getPropertyMappingConfiguration();
 
-        // ToDo: Remove subCategory with next major version
         $propertyMappingConfiguration->allowProperties(
             'searchWord',
             'letter',
             'district',
             'category',
-            'subCategory',
             'order',
             'orderBy',
         );
+
+        // Ignore unknown arguments like the removed "subCategory" in old links
+        $propertyMappingConfiguration->skipUnknownProperties();
 
         $propertyMappingConfiguration->setTypeConverterOptions(
             PersistentObjectConverter::class,
