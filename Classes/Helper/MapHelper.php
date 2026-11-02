@@ -69,26 +69,13 @@ class MapHelper
     }
 
     /**
-     * A new club has no UID while its POI records are created. Call this
-     * method after the club was persisted to add the UID to the POI titles.
-     * The changed POI records will be persisted by Extbase.
+     * Extbase does not call the DataHandler, so the column synchronization
+     * of maps2 is not executed for clubs saved in frontend. Set the title on
+     * our own with the "overrideFieldValues" API of maps2.
      */
-    public function updatePoiCollectionTitles(Club $club): void
-    {
-        foreach ($club->getOriginalAddresses() as $address) {
-            $poiCollection = $address->getTxMaps2Uid();
-            if (!$poiCollection instanceof PoiCollection || $poiCollection->_isNew()) {
-                continue;
-            }
-
-            $poiCollection->setTitle($this->getPoiCollectionTitle($club, $address));
-            $this->poiCollectionRepository->update($poiCollection);
-        }
-    }
-
     protected function getPoiCollectionTitle(Club $club, Address $address): string
     {
-        return sprintf('%s (%d) - %s', $club->getTitle(), (int)$club->getUid(), $address->getTitle());
+        return $club->getTitle() . ' - ' . $address->getTitle();
     }
 
     /**

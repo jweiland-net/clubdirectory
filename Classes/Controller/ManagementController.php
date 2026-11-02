@@ -105,8 +105,8 @@ class ManagementController extends ActionController
     }
 
     /**
-     * The club UID and PID are required for the unique path segment and the
-     * POI titles. They are available after the first persistAll() only.
+     * The club UID and PID are required to check the uniqueness of the path
+     * segment. They are available after the first persistAll() only.
      */
     protected function persistNewClub(Club $club): void
     {
@@ -114,7 +114,6 @@ class ManagementController extends ActionController
         $this->persistenceManager->persistAll();
 
         $this->pathSegmentHelper->updatePathSegmentForClub($club);
-        $this->mapHelper->updatePoiCollectionTitles($club);
 
         $this->clubRepository->update($club);
         $this->persistenceManager->persistAll();
