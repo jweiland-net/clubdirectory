@@ -154,10 +154,10 @@
 				<source>Edit</source>
 			</trans-unit>
 			<trans-unit id="clubCreated">
-				<source>Club created</source>
+				<source>Thank you! Your club has been saved. It will be visible in the club directory as soon as it has been checked and released by the administrator. No further action is required, unless you are asked for changes.</source>
 			</trans-unit>
 			<trans-unit id="clubUpdated">
-				<source>Club updated</source>
+				<source>Thank you! Your changes have been saved. Until they have been checked and released by the administrator, the club is not visible in the club directory.</source>
 			</trans-unit>
 			<trans-unit id="clubActivated">
 				<source>The club was activated and is now visible in frontend</source>
