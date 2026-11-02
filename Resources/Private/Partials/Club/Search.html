@@ -9,7 +9,9 @@
         name="search"
         class="form-inline">
     <div class="form-group">
-        <f:form.textfield name="search[searchWord]" class="form-control" value="{search.searchWord}"/>
+        <f:form.textfield name="search[searchWord]"
+                          class="form-control"
+                          value="{search.searchWord}"/>
     </div>
     <f:form.submit class="btn btn-default" value="{f:translate(key: 'search')}"/>
 </f:form>

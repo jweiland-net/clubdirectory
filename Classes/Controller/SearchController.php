@@ -21,6 +21,7 @@ use JWeiland\Clubdirectory\Domain\Model\Search;
 use JWeiland\Clubdirectory\Domain\Repository\DistrictRepository;
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 
@@ -52,6 +53,7 @@ class SearchController extends ActionController
         $this->postProcessAndAssignFluidVariables([
             'categories' => $this->categoryRepository->getCategories(),
             'districts' => $this->districtRepository->findAll(),
+            'search' => GeneralUtility::makeInstance(Search::class),
             'allowedUserGroup' => $this->extConf->getUserGroup(),
         ]);
 
