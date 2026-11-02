@@ -4,8 +4,8 @@
       data-namespace-typo3-fluid="true">
 
 <f:render section="renderTextProperty" arguments="{property: 'title', column: 'title', mandatory: 1}"/>
-<f:render section="renderSelectProperty"
-          arguments="{property: 'categories', column: 'categories', options: categories, size: 5, multiple: 1}"/>
+<f:render section="renderMultipleSelectProperty"
+          arguments="{property: 'categories', column: 'categories', options: categories, size: 5}"/>
 <f:render section="renderTextareaProperty" arguments="{property: 'activity', column: 'activity'}"/>
 <f:render section="renderTextareaProperty" arguments="{property: 'description', column: 'description'}"/>
 <f:render section="renderTextProperty" arguments="{property: 'contactPerson', column: 'contactPerson'}"/>
@@ -104,7 +104,7 @@
     </div>
 </f:section>
 
-<f:section name="renderSelectProperty">
+<f:section name="renderSingleSelectProperty">
     <div class="form-group">
         <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
         <f:form.select
@@ -112,13 +112,28 @@
             class="form-control"
             id="{property}"
             options="{options}"
-            size="{f:if(condition: size, then: size, else: 1)}"
-            multiple="{f:if(condition: multiple, then: 1, else: 0)}"
             optionValueField="{f:if(condition: optionValueField, then: optionValueField, else: 'uid')}"
             optionLabelField="{f:if(condition: optionLabelField, then: optionLabelField, else: 'title')}"
             sortByOptionLabel="1"
             prependOptionLabel="{f:translate(key: 'pleaseChoose')}"
             prependOptionValue=""/>
+        <f:render section="renderHelpMessage" arguments="{property: property}"/>
+    </div>
+</f:section>
+
+<f:section name="renderMultipleSelectProperty">
+    <div class="form-group">
+        <f:render section="renderLabel" arguments="{column: column, domain: domain}"/>
+        <f:form.select
+            property="{property}"
+            class="form-control"
+            id="{property}"
+            options="{options}"
+            size="{f:if(condition: size, then: size, else: 5)}"
+            multiple="1"
+            optionValueField="{f:if(condition: optionValueField, then: optionValueField, else: 'uid')}"
+            optionLabelField="{f:if(condition: optionLabelField, then: optionLabelField, else: 'title')}"
+            sortByOptionLabel="1"/>
         <f:render section="renderHelpMessage" arguments="{property: property}"/>
     </div>
 </f:section>
@@ -172,7 +187,7 @@
 <f:section name="renderAddressProperties">
     <f:variable name="prefix">addresses.{index}</f:variable>
 
-    <f:render section="renderSelectProperty"
+    <f:render section="renderSingleSelectProperty"
               arguments="{property: '{prefix}.title', column: 'title', domain: 'address', options: addressTitles, optionValueField: 'value', optionLabelField: 'label'}"/>
     <f:render section="renderTextProperty"
               arguments="{property: '{prefix}.street', column: 'street', domain: 'address'}"/>
