@@ -524,6 +524,15 @@ class ClubTest extends UnitTestCase
     }
 
     #[Test]
+    public function setDistrictWithNullRemovesDistrict(): void
+    {
+        $this->subject->setDistrict(new District());
+        $this->subject->setDistrict(null);
+
+        self::assertNull($this->subject->getDistrict());
+    }
+
+    #[Test]
     public function getAddressesInitiallyReturnsArray(): void
     {
         self::assertEquals(

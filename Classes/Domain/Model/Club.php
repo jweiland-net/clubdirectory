@@ -424,7 +424,10 @@ class Club extends AbstractEntity
         return $this->district;
     }
 
-    public function setDistrict(District $district): void
+    /**
+     * The district is optional. The empty option of the frontend form maps to NULL.
+     */
+    public function setDistrict(?District $district): void
     {
         $this->district = $district;
     }

@@ -69,6 +69,7 @@ class ManagementController extends ActionController
         $this->postProcessAndAssignFluidVariables([
             'club' => $club,
             'categories' => $this->categoryRepository->getCategories(),
+            'districts' => $this->districtRepository->findAll(),
             'addressTitles' => $this->getAddressTitles(),
         ]);
 
@@ -141,6 +142,7 @@ class ManagementController extends ActionController
         $this->postProcessAndAssignFluidVariables([
             'club' => $club,
             'categories' => $this->categoryRepository->getCategories(),
+            'districts' => $this->districtRepository->findAll(),
             'addressTitles' => $this->getAddressTitles(),
             'moderationToken' => $this->clubAccessService->getValidModerationToken($this->request, (int)$club->getUid()),
         ]);
