@@ -243,7 +243,7 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
     public function findAllForExport(): array
     {
         $clubs = [];
-        $clubs[] = ['Title', 'Email', 'Street', 'HouseNumber', 'Zip', 'City', 'Distrct', 'Tel'];
+        $clubs[] = ['Title', 'Email', 'Street', 'HouseNumber', 'Zip', 'City', 'District', 'Tel'];
 
         /** @var ObjectStorage|Club[] $clubObjects */
         $clubObjects = $this->findAll();
