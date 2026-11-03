@@ -149,6 +149,21 @@ class ManagementActivationTest extends FunctionalTestCase
         self::assertFalse($this->isClubHidden(self::HIDDEN_CLUB));
     }
 
+    /**
+     * The URL validators of the frontend form reject "www.example.org"
+     */
+    #[Test]
+    public function postActivateWithInvalidValuesOfFrontendFormActivatesClub(): void
+    {
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_clubdirectory_domain_model_club')
+            ->update('tx_clubdirectory_domain_model_club', ['website' => 'www.example.org'], ['uid' => self::HIDDEN_CLUB]);
+
+        $this->requestAction('activate', $this->getActivationArguments(), 'POST');
+
+        self::assertFalse($this->isClubHidden(self::HIDDEN_CLUB));
+    }
+
     #[Test]
     public function postActivateWithoutModerationTokenDeniesAccess(): void
     {

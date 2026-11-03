@@ -221,7 +221,11 @@ class ManagementController extends ActionController
     /**
      * The club is activated via POST only. GET requests are redirected to
      * the confirmation page.
+     * Activation changes the "hidden" state only. The club is not validated,
+     * so values saved in backend, which do not pass the validators of the
+     * frontend form, do not prevent the activation.
      */
+    #[Extbase\IgnoreValidation(['value' => 'club'])]
     public function activateAction(Club $club): ResponseInterface
     {
         if ($this->request->getMethod() !== 'POST') {
