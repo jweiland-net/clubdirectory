@@ -34,6 +34,8 @@ Security:
 *   [SECURITY] Allow external URLs only in the backend fields website,
     Facebook, Twitter and Instagram (TCA type `link`). Run the database
     analyzer, as the social link columns change to `TEXT`
+*   [SECURITY] Validate website and social links of the Management form
+    as complete URLs incl. scheme, e.g. `https://`
 
 ..  _changelog-9-0-0:
 

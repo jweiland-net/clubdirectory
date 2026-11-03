@@ -179,6 +179,9 @@
 			<trans-unit id="error.address.incomplete">
 				<source>%s: Please enter at least street, ZIP and city.</source>
 			</trans-unit>
+			<trans-unit id="error.url.invalid">
+				<source>Please enter the complete URL including https://.</source>
+			</trans-unit>
 			<trans-unit id="error.geocoding.noPositionsFound.title">
 				<source>Address not found</source>
 			</trans-unit>

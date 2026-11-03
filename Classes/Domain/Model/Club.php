@@ -25,6 +25,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class Club extends AbstractEntity
 {
+    private const URL_ERROR_MESSAGE = 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:error.url.invalid';
+
     protected bool $hidden = false;
 
     #[Extbase\Validate(['validator' => 'NotEmpty'])]
@@ -41,6 +43,7 @@ class Club extends AbstractEntity
     #[Extbase\Validate(['validator' => 'EmailAddress'])]
     protected string $email = '';
 
+    #[Extbase\Validate(['validator' => 'Url', 'options' => ['message' => self::URL_ERROR_MESSAGE]])]
     protected string $website = '';
 
     protected string $members = '';
@@ -130,10 +133,13 @@ class Club extends AbstractEntity
     ])]
     protected ObjectStorage $images;
 
+    #[Extbase\Validate(['validator' => 'Url', 'options' => ['message' => self::URL_ERROR_MESSAGE]])]
     protected string $facebook = '';
 
+    #[Extbase\Validate(['validator' => 'Url', 'options' => ['message' => self::URL_ERROR_MESSAGE]])]
     protected string $twitter = '';
 
+    #[Extbase\Validate(['validator' => 'Url', 'options' => ['message' => self::URL_ERROR_MESSAGE]])]
     protected string $instagram = '';
 
     protected string $tags = '';
