@@ -95,13 +95,14 @@ or `after` one of them.
         :Actions: `Management`: create, edit, update, activate.
             `Map`: new, create. Allows the access to the club for owners,
             backend administrators and valid moderation tokens only. Stops
-            with the 403 error handling of the site otherwise. See
+            with the 403 error handling of the site otherwise. `activate`
+            gets the club UID as scalar argument `clubUid`. See
             :ref:`moderation-access`.
 
     -   :Identifier: `clubdirectory/register-hidden-club`
         :Event: `PreProcessControllerActionEvent`
-        :Actions: `Management`: edit, update, activate. `Map`: new, create.
-            Registers the hidden club for the property mapper. Executed
+        :Actions: `Management`: edit, update, confirmActivation. `Map`: new,
+            create. Registers the hidden club for the property mapper. Executed
             after `clubdirectory/restrictAccess`.
 
     -   :Identifier: `clubdirectory/apply-upload-folder`

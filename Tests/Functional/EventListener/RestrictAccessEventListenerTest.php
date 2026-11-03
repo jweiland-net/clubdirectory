@@ -418,7 +418,7 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     {
         $this->loginUser(self::OWNER);
 
-        $this->assertAccessDenied($this->createEvent('Management', 'activate', ['club' => (string)self::HIDDEN_CLUB]));
+        $this->assertAccessDenied($this->createEvent('Management', 'activate', ['clubUid' => (string)self::HIDDEN_CLUB]));
     }
 
     #[Test]
@@ -427,7 +427,7 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
         $this->loginUser();
 
         $this->assertAccessGranted($this->createEvent('Management', 'activate', [
-            'club' => (string)self::HIDDEN_CLUB,
+            'clubUid' => (string)self::HIDDEN_CLUB,
             'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
         ]));
     }
@@ -440,7 +440,7 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
         $tamperedToken = substr($token, 0, -1) . ($token[-1] === 'a' ? 'b' : 'a');
 
         $this->assertAccessDenied($this->createEvent('Management', 'activate', [
-            'club' => (string)self::HIDDEN_CLUB,
+            'clubUid' => (string)self::HIDDEN_CLUB,
             'moderationToken' => $tamperedToken,
         ]));
     }
@@ -457,7 +457,7 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
             ->update('tx_clubdirectory_domain_model_club', ['tstamp' => 1762000001], ['uid' => self::HIDDEN_CLUB]);
 
         $this->assertAccessDenied($this->createEvent('Management', 'activate', [
-            'club' => (string)self::HIDDEN_CLUB,
+            'clubUid' => (string)self::HIDDEN_CLUB,
             'moderationToken' => $token,
         ]));
     }
@@ -468,7 +468,7 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
         $this->loginUser(self::OWNER);
 
         $this->assertAccessDenied($this->createEvent('Management', 'activate', [
-            'club' => (string)self::HIDDEN_CLUB,
+            'clubUid' => (string)self::HIDDEN_CLUB,
             'moderationToken' => $this->getModerationToken(self::VISIBLE_CLUB),
         ]));
     }
@@ -478,7 +478,7 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     {
         $this->loginUser(0, true);
 
-        $this->assertAccessDenied($this->createEvent('Management', 'activate', ['club' => (string)self::HIDDEN_CLUB]));
+        $this->assertAccessDenied($this->createEvent('Management', 'activate', ['clubUid' => (string)self::HIDDEN_CLUB]));
     }
 
     #[Test]
@@ -487,7 +487,29 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
         $this->loginUser(0, true);
 
         $this->assertAccessGranted($this->createEvent('Management', 'activate', [
+            'clubUid' => (string)self::HIDDEN_CLUB,
+            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
+        ]));
+    }
+
+    #[Test]
+    public function activateWithClubArgumentInsteadOfClubUidDeniesAccess(): void
+    {
+        $this->loginUser();
+
+        $this->assertAccessDenied($this->createEvent('Management', 'activate', [
             'club' => (string)self::HIDDEN_CLUB,
+            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
+        ]));
+    }
+
+    #[Test]
+    public function activateWithArrayInClubUidDeniesAccess(): void
+    {
+        $this->loginUser();
+
+        $this->assertAccessDenied($this->createEvent('Management', 'activate', [
+            'clubUid' => ['__identity' => (string)self::HIDDEN_CLUB],
             'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
         ]));
     }

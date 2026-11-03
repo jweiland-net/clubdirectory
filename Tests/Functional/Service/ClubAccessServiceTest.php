@@ -311,7 +311,7 @@ class ClubAccessServiceTest extends FunctionalTestCase
     private function isValidModerationToken(string $moderationToken, int $clubUid): bool
     {
         $request = $this->createExtbaseRequest('Management', 'activate', [
-            'club' => $clubUid,
+            'clubUid' => $clubUid,
             'moderationToken' => $moderationToken,
         ]);
 

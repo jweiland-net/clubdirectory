@@ -17,6 +17,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Configuration\SiteWriter;
 use TYPO3\CMS\Core\Utility\HttpUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\MvcPropertyMappingConfigurationService;
 use TYPO3\CMS\Frontend\Page\CacheHashCalculator;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
@@ -76,7 +77,10 @@ class ManagementActivationTest extends FunctionalTestCase
         $request = new InternalRequest('https://www.example.com/');
 
         if ($method === 'POST') {
-            $request = $request->withMethod('POST')->withParsedBody([self::PLUGIN_NAMESPACE => $pluginArguments]);
+            $parsedBody = [self::PLUGIN_NAMESPACE => $pluginArguments];
+            $request = $request->withMethod('POST')->withParsedBody($parsedBody);
+            // The testing framework can not build a body of nested arrays
+            $request->getBody()->write(http_build_query($parsedBody));
         } else {
             foreach ($pluginArguments as $argumentName => $value) {
                 $queryParameters[self::PLUGIN_NAMESPACE . '[' . $argumentName . ']'] = $value;
@@ -90,14 +94,65 @@ class ManagementActivationTest extends FunctionalTestCase
     }
 
     /**
+     * "confirmActivation" gets the club as "club", "activate" as "clubUid"
+     *
      * @return array<string, string>
      */
-    private function getActivationArguments(): array
+    private function getActivationArguments(string $clubArgumentName = 'clubUid'): array
     {
         return [
-            'club' => (string)self::HIDDEN_CLUB,
+            $clubArgumentName => (string)self::HIDDEN_CLUB,
             'moderationToken' => $this->get(ClubAccessService::class)->generateModerationToken(self::HIDDEN_CLUB),
         ];
+    }
+
+    /**
+     * Club properties with a valid "__trustedProperties" token, which allows
+     * to map them, e.g. replayed from another form
+     *
+     * @return array<string, mixed>
+     */
+    private function getActivationArgumentsWithClubProperties(): array
+    {
+        $arguments = $this->getActivationArguments();
+        $arguments['club'] = [
+            '__identity' => (string)self::HIDDEN_CLUB,
+            'title' => 'Changed title',
+            'email' => 'attacker@example.com',
+            'website' => 'https://attacker.example.com',
+            'description' => 'Changed description',
+        ];
+        $arguments['__trustedProperties'] = $this->get(MvcPropertyMappingConfigurationService::class)
+            ->generateTrustedPropertiesToken(
+                [
+                    self::PLUGIN_NAMESPACE . '[club][__identity]',
+                    self::PLUGIN_NAMESPACE . '[club][title]',
+                    self::PLUGIN_NAMESPACE . '[club][email]',
+                    self::PLUGIN_NAMESPACE . '[club][website]',
+                    self::PLUGIN_NAMESPACE . '[club][description]',
+                    self::PLUGIN_NAMESPACE . '[clubUid]',
+                    self::PLUGIN_NAMESPACE . '[moderationToken]',
+                ],
+                self::PLUGIN_NAMESPACE,
+            );
+
+        return $arguments;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function getClubProperties(int $clubUid): array
+    {
+        $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');
+        $queryBuilder->getRestrictions()->removeAll();
+
+        return (array)$queryBuilder
+            ->select('title', 'email', 'website', 'description')
+            ->from('tx_clubdirectory_domain_model_club')
+            ->where($queryBuilder->expr()->eq('uid', $clubUid))
+            ->executeQuery()
+            ->fetchAssociative();
     }
 
     private function isClubHidden(int $clubUid): bool
@@ -117,7 +172,7 @@ class ManagementActivationTest extends FunctionalTestCase
     #[Test]
     public function getConfirmActivationShowsFormAndKeepsClubHidden(): void
     {
-        $arguments = $this->getActivationArguments();
+        $arguments = $this->getActivationArguments('club');
 
         $response = $this->requestAction('confirmActivation', $arguments);
         $content = (string)$response->getBody();
@@ -125,6 +180,7 @@ class ManagementActivationTest extends FunctionalTestCase
         self::assertSame(200, $response->getStatusCode());
         self::assertStringContainsString('Hidden club', $content);
         self::assertStringContainsString('method="post"', $content);
+        self::assertStringContainsString('name="' . self::PLUGIN_NAMESPACE . '[clubUid]" value="' . self::HIDDEN_CLUB . '"', $content);
         self::assertStringContainsString('value="' . $arguments['moderationToken'] . '"', $content);
         self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
     }
@@ -138,6 +194,15 @@ class ManagementActivationTest extends FunctionalTestCase
     {
         $this->requestAction('activate', $this->getActivationArguments());
 
+        self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
+    }
+
+    #[Test]
+    public function postActivateWithClubArgumentInsteadOfClubUidDeniesAccess(): void
+    {
+        $response = $this->requestAction('activate', $this->getActivationArguments('club'), 'POST');
+
+        self::assertSame(403, $response->getStatusCode());
         self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
     }
 
@@ -165,9 +230,34 @@ class ManagementActivationTest extends FunctionalTestCase
     }
 
     #[Test]
+    public function postActivateWithClubPropertiesActivatesClubWithoutChangingProperties(): void
+    {
+        $clubProperties = $this->getClubProperties(self::HIDDEN_CLUB);
+
+        $this->requestAction('activate', $this->getActivationArgumentsWithClubProperties(), 'POST');
+
+        self::assertFalse($this->isClubHidden(self::HIDDEN_CLUB));
+        self::assertSame($clubProperties, $this->getClubProperties(self::HIDDEN_CLUB));
+    }
+
+    #[Test]
+    public function postActivateWithClubPropertiesAndInvalidModerationTokenDeniesAccess(): void
+    {
+        $clubProperties = $this->getClubProperties(self::HIDDEN_CLUB);
+        $arguments = $this->getActivationArgumentsWithClubProperties();
+        $arguments['moderationToken'] = 'invalid';
+
+        $response = $this->requestAction('activate', $arguments, 'POST');
+
+        self::assertSame(403, $response->getStatusCode());
+        self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
+        self::assertSame($clubProperties, $this->getClubProperties(self::HIDDEN_CLUB));
+    }
+
+    #[Test]
     public function postActivateWithoutModerationTokenDeniesAccess(): void
     {
-        $response = $this->requestAction('activate', ['club' => (string)self::HIDDEN_CLUB], 'POST');
+        $response = $this->requestAction('activate', ['clubUid' => (string)self::HIDDEN_CLUB], 'POST');
 
         self::assertSame(403, $response->getStatusCode());
         self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));

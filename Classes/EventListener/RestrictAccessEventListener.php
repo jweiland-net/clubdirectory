@@ -69,6 +69,15 @@ final readonly class RestrictAccessEventListener
     ];
 
     /**
+     * These actions get the club UID as scalar argument "clubUid" instead of "club"
+     */
+    private const CLUB_UID_CONTROLLER_ACTIONS = [
+        'Management' => [
+            'activate',
+        ],
+    ];
+
+    /**
      * Only these actions are allowed to be called with a club which was not persisted yet
      */
     private const NEW_CLUB_CONTROLLER_ACTIONS = [
@@ -114,7 +123,7 @@ final readonly class RestrictAccessEventListener
     private function isAccessAllowed(PreProcessControllerActionEvent $controllerActionEvent): bool
     {
         $request = $controllerActionEvent->getRequest();
-        $clubArgument = $request->hasArgument('club') ? $request->getArgument('club') : null;
+        $clubArgument = $this->getClubArgument($controllerActionEvent);
         $clubUid = $this->clubAccessService->getIdentity($clubArgument);
         $hasModerationToken = $this->clubAccessService->getValidModerationToken($request, $clubUid) !== '';
 
@@ -135,6 +144,26 @@ final readonly class RestrictAccessEventListener
         }
 
         return !is_array($clubArgument) || $this->clubAccessService->hasOnlyRecordsOfClub($clubArgument, $clubUid);
+    }
+
+    /**
+     * Returns the argument, which identifies the club. Arrays in "clubUid"
+     * are rejected, so these actions get a scalar UID only.
+     */
+    private function getClubArgument(PreProcessControllerActionEvent $controllerActionEvent): mixed
+    {
+        $request = $controllerActionEvent->getRequest();
+        if (!in_array(
+            $controllerActionEvent->getActionName(),
+            self::CLUB_UID_CONTROLLER_ACTIONS[$controllerActionEvent->getControllerName()] ?? [],
+            true,
+        )) {
+            return $request->hasArgument('club') ? $request->getArgument('club') : null;
+        }
+
+        $clubUid = $request->hasArgument('clubUid') ? $request->getArgument('clubUid') : null;
+
+        return is_scalar($clubUid) ? $clubUid : null;
     }
 
     /**
