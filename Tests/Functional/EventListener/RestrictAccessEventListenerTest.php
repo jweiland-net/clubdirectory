@@ -162,7 +162,74 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     {
         $this->loginUser(0, true);
 
+        $this->assertAccessGranted($this->createEvent($controllerName, $actionName, ['club' => (string)self::OTHER_GROUP_CLUB]));
+    }
+
+    public static function managementActionDataProvider(): array
+    {
+        return [
+            'Management create' => ['Management', 'create'],
+            'Management edit' => ['Management', 'edit'],
+            'Management update' => ['Management', 'update'],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('managementActionDataProvider')]
+    public function managementActionWithBackendAdminGrantsAccessToActiveClub(string $controllerName, string $actionName): void
+    {
+        $this->loginUser(0, true);
+
         $this->assertAccessGranted($this->createEvent($controllerName, $actionName, ['club' => (string)self::FOREIGN_CLUB]));
+    }
+
+    public static function mapActionWithActiveClubDataProvider(): array
+    {
+        $arguments = [];
+        foreach (['new', 'create'] as $actionName) {
+            $arguments['Map ' . $actionName . ' with owner'] = [$actionName, self::OWNER, false, false];
+            $arguments['Map ' . $actionName . ' with backend admin'] = [$actionName, 0, true, false];
+            $arguments['Map ' . $actionName . ' with moderation token'] = [$actionName, 0, false, true];
+            $arguments['Map ' . $actionName . ' with owner and moderation token'] = [$actionName, self::OWNER, false, true];
+        }
+
+        return $arguments;
+    }
+
+    /**
+     * Clubs are hidden after Management create and update. So an active club
+     * is never in the map step and must not be changed without moderation.
+     */
+    #[Test]
+    #[DataProvider('mapActionWithActiveClubDataProvider')]
+    public function mapActionWithActiveClubDeniesAccess(
+        string $actionName,
+        int $frontendUserUid,
+        bool $isBackendAdmin,
+        bool $withModerationToken,
+    ): void {
+        $this->loginUser($frontendUserUid, $isBackendAdmin);
+        $arguments = ['club' => ['__identity' => (string)self::VISIBLE_CLUB]];
+        if ($withModerationToken) {
+            $arguments['moderationToken'] = $this->getModerationToken(self::VISIBLE_CLUB);
+        }
+
+        $this->assertAccessDenied($this->createEvent('Map', $actionName, $arguments));
+    }
+
+    #[Test]
+    public function mapCreateWithHiddenClubOfOwnerGrantsAccess(): void
+    {
+        $this->loginUser(self::OWNER);
+
+        $this->assertAccessGranted($this->createEvent('Map', 'create', [
+            'club' => [
+                '__identity' => (string)self::HIDDEN_CLUB,
+                'addresses' => [
+                    ['__identity' => '2'],
+                ],
+            ],
+        ]));
     }
 
     #[Test]

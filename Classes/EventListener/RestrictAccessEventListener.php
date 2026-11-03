@@ -28,6 +28,10 @@ use TYPO3\CMS\Frontend\Controller\ErrorController;
  * club without login. "confirmActivation" and "activate" are allowed with a
  * valid token only, so owners can not activate their own clubs and bypass
  * the moderation.
+ * The map step ("Map" new and create) is allowed for hidden clubs only, as
+ * clubs are hidden after Management create and update until they get
+ * activated. So the map step can never change an active club. This applies
+ * to backend administrators and moderation token holders, too.
  * The listener is called in the initialize*Action methods, so access is
  * denied before Extbase maps the arguments and stores uploaded files.
  * Access will be denied with the 403 error handling of the site. Do not
@@ -69,6 +73,16 @@ final readonly class RestrictAccessEventListener
      */
     private const NEW_CLUB_CONTROLLER_ACTIONS = [
         'Management' => [
+            'new',
+            'create',
+        ],
+    ];
+
+    /**
+     * These actions are allowed for hidden clubs only
+     */
+    private const HIDDEN_CLUB_CONTROLLER_ACTIONS = [
+        'Map' => [
             'new',
             'create',
         ],
@@ -116,6 +130,10 @@ final readonly class RestrictAccessEventListener
             return false;
         }
 
+        if ($clubUid > 0 && !$this->isClubStateAllowed($controllerActionEvent, $clubUid)) {
+            return false;
+        }
+
         return !is_array($clubArgument) || $this->clubAccessService->hasOnlyRecordsOfClub($clubArgument, $clubUid);
     }
 
@@ -147,5 +165,14 @@ final readonly class RestrictAccessEventListener
             self::NEW_CLUB_CONTROLLER_ACTIONS[$controllerActionEvent->getControllerName()] ?? [],
             true,
         );
+    }
+
+    private function isClubStateAllowed(PreProcessControllerActionEvent $controllerActionEvent, int $clubUid): bool
+    {
+        return !in_array(
+            $controllerActionEvent->getActionName(),
+            self::HIDDEN_CLUB_CONTROLLER_ACTIONS[$controllerActionEvent->getControllerName()] ?? [],
+            true,
+        ) || $this->clubAccessService->isClubHidden($clubUid);
     }
 }

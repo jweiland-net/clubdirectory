@@ -110,6 +110,31 @@ readonly class ClubAccessService
         return $frontendUserUid > 0 && $this->isClubAssignedToFrontendUser($clubUid, $frontendUserUid);
     }
 
+    /**
+     * Returns true, if the club exists and is hidden. Deleted clubs are
+     * never returned.
+     */
+    public function isClubHidden(int $clubUid): bool
+    {
+        if ($clubUid <= 0) {
+            return false;
+        }
+
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_CLUB);
+        $queryBuilder->getRestrictions()->removeAll()->add(new DeletedRestriction());
+
+        $hidden = $queryBuilder
+            ->select('hidden')
+            ->from(self::TABLE_CLUB)
+            ->where(
+                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($clubUid, Connection::PARAM_INT)),
+            )
+            ->executeQuery()
+            ->fetchOne();
+
+        return $hidden !== false && (int)$hidden === 1;
+    }
+
     public function isBackendAdmin(): bool
     {
         return $this->context->getPropertyFromAspect('backend.user', 'isAdmin', false) === true;
