@@ -21,8 +21,11 @@ use JWeiland\Clubdirectory\Service\ClubCacheService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Controller\Argument;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
+use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Extbase\Validation\Validator\ValidatorInterface;
 
 /**
  * Controller to confirm the map positions of a new club. Changes of
@@ -60,6 +63,49 @@ class MapController extends ActionController
     public function initializeCreateAction(): void
     {
         $this->preProcessControllerAction();
+        $this->restrictClubArgumentToCoordinates();
+    }
+
+    /**
+     * The trusted properties of all forms of the plugin are signed for the
+     * argument "club". So the argument gets a new property mapping
+     * configuration, which maps the coordinates of the existing POI
+     * collections of the existing addresses only. All other submitted
+     * properties are skipped. Creation of new addresses or POI collections
+     * is not allowed.
+     */
+    protected function restrictClubArgumentToCoordinates(): void
+    {
+        $propertyMappingConfiguration = $this->replaceClubArgument()->getPropertyMappingConfiguration();
+        $propertyMappingConfiguration
+            ->allowProperties('addresses')
+            ->skipUnknownProperties()
+            ->setTypeConverterOptions(PersistentObjectConverter::class, [
+                PersistentObjectConverter::CONFIGURATION_MODIFICATION_ALLOWED => true,
+            ]);
+        $propertyMappingConfiguration->allowModificationForSubProperty('addresses.*');
+        $propertyMappingConfiguration->forProperty('addresses.*')
+            ->allowProperties('txMaps2Uid')
+            ->skipUnknownProperties();
+        $propertyMappingConfiguration->allowModificationForSubProperty('addresses.*.txMaps2Uid');
+        $propertyMappingConfiguration->forProperty('addresses.*.txMaps2Uid')
+            ->allowProperties('latitude', 'longitude')
+            ->skipUnknownProperties();
+    }
+
+    /**
+     * Replaces the argument "club" with a new argument without property
+     * mapping configuration. The validator of the argument is kept.
+     */
+    protected function replaceClubArgument(): Argument
+    {
+        $validator = $this->arguments->getArgument('club')->getValidator();
+        $clubArgument = $this->arguments->addNewArgument('club', Club::class, true);
+        if ($validator instanceof ValidatorInterface) {
+            $clubArgument->setValidator($validator);
+        }
+
+        return $clubArgument;
     }
 
     public function createAction(Club $club): ResponseInterface
