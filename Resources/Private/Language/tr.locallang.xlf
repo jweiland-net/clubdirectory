@@ -231,6 +231,10 @@
         <source>%s: Please enter at least street, ZIP and city.</source>
         <target state="needs-translation">%s: Please enter at least street, ZIP and city.</target>
       </trans-unit>
+      <trans-unit id="error.url.invalid">
+        <source>Please enter the complete URL including https://.</source>
+        <target state="needs-translation">Please enter the complete URL including https://.</target>
+      </trans-unit>
       <trans-unit id="error.geocoding.noPositionsFound.title">
         <source>Address not found</source>
         <target state="needs-translation">Address not found</target>
