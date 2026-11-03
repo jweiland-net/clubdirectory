@@ -11,16 +11,19 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Domain\Repository;
 
+use JWeiland\Clubdirectory\Domain\Model\District;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Repository to get and search for districts
+ *
+ * @extends Repository<District>
  */
 class DistrictRepository extends Repository
 {
     /**
-     * @var array
+     * @var array<non-empty-string, QueryInterface::ORDER_*>
      */
     protected $defaultOrderings = [
         'district' => QueryInterface::ORDER_ASCENDING,

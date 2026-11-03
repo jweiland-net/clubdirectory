@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Event;
 
 use TYPO3\CMS\Extbase\Mvc\Controller\Arguments;
-use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
 /**
  * Pre-process controller actions. Dispatched within the initialize*Action methods,
@@ -25,12 +25,12 @@ final class PreProcessControllerActionEvent implements ControllerActionEventInte
      * @param array<string, mixed> $settings
      */
     public function __construct(
-        private Request $request,
+        private RequestInterface $request,
         private Arguments $arguments,
         private readonly array $settings,
     ) {}
 
-    public function getRequest(): Request
+    public function getRequest(): RequestInterface
     {
         return $this->request;
     }
@@ -58,7 +58,7 @@ final class PreProcessControllerActionEvent implements ControllerActionEventInte
         return $this->settings;
     }
 
-    public function setRequest(Request $request): void
+    public function setRequest(RequestInterface $request): void
     {
         $this->request = $request;
     }

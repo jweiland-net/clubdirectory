@@ -22,20 +22,21 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendRestrictionContainer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrInterface;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Repository to get and search for clubs
+ *
+ * @extends Repository<Club>
  */
 class ClubRepository extends Repository implements HiddenRepositoryInterface
 {
     use ConnectionPoolTrait;
 
     /**
-     * @var array
+     * @var array<non-empty-string, QueryInterface::ORDER_*>
      */
     protected $defaultOrderings = [
         'title' => QueryInterface::ORDER_ASCENDING,
@@ -59,6 +60,9 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         $this->glossaryService = $glossaryService;
     }
 
+    /**
+     * @return QueryResultInterface<int, Club>
+     */
     public function findFilteredBy(int $category, int $district = 0, string $letter = ''): QueryResultInterface
     {
         $query = $this->createQuery();
@@ -93,6 +97,9 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         return $query->matching($query->logicalAnd(...$constraints))->execute();
     }
 
+    /**
+     * @return QueryResultInterface<int, Club>
+     */
     public function findBySearch(Search $search): QueryResultInterface
     {
         $query = $this->createQuery();
@@ -119,6 +126,9 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         return $constraints !== [] ? $query->matching($query->logicalAnd(...$constraints))->execute() : $query->execute();
     }
 
+    /**
+     * @return QueryResultInterface<int, Club>
+     */
     public function findByFeUser(int $feUser): QueryResultInterface
     {
         $query = $this->createQuery();
@@ -185,6 +195,9 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         return $queryBuilder;
     }
 
+    /**
+     * @param QueryInterface<Club> $query
+     */
     protected function getConstraintForSearchWord(QueryInterface $query, string $searchWord): OrInterface
     {
         // Search for "%" and "_" literally. Same as Connection::escapeLikeWildcards(),
@@ -239,15 +252,15 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
     /**
      * Find all clubs to export them via CSV
      * only for BE.
+     *
+     * @return list<list<string>>
      */
     public function findAllForExport(): array
     {
         $clubs = [];
         $clubs[] = ['Title', 'Email', 'Street', 'HouseNumber', 'Zip', 'City', 'District', 'Tel'];
 
-        /** @var ObjectStorage|Club[] $clubObjects */
-        $clubObjects = $this->findAll();
-        foreach ($clubObjects as $club) {
+        foreach ($this->findAll() as $club) {
             foreach ($club->getAddresses() as $address) {
                 if ($address->getTitle() === 'postAddress') {
                     $clubs[] = [
@@ -267,6 +280,9 @@ class ClubRepository extends Repository implements HiddenRepositoryInterface
         return $clubs;
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     public function getStoragePid(): array
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');

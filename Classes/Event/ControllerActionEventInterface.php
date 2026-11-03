@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Event;
 
-use TYPO3\CMS\Extbase\Mvc\Request;
+use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
 interface ControllerActionEventInterface
 {
-    public function getRequest(): Request;
+    public function getRequest(): RequestInterface;
 
     /**
      * Get controller name.
@@ -29,5 +29,8 @@ interface ControllerActionEventInterface
      */
     public function getActionName(): string;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getSettings(): array;
 }

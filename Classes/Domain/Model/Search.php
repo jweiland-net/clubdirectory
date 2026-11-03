@@ -103,6 +103,8 @@ class Search
     /**
      * Helper method to fill selectbox in fluid template {search.order}
      * Get sorting order
+     *
+     * @return array<int, array{key: string, value: string|null}>
      */
     public function getSortingOrders(): array
     {

@@ -24,6 +24,10 @@ class UpdateMaps2RecordHook
 {
     use ConnectionPoolTrait;
 
+    /**
+     * @param array<string, mixed> $foreignLocationRecord
+     * @param array<string, mixed> $options
+     */
     public function postUpdatePoiCollection(string $poiCollectionTableName, int $poiCollectionUid, string $foreignTableName, array $foreignLocationRecord, array $options): void
     {
         // Execute update only, if club column is filled. Else POI collection will be filled with title of address
@@ -51,6 +55,9 @@ class UpdateMaps2RecordHook
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getClubRecord(int $clubUid): array
     {
         $queryBuilder = $this->getConnectionPool()->getQueryBuilderForTable('tx_clubdirectory_domain_model_club');

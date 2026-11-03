@@ -19,6 +19,9 @@ class AddPaginatorEventListener extends AbstractControllerEventListener
 {
     protected int $itemsPerPage = 15;
 
+    /**
+     * @var array<string, list<string>>
+     */
     protected array $allowedControllerActions = [
         'Club' => [
             'list',

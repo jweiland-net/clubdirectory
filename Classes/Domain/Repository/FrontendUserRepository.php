@@ -20,6 +20,7 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
  * Repository to manage records of fe_users table and retrieve current logged-in user
  *
  * @method FrontendUser findByUid(int $frontendUserUid)
+ * @extends Repository<FrontendUser>
  */
 class FrontendUserRepository extends Repository
 {
@@ -28,6 +29,9 @@ class FrontendUserRepository extends Repository
         return $this->getCurrentFrontendUserRecord()['uid'] ?? 0;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getCurrentFrontendUserRecord(): array
     {
         if ($this->getTypo3Request() === null) {

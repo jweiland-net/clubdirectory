@@ -84,13 +84,15 @@ class MapHelper
 
     protected function attachPoiCollection(Address $address, Position $position, Club $club): void
     {
-        $address->setTxMaps2Uid($this->poiCollectionRepository->findByIdentifier(
+        $poiCollection = $this->poiCollectionRepository->findByIdentifier(
             $this->mapService->createNewPoiCollection(
                 $this->extConf->getPoiCollectionPid(),
                 $position,
                 ['title' => $this->getPoiCollectionTitle($club)],
             ),
-        ));
+        );
+
+        $address->setTxMaps2Uid($poiCollection instanceof PoiCollection ? $poiCollection : null);
     }
 
     /**
