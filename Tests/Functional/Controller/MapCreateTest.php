@@ -319,4 +319,25 @@ class MapCreateTest extends FunctionalTestCase
             array_map('intval', $this->getFields(self::TABLE_ADDRESS, self::ADDRESS_WITH_POI, ['club', 'deleted'])),
         );
     }
+
+    /**
+     * Club 1 is active and assigned to the owner (Fixtures/ClubAccess.csv)
+     */
+    #[Test]
+    public function postCreateWithActiveClubOfOwnerDeniesAccess(): void
+    {
+        $response = $this->postCreate([
+            '__identity' => (string)self::VISIBLE_CLUB,
+            'title' => 'Manipulated club',
+            'addresses' => [
+                ['__identity' => '1'],
+            ],
+        ]);
+
+        self::assertSame(403, $response->getStatusCode());
+        self::assertSame(
+            ['hidden' => 0, 'title' => 'Swimming club'],
+            $this->getFields(self::TABLE_CLUB, self::VISIBLE_CLUB, ['hidden', 'title']),
+        );
+    }
 }
