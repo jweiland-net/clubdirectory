@@ -83,56 +83,56 @@ Event listeners of clubdirectory
 Use these identifiers, if you want to register your own listener `before`
 or `after` one of them.
 
-..  t3-field-list-table::
+..  list-table::
     :header-rows: 1
 
-    -   :Identifier: Identifier
-        :Event: Event
-        :Actions: Controller actions and purpose
+    *   -   Identifier
+        -   Event
+        -   Controller actions and purpose
 
-    -   :Identifier: `clubdirectory/restrictAccess`
-        :Event: `PreProcessControllerActionEvent`
-        :Actions: `Management`: create, edit, update, activate.
+    *   -   `clubdirectory/restrictAccess`
+        -   `PreProcessControllerActionEvent`
+        -   `Management`: create, edit, update, activate.
             `Map`: new, create. Allows the access to the club for owners,
             backend administrators and valid moderation tokens only. Stops
             with the 403 error handling of the site otherwise. `activate`
             gets the club UID as scalar argument `clubUid`. See
             :ref:`moderation-access`.
 
-    -   :Identifier: `clubdirectory/register-hidden-club`
-        :Event: `PreProcessControllerActionEvent`
-        :Actions: `Management`: edit, update, confirmActivation. `Map`: new,
-            create. Registers the hidden club for the property mapper. Executed
-            after `clubdirectory/restrictAccess`.
+    *   -   `clubdirectory/register-hidden-club`
+        -   `PreProcessControllerActionEvent`
+        -   `Management`: edit, update, confirmActivation. `Map`: new,
+            create. Registers the hidden club for the property mapper.
+            Executed after `clubdirectory/restrictAccess`.
 
-    -   :Identifier: `clubdirectory/apply-upload-folder`
-        :Event: `PreProcessControllerActionEvent`
-        :Actions: `Management`: create, update. Sets the upload folder of
+    *   -   `clubdirectory/apply-upload-folder`
+        -   `PreProcessControllerActionEvent`
+        -   `Management`: create, update. Sets the upload folder of
             logo and images from `settings.new.uploadFolder`.
 
-    -   :Identifier: `clubdirectory/check-fal-uploads`
-        :Event: `PreProcessControllerActionEvent`
-        :Actions: `Management`: create, update. Adds the validator of
+    *   -   `clubdirectory/check-fal-uploads`
+        -   `PreProcessControllerActionEvent`
+        -   `Management`: create, update. Adds the validator of
             checkfaluploads to logo and images, if checkfaluploads is
             installed. See :ref:`upgrade-9-0-0-checkfaluploads`.
 
-    -   :Identifier: `clubdirectory/allow-search-parameter`
-        :Event: `PreProcessControllerActionEvent`
-        :Actions: `Search`: listSearchResults. Allows the search arguments
+    *   -   `clubdirectory/allow-search-parameter`
+        -   `PreProcessControllerActionEvent`
+        -   `Search`: listSearchResults. Allows the search arguments
             also for GET requests, e.g. of the page browser.
 
-    -   :Identifier: `JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener`
-        :Event: `PostProcessFluidVariablesEvent`
-        :Actions: `Club`: list. `Search`: listSearchResults. Adds the
+    *   -   `JWeiland\Clubdirectory\EventListener\AddPaginatorEventListener`
+        -   `PostProcessFluidVariablesEvent`
+        -   `Club`: list. `Search`: listSearchResults. Adds the
             paginator and the pagination.
 
-    -   :Identifier: `JWeiland\Clubdirectory\EventListener\AddGlossaryEventListener`
-        :Event: `PostProcessFluidVariablesEvent`
-        :Actions: `Club`: list. Adds the glossary of glossary2.
+    *   -   `JWeiland\Clubdirectory\EventListener\AddGlossaryEventListener`
+        -   `PostProcessFluidVariablesEvent`
+        -   `Club`: list. Adds the glossary of glossary2.
 
-    -   :Identifier: `JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener`
-        :Event: `\JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent`
-        :Actions: Sets the club title as title of the POI records of clubs
+    *   -   `JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener`
+        -   `\JWeiland\Maps2\Event\PostProcessPoiCollectionRecordEvent`
+        -   Sets the club title as title of the POI records of clubs
             saved in the backend.
 
 ..  versionchanged:: 9.0.0
