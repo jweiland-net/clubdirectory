@@ -395,6 +395,18 @@
         <source>Activate record</source>
         <target state="final">Datensatz freischalten</target>
       </trans-unit>
+      <trans-unit id="confirmActivation.header">
+        <source>Activate club</source>
+        <target state="needs-translation">Activate club</target>
+      </trans-unit>
+      <trans-unit id="confirmActivation.description">
+        <source>Please check the club. It will be visible in frontend after the activation.</source>
+        <target state="needs-translation">Please check the club. It will be visible in frontend after the activation.</target>
+      </trans-unit>
+      <trans-unit id="confirmActivation.submit">
+        <source>Activate club</source>
+        <target state="needs-translation">Activate club</target>
+      </trans-unit>
       <trans-unit id="email.property" approved="yes">
         <source>Property</source>
         <target state="final">Eigenschaft</target>
