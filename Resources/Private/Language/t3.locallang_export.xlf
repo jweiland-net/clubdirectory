@@ -15,6 +15,10 @@
         <source>CSV-Export: Clubdirectory</source>
         <target>crwdns305868:0crwdne305868:0</target>
       </trans-unit>
+      <trans-unit id="noPageAccess">
+        <source>Please select a page or folder in the page tree, which you are allowed to access.</source>
+        <target>crwdns418769:0crwdne418769:0</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
