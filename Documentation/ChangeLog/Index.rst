@@ -5,6 +5,27 @@
 ChangeLog
 =========
 
+..  _changelog-9-0-2:
+
+Version 9.0.2
+=============
+
+Tasks:
+
+*   [TASK] Analyse the extension with PHPStan level 6 without errors and
+    run PHPStan in CI. The baseline contains entries of this extension
+    only
+*   [TASK] Modernize the documentation for the render-guides rendering
+
+Developers:
+
+*   The events `PreProcessControllerActionEvent` and
+    `PostProcessFluidVariablesEvent` and their interface
+    `ControllerActionEventInterface` type the request with
+    :php:`\TYPO3\CMS\Extbase\Mvc\RequestInterface` instead of
+    :php:`\TYPO3\CMS\Extbase\Mvc\Request`. Use the interface in your
+    event listeners, too
+
 ..  _changelog-9-0-1:
 
 Version 9.0.1
