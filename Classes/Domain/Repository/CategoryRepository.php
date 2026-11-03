@@ -19,13 +19,15 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Repository to get and search for categories stored in sys_category
+ *
+ * @extends Repository<Category>
  */
 class CategoryRepository extends Repository
 {
     protected ExtConf $extConf;
 
     /**
-     * @var array
+     * @var array<non-empty-string, QueryInterface::ORDER_*>
      */
     protected $defaultOrderings = [
         'title' => QueryInterface::ORDER_ASCENDING,
@@ -43,6 +45,8 @@ class CategoryRepository extends Repository
 
     /**
      * Get categories of configured root category
+     *
+     * @return QueryResultInterface<int, Category>
      */
     public function getCategories(): QueryResultInterface
     {

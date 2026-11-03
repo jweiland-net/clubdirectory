@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\Helper;
 
 use JWeiland\Clubdirectory\Domain\Repository\HiddenRepositoryInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
@@ -30,6 +31,10 @@ class HiddenObjectHelper
         $this->session = $session;
     }
 
+    /**
+     * @template T of DomainObjectInterface
+     * @param RepositoryInterface<T> $repository
+     */
     public function registerHiddenObjectInExtbaseSession(
         RepositoryInterface $repository,
         RequestInterface $request,

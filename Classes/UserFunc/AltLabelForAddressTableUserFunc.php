@@ -18,6 +18,9 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
  */
 class AltLabelForAddressTableUserFunc
 {
+    /**
+     * @param array<string, mixed> $parameters
+     */
     public function setAddressLabel(array &$parameters = []): void
     {
         $row = is_array($parameters['row'] ?? null) ? $parameters['row'] : [];
@@ -48,6 +51,8 @@ class AltLabelForAddressTableUserFunc
     /**
      * FormEngine (TcaSelectItems) provides select values as array, while
      * BackendUtility::getRecordTitle() provides the raw DB value.
+     *
+     * @param array<string, mixed> $row
      */
     private function getScalarValue(array $row, string $column): string
     {

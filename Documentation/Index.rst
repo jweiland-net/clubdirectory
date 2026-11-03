@@ -1,5 +1,5 @@
 ..  include:: /Includes.rst.txt
-
+..  _start:
 
 =============
 Clubdirectory
@@ -56,4 +56,3 @@ Manual covering TYPO3 extension clubdirectory
     :hidden:
 
     Sitemap
-    genindex

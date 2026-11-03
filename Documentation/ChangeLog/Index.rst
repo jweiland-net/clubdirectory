@@ -1,11 +1,30 @@
 ..  include:: /Includes.rst.txt
-
-
 ..  _changelog:
 
 =========
 ChangeLog
 =========
+
+..  _changelog-9-0-2:
+
+Version 9.0.2
+=============
+
+Tasks:
+
+*   [TASK] Analyse the extension with PHPStan level 6 without errors and
+    run PHPStan in CI. The baseline contains entries of this extension
+    only
+*   [TASK] Modernize the documentation for the render-guides rendering
+
+Developers:
+
+*   The events `PreProcessControllerActionEvent` and
+    `PostProcessFluidVariablesEvent` and their interface
+    `ControllerActionEventInterface` type the request with
+    :php:`\TYPO3\CMS\Extbase\Mvc\RequestInterface` instead of
+    :php:`\TYPO3\CMS\Extbase\Mvc\Request`. Use the interface in your
+    event listeners, too
 
 ..  _changelog-9-0-1:
 
@@ -155,46 +174,65 @@ Bugfixes:
     of the Clubdirectory plugin
 *   [BUGFIX] Respect category and district of the plugin in the glossary
 
+..  _changelog-8-1-3:
+
 Version 8.1.3
 =============
 
-*   [TASK] Add RestrictAccessEventListener to check update actions against unauthorised edits by non-owner fe_users
+*   [TASK] Add RestrictAccessEventListener to check update actions against
+    unauthorised edits by non-owner fe_users
+
+..  _changelog-8-1-2:
 
 Version 8.1.2
 =============
 
 *   [BUGFIX] Replace hardcoded tab labels with localized labels in tt_content
 
+..  _changelog-8-1-1:
+
 Version 8.1.1
 =============
 
 *   [TASK] Improve robustness of hidden object resolution and event
+
+..  _changelog-8-1-0:
 
 Version 8.1.0
 =============
 
 *   [TASK] Simplify access restiction in Backend Module configuration
 
+..  _changelog-8-0-6:
+
 Version 8.0.6
 =============
 
 *   [BUGFIX] Issue with frontend file upload in create and upload module fixed
+
+..  _changelog-8-0-5:
 
 Version 8.0.5
 =============
 
 *   [BUGFIX] Remove deprecated usage of SoftRef parser: images
 
+..  _changelog-8-0-4:
+
 Version 8.0.4
 =============
 
 *   [BUGFIX] Fixed Property Mapper with CheckFal validation issues
+
+..  _changelog-8-0-3:
 
 Version 8.0.3
 =============
 
 *   Retrieve FE user from request instead from TSFE
 *   Set return value for create and update actions
+
+..  _changelog-8-0-2:
 
 Version 8.0.2
 =============
@@ -208,11 +246,15 @@ Version 8.0.2
 *   Upgrade sys_language_uid, hidden, starttime and endtime of TCA
 *   Use type page for pages in site setting definitions
 
+..  _changelog-8-0-1:
+
 Version 8.0.1
 =============
 
 *   Fixed SiteSets name
 *   Fixed Plugin Preview
+
+..  _changelog-8-0-0:
 
 Version 8.0.0
 =============
@@ -226,10 +268,14 @@ Version 8.0.0
 *   Migrated tests to "podman"
 *   Upgrade tests against MariaDB 10.4 to 10.5
 
+..  _changelog-7-0-1:
+
 Version 7.0.1
 =============
 
 *   TASK: Moved categories filed of club TCA to seperate categories tab
+
+..  _changelog-7-0-0:
 
 Version 7.0.0
 =============
@@ -240,11 +286,15 @@ Version 7.0.0
 *   Removed compatibility for TYPO3 11 and lower versions
 *   All deprecated calls replaced
 
+..  _changelog-6-0-1:
+
 Version 6.0.1
 =============
 
 *   Replace GeneralUtility::makeInstance where possible
 *   BUGFIX: Solve AJAX error while calling UpgradeWizards module
+
+..  _changelog-6-0-0:
 
 Version 6.0.0
 =============
@@ -256,11 +306,15 @@ Version 6.0.0
 *   Migrate SignalSlot of maps2 to EventListener
 *   Refactor the controllers
 
+..  _changelog-5-3-1:
+
 Version 5.3.1
 =============
 
 *   Repair export of clubs as CSV.
 *   Add district to CSV download
+
+..  _changelog-5-3-0:
 
 Version 5.3.0
 =============
@@ -279,36 +333,50 @@ Version 5.3.0
 *   Move activity behind title
 *   Reduce field height of activity/times to 5 rows
 
+..  _changelog-5-2-1:
+
 Version 5.2.1
 =============
 
 *   Add TS glossary options for GlossaryService
 *   Remove GlossaryService from controller
 
+..  _changelog-5-2-0:
+
 Version 5.2.0
 =============
 
 *   Set dependency for glossary2 to 5.0.0
+
+..  _changelog-5-0-7:
 
 Version 5.0.7
 =============
 
 *   Move SlugHelper from constructor argument into getSlugHelper()
 
+..  _changelog-5-0-6:
+
 Version 5.0.6
 =============
 
 *   Use Extbase Category
+
+..  _changelog-5-0-5:
 
 Version 5.0.5
 =============
 
 *   Use traverse to disable cHash check in TS condition
 
+..  _changelog-5-0-4:
+
 Version 5.0.4
 =============
 
 *   Use unique instead of uniqueInSite for slug
+
+..  _changelog-5-0-3:
 
 Version 5.0.3
 =============
@@ -316,31 +384,43 @@ Version 5.0.3
 *   Add translation for yes/no
 *   Add barrier-free information into address partial
 
+..  _changelog-5-0-2:
+
 Version 5.0.2
 =============
 
 *   Add CSH for sortTitle in FE
 *   Allow storing of hidden records for admins in FE
 
+..  _changelog-5-0-1:
+
 Version 5.0.1
 =============
 
 *   Use correct namespace for EventDispatcher
+
+..  _changelog-5-0-0:
 
 Version 5.0.0
 =============
 
 *   Remove TYPO3 9 compatibility
 
+..  _changelog-4-0-4:
+
 Version 4.0.4
 =============
 
 *   Only add uid to RouteEnhancer, if club was created over frontend
 
+..  _changelog-4-0-3:
+
 Version 4.0.3
 =============
 
 *   Remove title from SVG Icons
+
+..  _changelog-4-0-2:
 
 Version 4.0.2
 =============
@@ -349,10 +429,14 @@ Version 4.0.2
 *   Add title attribute to editPoi VH
 *   Store path_segment while frontend edit
 
+..  _changelog-4-0-1:
+
 Version 4.0.1
 =============
 
 *   Replace Google+ column with Instagram
+
+..  _changelog-4-0-0:
 
 Version 4.0.0
 =============
@@ -371,22 +455,31 @@ Version 4.0.0
 *   Add TYPO3 10 compatibility
 *   Add club getter to get first category
 
+..  _changelog-3-0-3:
+
 Version 3.0.3
 =============
 
 *   Show error, if address was not found and redirect to previous action
+
+..  _changelog-3-0-2:
 
 Version 3.0.2
 =============
 
 *   Replace ext icon and all tables icons
 *   Use correct address label, if title is of type array
-*   [PERFORMANCE] Use group instead of select type for all l10n_parent columns in TCA
+*   [PERFORMANCE] Use group instead of select type for all l10n_parent
+    columns in TCA
+
+..  _changelog-3-0-1:
 
 Version 3.0.1
 =============
 
 *   Do not change label of address records, if shown as inline in club record
+
+..  _changelog-3-0-0:
 
 Version 3.0.0
 =============
@@ -400,7 +493,8 @@ Version 3.0.0
 *   Add possibility to delete images from FE
 *   Move JS include from Controller into TS Setup
 *   Code CleanUps like correct strict type declaration
-*   Set return value of getAddresses, getImages and getLogo to array in Club Model
+*   Set return value of getAddresses, getImages and getLogo to array in Club
+    Model
 *   Add edit/activate links into create/update mails
 *   Complete reworked Fluid-Templating incl. Bootstrap
 *   Set default ordering in Search class, so you can see it in FE, too

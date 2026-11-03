@@ -20,6 +20,8 @@ class AbstractControllerEventListener
 {
     /**
      * Only execute this EventListener if controller and action matches
+     *
+     * @var array<string, list<string>>
      */
     protected array $allowedControllerActions = [];
 

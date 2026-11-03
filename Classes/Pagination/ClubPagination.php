@@ -34,6 +34,9 @@ class ClubPagination implements PaginationInterface
 
     protected PaginatorInterface $paginator;
 
+    /**
+     * @var array<string, mixed>
+     */
     protected array $arguments = [];
 
     /**
@@ -69,6 +72,9 @@ class ClubPagination implements PaginationInterface
         return $previousPage >= $this->getFirstPageNumber() ? $previousPage : null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getPreviousPageArguments(): ?array
     {
         $arguments = $this->arguments;
@@ -84,6 +90,9 @@ class ClubPagination implements PaginationInterface
         return $nextPage <= $this->paginator->getNumberOfPages() ? $nextPage : null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getNextPageArguments(): ?array
     {
         $arguments = $this->arguments;
@@ -97,6 +106,9 @@ class ClubPagination implements PaginationInterface
         return 1;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getFirstPageArguments(): ?array
     {
         $arguments = $this->arguments;
@@ -110,6 +122,9 @@ class ClubPagination implements PaginationInterface
         return $this->paginator->getNumberOfPages();
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getLastPageArguments(): ?array
     {
         $arguments = $this->arguments;

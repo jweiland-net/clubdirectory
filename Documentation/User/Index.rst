@@ -1,10 +1,8 @@
 ..  include:: /Includes.rst.txt
-
-
 ..  _user-manual:
 
 ============
-Users Manual
+Users manual
 ============
 
 Target group: **Editors**
@@ -40,10 +38,12 @@ Your administrator configures on which pages these plugins are placed, see
 
 ..  _user-manual-plugin-options:
 
-Plugin Options
+Plugin options
 ==============
 
 The following options are available for the plugin `Club Directory`.
+
+..  _user-manual-plugin-options-glossary:
 
 Show A-Z links
 --------------
@@ -53,11 +53,15 @@ All-link is prepended is configured by your administrator in the site
 setting :confval:`clubdirectory.glossary2.showAllLink
 <site-setting-glossary2-showalllink>`.
 
+..  _user-manual-plugin-options-category:
+
 Category
 --------
 
 Sometimes it makes sense to reduce list of club entries to a given category.
 The A-Z links only contain letters of clubs in this category.
+
+..  _user-manual-plugin-options-district:
 
 Choose a district
 -----------------
@@ -79,18 +83,22 @@ The search results and the list of own clubs of the plugin
 `Club Directory Management` link to the detail view of the plugin
 `Club Directory`.
 
-Club Record
+..  _user-manual-club-record:
+
+Club record
 ===========
 
 #.  Select a Storage Page
 
 #.  Create a new record of type `Club`
 
-#.  Give it a title. We will use the first letter of title to sort it into our glossary navigation (if activated).
+#.  Give it a title. We will use the first letter of title to sort it into
+    our glossary navigation (if activated).
 
 #.  Enter a description which will be shown on configured detail page
 
 #.  By default you can insert up to 5 images to club record.
 
-#.  At tab `Categories` you can relate club entry to a category. That way you can show only club records of
-    a defined category in plugin, if you want.
+#.  At tab `Categories` you can relate club entry to a category. That way
+    you can show only club records of a defined category in plugin, if you
+    want.

@@ -291,11 +291,17 @@ class Club extends AbstractEntity
         $this->description = $description;
     }
 
+    /**
+     * @return ObjectStorage<FrontendUser>
+     */
     public function getFeUsers(): ObjectStorage
     {
         return $this->feUsers;
     }
 
+    /**
+     * @param ObjectStorage<FrontendUser> $feUsers
+     */
     public function setFeUsers(ObjectStorage $feUsers): void
     {
         $this->feUsers = $feUsers;
@@ -439,7 +445,7 @@ class Club extends AbstractEntity
     }
 
     /**
-     * @return array|Address[]
+     * @return list<Address>
      */
     public function getAddresses(): array
     {
@@ -451,11 +457,17 @@ class Club extends AbstractEntity
         return $addresses;
     }
 
+    /**
+     * @return ObjectStorage<Address>
+     */
     public function getOriginalAddresses(): ObjectStorage
     {
         return $this->addresses;
     }
 
+    /**
+     * @param ObjectStorage<Address> $addresses
+     */
     public function setAddresses(ObjectStorage $addresses): void
     {
         $this->addresses = $addresses;
@@ -471,6 +483,9 @@ class Club extends AbstractEntity
         $this->addresses->detach($address);
     }
 
+    /**
+     * @return ObjectStorage<Category>
+     */
     public function getCategories(): ObjectStorage
     {
         return $this->categories;
@@ -482,6 +497,9 @@ class Club extends AbstractEntity
         return $this->categories->current();
     }
 
+    /**
+     * @param ObjectStorage<Category> $categories
+     */
     public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
@@ -500,6 +518,8 @@ class Club extends AbstractEntity
     /**
      * Helper method to build a baseRecord for path_segment
      * Needed in PathSegmentHelper
+     *
+     * @return array{uid: int|null, pid: int|null, title: string}
      */
     public function getBaseRecordForPathSegment(): array
     {

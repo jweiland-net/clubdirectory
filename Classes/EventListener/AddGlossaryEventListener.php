@@ -22,6 +22,9 @@ class AddGlossaryEventListener extends AbstractControllerEventListener
 
     protected ClubRepository $clubRepository;
 
+    /**
+     * @var array<string, list<string>>
+     */
     protected array $allowedControllerActions = [
         'Club' => [
             'list',
@@ -51,6 +54,9 @@ class AddGlossaryEventListener extends AbstractControllerEventListener
         }
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getOptions(PostProcessFluidVariablesEvent $event): array
     {
         $options = [

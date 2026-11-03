@@ -27,6 +27,8 @@ trait AddressTrait
 {
     /**
      * Get translated titles of all address types for select box in address records form.
+     *
+     * @return list<\stdClass>
      */
     protected function getAddressTitles(): array
     {
@@ -63,6 +65,8 @@ trait AddressTrait
      * The form always renders 3 address blocks. Remove all addresses without
      * an address type from request before property mapping starts. Already
      * persisted addresses without an address type will be removed from club.
+     *
+     * @param array<string, mixed> $requestArgument
      */
     protected function removeEmptyAddressesFromRequest(array &$requestArgument): void
     {

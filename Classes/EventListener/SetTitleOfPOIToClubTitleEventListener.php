@@ -58,6 +58,7 @@ class SetTitleOfPOIToClubTitleEventListener
      * Clubs are hidden until they are activated. Their POI needs the club
      * title, too. So respect the deleted flag only.
      *
+     * @return array<string, mixed>
      * @throws \Doctrine\DBAL\Exception
      */
     protected function getClubRecord(int $clubUid): array
