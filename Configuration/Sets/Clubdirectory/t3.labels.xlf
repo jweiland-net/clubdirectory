@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="EXT:clubdirectory/Configuration/Sets/Clubdirectory/labels.xlf" date="2026-10-30T12:00:00Z" product-name="clubdirectory" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="label">
+        <source>Club Directory</source>
+        <target>crwdns418655:0crwdne418655:0</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory">
+        <source>Clubdirectory</source>
+        <target>crwdns418657:0crwdne418657:0</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.templates">
+        <source>Templates</source>
+        <target>crwdns418659:0crwdne418659:0</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.pages">
+        <source>Pages</source>
+        <target>crwdns418661:0crwdne418661:0</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.settings">
+        <source>Settings</source>
+        <target>crwdns418663:0crwdne418663:0</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.media">
+        <source>Image Sizes</source>
+        <target>crwdns418665:0crwdne418665:0</target>
+      </trans-unit>
+      <trans-unit id="categories.clubdirectory.glossary2">
+        <source>Glossary2</source>
+        <target>crwdns418667:0crwdne418667:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.templateRootPath">
+        <source>Templates</source>
+        <target>crwdns418669:0crwdne418669:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.templateRootPath">
+        <source>Path to template root</source>
+        <target>crwdns418671:0crwdne418671:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.partialRootPath">
+        <source>Partials</source>
+        <target>crwdns418673:0crwdne418673:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.partialRootPath">
+        <source>Path to partial root</source>
+        <target>crwdns418675:0crwdne418675:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.layoutRootPath">
+        <source>Layouts</source>
+        <target>crwdns418677:0crwdne418677:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.layoutRootPath">
+        <source>Path to layout root</source>
+        <target>crwdns418679:0crwdne418679:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.storagePid">
+        <source>Default storage PID</source>
+        <target>crwdns418681:0crwdne418681:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.storagePid">
+        <source>Folder that stores all POIs</source>
+        <target>crwdns418683:0crwdne418683:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfListPage">
+        <source>List Page</source>
+        <target>crwdns418685:0crwdne418685:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfListPage">
+        <source>Page UID with clubdirectory plugin to show the list of clubs</source>
+        <target>crwdns418687:0crwdne418687:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfDetailPage">
+        <source>Pid of Detail Page</source>
+        <target>crwdns418689:0crwdne418689:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfDetailPage">
+        <source>Page with detail page plugin</source>
+        <target>crwdns418691:0crwdne418691:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfSearchResults">
+        <source>Search Results Page</source>
+        <target>crwdns418693:0crwdne418693:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfSearchResults">
+        <source>Page UID with clubdirectory search plugin to show search results</source>
+        <target>crwdns418695:0crwdne418695:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfManagementPage">
+        <source>Management Page</source>
+        <target>crwdns418697:0crwdne418697:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfManagementPage">
+        <source>Page UID with clubdirectory management plugin to manage own clubs</source>
+        <target>crwdns418699:0crwdne418699:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pidOfMaps2Plugin">
+        <source>Pid of Maps2 Plugins</source>
+        <target>crwdns418701:0crwdne418701:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pidOfMaps2Plugin">
+        <source>Storage Page Uid of Maps2 Plugin</source>
+        <target>crwdns418703:0crwdne418703:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.userGroup">
+        <source>Usergroup Uid</source>
+        <target>crwdns418705:0crwdne418705:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.userGroup">
+        <source>The user group allowed to create new clubs. This determines the rendering of the links to create a club and to list the own clubs, and of the list of own clubs.</source>
+        <target>crwdns418707:0crwdne418707:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.pageBrowser.itemsPerPage">
+        <source>Items per page for pagination</source>
+        <target>crwdns418709:0crwdne418709:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.pageBrowser.itemsPerPage">
+        <source>Number of results that needs to be shown on listing page</source>
+        <target>crwdns418711:0crwdne418711:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.newUploadPath">
+        <source>New upload path</source>
+        <target>crwdns418713:0crwdne418713:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.newUploadPath">
+        <source>Path for uploading assets for clubdirectory records</source>
+        <target>crwdns418715:0crwdne418715:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.width">
+        <source>List Image width</source>
+        <target>crwdns418717:0crwdne418717:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.height">
+        <source>List Image height</source>
+        <target>crwdns418719:0crwdne418719:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.minWidth">
+        <source>List Image minimum width</source>
+        <target>crwdns418721:0crwdne418721:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.minHeight">
+        <source>List Image minimum height</source>
+        <target>crwdns418723:0crwdne418723:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.maxWidth">
+        <source>List Image maximum width</source>
+        <target>crwdns418725:0crwdne418725:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.list.image.maxHeight">
+        <source>List Image maximum height</source>
+        <target>crwdns418727:0crwdne418727:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.width">
+        <source>Show action logo width</source>
+        <target>crwdns418729:0crwdne418729:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.height">
+        <source>Show action logo height</source>
+        <target>crwdns418731:0crwdne418731:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.minWidth">
+        <source>Show action logo minimum width</source>
+        <target>crwdns418733:0crwdne418733:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.minHeight">
+        <source>Show action logo minimum height</source>
+        <target>crwdns418735:0crwdne418735:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.maxWidth">
+        <source>Show action logo maximum width</source>
+        <target>crwdns418737:0crwdne418737:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.logo.maxHeight">
+        <source>Show action logo maximum height</source>
+        <target>crwdns418739:0crwdne418739:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.width">
+        <source>Show Image width</source>
+        <target>crwdns418741:0crwdne418741:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.height">
+        <source>Show Image height</source>
+        <target>crwdns418743:0crwdne418743:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.minWidth">
+        <source>Show Image minimum width</source>
+        <target>crwdns418745:0crwdne418745:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.minHeight">
+        <source>Show Image minimum height</source>
+        <target>crwdns418747:0crwdne418747:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.maxWidth">
+        <source>Show Image maximum width</source>
+        <target>crwdns418749:0crwdne418749:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.show.image.maxHeight">
+        <source>Show Image maximum height</source>
+        <target>crwdns418751:0crwdne418751:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.glossary2.mergeNumbers">
+        <source>Merge Numbers in Glossary</source>
+        <target>crwdns418753:0crwdne418753:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.glossary2.showAllLink">
+        <source>Show "All" Link in Glossary</source>
+        <target>crwdns418755:0crwdne418755:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
