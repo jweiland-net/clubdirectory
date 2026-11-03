@@ -29,6 +29,8 @@ Security:
     longitude of the existing POI collections only. Further fields in
     overridden :file:`Map/New.html` templates are ignored. Addresses
     without POI collection are kept
+*   [SECURITY] Render website and social links with typolink, which drops
+    `javascript:` and `data:` URIs. These links are not rendered
 
 ..  _changelog-9-0-0:
 
