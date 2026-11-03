@@ -54,7 +54,9 @@
             </f:link.email>
         </div>
     </f:if>
-    <f:if condition="{club.website}">
+    <f:comment>Typolink drops unsafe URIs like "javascript:". Do not render the link then.</f:comment>
+    <f:variable name="websiteUri" value="{f:uri.typolink(parameter: club.website)}"/>
+    <f:if condition="{websiteUri}">
         <div>
             <svg class="bi bi-house" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">
@@ -64,11 +66,11 @@
                 <path fill-rule="evenodd" d="M15 4.5V8l-2-2V4.5a.5.5 0 01.5-.5h1a.5.5 0 01.5.5z"
                       clip-rule="evenodd"></path>
             </svg>
-            <f:link.external title="{club.website}"
-                             uri="{club.website}"
+            <f:link.typolink parameter="{websiteUri}"
+                             title="{club.website}"
                              target="_blank">
                 {f:translate(key: "tx_clubdirectory_domain_model_club.website")}
-            </f:link.external>
+            </f:link.typolink>
         </div>
     </f:if>
 
@@ -140,7 +142,9 @@
 </f:section>
 
 <f:section name="renderSocialElement">
-    <f:if condition="{uri}">
+    <f:comment>Typolink drops unsafe URIs like "javascript:". Do not render the link then.</f:comment>
+    <f:variable name="typolinkUri" value="{f:uri.typolink(parameter: uri)}"/>
+    <f:if condition="{typolinkUri}">
         <div>
             <svg class="bi bi-cloud" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">
@@ -148,11 +152,11 @@
                       d="M6.887 9.2l-.964-.165A2.5 2.5 0 105.5 14h10a1.5 1.5 0 00.237-2.982l-1.038-.164.216-1.028a4 4 0 10-7.843-1.587l-.185.96zm9.084.341a5 5 0 00-9.88-1.492A3.5 3.5 0 105.5 15h9.999a2.5 2.5 0 00.394-4.968c.033-.16.06-.324.077-.49z"
                       clip-rule="evenodd"></path>
             </svg>
-            <f:link.external target="_blank"
-                             uri="{uri}"
+            <f:link.typolink parameter="{typolinkUri}"
+                             target="_blank"
                              title="{f:translate(key: transKey)}">
                 {f:translate(key: transKey)}
-            </f:link.external>
+            </f:link.typolink>
         </div>
     </f:if>
 </f:section>

@@ -80,7 +80,6 @@ class RegisterHiddenClubEventListenerTest extends UnitTestCase
             'Management edit' => ['Management', 'edit'],
             'Management update' => ['Management', 'update'],
             'Management confirmActivation' => ['Management', 'confirmActivation'],
-            'Management activate' => ['Management', 'activate'],
             'Map new' => ['Map', 'new'],
             'Map create' => ['Map', 'create'],
         ];
@@ -115,6 +114,8 @@ class RegisterHiddenClubEventListenerTest extends UnitTestCase
             'Management new' => ['Management', 'new'],
             // A new club is never hidden. It gets hidden in createAction.
             'Management create' => ['Management', 'create'],
+            // Activation loads the club by its UID. Its properties are never mapped.
+            'Management activate' => ['Management', 'activate'],
             'Map edit (removed)' => ['Map', 'edit'],
             'Map update (removed)' => ['Map', 'update'],
             'unknown controller' => ['Foo', 'edit'],

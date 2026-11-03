@@ -31,7 +31,7 @@
     </dl>
 
     <f:form action="activate" method="post">
-        <f:form.hidden name="club" value="{club.uid}"/>
+        <f:form.hidden name="clubUid" value="{club.uid}"/>
         <f:form.hidden name="moderationToken" value="{moderationToken}"/>
         <f:form.submit value="{f:translate(key: 'confirmActivation.submit')}"/>
     </f:form>

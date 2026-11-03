@@ -39,7 +39,6 @@ final readonly class RegisterHiddenClubEventListener
             'edit',
             'update',
             'confirmActivation',
-            'activate',
         ],
         'Map' => [
             'new',

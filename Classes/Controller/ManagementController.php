@@ -24,11 +24,13 @@ use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use JWeiland\Clubdirectory\Service\ClubAccessService;
 use JWeiland\Clubdirectory\Service\ClubCacheService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
 
 /**
  * Controller to let frontend users create, edit and manage their own clubs listings
@@ -48,6 +50,7 @@ class ManagementController extends ActionController
         protected DistrictRepository $districtRepository,
         protected PathSegmentHelper $pathSegmentHelper,
         protected PersistenceManagerInterface $persistenceManager,
+        protected ErrorController $errorController,
     ) {}
 
     public function listMyClubsAction(): ResponseInterface
@@ -221,23 +224,49 @@ class ManagementController extends ActionController
     /**
      * The club is activated via POST only. GET requests are redirected to
      * the confirmation page.
+     * The action gets the club UID only, so no property of the club is
+     * mapped, even if "__trustedProperties" of another form allow it.
+     * Activation changes the "hidden" state only. The club is not validated,
+     * so values saved in backend, which do not pass the validators of the
+     * frontend form, do not prevent the activation.
+     *
+     * @throws PropagateResponseException
      */
-    public function activateAction(Club $club): ResponseInterface
+    public function activateAction(int $clubUid): ResponseInterface
     {
         if ($this->request->getMethod() !== 'POST') {
             return $this->redirect('confirmActivation', null, null, [
-                'club' => $club,
-                'moderationToken' => $this->clubAccessService->getValidModerationToken($this->request, (int)$club->getUid()),
+                'club' => $clubUid,
+                'moderationToken' => $this->clubAccessService->getValidModerationToken($this->request, $clubUid),
             ]);
         }
 
+        $club = $this->getClubToActivate($clubUid);
         $club->setHidden(false);
         $this->clubRepository->update($club);
         $this->persistenceManager->persistAll();
-        $this->clubCacheService->flushCachesOfClub((int)$club->getUid());
+        $this->clubCacheService->flushCachesOfClub($clubUid);
 
         return $this->redirectToClubList(
             (string)LocalizationUtility::translate('clubActivated', 'clubdirectory'),
         );
+    }
+
+    /**
+     * Unknown clubs result in the 404 error handling of the site
+     *
+     * @throws PropagateResponseException
+     */
+    protected function getClubToActivate(int $clubUid): Club
+    {
+        $club = $this->clubRepository->findHiddenObject($clubUid);
+        if (!$club instanceof Club) {
+            throw new PropagateResponseException(
+                $this->errorController->pageNotFoundAction($this->request, 'Club not found'),
+                1762358400,
+            );
+        }
+
+        return $club;
     }
 }

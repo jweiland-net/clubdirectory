@@ -311,7 +311,7 @@ class ClubAccessServiceTest extends FunctionalTestCase
     private function isValidModerationToken(string $moderationToken, int $clubUid): bool
     {
         $request = $this->createExtbaseRequest('Management', 'activate', [
-            'club' => $clubUid,
+            'clubUid' => $clubUid,
             'moderationToken' => $moderationToken,
         ]);
 
@@ -418,5 +418,32 @@ class ClubAccessServiceTest extends FunctionalTestCase
             ->update('tx_clubdirectory_domain_model_club', ['deleted' => 1], ['uid' => self::VISIBLE_CLUB]);
 
         self::assertFalse($this->isValidModerationToken($token, self::VISIBLE_CLUB));
+    }
+
+    public static function isClubHiddenDataProvider(): array
+    {
+        return [
+            'hidden club' => [self::HIDDEN_CLUB, true],
+            'visible club' => [self::VISIBLE_CLUB, false],
+            'unknown club' => [999, false],
+            'no club' => [0, false],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('isClubHiddenDataProvider')]
+    public function isClubHiddenReturnsExpectedResult(int $clubUid, bool $expected): void
+    {
+        self::assertSame($expected, $this->createSubject()->isClubHidden($clubUid));
+    }
+
+    #[Test]
+    public function isClubHiddenWithHiddenAndDeletedClubReturnsFalse(): void
+    {
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_clubdirectory_domain_model_club')
+            ->update('tx_clubdirectory_domain_model_club', ['hidden' => 1], ['uid' => self::DELETED_CLUB]);
+
+        self::assertFalse($this->createSubject()->isClubHidden(self::DELETED_CLUB));
     }
 }

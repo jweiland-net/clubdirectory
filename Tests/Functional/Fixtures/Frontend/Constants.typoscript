@@ -6,4 +6,5 @@ clubdirectory {
   pidOfListPage = 1
   pidOfDetailPage = 1
   pidOfManagementPage = 1
+  userGroup = 1
 }

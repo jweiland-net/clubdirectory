@@ -74,12 +74,13 @@ The activate link of the mails points to the new action
 `confirmActivation` of the Management plugin. It shows a summary of the
 club and a button, which activates the club via POST. A GET request of the
 action `activate` does not activate the club anymore, it redirects to the
-confirmation. So activate links of older mails keep working.
+confirmation.
 
 If you override the mail templates :file:`Templates/Management/Update.html`
 and :file:`Templates/Map/Create.html`, change the action of the activate
 link from `activate` to `confirmActivation`. To change the confirmation
-page, override :file:`Templates/Management/ConfirmActivation.html`.
+page, override :file:`Templates/Management/ConfirmActivation.html`. Its
+form sends the club UID as argument `clubUid` to the action `activate`.
 
 ..  _upgrade-9-0-0:
 

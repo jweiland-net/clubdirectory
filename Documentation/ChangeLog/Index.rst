@@ -24,6 +24,20 @@ Security:
     only
 *   [SECURITY] Activate clubs via POST of a confirmation form only. The
     activate link of the mail shows the new action `confirmActivation`
+*   [SECURITY] Action `activate` gets the club UID as argument `clubUid`
+    only and maps no property of the club
+*   [SECURITY] Allow the map step (`Map` new and create) for hidden clubs
+    only and keep the club hidden. `Map` create saves latitude and
+    longitude of the existing POI collections only. Further fields in
+    overridden :file:`Map/New.html` templates are ignored. Addresses
+    without POI collection are kept
+*   [SECURITY] Render website and social links with typolink, which drops
+    `javascript:` and `data:` URIs. These links are not rendered
+*   [SECURITY] Allow external URLs only in the backend fields website,
+    Facebook, Twitter and Instagram (TCA type `link`). Run the database
+    analyzer, as the social link columns change to `TEXT`
+*   [SECURITY] Validate website and social links of the Management form
+    as complete URLs incl. scheme, e.g. `https://`
 
 Tasks:
 

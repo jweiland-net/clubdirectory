@@ -105,4 +105,63 @@ class ClubControllerTest extends FunctionalTestCase
         self::assertStringContainsString('Club not found', (string)$response->getBody());
         self::assertStringNotContainsString('Hidden club', (string)$response->getBody());
     }
+
+    private function updateLinksOfClub(int $clubUid, string $link): void
+    {
+        $this->getConnectionPool()
+            ->getConnectionForTable('tx_clubdirectory_domain_model_club')
+            ->update(
+                'tx_clubdirectory_domain_model_club',
+                ['website' => $link, 'facebook' => $link, 'twitter' => $link, 'instagram' => $link],
+                ['uid' => $clubUid],
+            );
+    }
+
+    public static function unsafeLinkDataProvider(): array
+    {
+        return [
+            'javascript' => ['javascript:alert(1)'],
+            'javascript in mixed case' => ['JaVaScRiPt:alert(1)'],
+            'data' => ['data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg=='],
+        ];
+    }
+
+    /**
+     * The stored values are rendered with typolink, which drops unsafe
+     * schemes like "javascript:" and "data:". No link is rendered then.
+     */
+    #[Test]
+    #[DataProvider('unsafeLinkDataProvider')]
+    public function showActionWithUnsafeLinksRendersNoLinks(string $link): void
+    {
+        $this->updateLinksOfClub(1, $link);
+
+        $body = (string)$this->requestShowAction(1)->getBody();
+
+        self::assertStringContainsString('Swimming club', $body);
+        self::assertStringNotContainsStringIgnoringCase(strtok($link, ':') . ':', $body);
+        self::assertStringNotContainsString('target="_blank"', $body);
+    }
+
+    public static function safeLinkDataProvider(): array
+    {
+        return [
+            'https' => ['https://www.example.org/club?a=1&b=2', 'https://www.example.org/club?a=1&amp;b=2'],
+            'without scheme' => ['www.example.org', 'http://www.example.org'],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('safeLinkDataProvider')]
+    public function showActionWithSafeLinksRendersLinks(string $link, string $expectedHref): void
+    {
+        $this->updateLinksOfClub(1, $link);
+
+        $body = (string)$this->requestShowAction(1)->getBody();
+
+        self::assertSame(
+            4,
+            preg_match_all('#<a href="' . preg_quote($expectedHref, '#') . '" target="_blank" rel="noreferrer"#', $body),
+        );
+    }
 }
