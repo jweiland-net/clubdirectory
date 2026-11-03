@@ -395,6 +395,18 @@
         <source>Activate record</source>
         <target>crwdns305716:0crwdne305716:0</target>
       </trans-unit>
+      <trans-unit id="confirmActivation.header">
+        <source>Activate club</source>
+        <target>crwdns418771:0crwdne418771:0</target>
+      </trans-unit>
+      <trans-unit id="confirmActivation.description">
+        <source>Please check the club. It will be visible in frontend after the activation.</source>
+        <target>crwdns418773:0crwdne418773:0</target>
+      </trans-unit>
+      <trans-unit id="confirmActivation.submit">
+        <source>Activate club</source>
+        <target>crwdns418775:0crwdne418775:0</target>
+      </trans-unit>
       <trans-unit id="email.property">
         <source>Property</source>
         <target>crwdns305718:0crwdne305718:0</target>
