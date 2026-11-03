@@ -128,13 +128,16 @@ Access control and error pages
     (:html:`<f:security.ifHasRole>` in the partial
     :file:`Partials/Club/InsertEditLinks.html`). The list of the own clubs
     shows a message to all other users, that they have no access.
-*   This setting controls the rendering of the templates only. Every
-    logged-in frontend user with access to the management page can call
-    the actions to create a club. Restrict the access of the management
-    page to the same usergroup in the page properties.
-*   Only frontend users assigned to the club (field
-    :guilabel:`Assign Frontend Users` of the club record) and backend
-    administrators are allowed to edit and update a club.
+*   All actions of the Management plugin to create, edit, update and
+    activate a club require a logged-in member of this usergroup or a
+    valid moderation token. Access is denied before uploaded files are
+    stored. Additionally restrict the access of the management page to the
+    same usergroup in the page properties (field :guilabel:`Usergroup
+    Access Rights`).
+*   Members of this usergroup are allowed to edit and update the clubs
+    assigned to them only (field :guilabel:`Assign Frontend Users` of the
+    club record). Backend administrators are allowed to edit and update
+    all clubs.
 *   Addresses and POI records submitted with the form must belong to the
     edited club.
 *   All other requests stop with the 403 error handling of the site.

@@ -37,6 +37,22 @@ backend user has access to it. Values starting with `=`, `+`, `-` or `@`
 are prefixed with a single quote, so spreadsheet applications do not
 execute them as formula.
 
+..  _upgrade-9-0-1-usergroup:
+
+Usergroup is checked on the server
+----------------------------------
+
+The site setting :confval:`clubdirectory.userGroup
+<site-setting-usergroup>` controlled the rendering of the templates only.
+Now the actions of the Management plugin to create, edit and update clubs
+are denied with the 403 error handling of the site for anonymous visitors
+and for frontend users, which are not member of this group. The mail links
+with a valid moderation token keep working without login.
+
+Check, that the owners of existing clubs are members of this usergroup.
+Additionally restrict the access of the management page to this usergroup
+in the page properties.
+
 ..  _upgrade-9-0-0:
 
 Update to Version 9.0.0

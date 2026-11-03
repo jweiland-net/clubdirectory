@@ -19,6 +19,9 @@ Security:
 *   [SECURITY] Stream the CSV export as download instead of storing it in
     :file:`typo3temp/`, neutralize spreadsheet formulas and check the
     page permissions of the backend user
+*   [SECURITY] Allow the actions of the Management plugin for logged-in
+    members of `clubdirectory.userGroup` or with a valid moderation token
+    only
 
 ..  _changelog-9-0-0:
 

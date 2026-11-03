@@ -101,13 +101,34 @@ readonly class ClubAccessService
             return false;
         }
 
-        if ($this->context->getPropertyFromAspect('backend.user', 'isAdmin', false) === true) {
+        if ($this->isBackendAdmin()) {
             return true;
         }
 
         $frontendUserUid = (int)$this->context->getPropertyFromAspect('frontend.user', 'id', 0);
 
         return $frontendUserUid > 0 && $this->isClubAssignedToFrontendUser($clubUid, $frontendUserUid);
+    }
+
+    public function isBackendAdmin(): bool
+    {
+        return $this->context->getPropertyFromAspect('backend.user', 'isAdmin', false) === true;
+    }
+
+    /**
+     * Same check as <f:security.ifHasRole role="{settings.userGroup}"> in the
+     * templates, but a logged-in frontend user is required in any case. So
+     * neither "0" nor "-1" (no login) grant access to anonymous visitors.
+     */
+    public function isMemberOfUserGroup(int $userGroup): bool
+    {
+        if ($userGroup === 0 || $this->context->getPropertyFromAspect('frontend.user', 'isLoggedIn', false) !== true) {
+            return false;
+        }
+
+        $groupIds = $this->context->getPropertyFromAspect('frontend.user', 'groupIds', []);
+
+        return is_array($groupIds) && in_array($userGroup, $groupIds, true);
     }
 
     /**

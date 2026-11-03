@@ -38,6 +38,25 @@ trait ClubAccessTestTrait
      */
     private const FOREIGN_USER = 2;
 
+    /**
+     * fe_users record of another usergroup than "settings.userGroup"
+     */
+    private const OTHER_GROUP_USER = 3;
+
+    /**
+     * Value of "settings.userGroup"
+     */
+    private const USER_GROUP = 1;
+
+    /**
+     * Usergroup of the fe_users records of Fixtures/ClubAccess.csv
+     */
+    private const USER_GROUP_OF_FRONTEND_USER = [
+        self::OWNER => self::USER_GROUP,
+        self::FOREIGN_USER => self::USER_GROUP,
+        self::OTHER_GROUP_USER => 2,
+    ];
+
     private const VISIBLE_CLUB = 1;
 
     private const HIDDEN_CLUB = 2;
@@ -45,6 +64,11 @@ trait ClubAccessTestTrait
     private const DELETED_CLUB = 3;
 
     private const FOREIGN_CLUB = 4;
+
+    /**
+     * Hidden club assigned to OTHER_GROUP_USER
+     */
+    private const OTHER_GROUP_CLUB = 5;
 
     private function createContext(
         int $frontendUserUid = 0,
@@ -68,6 +92,8 @@ trait ClubAccessTestTrait
     ): void {
         $frontendUser = new FrontendUserAuthentication();
         $frontendUser->user = $frontendUserUid > 0 ? ['uid' => $frontendUserUid, 'username' => 'user'] : null;
+        $userGroup = self::USER_GROUP_OF_FRONTEND_USER[$frontendUserUid] ?? 0;
+        $frontendUser->userGroups = $userGroup > 0 ? [$userGroup => ['uid' => $userGroup]] : [];
         $context->setAspect('frontend.user', new UserAspect($frontendUser));
 
         $backendUser = null;
@@ -104,11 +130,12 @@ trait ClubAccessTestTrait
         string $controllerName,
         string $actionName,
         array $arguments = [],
+        int $userGroup = self::USER_GROUP,
     ): PreProcessControllerActionEvent {
         return new PreProcessControllerActionEvent(
             $this->createExtbaseRequest($controllerName, $actionName, $arguments),
             new Arguments(),
-            [],
+            ['userGroup' => (string)$userGroup],
         );
     }
 }

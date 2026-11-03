@@ -212,7 +212,6 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     {
         return [
             'Management listMyClubs' => ['Management', 'listMyClubs'],
-            'Management new' => ['Management', 'new'],
             'Club list' => ['Club', 'list'],
             'Club show' => ['Club', 'show'],
             'Search show' => ['Search', 'show'],
@@ -228,6 +227,95 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
         $this->loginUser();
 
         $this->assertAccessGranted($this->createEvent($controllerName, $actionName, ['club' => (string)self::FOREIGN_CLUB]));
+    }
+
+    public static function newClubActionDataProvider(): array
+    {
+        return [
+            'Management new' => ['Management', 'new', []],
+            'Management create without club' => ['Management', 'create', []],
+            'Management create with new club' => ['Management', 'create', ['club' => ['title' => 'New club']]],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('newClubActionDataProvider')]
+    public function newClubActionWithMemberOfUserGroupGrantsAccess(
+        string $controllerName,
+        string $actionName,
+        array $arguments,
+    ): void {
+        $this->loginUser(self::OWNER);
+
+        $this->assertAccessGranted($this->createEvent($controllerName, $actionName, $arguments));
+    }
+
+    #[Test]
+    #[DataProvider('newClubActionDataProvider')]
+    public function newClubActionWithoutLoginDeniesAccess(string $controllerName, string $actionName, array $arguments): void
+    {
+        $this->loginUser();
+
+        $this->assertAccessDenied($this->createEvent($controllerName, $actionName, $arguments));
+    }
+
+    #[Test]
+    #[DataProvider('newClubActionDataProvider')]
+    public function newClubActionWithUserOfOtherGroupDeniesAccess(
+        string $controllerName,
+        string $actionName,
+        array $arguments,
+    ): void {
+        $this->loginUser(self::OTHER_GROUP_USER);
+
+        $this->assertAccessDenied($this->createEvent($controllerName, $actionName, $arguments));
+    }
+
+    #[Test]
+    #[DataProvider('newClubActionDataProvider')]
+    public function newClubActionWithBackendAdminAndWithoutFrontendLoginDeniesAccess(
+        string $controllerName,
+        string $actionName,
+        array $arguments,
+    ): void {
+        $this->loginUser(0, true);
+
+        $this->assertAccessDenied($this->createEvent($controllerName, $actionName, $arguments));
+    }
+
+    #[Test]
+    #[DataProvider('newClubActionDataProvider')]
+    public function newClubActionWithoutConfiguredUserGroupDeniesAccess(
+        string $controllerName,
+        string $actionName,
+        array $arguments,
+    ): void {
+        $this->loginUser(self::OWNER);
+
+        $this->assertAccessDenied($this->createEvent($controllerName, $actionName, $arguments, 0));
+    }
+
+    #[Test]
+    #[DataProvider('restrictedActionDataProvider')]
+    public function restrictedActionWithOwnerOfOtherGroupDeniesAccess(string $controllerName, string $actionName): void
+    {
+        $this->loginUser(self::OTHER_GROUP_USER);
+
+        $this->assertAccessDenied($this->createEvent($controllerName, $actionName, ['club' => (string)self::OTHER_GROUP_CLUB]));
+    }
+
+    #[Test]
+    #[DataProvider('restrictedActionDataProvider')]
+    public function restrictedActionWithValidModerationTokenGrantsAccessToUserOfOtherGroup(
+        string $controllerName,
+        string $actionName,
+    ): void {
+        $this->loginUser(self::OTHER_GROUP_USER);
+
+        $this->assertAccessGranted($this->createEvent($controllerName, $actionName, [
+            'club' => (string)self::HIDDEN_CLUB,
+            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
+        ]));
     }
 
     #[Test]
