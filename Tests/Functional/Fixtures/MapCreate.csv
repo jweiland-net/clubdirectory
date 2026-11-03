@@ -1,0 +1,10 @@
+"fe_groups",,,
+,"uid","pid","title"
+,1,1,"Club owners"
+,2,1,"Other group"
+"tx_maps2_domain_model_poicollection",,,,,,
+,"uid","pid","title","collection_type","latitude","longitude"
+,13,1,"Hidden club","Point",47.9990000000,7.8420000000
+"tx_clubdirectory_domain_model_address",,,,,,,
+,"uid","pid","club","title","zip","city","tx_maps2_uid"
+,4,1,2,"postAddress","79098","Freiburg",13

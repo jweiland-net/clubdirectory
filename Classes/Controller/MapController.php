@@ -68,6 +68,8 @@ class MapController extends ActionController
             return $this->redirectToClubList('There is no valid user logged in. So record was not saved');
         }
 
+        // The map step never publishes a club. It gets activated by moderation only.
+        $club->setHidden(true);
         $this->clubRepository->update($club);
         // The moderation token of the mail signs the "tstamp" of the persisted club
         $this->persistenceManager->persistAll();
