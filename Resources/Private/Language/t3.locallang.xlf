@@ -231,6 +231,10 @@
         <source>%s: Please enter at least street, ZIP and city.</source>
         <target>crwdns418615:0%scrwdne418615:0</target>
       </trans-unit>
+      <trans-unit id="error.url.invalid">
+        <source>Please enter the complete URL including https://.</source>
+        <target>crwdns418777:0crwdne418777:0</target>
+      </trans-unit>
       <trans-unit id="error.geocoding.noPositionsFound.title">
         <source>Address not found</source>
         <target>crwdns418617:0crwdne418617:0</target>
