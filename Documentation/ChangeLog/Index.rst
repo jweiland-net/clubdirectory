@@ -25,6 +25,12 @@ Security:
 *   [SECURITY] Activate clubs via POST of a confirmation form only. The
     activate link of the mail shows the new action `confirmActivation`
 
+Tasks:
+
+*   [TASK] Export CSV according to RFC 4180: comma as delimiter, all
+    fields enclosed in double quotes and CRLF as line break. Earlier
+    versions used semicolon and single quotes
+
 ..  _changelog-9-0-0:
 
 Version 9.0.0

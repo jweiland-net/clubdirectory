@@ -94,7 +94,7 @@ class ExportController extends ActionController
         $csv = $this->csvExportService->createCsv($this->clubRepository->findAllForExport());
 
         return $this->responseFactory->createResponse()
-            ->withHeader('Content-Type', 'text/csv; charset=utf-8')
+            ->withHeader('Content-Type', 'text/csv; charset=utf-8; header=present')
             ->withHeader('Content-Disposition', 'attachment; filename="' . self::EXPORT_FILE_NAME . '"')
             ->withHeader('Cache-Control', 'no-store, private')
             ->withBody($this->streamFactory->createStream($csv));

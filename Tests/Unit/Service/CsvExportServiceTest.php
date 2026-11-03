@@ -77,19 +77,76 @@ class CsvExportServiceTest extends UnitTestCase
     }
 
     #[Test]
-    public function createCsvReturnsSemicolonSeparatedRowsWithNeutralizedFormulas(): void
+    public function createCsvReturnsCommaSeparatedEnclosedFieldsWithCrlf(): void
     {
         $csv = $this->subject->createCsv([
             ['Title', 'Email', 'Tel'],
             ['Swimming club', 'info@example.com', '0761 12345'],
-            ['=cmd|\' /C calc\'!A0', 'mail@example.com', '+49 761 12345'],
         ]);
 
         self::assertSame(
-            'Title;Email;Tel' . "\n"
-            . "'Swimming club';info@example.com;'0761 12345'" . "\n"
-            . "'''=cmd|'' /C calc''!A0';mail@example.com;'''+49 761 12345'" . "\n",
+            '"Title","Email","Tel"' . "\r\n"
+            . '"Swimming club","info@example.com","0761 12345"' . "\r\n",
             $csv,
+        );
+    }
+
+    public static function specialValueDataProvider(): array
+    {
+        return [
+            'comma' => ['Club, Inc.', '"Club, Inc."'],
+            'double quotes' => ['Club "Blue"', '"Club ""Blue"""'],
+            'single quote' => ['Club \'Blue\'', '"Club \'Blue\'"'],
+            'backslash before quote' => ['C:\\"x', '"C:\\""x"'],
+            'line feed' => ["Line 1\nLine 2", "\"Line 1\nLine 2\""],
+            'CRLF' => ["Line 1\r\nLine 2", "\"Line 1\r\nLine 2\""],
+            'umlauts' => ['Müllheimer Ruderverein Öhringen', '"Müllheimer Ruderverein Öhringen"'],
+            'empty string' => ['', '""'],
+            'null' => [null, '""'],
+            'integer' => [79100, '"79100"'],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('specialValueDataProvider')]
+    public function createCsvEnclosesAndEscapesSpecialValues(mixed $value, string $expectedField): void
+    {
+        self::assertSame($expectedField . "\r\n", $this->subject->createCsv([[$value]]));
+    }
+
+    public static function formulaFieldDataProvider(): array
+    {
+        return [
+            'equals sign with quotes' => ['=cmd|\' /C calc\'!A0', '"\'=cmd|\' /C calc\'!A0"'],
+            'hyperlink with double quotes' => ['=HYPERLINK("https://example.com")', '"\'=HYPERLINK(""https://example.com"")"'],
+            'plus sign' => ['+49 761 12345', '"\'+49 761 12345"'],
+            'minus sign' => ['-2+3', '"\'-2+3"'],
+            'at sign' => ['@SUM(A1:A2)', '"\'@SUM(A1:A2)"'],
+            'tab' => ["\t=1+1", "\"'\t=1+1\""],
+            'carriage return' => ["\r=1+1", "\"'\r=1+1\""],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('formulaFieldDataProvider')]
+    public function createCsvEnclosesNeutralizedFormulas(string $value, string $expectedField): void
+    {
+        self::assertSame(
+            '"Title",' . $expectedField . "\r\n",
+            $this->subject->createCsv([['Title', $value]]),
+        );
+    }
+
+    #[Test]
+    public function createCsvCanBeParsedWithStrGetCsv(): void
+    {
+        $row = ['Club "Blue", Müllheim', "Line 1\r\nLine 2", '=1+1', 'info@example.com'];
+
+        $csv = $this->subject->createCsv([$row]);
+
+        self::assertSame(
+            ['Club "Blue", Müllheim', "Line 1\r\nLine 2", '\'=1+1', 'info@example.com'],
+            str_getcsv(substr($csv, 0, -2), ',', '"', ''),
         );
     }
 

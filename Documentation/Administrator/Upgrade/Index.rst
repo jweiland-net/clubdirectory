@@ -37,6 +37,18 @@ backend user has access to it. Values starting with `=`, `+`, `-` or `@`
 are prefixed with a single quote, so spreadsheet applications do not
 execute them as formula.
 
+..  _upgrade-9-0-1-export-format:
+
+CSV export format
+-----------------
+
+The CSV export follows RFC 4180 now: fields are separated by comma instead
+of semicolon and enclosed in double quotes instead of single quotes. Double
+quotes in values are doubled, lines end with CRLF and the file is UTF-8
+encoded without byte order mark. Adapt scripts or imports, which process
+the export. In spreadsheet applications use the import of text/CSV files
+and choose UTF-8 and comma, if they do not detect them automatically.
+
 ..  _upgrade-9-0-1-usergroup:
 
 Usergroup is checked on the server
