@@ -1,6 +1,4 @@
 ..  include:: /Includes.rst.txt
-
-
 ..  _routes:
 
 ======
@@ -18,7 +16,7 @@ not add a requirement for the UID to `club_title`.
 
 ..  _routes-example:
 
-Example Configuration
+Example configuration
 =====================
 
 ..  code-block:: yaml

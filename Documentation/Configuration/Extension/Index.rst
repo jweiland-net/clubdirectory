@@ -1,10 +1,8 @@
 ..  include:: /Includes.rst.txt
-
-
 ..  _extensionSettings:
 
 ==================
-Extension Settings
+Extension settings
 ==================
 
 Some general settings for `clubdirectory` can be configured

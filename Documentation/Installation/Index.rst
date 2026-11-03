@@ -1,11 +1,11 @@
 ..  include:: /Includes.rst.txt
-
-
 ..  _installation:
 
 ============
 Installation
 ============
+
+..  _installation-composer:
 
 Composer
 ========
@@ -24,6 +24,8 @@ If you work with DDEV please execute this command:
 
     ddev composer req jweiland/clubdirectory
     ddev exec vendor/bin/typo3 extension:setup --extension=clubdirectory
+
+..  _installation-extension-manager:
 
 ExtensionManager
 ================
@@ -52,6 +54,8 @@ over the ExtensionManager:
     Use the search field to find `clubdirectory`. Choose the `clubdirectory`
     line from the search result and click on the cloud icon to
     install `clubdirectory`.
+
+..  _installation-next-step:
 
 Next step
 =========

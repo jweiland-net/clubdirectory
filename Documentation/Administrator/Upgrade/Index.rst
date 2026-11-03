@@ -1,6 +1,4 @@
 ..  include:: /Includes.rst.txt
-
-
 ..  _upgrade:
 
 =======
@@ -12,7 +10,7 @@ section carefully!
 
 ..  _upgrade-9-0-1:
 
-Update to Version 9.0.1
+Update to version 9.0.1
 =======================
 
 This version contains security fixes. Please go through all steps below.
@@ -84,7 +82,7 @@ form sends the club UID as argument `clubUid` to the action `activate`.
 
 ..  _upgrade-9-0-0:
 
-Update to Version 9.0.0
+Update to version 9.0.0
 =======================
 
 This version contains breaking changes. The plugin was split into three
@@ -465,7 +463,7 @@ caches in :guilabel:`Admin Tools > Maintenance` after the update.
 
 ..  _upgrade-8-0-0:
 
-Update to Version 8.0.0
+Update to version 8.0.0
 =======================
 
 This version supports TYPO3 version 13 LTS only. Lower version support removed.
@@ -473,7 +471,9 @@ Restructured ExtConf file and added SiteSet for the extension. Used Dependency
 Injection wherever possible. Migrate clubdirectory plugins to CTypes and added
 new migration wizard.
 
-Update to Version 7.0.0
+..  _upgrade-7-0-0:
+
+Update to version 7.0.0
 =======================
 
 This version supports TYPO3 version 12 LTS only. Lower version support removed.
@@ -482,7 +482,9 @@ with TYPO3 Testing Framework. The backend module for CSV export has been fixed
 for new backend module API service. All the deprecations are fixed in this
 version so there are no logs thrown in extension scanner.
 
-Update to Version 6.0.0
+..  _upgrade-6-0-0:
+
+Update to version 6.0.0
 =======================
 
 `clubdirectory` allows `maps2` in version 10.0.0. This version does not work
@@ -495,24 +497,30 @@ If you have extended the controllers of `clubdirectory` please check, if your
 implementation is still working, as we have drastically re-factored the
 controllers.
 
-Update to Version 5.1.0
+..  _upgrade-5-1-0:
+
+Update to version 5.1.0
 =======================
 
 TYPO3 log fills up with warnings about removed GET/POST params in PageBrowser.
 To solve this issue we have
 switched to new Paginate API of TYPO3. Please update following fluid files:
 
-Templates/Club/List.html
-Partials/Club/List.html
+*   :file:`Templates/Club/List.html`
+*   :file:`Partials/Club/List.html`
 
 And update the lines about PageBrowser. Use our files as an example
 
-Update to Version 5.0.7
+..  _upgrade-5-0-7:
+
+Update to version 5.0.7
 =======================
 
 We have changed some method arguments, please flush cache in InstallTool
 
-Update to Version 3.0.0
+..  _upgrade-3-0-0:
+
+Update to version 3.0.0
 =======================
 
 We have changed Fluid-Templates a lot. We have removed a lot of CSS classes

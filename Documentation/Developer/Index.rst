@@ -1,6 +1,4 @@
 ..  include:: /Includes.rst.txt
-
-
 ..  _developer:
 
 ================
@@ -35,7 +33,8 @@ upload configuration.
 Additional methods:
 
 `getArguments()` / `setArguments(Arguments $arguments)`
-    The controller arguments (:php:`\TYPO3\CMS\Extbase\Mvc\Controller\Arguments`).
+    The controller arguments
+    (:php:`\TYPO3\CMS\Extbase\Mvc\Controller\Arguments`).
 
 `setRequest(Request $request)`
     Replaces the Extbase request.

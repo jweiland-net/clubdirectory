@@ -1,11 +1,11 @@
 ..  include:: /Includes.rst.txt
-
-
 ..  _known-problems:
 
 ==============
-Known Problems
+Known problems
 ==============
+
+..  _known-problems-glossary:
 
 Glossary
 ========
