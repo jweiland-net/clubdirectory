@@ -15,6 +15,10 @@
         <source>CSV-Export: Clubdirectory</source>
         <target state="needs-translation">CSV-Export: Clubdirectory</target>
       </trans-unit>
+      <trans-unit id="noPageAccess">
+        <source>Please select a page or folder in the page tree, which you are allowed to access.</source>
+        <target state="needs-translation">Please select a page or folder in the page tree, which you are allowed to access.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
