@@ -301,4 +301,22 @@ class MapCreateTest extends FunctionalTestCase
             0.0000000001,
         );
     }
+
+    /**
+     * The map form contains the addresses with POI collection only
+     */
+    #[Test]
+    public function postCreateKeepsAddressesWithoutPoiCollection(): void
+    {
+        $this->postCreate($this->getMapFormArgument('47.9876543210', '7.8123456789'));
+
+        self::assertSame(
+            ['deleted' => 0, 'club' => 2],
+            array_map('intval', $this->getFields(self::TABLE_ADDRESS, self::ADDRESS_WITHOUT_POI, ['club', 'deleted'])),
+        );
+        self::assertSame(
+            ['deleted' => 0, 'club' => 2],
+            array_map('intval', $this->getFields(self::TABLE_ADDRESS, self::ADDRESS_WITH_POI, ['club', 'deleted'])),
+        );
+    }
 }

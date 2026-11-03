@@ -63,7 +63,36 @@ class MapController extends ActionController
     public function initializeCreateAction(): void
     {
         $this->preProcessControllerAction();
+        $this->addUnsubmittedAddressesToClubArgument();
         $this->restrictClubArgumentToCoordinates();
+    }
+
+    /**
+     * Extbase replaces the addresses of the club with the submitted addresses
+     * and removes all other addresses (cascade remove). The map form submits
+     * the addresses with POI collection only. So the identities of all other
+     * addresses of the club are added to the argument "club".
+     */
+    protected function addUnsubmittedAddressesToClubArgument(): void
+    {
+        $clubArgument = $this->request->hasArgument('club') ? $this->request->getArgument('club') : null;
+        if (!is_array($clubArgument) || !is_array($clubArgument['addresses'] ?? null)) {
+            return;
+        }
+
+        $club = $this->clubRepository->findHiddenObject($this->clubAccessService->getIdentity($clubArgument));
+        if (!$club instanceof Club) {
+            return;
+        }
+
+        $submittedAddressUids = array_map($this->clubAccessService->getIdentity(...), $clubArgument['addresses']);
+        foreach ($club->getAddresses() as $address) {
+            if (!in_array($address->getUid(), $submittedAddressUids, true)) {
+                $clubArgument['addresses'][] = ['__identity' => (string)$address->getUid()];
+            }
+        }
+
+        $this->request = $this->request->withArgument('club', $clubArgument);
     }
 
     /**
