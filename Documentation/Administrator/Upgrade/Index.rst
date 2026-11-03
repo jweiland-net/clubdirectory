@@ -10,6 +10,33 @@ Upgrade
 If you upgrade `clubdirectory` to a newer version, please read this
 section carefully!
 
+..  _upgrade-9-0-1:
+
+Update to Version 9.0.1
+=======================
+
+This version contains security fixes. Please go through all steps below.
+
+..  _upgrade-9-0-1-export:
+
+Delete the old CSV export file
+------------------------------
+
+The backend module streams the CSV export as download now. Earlier
+versions stored it publicly accessible in
+:file:`public/typo3temp/tx_clubdirectory/export.csv`. Delete this file
+and its directory, as it contains the mail addresses, addresses and phone
+numbers of all exported clubs:
+
+..  code-block:: bash
+
+    rm -rf public/typo3temp/tx_clubdirectory/
+
+The export contains the clubs of the selected page or folder only, if the
+backend user has access to it. Values starting with `=`, `+`, `-` or `@`
+are prefixed with a single quote, so spreadsheet applications do not
+execute them as formula.
+
 ..  _upgrade-9-0-0:
 
 Update to Version 9.0.0
