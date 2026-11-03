@@ -56,4 +56,3 @@ Manual covering TYPO3 extension clubdirectory
     :hidden:
 
     Sitemap
-    genindex
