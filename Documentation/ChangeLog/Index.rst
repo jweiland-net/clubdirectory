@@ -24,6 +24,11 @@ Security:
     only
 *   [SECURITY] Activate clubs via POST of a confirmation form only. The
     activate link of the mail shows the new action `confirmActivation`
+*   [SECURITY] Allow the map step (`Map` new and create) for hidden clubs
+    only and keep the club hidden. `Map` create saves latitude and
+    longitude of the existing POI collections only. Further fields in
+    overridden :file:`Map/New.html` templates are ignored. Addresses
+    without POI collection are kept
 
 ..  _changelog-9-0-0:
 
