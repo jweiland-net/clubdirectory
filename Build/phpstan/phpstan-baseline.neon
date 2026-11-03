@@ -1,5 +1,11 @@
 parameters:
-    excludePaths:
-        - %currentWorkingDirectory%/Classes/Hook/PageLayoutViewHook.php
-        - %currentWorkingDirectory%/Classes/Utility/StringUtility.php
-        - %currentWorkingDirectory%/Classes/Preview/WallsIoBackendPreviewRenderer
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$extbaseQuery of method JWeiland\\\\Glossary2\\\\Service\\\\GlossaryService\\:\\:getLetterConstraintForExtbaseQuery\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<JWeiland\\\\Glossary2\\\\Domain\\\\Model\\\\Glossary\\>, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<JWeiland\\\\Clubdirectory\\\\Domain\\\\Model\\\\Club\\> given\\.$#"
+			count: 1
+			path: ../../Classes/Domain/Repository/ClubRepository.php
+
+		-
+			message: "#^Class JWeiland\\\\Checkfaluploads\\\\Validation\\\\Validator\\\\CheckFalUploadValidator not found\\.$#"
+			count: 1
+			path: ../../Classes/EventListener/CheckFalUploadsEventListener.php
