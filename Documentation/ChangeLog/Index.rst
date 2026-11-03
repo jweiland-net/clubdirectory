@@ -31,6 +31,9 @@ Security:
     without POI collection are kept
 *   [SECURITY] Render website and social links with typolink, which drops
     `javascript:` and `data:` URIs. These links are not rendered
+*   [SECURITY] Allow external URLs only in the backend fields website,
+    Facebook, Twitter and Instagram (TCA type `link`). Run the database
+    analyzer, as the social link columns change to `TEXT`
 
 ..  _changelog-9-0-0:
 

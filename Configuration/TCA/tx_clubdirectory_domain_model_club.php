@@ -133,6 +133,10 @@ return [
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.website',
             'config' => [
                 'type' => 'link',
+                'allowedTypes' => ['url'],
+                'appearance' => [
+                    'allowedOptions' => [],
+                ],
                 'size' => 30,
             ],
         ],
@@ -205,27 +209,36 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.facebook',
             'config' => [
-                'type' => 'input',
+                'type' => 'link',
+                'allowedTypes' => ['url'],
+                'appearance' => [
+                    'allowedOptions' => [],
+                ],
                 'size' => 30,
-                'eval' => 'trim',
             ],
         ],
         'twitter' => [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.twitter',
             'config' => [
-                'type' => 'input',
+                'type' => 'link',
+                'allowedTypes' => ['url'],
+                'appearance' => [
+                    'allowedOptions' => [],
+                ],
                 'size' => 30,
-                'eval' => 'trim',
             ],
         ],
         'instagram' => [
             'exclude' => true,
             'label' => 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:tx_clubdirectory_domain_model_club.instagram',
             'config' => [
-                'type' => 'input',
+                'type' => 'link',
+                'allowedTypes' => ['url'],
+                'appearance' => [
+                    'allowedOptions' => [],
+                ],
                 'size' => 30,
-                'eval' => 'trim',
             ],
         ],
         'tags' => [
