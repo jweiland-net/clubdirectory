@@ -20,11 +20,16 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 
 /**
- * Restrict access to controller actions, if the logged-in user tries to
- * access records of clubs which are not assigned to him.
+ * Restrict access to the actions of the Management and Map controllers.
+ * They are allowed for logged-in members of the usergroup configured in
+ * "settings.userGroup" only. Frontend users can manage the clubs assigned to
+ * them only. Backend administrators can manage existing clubs.
  * A valid "moderationToken" of the signed mail links grants access to the
- * club without login. "activate" is allowed with a valid token only, so
- * owners can not activate their own clubs and bypass the moderation.
+ * club without login. "confirmActivation" and "activate" are allowed with a
+ * valid token only, so owners can not activate their own clubs and bypass
+ * the moderation.
+ * The listener is called in the initialize*Action methods, so access is
+ * denied before Extbase maps the arguments and stores uploaded files.
  * Access will be denied with the 403 error handling of the site. Do not
  * forward to Extbase's errorAction: on POST requests it forwards back to the
  * referring action, which will be denied again (InfiniteLoopException).
@@ -36,9 +41,11 @@ final readonly class RestrictAccessEventListener
 
     private const ALLOWED_CONTROLLER_ACTIONS = [
         'Management' => [
+            'new',
             'create',
             'edit',
             'update',
+            'confirmActivation',
             'activate',
         ],
         'Map' => [
@@ -48,10 +55,21 @@ final readonly class RestrictAccessEventListener
     ];
 
     /**
+     * These actions are allowed with a valid moderation token only
+     */
+    private const MODERATION_TOKEN_CONTROLLER_ACTIONS = [
+        'Management' => [
+            'confirmActivation',
+            'activate',
+        ],
+    ];
+
+    /**
      * Only these actions are allowed to be called with a club which was not persisted yet
      */
     private const NEW_CLUB_CONTROLLER_ACTIONS = [
         'Management' => [
+            'new',
             'create',
         ],
     ];
@@ -84,26 +102,42 @@ final readonly class RestrictAccessEventListener
         $request = $controllerActionEvent->getRequest();
         $clubArgument = $request->hasArgument('club') ? $request->getArgument('club') : null;
         $clubUid = $this->clubAccessService->getIdentity($clubArgument);
+        $hasModerationToken = $this->clubAccessService->getValidModerationToken($request, $clubUid) !== '';
+
+        if (!$hasModerationToken && !$this->isAuthorizedUser($controllerActionEvent, $clubUid)) {
+            return false;
+        }
 
         if ($clubUid === 0 && !$this->isNewClubAllowed($controllerActionEvent)) {
             return false;
         }
 
-        if ($clubUid > 0 && !$this->isClubAccessAllowed($controllerActionEvent, $clubUid)) {
+        if ($clubUid > 0 && !$hasModerationToken && !$this->isClubAccessAllowed($controllerActionEvent, $clubUid)) {
             return false;
         }
 
         return !is_array($clubArgument) || $this->clubAccessService->hasOnlyRecordsOfClub($clubArgument, $clubUid);
     }
 
+    /**
+     * Without a moderation token only members of the configured usergroup are
+     * allowed. Backend administrators are allowed to manage existing clubs.
+     */
+    private function isAuthorizedUser(PreProcessControllerActionEvent $controllerActionEvent, int $clubUid): bool
+    {
+        $userGroup = (int)($controllerActionEvent->getSettings()['userGroup'] ?? 0);
+
+        return $this->clubAccessService->isMemberOfUserGroup($userGroup)
+            || ($clubUid > 0 && $this->clubAccessService->isBackendAdmin());
+    }
+
     private function isClubAccessAllowed(PreProcessControllerActionEvent $controllerActionEvent, int $clubUid): bool
     {
-        if ($this->clubAccessService->getValidModerationToken($controllerActionEvent->getRequest(), $clubUid) !== '') {
-            return true;
-        }
-
-        return $controllerActionEvent->getActionName() !== 'activate'
-            && $this->clubAccessService->canManageClub($clubUid);
+        return !in_array(
+            $controllerActionEvent->getActionName(),
+            self::MODERATION_TOKEN_CONTROLLER_ACTIONS[$controllerActionEvent->getControllerName()] ?? [],
+            true,
+        ) && $this->clubAccessService->canManageClub($clubUid);
     }
 
     private function isNewClubAllowed(PreProcessControllerActionEvent $controllerActionEvent): bool

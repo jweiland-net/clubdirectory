@@ -38,6 +38,7 @@ final readonly class RegisterHiddenClubEventListener
         'Management' => [
             'edit',
             'update',
+            'confirmActivation',
             'activate',
         ],
         'Map' => [

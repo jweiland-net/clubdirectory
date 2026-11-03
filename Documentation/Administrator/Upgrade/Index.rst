@@ -10,6 +10,65 @@ Upgrade
 If you upgrade `clubdirectory` to a newer version, please read this
 section carefully!
 
+..  _upgrade-9-0-1:
+
+Update to Version 9.0.1
+=======================
+
+This version contains security fixes. Please go through all steps below.
+
+..  _upgrade-9-0-1-export:
+
+Delete the old CSV export file
+------------------------------
+
+The backend module streams the CSV export as download now. Earlier
+versions stored it publicly accessible in
+:file:`public/typo3temp/tx_clubdirectory/export.csv`. Delete this file
+and its directory, as it contains the mail addresses, addresses and phone
+numbers of all exported clubs:
+
+..  code-block:: bash
+
+    rm -rf public/typo3temp/tx_clubdirectory/
+
+The export contains the clubs of the selected page or folder only, if the
+backend user has access to it. Values starting with `=`, `+`, `-` or `@`
+are prefixed with a single quote, so spreadsheet applications do not
+execute them as formula.
+
+..  _upgrade-9-0-1-usergroup:
+
+Usergroup is checked on the server
+----------------------------------
+
+The site setting :confval:`clubdirectory.userGroup
+<site-setting-usergroup>` controlled the rendering of the templates only.
+Now the actions of the Management plugin to create, edit and update clubs
+are denied with the 403 error handling of the site for anonymous visitors
+and for frontend users, which are not member of this group. The mail links
+with a valid moderation token keep working without login.
+
+Check, that the owners of existing clubs are members of this usergroup.
+Additionally restrict the access of the management page to this usergroup
+in the page properties.
+
+..  _upgrade-9-0-1-activation:
+
+Activation via confirmation form
+--------------------------------
+
+The activate link of the mails points to the new action
+`confirmActivation` of the Management plugin. It shows a summary of the
+club and a button, which activates the club via POST. A GET request of the
+action `activate` does not activate the club anymore, it redirects to the
+confirmation. So activate links of older mails keep working.
+
+If you override the mail templates :file:`Templates/Management/Update.html`
+and :file:`Templates/Map/Create.html`, change the action of the activate
+link from `activate` to `confirmActivation`. To change the confirmation
+page, override :file:`Templates/Management/ConfirmActivation.html`.
+
 ..  _upgrade-9-0-0:
 
 Update to Version 9.0.0

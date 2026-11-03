@@ -130,9 +130,11 @@ settings to find the page of the responsible plugin.
     of the own clubs (:file:`Templates/Management/ListMyClubs.html`). All
     other users get a message, that they have no access to this page.
 
-    This setting controls the rendering of the templates only, it is not an
-    access check on the server. Restrict the access of the management page
-    to this group, too. See :ref:`moderation-access`.
+    Without a valid moderation token of the mail links, only logged-in
+    members of this group are allowed to create, edit and update clubs.
+    `-2` allows all logged-in frontend users, `0` denies the access for
+    all of them. Restrict the access of the management page to this group,
+    too. See :ref:`moderation-access`.
 
 ..  _site-settings-settings:
 

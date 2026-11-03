@@ -7,6 +7,24 @@
 ChangeLog
 =========
 
+..  _changelog-9-0-1:
+
+Version 9.0.1
+=============
+
+Please read :ref:`upgrade-9-0-1` before updating.
+
+Security:
+
+*   [SECURITY] Stream the CSV export as download instead of storing it in
+    :file:`typo3temp/`, neutralize spreadsheet formulas and check the
+    page permissions of the backend user
+*   [SECURITY] Allow the actions of the Management plugin for logged-in
+    members of `clubdirectory.userGroup` or with a valid moderation token
+    only
+*   [SECURITY] Activate clubs via POST of a confirmation form only. The
+    activate link of the mail shows the new action `confirmActivation`
+
 ..  _changelog-9-0-0:
 
 Version 9.0.0

@@ -61,9 +61,11 @@ Moderation flow
     the pending moderation.
 
 #.  The administrator opens the edit link to check and correct the club,
-    or the activate link to publish it. After the activation the
-    administrator is redirected to the list page, which shows a
-    confirmation message.
+    or the activate link to publish it. The activate link shows a summary
+    of the club with a button. The club is activated after submitting this
+    form only, so mail security scanners opening the link can not activate
+    it. After the activation the administrator is redirected to the list
+    page, which shows a confirmation message.
 
 The list page is not cached, while it shows such a message. The
 `Clubdirectory` plugin tags its cached list pages with
@@ -115,7 +117,8 @@ record.
 If you override the mail templates :file:`Templates/Management/Update.html`
 and :file:`Templates/Map/Create.html`, keep the argument `moderationToken`
 in both links and the hidden field `moderationToken` in
-:file:`Templates/Management/Edit.html`.
+:file:`Templates/Management/Edit.html` and
+:file:`Templates/Management/ConfirmActivation.html`.
 
 ..  _moderation-access:
 
@@ -128,13 +131,16 @@ Access control and error pages
     (:html:`<f:security.ifHasRole>` in the partial
     :file:`Partials/Club/InsertEditLinks.html`). The list of the own clubs
     shows a message to all other users, that they have no access.
-*   This setting controls the rendering of the templates only. Every
-    logged-in frontend user with access to the management page can call
-    the actions to create a club. Restrict the access of the management
-    page to the same usergroup in the page properties.
-*   Only frontend users assigned to the club (field
-    :guilabel:`Assign Frontend Users` of the club record) and backend
-    administrators are allowed to edit and update a club.
+*   All actions of the Management plugin to create, edit, update and
+    activate a club require a logged-in member of this usergroup or a
+    valid moderation token. Access is denied before uploaded files are
+    stored. Additionally restrict the access of the management page to the
+    same usergroup in the page properties (field :guilabel:`Usergroup
+    Access Rights`).
+*   Members of this usergroup are allowed to edit and update the clubs
+    assigned to them only (field :guilabel:`Assign Frontend Users` of the
+    club record). Backend administrators are allowed to edit and update
+    all clubs.
 *   Addresses and POI records submitted with the form must belong to the
     edited club.
 *   All other requests stop with the 403 error handling of the site.

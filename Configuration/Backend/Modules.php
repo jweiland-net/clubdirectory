@@ -25,7 +25,7 @@ return [
         'iconIdentifier' => 'ext-clubdirectory-be-module-icon',
         'extensionName' => 'Clubdirectory',
         'controllerActions' => [
-            ExportController::class => 'index, show',
+            ExportController::class => 'index, show, download',
         ],
     ],
 ];

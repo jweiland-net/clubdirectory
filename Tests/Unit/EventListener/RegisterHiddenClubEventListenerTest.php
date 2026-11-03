@@ -79,6 +79,7 @@ class RegisterHiddenClubEventListenerTest extends UnitTestCase
         return [
             'Management edit' => ['Management', 'edit'],
             'Management update' => ['Management', 'update'],
+            'Management confirmActivation' => ['Management', 'confirmActivation'],
             'Management activate' => ['Management', 'activate'],
             'Map new' => ['Map', 'new'],
             'Map create' => ['Map', 'create'],

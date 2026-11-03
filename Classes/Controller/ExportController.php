@@ -12,32 +12,31 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Controller;
 
 use JWeiland\Clubdirectory\Domain\Repository\ClubRepository;
+use JWeiland\Clubdirectory\Service\CsvExportService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\PathUtility;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Type\Bitmask\Permission;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 /**
- * Controller to export clubs as CSV
+ * Controller to export clubs as CSV. The CSV contains personal data, so it
+ * is streamed as download and never stored in a public directory. Clubs are
+ * exported from the selected page only, if the backend user has access to it.
  */
 class ExportController extends ActionController
 {
-    /**
-     * In which directory we want to export club data
-     * Needed separately to create folder structure if not exists.
-     */
-    protected string $exportPath = 'typo3temp/tx_clubdirectory/';
-
-    /**
-     * In which file we want to export club data.
-     */
-    protected string $exportFile = 'export.csv';
+    private const EXPORT_FILE_NAME = 'clubdirectory-export.csv';
 
     protected ClubRepository $clubRepository;
+
+    protected CsvExportService $csvExportService;
 
     protected ModuleTemplateFactory $moduleTemplateFactory;
 
@@ -46,6 +45,11 @@ class ExportController extends ActionController
     public function injectClubRepository(ClubRepository $clubRepository): void
     {
         $this->clubRepository = $clubRepository;
+    }
+
+    public function injectCsvExportService(CsvExportService $csvExportService): void
+    {
+        $this->csvExportService = $csvExportService;
     }
 
     public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
@@ -66,64 +70,92 @@ class ExportController extends ActionController
 
     public function indexAction(): ResponseInterface
     {
-        $this->createDirectoryStructure();
-        $this->removePreviousExports();
+        $clubs = $this->getClubsOfCurrentPage();
 
-        $clubs = $this->clubRepository->findAllForExport();
-        $storagePid = (count($clubs) <= 1) ? $this->clubRepository->getStoragePid() : [];
-        $exportFile = $this->getExportPath() . $this->exportFile;
-        $fp = \fopen($exportFile, 'wb');
-        foreach ($clubs as $row) {
-            \fputcsv($fp, $row, ';', "'");
-        }
-
-        \fclose($fp);
-
-        $this->moduleTemplate->assign(
-            'exportPath',
-            PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile),
-        );
         $this->moduleTemplate->assign('clubs', $clubs);
-        $this->moduleTemplate->assign('storagePid', $storagePid);
+        $this->moduleTemplate->assign('storagePid', count($clubs) <= 1 ? $this->getAccessibleStoragePids() : []);
 
         return $this->moduleTemplate->renderResponse('Export/Index');
     }
 
     public function showAction(): ResponseInterface
     {
-        $this->moduleTemplate->assign(
-            'exportPath',
-            PathUtility::getAbsoluteWebPath($this->getExportPath() . $this->exportFile),
-        );
-
-        $this->moduleTemplate->assign('clubs', $this->clubRepository->findAllForExport());
+        $this->moduleTemplate->assign('clubs', $this->getClubsOfCurrentPage());
 
         return $this->moduleTemplate->renderResponse('Export/Show');
     }
 
-    /**
-     * Check directory and create directory structure if not already created.
-     */
-    protected function createDirectoryStructure(): void
+    public function downloadAction(): ResponseInterface
     {
-        if (!\is_dir($this->getExportPath())) {
-            GeneralUtility::mkdir_deep($this->getExportPath());
+        if (!$this->hasPageAccess($this->getCurrentPageUid())) {
+            return $this->responseFactory->createResponse(403);
         }
+
+        $csv = $this->csvExportService->createCsv($this->clubRepository->findAllForExport());
+
+        return $this->responseFactory->createResponse()
+            ->withHeader('Content-Type', 'text/csv; charset=utf-8')
+            ->withHeader('Content-Disposition', 'attachment; filename="' . self::EXPORT_FILE_NAME . '"')
+            ->withHeader('Cache-Control', 'no-store, private')
+            ->withBody($this->streamFactory->createStream($csv));
     }
 
     /**
-     * Remove previously created exports.
+     * @return array<int, array<int, mixed>>
      */
-    protected function removePreviousExports(): void
+    protected function getClubsOfCurrentPage(): array
     {
-        $exportFile = $this->getExportPath() . $this->exportFile;
-        if (\is_file($exportFile)) {
-            \unlink($exportFile); // only to be sure
+        if ($this->hasPageAccess($this->getCurrentPageUid())) {
+            return $this->clubRepository->findAllForExport();
         }
+
+        $this->addFlashMessage(
+            (string)LocalizationUtility::translate('LLL:EXT:clubdirectory/Resources/Private/Language/locallang_export.xlf:noPageAccess'),
+            '',
+            ContextualFeedbackSeverity::WARNING,
+        );
+
+        return [];
     }
 
-    protected function getExportPath(): string
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    protected function getAccessibleStoragePids(): array
     {
-        return Environment::getPublicPath() . '/' . rtrim($this->exportPath, '/') . '/';
+        return array_values(array_filter(
+            $this->clubRepository->getStoragePid(),
+            fn(array $storage): bool => $this->hasPageAccess((int)($storage['pid'] ?? 0)),
+        ));
+    }
+
+    /**
+     * Without a selected page Extbase falls back to the first root page, so
+     * a page has to be selected explicitly.
+     */
+    protected function hasPageAccess(int $pageUid): bool
+    {
+        if ($pageUid <= 0) {
+            return false;
+        }
+
+        $permissionClause = $this->getBackendUser()->getPagePermsClause(Permission::PAGE_SHOW);
+
+        return is_array(BackendUtility::readPageAccess($pageUid, $permissionClause));
+    }
+
+    /**
+     * Same page UID as used by Extbase's BackendConfigurationManager as storage PID
+     */
+    protected function getCurrentPageUid(): int
+    {
+        $pageUid = $this->request->getParsedBody()['id'] ?? $this->request->getQueryParams()['id'] ?? 0;
+
+        return MathUtility::canBeInterpretedAsInteger($pageUid) ? (int)$pageUid : 0;
+    }
+
+    protected function getBackendUser(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
     }
 }

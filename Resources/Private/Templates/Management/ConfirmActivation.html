@@ -1,0 +1,39 @@
+<html lang="en"
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default"/>
+
+<f:section name="main">
+    <f:flashMessages/>
+
+    <h2>{f:translate(key: 'confirmActivation.header')}</h2>
+    <p>{f:translate(key: 'confirmActivation.description')}</p>
+
+    <dl>
+        <dt><f:translate key="tx_clubdirectory_domain_model_club.title"/></dt>
+        <dd>{club.title}</dd>
+        <dt><f:translate key="tx_clubdirectory_domain_model_club.activity"/></dt>
+        <dd>{club.activity}</dd>
+        <dt><f:translate key="tx_clubdirectory_domain_model_club.contactPerson"/></dt>
+        <dd>{club.contactPerson}</dd>
+        <dt><f:translate key="tx_clubdirectory_domain_model_club.email"/></dt>
+        <dd>{club.email}</dd>
+        <dt><f:translate key="tx_clubdirectory_domain_model_club.website"/></dt>
+        <dd>{club.website}</dd>
+        <f:for each="{club.addresses}" as="address">
+            <dt><f:translate key="tx_clubdirectory_domain_model_address.title.{address.title}"/></dt>
+            <dd>
+                {address.street} {address.houseNumber}<br>
+                {address.zip} {address.city}
+            </dd>
+        </f:for>
+    </dl>
+
+    <f:form action="activate" method="post">
+        <f:form.hidden name="club" value="{club.uid}"/>
+        <f:form.hidden name="moderationToken" value="{moderationToken}"/>
+        <f:form.submit value="{f:translate(key: 'confirmActivation.submit')}"/>
+    </f:form>
+</f:section>
+</html>

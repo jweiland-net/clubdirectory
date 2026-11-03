@@ -49,6 +49,65 @@ class ClubAccessServiceTest extends FunctionalTestCase
     }
 
     #[Test]
+    public function isMemberOfUserGroupWithMemberReturnsTrue(): void
+    {
+        self::assertTrue(
+            $this->createSubject(self::OWNER)->isMemberOfUserGroup(self::USER_GROUP),
+        );
+    }
+
+    #[Test]
+    public function isMemberOfUserGroupWithUserOfOtherGroupReturnsFalse(): void
+    {
+        self::assertFalse(
+            $this->createSubject(self::OTHER_GROUP_USER)->isMemberOfUserGroup(self::USER_GROUP),
+        );
+    }
+
+    #[Test]
+    public function isMemberOfUserGroupWithAnyLoginGroupAndLoggedInUserReturnsTrue(): void
+    {
+        self::assertTrue(
+            $this->createSubject(self::OTHER_GROUP_USER)->isMemberOfUserGroup(-2),
+        );
+    }
+
+    public static function userGroupWithoutLoginDataProvider(): array
+    {
+        return [
+            'configured usergroup' => [self::USER_GROUP],
+            'no usergroup' => [0],
+            'pseudo group "hide at login"' => [-1],
+            'pseudo group "any login"' => [-2],
+        ];
+    }
+
+    #[Test]
+    #[DataProvider('userGroupWithoutLoginDataProvider')]
+    public function isMemberOfUserGroupWithoutLoginReturnsFalse(int $userGroup): void
+    {
+        self::assertFalse(
+            $this->createSubject()->isMemberOfUserGroup($userGroup),
+        );
+    }
+
+    #[Test]
+    public function isMemberOfUserGroupWithoutConfiguredUserGroupReturnsFalse(): void
+    {
+        self::assertFalse(
+            $this->createSubject(self::OWNER)->isMemberOfUserGroup(0),
+        );
+    }
+
+    #[Test]
+    public function isMemberOfUserGroupWithBackendAdminAndWithoutFrontendLoginReturnsFalse(): void
+    {
+        self::assertFalse(
+            $this->createSubject(0, true)->isMemberOfUserGroup(self::USER_GROUP),
+        );
+    }
+
+    #[Test]
     public function canManageClubWithOwnerReturnsTrue(): void
     {
         self::assertTrue(
