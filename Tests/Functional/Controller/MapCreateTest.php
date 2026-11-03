@@ -223,11 +223,11 @@ class MapCreateTest extends FunctionalTestCase
     #[Test]
     public function postCreateSavesCoordinatesOfPoiCollection(): void
     {
-        $this->postCreate($this->getMapFormArgument('47.9876543210', '7.8123456789'));
+        $this->postCreate($this->getMapFormArgument('47.987654', '7.812345'));
 
         $poiCollection = $this->getRecord(self::TABLE_POI_COLLECTION, self::POI_COLLECTION);
-        self::assertEqualsWithDelta(47.987654321, (float)$poiCollection['latitude'], 0.0000000001);
-        self::assertEqualsWithDelta(7.8123456789, (float)$poiCollection['longitude'], 0.0000000001);
+        self::assertEqualsWithDelta(47.987654, (float)$poiCollection['latitude'], 0.0000000001);
+        self::assertEqualsWithDelta(7.812345, (float)$poiCollection['longitude'], 0.0000000001);
         self::assertSame('Hidden club', $poiCollection['title']);
     }
 
@@ -243,7 +243,7 @@ class MapCreateTest extends FunctionalTestCase
         $expectedClub = $this->getFields(self::TABLE_CLUB, self::HIDDEN_CLUB, $clubFields);
         $expectedAddress = $this->getFields(self::TABLE_ADDRESS, self::ADDRESS_WITH_POI, $addressFields);
 
-        $club = $this->getMapFormArgument('47.9876543210', '7.8123456789');
+        $club = $this->getMapFormArgument('47.987654', '7.812345');
         $club['title'] = 'Manipulated club';
         $club['email'] = 'attacker@example.com';
         $club['description'] = 'Manipulated description';
@@ -257,13 +257,13 @@ class MapCreateTest extends FunctionalTestCase
         self::assertSame($expectedAddress, $this->getFields(self::TABLE_ADDRESS, self::ADDRESS_WITH_POI, $addressFields));
         $poiCollection = $this->getRecord(self::TABLE_POI_COLLECTION, self::POI_COLLECTION);
         self::assertSame('Hidden club', $poiCollection['title']);
-        self::assertEqualsWithDelta(47.987654321, (float)$poiCollection['latitude'], 0.0000000001);
+        self::assertEqualsWithDelta(47.987654, (float)$poiCollection['latitude'], 0.0000000001);
     }
 
     #[Test]
     public function postCreateWithNewAddressRejectsCreationOfRecords(): void
     {
-        $club = $this->getMapFormArgument('47.9876543210', '7.8123456789');
+        $club = $this->getMapFormArgument('47.987654', '7.812345');
         $club['addresses'][2] = [
             'title' => 'clubHome',
             'zip' => '79098',
@@ -289,7 +289,7 @@ class MapCreateTest extends FunctionalTestCase
     #[Test]
     public function postCreateWithForeignPoiCollectionDeniesAccess(): void
     {
-        $club = $this->getMapFormArgument('47.9876543210', '7.8123456789');
+        $club = $this->getMapFormArgument('47.987654', '7.812345');
         $club['addresses'][1]['txMaps2Uid']['__identity'] = '11';
 
         $response = $this->postCreate($club);
@@ -308,7 +308,7 @@ class MapCreateTest extends FunctionalTestCase
     #[Test]
     public function postCreateKeepsAddressesWithoutPoiCollection(): void
     {
-        $this->postCreate($this->getMapFormArgument('47.9876543210', '7.8123456789'));
+        $this->postCreate($this->getMapFormArgument('47.987654', '7.812345'));
 
         self::assertSame(
             ['deleted' => 0, 'club' => 2],
