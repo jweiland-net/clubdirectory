@@ -25,8 +25,9 @@ use TYPO3\CMS\Frontend\Controller\ErrorController;
  * "settings.userGroup" only. Frontend users can manage the clubs assigned to
  * them only. Backend administrators can manage existing clubs.
  * A valid "moderationToken" of the signed mail links grants access to the
- * club without login. "activate" is allowed with a valid token only, so
- * owners can not activate their own clubs and bypass the moderation.
+ * club without login. "confirmActivation" and "activate" are allowed with a
+ * valid token only, so owners can not activate their own clubs and bypass
+ * the moderation.
  * The listener is called in the initialize*Action methods, so access is
  * denied before Extbase maps the arguments and stores uploaded files.
  * Access will be denied with the 403 error handling of the site. Do not
@@ -44,11 +45,22 @@ final readonly class RestrictAccessEventListener
             'create',
             'edit',
             'update',
+            'confirmActivation',
             'activate',
         ],
         'Map' => [
             'new',
             'create',
+        ],
+    ];
+
+    /**
+     * These actions are allowed with a valid moderation token only
+     */
+    private const MODERATION_TOKEN_CONTROLLER_ACTIONS = [
+        'Management' => [
+            'confirmActivation',
+            'activate',
         ],
     ];
 
@@ -121,8 +133,11 @@ final readonly class RestrictAccessEventListener
 
     private function isClubAccessAllowed(PreProcessControllerActionEvent $controllerActionEvent, int $clubUid): bool
     {
-        return $controllerActionEvent->getActionName() !== 'activate'
-            && $this->clubAccessService->canManageClub($clubUid);
+        return !in_array(
+            $controllerActionEvent->getActionName(),
+            self::MODERATION_TOKEN_CONTROLLER_ACTIONS[$controllerActionEvent->getControllerName()] ?? [],
+            true,
+        ) && $this->clubAccessService->canManageClub($clubUid);
     }
 
     private function isNewClubAllowed(PreProcessControllerActionEvent $controllerActionEvent): bool

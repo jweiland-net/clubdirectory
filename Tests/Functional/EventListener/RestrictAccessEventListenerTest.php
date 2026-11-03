@@ -184,6 +184,7 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
         return [
             'Management edit' => ['Management', 'edit'],
             'Management update' => ['Management', 'update'],
+            'Management confirmActivation' => ['Management', 'confirmActivation'],
             'Management activate' => ['Management', 'activate'],
             'Map new' => ['Map', 'new'],
             'Map create' => ['Map', 'create'],
@@ -313,6 +314,33 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
         $this->loginUser(self::OTHER_GROUP_USER);
 
         $this->assertAccessGranted($this->createEvent($controllerName, $actionName, [
+            'club' => (string)self::HIDDEN_CLUB,
+            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
+        ]));
+    }
+
+    #[Test]
+    public function confirmActivationWithOwnerAndWithoutModerationTokenDeniesAccess(): void
+    {
+        $this->loginUser(self::OWNER);
+
+        $this->assertAccessDenied($this->createEvent('Management', 'confirmActivation', ['club' => (string)self::HIDDEN_CLUB]));
+    }
+
+    #[Test]
+    public function confirmActivationWithBackendAdminAndWithoutModerationTokenDeniesAccess(): void
+    {
+        $this->loginUser(0, true);
+
+        $this->assertAccessDenied($this->createEvent('Management', 'confirmActivation', ['club' => (string)self::HIDDEN_CLUB]));
+    }
+
+    #[Test]
+    public function confirmActivationWithValidModerationTokenAndWithoutLoginGrantsAccess(): void
+    {
+        $this->loginUser();
+
+        $this->assertAccessGranted($this->createEvent('Management', 'confirmActivation', [
             'club' => (string)self::HIDDEN_CLUB,
             'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
         ]));

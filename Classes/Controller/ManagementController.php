@@ -192,13 +192,45 @@ class ManagementController extends ActionController
         return $this->redirect('listMyClubs');
     }
 
+    public function initializeConfirmActivationAction(): void
+    {
+        $this->preProcessControllerAction();
+    }
+
+    /**
+     * Mail security scanners and link previews open the links of a mail
+     * automatically. So the activation link of the mail shows this summary
+     * of the club only. Its form activates the club via POST.
+     */
+    #[Extbase\IgnoreValidation(['value' => 'club'])]
+    public function confirmActivationAction(Club $club): ResponseInterface
+    {
+        $this->postProcessAndAssignFluidVariables([
+            'club' => $club,
+            'moderationToken' => $this->clubAccessService->getValidModerationToken($this->request, (int)$club->getUid()),
+        ]);
+
+        return $this->htmlResponse();
+    }
+
     public function initializeActivateAction(): void
     {
         $this->preProcessControllerAction();
     }
 
+    /**
+     * The club is activated via POST only. GET requests are redirected to
+     * the confirmation page.
+     */
     public function activateAction(Club $club): ResponseInterface
     {
+        if ($this->request->getMethod() !== 'POST') {
+            return $this->redirect('confirmActivation', null, null, [
+                'club' => $club,
+                'moderationToken' => $this->clubAccessService->getValidModerationToken($this->request, (int)$club->getUid()),
+            ]);
+        }
+
         $club->setHidden(false);
         $this->clubRepository->update($club);
         $this->persistenceManager->persistAll();

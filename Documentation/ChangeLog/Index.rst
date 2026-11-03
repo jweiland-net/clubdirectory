@@ -22,6 +22,8 @@ Security:
 *   [SECURITY] Allow the actions of the Management plugin for logged-in
     members of `clubdirectory.userGroup` or with a valid moderation token
     only
+*   [SECURITY] Activate clubs via POST of a confirmation form only. The
+    activate link of the mail shows the new action `confirmActivation`
 
 ..  _changelog-9-0-0:
 

@@ -52,6 +52,7 @@ class RegisterHiddenClubEventListenerTest extends FunctionalTestCase
     {
         return [
             'Management edit' => ['Management', 'edit'],
+            'Management confirmActivation' => ['Management', 'confirmActivation'],
             'Management activate' => ['Management', 'activate'],
             'Map new' => ['Map', 'new'],
         ];
@@ -63,7 +64,7 @@ class RegisterHiddenClubEventListenerTest extends FunctionalTestCase
     {
         $this->setUserAspects($this->get(Context::class), self::OWNER);
         $arguments = ['club' => (string)self::HIDDEN_CLUB];
-        if ($actionName === 'activate') {
+        if (in_array($actionName, ['confirmActivation', 'activate'], true)) {
             $arguments['moderationToken'] = $this->get(ClubAccessService::class)
                 ->generateModerationToken(self::HIDDEN_CLUB);
         }

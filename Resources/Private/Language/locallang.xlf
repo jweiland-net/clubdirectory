@@ -304,6 +304,15 @@
 			<trans-unit id="email.activateRecord">
 				<source>Activate record</source>
 			</trans-unit>
+			<trans-unit id="confirmActivation.header">
+				<source>Activate club</source>
+			</trans-unit>
+			<trans-unit id="confirmActivation.description">
+				<source>Please check the club. It will be visible in frontend after the activation.</source>
+			</trans-unit>
+			<trans-unit id="confirmActivation.submit">
+				<source>Activate club</source>
+			</trans-unit>
 			<trans-unit id="email.property">
 				<source>Property</source>
 			</trans-unit>

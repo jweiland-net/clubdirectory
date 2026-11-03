@@ -53,6 +53,22 @@ Check, that the owners of existing clubs are members of this usergroup.
 Additionally restrict the access of the management page to this usergroup
 in the page properties.
 
+..  _upgrade-9-0-1-activation:
+
+Activation via confirmation form
+--------------------------------
+
+The activate link of the mails points to the new action
+`confirmActivation` of the Management plugin. It shows a summary of the
+club and a button, which activates the club via POST. A GET request of the
+action `activate` does not activate the club anymore, it redirects to the
+confirmation. So activate links of older mails keep working.
+
+If you override the mail templates :file:`Templates/Management/Update.html`
+and :file:`Templates/Map/Create.html`, change the action of the activate
+link from `activate` to `confirmActivation`. To change the confirmation
+page, override :file:`Templates/Management/ConfirmActivation.html`.
+
 ..  _upgrade-9-0-0:
 
 Update to Version 9.0.0

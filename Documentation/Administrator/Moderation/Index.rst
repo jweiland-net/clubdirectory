@@ -61,9 +61,11 @@ Moderation flow
     the pending moderation.
 
 #.  The administrator opens the edit link to check and correct the club,
-    or the activate link to publish it. After the activation the
-    administrator is redirected to the list page, which shows a
-    confirmation message.
+    or the activate link to publish it. The activate link shows a summary
+    of the club with a button. The club is activated after submitting this
+    form only, so mail security scanners opening the link can not activate
+    it. After the activation the administrator is redirected to the list
+    page, which shows a confirmation message.
 
 The list page is not cached, while it shows such a message. The
 `Clubdirectory` plugin tags its cached list pages with
@@ -115,7 +117,8 @@ record.
 If you override the mail templates :file:`Templates/Management/Update.html`
 and :file:`Templates/Map/Create.html`, keep the argument `moderationToken`
 in both links and the hidden field `moderationToken` in
-:file:`Templates/Management/Edit.html`.
+:file:`Templates/Management/Edit.html` and
+:file:`Templates/Management/ConfirmActivation.html`.
 
 ..  _moderation-access:
 
