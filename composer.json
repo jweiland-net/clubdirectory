@@ -28,7 +28,7 @@
 		"source": "https://github.com/jweiland-net/clubdirectory"
 	},
 	"require": {
-		"jweiland/glossary2": ">=7.0.7",
+		"jweiland/glossary2": ">=7.1.0",
 		"jweiland/maps2": ">=12.2.1",
 		"typo3/cms-core": "^13.4",
 		"typo3/cms-redirects": "^13.4"
