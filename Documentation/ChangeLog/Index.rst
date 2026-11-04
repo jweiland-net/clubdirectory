@@ -15,6 +15,8 @@ Tasks:
 *   [TASK] Remove the conversion of an empty `pidOfDetailPage` to `NULL`.
     Since TYPO3 13 the Fluid ViewHelpers `f:link.action`, `f:uri.action`
     and `f:form` link to the current page, if `pageUid` is `0`
+*   [TASK] Require `glossary2` 7.1.0 or higher, as it introduces a generic
+    `QueryInterface` type for `GlossaryService::getLetterConstraintForExtbaseQuery()`
 
 ..  _changelog-9-0-2:
 
