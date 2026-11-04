@@ -5,6 +5,17 @@
 ChangeLog
 =========
 
+..  _changelog-9-0-3:
+
+Version 9.0.3
+=============
+
+Tasks:
+
+*   [TASK] Remove the conversion of an empty `pidOfDetailPage` to `NULL`.
+    Since TYPO3 13 the Fluid ViewHelpers `f:link.action`, `f:uri.action`
+    and `f:form` link to the current page, if `pageUid` is `0`
+
 ..  _changelog-9-0-2:
 
 Version 9.0.2
