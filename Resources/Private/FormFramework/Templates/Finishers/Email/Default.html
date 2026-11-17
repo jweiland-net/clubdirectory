@@ -1,6 +1,7 @@
 <html lang="en"
       xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      xmlns:c="http://typo3.org/ns/JWeiland/Clubdirectory/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
 <f:layout name="SystemEmail"/>
@@ -60,6 +61,9 @@
                         {value}<f:if condition="{iterator.isLast}"><f:else><br></f:else></f:if>
                     </f:for>
                 </f:then>
+                <f:else if="{formValue.element.properties.dbMapping.dataType} == 'richText'">
+                    <c:formatRichText element="{formValue.element}" value="{formValue.processedValue}"/>
+                </f:else>
                 <f:else>
                     <f:format.nl2br>{formValue.processedValue}</f:format.nl2br>
                 </f:else>
