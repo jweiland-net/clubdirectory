@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2026-11-17T12:00:00Z" product-name="clubdirectory">
+		<header/>
+		<body>
+			<trans-unit id="element.newClub.renderingOptions.submitButtonLabel">
+				<source>Submit</source>
+			</trans-unit>
+			<trans-unit id="element.club-data.properties.label">
+				<source>Club data</source>
+			</trans-unit>
+			<trans-unit id="element.club-data.renderingOptions.nextButtonLabel">
+				<source>Next page</source>
+			</trans-unit>
+			<trans-unit id="element.title.properties.label">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="element.title.properties.elementDescription">
+				<source>The title is mandatory</source>
+			</trans-unit>
+			<trans-unit id="element.categories.properties.label">
+				<source>Categories</source>
+			</trans-unit>
+			<trans-unit id="element.categories.properties.elementDescription">
+				<source>Please select the categories of the club.</source>
+			</trans-unit>
+			<trans-unit id="element.activity.properties.label">
+				<source>Activity</source>
+			</trans-unit>
+			<trans-unit id="element.activity.properties.elementDescription">
+				<source>Describe the activities/goals of the club.</source>
+			</trans-unit>
+			<trans-unit id="element.description.properties.label">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="element.description.properties.elementDescription">
+				<source>Further descriptions</source>
+			</trans-unit>
+			<trans-unit id="element.contact-person.properties.label">
+				<source>Contact person</source>
+			</trans-unit>
+			<trans-unit id="element.contact-person.properties.elementDescription">
+				<source>Enter the contact person of the club</source>
+			</trans-unit>
+			<trans-unit id="element.contact-times.properties.label">
+				<source>Contact times</source>
+			</trans-unit>
+			<trans-unit id="element.contact-times.properties.elementDescription">
+				<source>Specify the times when the contact person is available.</source>
+			</trans-unit>
+			<trans-unit id="element.email.properties.label">
+				<source>Email</source>
+			</trans-unit>
+			<trans-unit id="element.email.properties.elementDescription">
+				<source>Enter the email address of the club or contact person.</source>
+			</trans-unit>
+			<trans-unit id="element.website.properties.label">
+				<source>Website</source>
+			</trans-unit>
+			<trans-unit id="element.website.properties.elementDescription">
+				<source>If the club has a website, enter its complete address including https://.</source>
+			</trans-unit>
+			<trans-unit id="element.members.properties.label">
+				<source>Members</source>
+			</trans-unit>
+			<trans-unit id="element.members.properties.elementDescription">
+				<source>Enter the number of members of the club.</source>
+			</trans-unit>
+			<trans-unit id="element.club-home.properties.label">
+				<source>Club home</source>
+			</trans-unit>
+			<trans-unit id="element.club-home.properties.elementDescription">
+				<source>Enter the name of the clubhouse if it exists.</source>
+			</trans-unit>
+			<trans-unit id="element.district.properties.label">
+				<source>District</source>
+			</trans-unit>
+			<trans-unit id="element.district.properties.prependOptionLabel">
+				<source>Please choose</source>
+			</trans-unit>
+			<trans-unit id="element.address-1.properties.label">
+				<source>Address 1</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-title.properties.label">
+				<source>Address type</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-title.properties.elementDescription">
+				<source>Choose the address type of the club and add the address infos.</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-title.properties.prependOptionLabel">
+				<source>Please choose</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-title.properties.options.organizationAddress">
+				<source>Organization address</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-title.properties.options.postAddress">
+				<source>Postal address</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-title.properties.options.clubAddress">
+				<source>Club address</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-street.properties.label">
+				<source>Street</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-house-number.properties.label">
+				<source>House number</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-zip.properties.label">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-city.properties.label">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-telephone.properties.label">
+				<source>Telephone</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-fax.properties.label">
+				<source>Fax</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-barrier-free.properties.label">
+				<source>Barrier free</source>
+			</trans-unit>
+			<trans-unit id="element.address-2.properties.label">
+				<source>Address 2</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-title.properties.label">
+				<source>Address type</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-title.properties.elementDescription">
+				<source>Enter a further address type of the club with all address infos.</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-title.properties.prependOptionLabel">
+				<source>Please choose</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-title.properties.options.organizationAddress">
+				<source>Organization address</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-title.properties.options.postAddress">
+				<source>Postal address</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-title.properties.options.clubAddress">
+				<source>Club address</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-street.properties.label">
+				<source>Street</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-house-number.properties.label">
+				<source>House number</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-zip.properties.label">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-city.properties.label">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-telephone.properties.label">
+				<source>Telephone</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-fax.properties.label">
+				<source>Fax</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-barrier-free.properties.label">
+				<source>Barrier free</source>
+			</trans-unit>
+			<trans-unit id="element.address-3.properties.label">
+				<source>Address 3</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-title.properties.label">
+				<source>Address type</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-title.properties.elementDescription">
+				<source>Enter a further address type of the club with all address infos.</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-title.properties.prependOptionLabel">
+				<source>Please choose</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-title.properties.options.organizationAddress">
+				<source>Organization address</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-title.properties.options.postAddress">
+				<source>Postal address</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-title.properties.options.clubAddress">
+				<source>Club address</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-street.properties.label">
+				<source>Street</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-house-number.properties.label">
+				<source>House number</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-zip.properties.label">
+				<source>Zip</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-city.properties.label">
+				<source>City</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-telephone.properties.label">
+				<source>Telephone</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-fax.properties.label">
+				<source>Fax</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-barrier-free.properties.label">
+				<source>Barrier free</source>
+			</trans-unit>
+			<trans-unit id="element.facebook.properties.label">
+				<source>Facebook</source>
+			</trans-unit>
+			<trans-unit id="element.facebook.properties.elementDescription">
+				<source>Enter the complete URL to Facebook including https://.</source>
+			</trans-unit>
+			<trans-unit id="element.twitter.properties.label">
+				<source>Twitter</source>
+			</trans-unit>
+			<trans-unit id="element.twitter.properties.elementDescription">
+				<source>Enter the complete URL to Twitter including https://.</source>
+			</trans-unit>
+			<trans-unit id="element.instagram.properties.label">
+				<source>Instagram</source>
+			</trans-unit>
+			<trans-unit id="element.instagram.properties.elementDescription">
+				<source>Enter the complete URL to Instagram including https://.</source>
+			</trans-unit>
+			<trans-unit id="element.tags.properties.label">
+				<source>Tags</source>
+			</trans-unit>
+			<trans-unit id="element.tags.properties.elementDescription">
+				<source>Enter further tags for the alphabetic list view.</source>
+			</trans-unit>
+			<trans-unit id="element.logo.properties.label">
+				<source>Logo</source>
+			</trans-unit>
+			<trans-unit id="element.logo.properties.elementDescription">
+				<source>Upload the logo file (jpg, gif, png) in a square formatting. A new logo replaces the existing one.</source>
+			</trans-unit>
+			<trans-unit id="element.image-1.properties.label">
+				<source>Image 1</source>
+			</trans-unit>
+			<trans-unit id="element.image-1.properties.elementDescription">
+				<source>Upload an image file (jpg, gif, png). A new image replaces the existing one.</source>
+			</trans-unit>
+			<trans-unit id="element.image-2.properties.label">
+				<source>Image 2</source>
+			</trans-unit>
+			<trans-unit id="element.image-2.properties.elementDescription">
+				<source>Upload an image file (jpg, gif, png). A new image replaces the existing one.</source>
+			</trans-unit>
+			<trans-unit id="element.image-3.properties.label">
+				<source>Image 3</source>
+			</trans-unit>
+			<trans-unit id="element.image-3.properties.elementDescription">
+				<source>Upload an image file (jpg, gif, png). A new image replaces the existing one.</source>
+			</trans-unit>
+			<trans-unit id="element.map-positions.properties.label">
+				<source>Map positions</source>
+			</trans-unit>
+			<trans-unit id="element.map-positions.renderingOptions.previousButtonLabel">
+				<source>Previous page</source>
+			</trans-unit>
+			<trans-unit id="element.map-positions-description.properties.label">
+				<source>Check the positions</source>
+			</trans-unit>
+			<trans-unit id="element.map-positions-description.properties.text">
+				<source>Please check the position of each address on the map. Drag the marker to correct it.</source>
+			</trans-unit>
+			<trans-unit id="element.address-1-position.properties.label">
+				<source>Position of address 1</source>
+			</trans-unit>
+			<trans-unit id="element.address-2-position.properties.label">
+				<source>Position of address 2</source>
+			</trans-unit>
+			<trans-unit id="element.address-3-position.properties.label">
+				<source>Position of address 3</source>
+			</trans-unit>
+			<trans-unit id="finisher.EmailToReceiver.subject">
+				<source>A club record was created or updated</source>
+			</trans-unit>
+			<trans-unit id="finisher.FlashMessage.messageBody">
+				<source>Thank you. The club will be published after it was checked by an administrator.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

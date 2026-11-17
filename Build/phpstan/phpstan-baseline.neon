@@ -1,6 +1,2 @@
 parameters:
-	ignoreErrors:
-		-
-			message: "#^Class JWeiland\\\\Checkfaluploads\\\\Validation\\\\Validator\\\\CheckFalUploadValidator not found\\.$#"
-			count: 1
-			path: ../../Classes/EventListener/CheckFalUploadsEventListener.php
+	ignoreErrors: []

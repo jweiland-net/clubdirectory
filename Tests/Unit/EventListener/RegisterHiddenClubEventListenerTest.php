@@ -77,11 +77,7 @@ class RegisterHiddenClubEventListenerTest extends UnitTestCase
     public static function coveredActionDataProvider(): array
     {
         return [
-            'Management edit' => ['Management', 'edit'],
-            'Management update' => ['Management', 'update'],
             'Management confirmActivation' => ['Management', 'confirmActivation'],
-            'Map new' => ['Map', 'new'],
-            'Map create' => ['Map', 'create'],
         ];
     }
 
@@ -111,13 +107,14 @@ class RegisterHiddenClubEventListenerTest extends UnitTestCase
             'Club list' => ['Club', 'list'],
             'Search listSearchResults' => ['Search', 'listSearchResults'],
             'Management listMyClubs' => ['Management', 'listMyClubs'],
-            'Management new' => ['Management', 'new'],
-            // A new club is never hidden. It gets hidden in createAction.
-            'Management create' => ['Management', 'create'],
+            // The club form based on EXT:form reads the club on its own
+            'Management perform' => ['Management', 'perform'],
             // Activation loads the club by its UID. Its properties are never mapped.
             'Management activate' => ['Management', 'activate'],
-            'Map edit (removed)' => ['Map', 'edit'],
-            'Map update (removed)' => ['Map', 'update'],
+            'Management edit (removed)' => ['Management', 'edit'],
+            'Management update (removed)' => ['Management', 'update'],
+            'Map new (removed)' => ['Map', 'new'],
+            'Map create (removed)' => ['Map', 'create'],
             'unknown controller' => ['Foo', 'edit'],
         ];
     }

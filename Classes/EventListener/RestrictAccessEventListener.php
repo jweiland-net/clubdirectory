@@ -20,20 +20,20 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 
 /**
- * Restrict access to the actions of the Management and Map controllers.
- * They are allowed for logged-in members of the usergroup configured in
+ * Restrict access to the actions of the Management controller. They are
+ * allowed for logged-in members of the usergroup configured in
  * "settings.userGroup" only. Frontend users can manage the clubs assigned to
  * them only. Backend administrators can manage existing clubs.
  * A valid "moderationToken" of the signed mail links grants access to the
  * club without login. "confirmActivation" and "activate" are allowed with a
  * valid token only, so owners can not activate their own clubs and bypass
  * the moderation.
- * The map step ("Map" new and create) is allowed for hidden clubs only, as
- * clubs are hidden after Management create and update until they get
- * activated. So the map step can never change an active club. This applies
- * to backend administrators and moderation token holders, too.
+ * The action "perform" renders the club form based on EXT:form. Without a
+ * club it creates a new club. The SaveClubFinisher and the
+ * PrefillForEditUsageHook check the same rules with
+ * ClubAccessService::isFormAccessAllowed() again.
  * The listener is called in the initialize*Action methods, so access is
- * denied before Extbase maps the arguments and stores uploaded files.
+ * denied before Extbase maps the arguments.
  * Access will be denied with the 403 error handling of the site. Do not
  * forward to Extbase's errorAction: on POST requests it forwards back to the
  * referring action, which will be denied again (InfiniteLoopException).
@@ -45,16 +45,9 @@ final readonly class RestrictAccessEventListener
 
     private const ALLOWED_CONTROLLER_ACTIONS = [
         'Management' => [
-            'new',
-            'create',
-            'edit',
-            'update',
+            'perform',
             'confirmActivation',
             'activate',
-        ],
-        'Map' => [
-            'new',
-            'create',
         ],
     ];
 
@@ -82,18 +75,7 @@ final readonly class RestrictAccessEventListener
      */
     private const NEW_CLUB_CONTROLLER_ACTIONS = [
         'Management' => [
-            'new',
-            'create',
-        ],
-    ];
-
-    /**
-     * These actions are allowed for hidden clubs only
-     */
-    private const HIDDEN_CLUB_CONTROLLER_ACTIONS = [
-        'Map' => [
-            'new',
-            'create',
+            'perform',
         ],
     ];
 
@@ -135,15 +117,7 @@ final readonly class RestrictAccessEventListener
             return false;
         }
 
-        if ($clubUid > 0 && !$hasModerationToken && !$this->isClubAccessAllowed($controllerActionEvent, $clubUid)) {
-            return false;
-        }
-
-        if ($clubUid > 0 && !$this->isClubStateAllowed($controllerActionEvent, $clubUid)) {
-            return false;
-        }
-
-        return !is_array($clubArgument) || $this->clubAccessService->hasOnlyRecordsOfClub($clubArgument, $clubUid);
+        return $clubUid === 0 || $hasModerationToken || $this->isClubAccessAllowed($controllerActionEvent, $clubUid);
     }
 
     /**
@@ -194,14 +168,5 @@ final readonly class RestrictAccessEventListener
             self::NEW_CLUB_CONTROLLER_ACTIONS[$controllerActionEvent->getControllerName()] ?? [],
             true,
         );
-    }
-
-    private function isClubStateAllowed(PreProcessControllerActionEvent $controllerActionEvent, int $clubUid): bool
-    {
-        return !in_array(
-            $controllerActionEvent->getActionName(),
-            self::HIDDEN_CLUB_CONTROLLER_ACTIONS[$controllerActionEvent->getControllerName()] ?? [],
-            true,
-        ) || $this->clubAccessService->isClubHidden($clubUid);
     }
 }

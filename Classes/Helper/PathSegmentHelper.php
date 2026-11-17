@@ -11,14 +11,13 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Helper;
 
-use JWeiland\Clubdirectory\Domain\Model\Club;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Helper class to generate a unique path segment (slug) for a club record.
- * Used while executing the UpgradeWizard and saving records in frontend.
+ * Used while executing the UpgradeWizard and by the SaveClubFinisher.
  */
 class PathSegmentHelper
 {
@@ -51,16 +50,5 @@ class PathSegmentHelper
         }
 
         return $slug;
-    }
-
-    /**
-     * The club must be persisted, so that the uniqueness check can exclude
-     * the club itself.
-     */
-    public function updatePathSegmentForClub(Club $club): void
-    {
-        $club->setPathSegment(
-            $this->generatePathSegment($club->getBaseRecordForPathSegment(), (int)$club->getPid()),
-        );
     }
 }

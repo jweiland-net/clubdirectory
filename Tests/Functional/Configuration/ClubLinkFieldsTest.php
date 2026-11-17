@@ -28,6 +28,10 @@ class ClubLinkFieldsTest extends FunctionalTestCase
 
     private const LINK_FIELDS = ['website', 'facebook', 'twitter', 'instagram'];
 
+    protected array $coreExtensionsToLoad = [
+        'typo3/cms-form',
+    ];
+
     protected array $testExtensionsToLoad = [
         'jweiland/maps2',
         'jweiland/glossary2',

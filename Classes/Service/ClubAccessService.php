@@ -11,11 +11,14 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Service;
 
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
+use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\RequestInterface;
 
 /**
@@ -27,14 +30,18 @@ use TYPO3\CMS\Extbase\Mvc\RequestInterface;
  * "moderationToken". It authorizes the administrator, who is never logged
  * in as the frontend user who owns the club. As the token signs the
  * "tstamp" of the club, too, only the links of the latest mail are valid.
+ *
+ * The club form based on EXT:form is not an Extbase action. Its finisher and
+ * hooks read the club to edit and the moderation token from the query
+ * parameters of the Management plugin, see isFormAccessAllowed().
  */
 readonly class ClubAccessService
 {
     private const TABLE_CLUB = 'tx_clubdirectory_domain_model_club';
 
-    private const TABLE_ADDRESS = 'tx_clubdirectory_domain_model_address';
-
     private const TABLE_CLUB_USER_MM = 'tx_clubdirectory_club_user_mm';
+
+    private const PLUGIN_NAMESPACE = 'tx_clubdirectory_management';
 
     private const MODERATION_TOKEN_SECRET = 'clubdirectory/club-moderation-link';
 
@@ -80,15 +87,51 @@ readonly class ClubAccessService
             ? $request->getArgument(self::MODERATION_TOKEN_ARGUMENT)
             : '';
 
-        if ($clubUid <= 0 || !is_string($moderationToken) || $moderationToken === '') {
-            return '';
-        }
-
-        $payload = $this->getModerationTokenPayload($clubUid);
-
-        return $payload !== '' && $this->hashService->validateHmac($payload, self::MODERATION_TOKEN_SECRET, $moderationToken)
+        return is_string($moderationToken) && $this->isValidModerationToken($clubUid, $moderationToken)
             ? $moderationToken
             : '';
+    }
+
+    /**
+     * Returns the UID of the club to edit in the club form. 0 means: create
+     * a new club. It is read from the query only, so a manipulated POST body
+     * can not change the club, which was checked by isFormAccessAllowed().
+     */
+    public function getClubUidFromQuery(ServerRequestInterface $request): int
+    {
+        $clubUid = $request->getQueryParams()[self::PLUGIN_NAMESPACE]['club'] ?? 0;
+
+        return MathUtility::canBeInterpretedAsInteger($clubUid) ? max(0, (int)$clubUid) : 0;
+    }
+
+    public function getModerationTokenFromQuery(ServerRequestInterface $request): string
+    {
+        $moderationToken = $request->getQueryParams()[self::PLUGIN_NAMESPACE][self::MODERATION_TOKEN_ARGUMENT] ?? '';
+
+        return is_string($moderationToken) ? $moderationToken : '';
+    }
+
+    /**
+     * Same rules as RestrictAccessEventListener applies to the Management
+     * plugin: New clubs can be created by members of "settings.userGroup"
+     * only. An existing club can be edited with a valid moderation token, by
+     * a backend administrator or by an assigned member of the user group.
+     */
+    public function isFormAccessAllowed(ServerRequestInterface $request): bool
+    {
+        $clubUid = $this->getClubUidFromQuery($request);
+        $isMember = $this->isMemberOfUserGroup($this->getUserGroup($request));
+        if ($clubUid === 0) {
+            return $isMember;
+        }
+
+        if ($this->isValidModerationToken($clubUid, $this->getModerationTokenFromQuery($request))) {
+            return true;
+        }
+
+        return $this->clubExists($clubUid)
+            && ($isMember || $this->isBackendAdmin())
+            && $this->canManageClub($clubUid);
     }
 
     /**
@@ -156,26 +199,43 @@ readonly class ClubAccessService
         return is_array($groupIds) && in_array($userGroup, $groupIds, true);
     }
 
-    /**
-     * Prevent property mapping of addresses and POI records of foreign clubs
-     * by submitting a manipulated "__identity" within the club argument.
-     *
-     * @param array<string|int, mixed> $clubArgument
-     */
-    public function hasOnlyRecordsOfClub(array $clubArgument, int $clubUid): bool
+    private function isValidModerationToken(int $clubUid, string $moderationToken): bool
     {
-        $addresses = $clubArgument['addresses'] ?? [];
-        if (!is_array($addresses)) {
-            return $this->getIdentity($addresses) === 0;
+        if ($clubUid <= 0 || $moderationToken === '') {
+            return false;
         }
 
-        foreach ($addresses as $address) {
-            if (!$this->isAddressOfClub($address, $clubUid)) {
-                return false;
-            }
+        $payload = $this->getModerationTokenPayload($clubUid);
+
+        return $payload !== '' && $this->hashService->validateHmac($payload, self::MODERATION_TOKEN_SECRET, $moderationToken);
+    }
+
+    private function clubExists(int $clubUid): bool
+    {
+        return $this->getModerationTokenPayload($clubUid) !== '';
+    }
+
+    /**
+     * Read like Extbase does: plugin.tx_clubdirectory_management overrides
+     * plugin.tx_clubdirectory. Without TypoScript no user group is
+     * configured, which denies access.
+     */
+    private function getUserGroup(ServerRequestInterface $request): int
+    {
+        $frontendTypoScript = $request->getAttribute('frontend.typoscript');
+        try {
+            $pluginSetup = $frontendTypoScript instanceof FrontendTypoScript
+                ? $frontendTypoScript->getSetupArray()['plugin.'] ?? []
+                : [];
+        } catch (\RuntimeException) {
+            $pluginSetup = [];
         }
 
-        return true;
+        return (int)(
+            $pluginSetup[self::PLUGIN_NAMESPACE . '.']['settings.']['userGroup']
+            ?? $pluginSetup['tx_clubdirectory.']['settings.']['userGroup']
+            ?? 0
+        );
     }
 
     /**
@@ -202,22 +262,6 @@ readonly class ClubAccessService
         return $timestamp === false ? '' : $clubUid . ':' . (int)$timestamp;
     }
 
-    private function isAddressOfClub(mixed $address, int $clubUid): bool
-    {
-        $addressUid = $this->getIdentity($address);
-        $poiCollectionUid = $this->getIdentity(is_array($address) ? ($address['txMaps2Uid'] ?? 0) : 0);
-        if ($addressUid === 0) {
-            return $poiCollectionUid === 0;
-        }
-
-        $addressRecord = $this->getAddressRecord($addressUid);
-
-        return $clubUid > 0
-            && $addressRecord !== []
-            && (int)$addressRecord['club'] === $clubUid
-            && ($poiCollectionUid === 0 || (int)$addressRecord['tx_maps2_uid'] === $poiCollectionUid);
-    }
-
     private function isClubAssignedToFrontendUser(int $clubUid, int $frontendUserUid): bool
     {
         $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_CLUB_USER_MM);
@@ -236,25 +280,5 @@ readonly class ClubAccessService
             ->fetchOne();
 
         return (int)$numberOfRelations > 0;
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function getAddressRecord(int $addressUid): array
-    {
-        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE_ADDRESS);
-        $queryBuilder->getRestrictions()->removeAll()->add(new DeletedRestriction());
-
-        $addressRecord = $queryBuilder
-            ->select('uid', 'club', 'tx_maps2_uid')
-            ->from(self::TABLE_ADDRESS)
-            ->where(
-                $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($addressUid, Connection::PARAM_INT)),
-            )
-            ->executeQuery()
-            ->fetchAssociative();
-
-        return is_array($addressRecord) ? $addressRecord : [];
     }
 }

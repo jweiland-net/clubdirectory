@@ -27,6 +27,7 @@ class ClubControllerTest extends FunctionalTestCase
 {
     protected array $coreExtensionsToLoad = [
         'redirects',
+        'typo3/cms-form',
     ];
 
     protected array $testExtensionsToLoad = [

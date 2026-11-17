@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Controller;
 
-use JWeiland\Clubdirectory\Controller\Traits\AddressTrait;
 use JWeiland\Clubdirectory\Controller\Traits\ControllerInjectionTrait;
 use JWeiland\Clubdirectory\Controller\Traits\InitializeControllerTrait;
 use JWeiland\Clubdirectory\Controller\Traits\PostProcessFluidVariablesTrait;
@@ -32,7 +31,6 @@ use TYPO3\CMS\Frontend\Controller\ErrorController;
  */
 class ClubController extends ActionController
 {
-    use AddressTrait;
     use ControllerInjectionTrait;
     use InitializeControllerTrait;
     use PostProcessFluidVariablesTrait;

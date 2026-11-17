@@ -1,1 +1,4 @@
 name: jweiland/clubdirectory
+dependencies:
+  # Provides the form element "Maps2PoiPosition" of the club form
+  - jweiland/maps2-default

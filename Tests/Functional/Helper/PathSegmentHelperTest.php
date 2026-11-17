@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Tests\Functional\Helper;
 
-use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Helper\PathSegmentHelper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
@@ -23,6 +22,10 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 class PathSegmentHelperTest extends FunctionalTestCase
 {
     protected PathSegmentHelper $subject;
+
+    protected array $coreExtensionsToLoad = [
+        'typo3/cms-form',
+    ];
 
     protected array $testExtensionsToLoad = [
         'jweiland/maps2',
@@ -113,31 +116,5 @@ class PathSegmentHelperTest extends FunctionalTestCase
             $expectedPathSegment,
             $this->subject->generatePathSegment($record, $pid),
         );
-    }
-
-    #[Test]
-    public function updatePathSegmentForClubSetsUniquePathSegment(): void
-    {
-        $club = new Club();
-        $club->_setProperty('uid', 6);
-        $club->setPid(1);
-        $club->setTitle('Swimming club');
-
-        $this->subject->updatePathSegmentForClub($club);
-
-        self::assertSame('swimming-club-2', $club->getPathSegment());
-    }
-
-    #[Test]
-    public function updatePathSegmentForClubExcludesClubItself(): void
-    {
-        $club = new Club();
-        $club->_setProperty('uid', 1);
-        $club->setPid(1);
-        $club->setTitle('Swimming club');
-
-        $this->subject->updatePathSegmentForClub($club);
-
-        self::assertSame('swimming-club', $club->getPathSegment());
     }
 }
