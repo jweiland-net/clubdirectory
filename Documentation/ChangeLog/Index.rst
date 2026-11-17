@@ -5,6 +5,34 @@
 ChangeLog
 =========
 
+..  _changelog-10-0-0:
+
+Version 10.0.0
+==============
+
+Please read :ref:`upgrade-10-0-0` before updating.
+
+Breaking changes:
+
+*   [!!!][TASK] Build the club form as multi-page form of EXT:form. The
+    first page contains the club data and the addresses, which are
+    geocoded with maps2 when the page is submitted. On the second page the
+    position of each address can be corrected with the form element
+    `Maps2PoiPosition` of maps2 12.3. The Extbase form, the
+    `MapController` and the integration of checkfaluploads have been
+    removed
+
+Features:
+
+*   [FEATURE] Add CKEditor 5 of EXT:rte_ckeditor to the description of the
+    club form. Enable it with the site setting
+    `clubdirectory.form.richText.enable`. The submitted HTML is sanitized
+    and stored like in the backend. The allowed tags can be modified with
+    the PSR-14 event `ModifyRichTextSanitizerConfigurationEvent`. See
+    :ref:`frontend-rich-text-editor`
+*   [FEATURE] Render rich text elements in the HTML and the text part of
+    the moderation mail
+
 ..  _changelog-9-0-3:
 
 Version 9.0.3
