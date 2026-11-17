@@ -30,6 +30,10 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
 
     protected RestrictAccessEventListener $subject;
 
+    protected array $coreExtensionsToLoad = [
+        'typo3/cms-form',
+    ];
+
     protected array $testExtensionsToLoad = [
         'jweiland/maps2',
         'jweiland/glossary2',
@@ -88,11 +92,7 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     public static function restrictedActionDataProvider(): array
     {
         return [
-            'Management create' => ['Management', 'create'],
-            'Management edit' => ['Management', 'edit'],
-            'Management update' => ['Management', 'update'],
-            'Map new' => ['Map', 'new'],
-            'Map create' => ['Map', 'create'],
+            'Management perform' => ['Management', 'perform'],
         ];
     }
 
@@ -168,9 +168,7 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     public static function managementActionDataProvider(): array
     {
         return [
-            'Management create' => ['Management', 'create'],
-            'Management edit' => ['Management', 'edit'],
-            'Management update' => ['Management', 'update'],
+            'Management perform' => ['Management', 'perform'],
         ];
     }
 
@@ -181,55 +179,6 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
         $this->loginUser(0, true);
 
         $this->assertAccessGranted($this->createEvent($controllerName, $actionName, ['club' => (string)self::FOREIGN_CLUB]));
-    }
-
-    public static function mapActionWithActiveClubDataProvider(): array
-    {
-        $arguments = [];
-        foreach (['new', 'create'] as $actionName) {
-            $arguments['Map ' . $actionName . ' with owner'] = [$actionName, self::OWNER, false, false];
-            $arguments['Map ' . $actionName . ' with backend admin'] = [$actionName, 0, true, false];
-            $arguments['Map ' . $actionName . ' with moderation token'] = [$actionName, 0, false, true];
-            $arguments['Map ' . $actionName . ' with owner and moderation token'] = [$actionName, self::OWNER, false, true];
-        }
-
-        return $arguments;
-    }
-
-    /**
-     * Clubs are hidden after Management create and update. So an active club
-     * is never in the map step and must not be changed without moderation.
-     */
-    #[Test]
-    #[DataProvider('mapActionWithActiveClubDataProvider')]
-    public function mapActionWithActiveClubDeniesAccess(
-        string $actionName,
-        int $frontendUserUid,
-        bool $isBackendAdmin,
-        bool $withModerationToken,
-    ): void {
-        $this->loginUser($frontendUserUid, $isBackendAdmin);
-        $arguments = ['club' => ['__identity' => (string)self::VISIBLE_CLUB]];
-        if ($withModerationToken) {
-            $arguments['moderationToken'] = $this->getModerationToken(self::VISIBLE_CLUB);
-        }
-
-        $this->assertAccessDenied($this->createEvent('Map', $actionName, $arguments));
-    }
-
-    #[Test]
-    public function mapCreateWithHiddenClubOfOwnerGrantsAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessGranted($this->createEvent('Map', 'create', [
-            'club' => [
-                '__identity' => (string)self::HIDDEN_CLUB,
-                'addresses' => [
-                    ['__identity' => '2'],
-                ],
-            ],
-        ]));
     }
 
     #[Test]
@@ -249,12 +198,8 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     public static function actionWithoutClubDataProvider(): array
     {
         return [
-            'Management edit' => ['Management', 'edit'],
-            'Management update' => ['Management', 'update'],
             'Management confirmActivation' => ['Management', 'confirmActivation'],
             'Management activate' => ['Management', 'activate'],
-            'Map new' => ['Map', 'new'],
-            'Map create' => ['Map', 'create'],
         ];
     }
 
@@ -283,8 +228,10 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
             'Club list' => ['Club', 'list'],
             'Club show' => ['Club', 'show'],
             'Search show' => ['Search', 'show'],
-            'Map edit (removed)' => ['Map', 'edit'],
-            'Map update (removed)' => ['Map', 'update'],
+            'Management new (removed)' => ['Management', 'new'],
+            'Management edit (removed)' => ['Management', 'edit'],
+            'Map new (removed)' => ['Map', 'new'],
+            'Map create (removed)' => ['Map', 'create'],
         ];
     }
 
@@ -300,9 +247,8 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     public static function newClubActionDataProvider(): array
     {
         return [
-            'Management new' => ['Management', 'new', []],
-            'Management create without club' => ['Management', 'create', []],
-            'Management create with new club' => ['Management', 'create', ['club' => ['title' => 'New club']]],
+            'Management perform without club' => ['Management', 'perform', []],
+            'Management perform with empty club' => ['Management', 'perform', ['club' => '0']],
         ];
     }
 
@@ -515,132 +461,24 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
     }
 
     #[Test]
-    public function managementCreateWithoutClubArgumentGrantsAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessGranted($this->createEvent('Management', 'create'));
-    }
-
-    #[Test]
-    public function managementCreateWithNewClubGrantsAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessGranted($this->createEvent('Management', 'create', [
-            'club' => [
-                'title' => 'New club',
-                'addresses' => [
-                    ['title' => 'organizationAddress', 'zip' => '79100', 'city' => 'Freiburg'],
-                ],
-            ],
-        ]));
-    }
-
-    #[Test]
-    public function managementCreateWithIdentityOfForeignClubDeniesAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'create', [
-            'club' => [
-                '__identity' => (string)self::FOREIGN_CLUB,
-                'title' => 'Manipulated club',
-            ],
-        ]));
-    }
-
-    #[Test]
-    public function managementCreateWithNewClubAndForeignAddressDeniesAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'create', [
-            'club' => [
-                'title' => 'New club',
-                'addresses' => [
-                    ['__identity' => '3', 'title' => 'organizationAddress'],
-                ],
-            ],
-        ]));
-    }
-
-    #[Test]
-    public function updateWithOwnClubAndForeignAddressDeniesAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'update', [
-            'club' => [
-                '__identity' => (string)self::VISIBLE_CLUB,
-                'addresses' => [
-                    ['__identity' => '3', 'title' => 'organizationAddress'],
-                ],
-            ],
-        ]));
-    }
-
-    #[Test]
-    public function updateWithOwnAddressAndForeignPoiDeniesAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'update', [
-            'club' => [
-                '__identity' => (string)self::VISIBLE_CLUB,
-                'addresses' => [
-                    ['__identity' => '1', 'txMaps2Uid' => ['__identity' => '12']],
-                ],
-            ],
-        ]));
-    }
-
-    #[Test]
-    public function updateWithValidModerationTokenOfHiddenFormFieldGrantsAccessWithoutLogin(): void
-    {
-        $this->loginUser();
-
-        // The edit form submits the token of the mail link as hidden field "moderationToken"
-        $this->assertAccessGranted($this->createEvent('Management', 'update', [
-            'club' => [
-                '__identity' => (string)self::HIDDEN_CLUB,
-                'title' => 'Updated hidden club',
-                'addresses' => [
-                    ['__identity' => '2', 'title' => 'organizationAddress'],
-                    ['title' => 'postAddress'],
-                ],
-            ],
-            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
-        ]));
-    }
-
-    #[Test]
-    public function updateWithModerationTokenOfAnotherClubDeniesAccess(): void
+    public function performWithClubOfOtherUserAndValidModerationTokenGrantsAccess(): void
     {
         $this->loginUser(self::FOREIGN_USER);
 
-        $this->assertAccessDenied($this->createEvent('Management', 'update', [
-            'club' => [
-                '__identity' => (string)self::HIDDEN_CLUB,
-                'title' => 'Updated hidden club',
-            ],
-            'moderationToken' => $this->getModerationToken(self::FOREIGN_CLUB),
+        $this->assertAccessGranted($this->createEvent('Management', 'perform', [
+            'club' => (string)self::HIDDEN_CLUB,
+            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
         ]));
     }
 
     #[Test]
-    public function updateWithValidModerationTokenAndForeignAddressDeniesAccess(): void
+    public function performWithModerationTokenOfAnotherClubDeniesAccess(): void
     {
-        $this->loginUser();
+        $this->loginUser(self::FOREIGN_USER);
 
-        $this->assertAccessDenied($this->createEvent('Management', 'update', [
-            'club' => [
-                '__identity' => (string)self::HIDDEN_CLUB,
-                'addresses' => [
-                    ['__identity' => '3', 'title' => 'organizationAddress'],
-                ],
-            ],
-            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
+        $this->assertAccessDenied($this->createEvent('Management', 'perform', [
+            'club' => (string)self::HIDDEN_CLUB,
+            'moderationToken' => $this->getModerationToken(self::FOREIGN_CLUB),
         ]));
     }
 }

@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Model;
 
 use JWeiland\Clubdirectory\Domain\Repository\FrontendUserRepository;
-use TYPO3\CMS\Core\Resource\Enum\DuplicationBehavior;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
@@ -25,11 +24,8 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class Club extends AbstractEntity
 {
-    private const URL_ERROR_MESSAGE = 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:error.url.invalid';
-
     protected bool $hidden = false;
 
-    #[Extbase\Validate(['validator' => 'NotEmpty'])]
     protected string $title = '';
 
     protected string $pathSegment = '';
@@ -40,10 +36,8 @@ class Club extends AbstractEntity
 
     protected string $contactTimes = '';
 
-    #[Extbase\Validate(['validator' => 'EmailAddress'])]
     protected string $email = '';
 
-    #[Extbase\Validate(['validator' => 'Url', 'options' => ['message' => self::URL_ERROR_MESSAGE]])]
     protected string $website = '';
 
     protected string $members = '';
@@ -58,88 +52,19 @@ class Club extends AbstractEntity
     protected ObjectStorage $feUsers;
 
     /**
-     * The uploadFolder will be overridden by ApplyUploadFolderEventListener with
-     * the TypoScript setting "settings.new.uploadFolder".
-     * Modifying the FileUpload is described here:
-     * @link https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/13.3/Feature-103511-IntroduceExtbaseFileUploadHandling.html#modifying-existing-configuration
-     *
      * @var ObjectStorage<FileReference>
      */
-    #[Extbase\FileUpload([
-        'validation' => [
-            'required' => false,
-            'maxFiles' => 1,
-            'fileSize' => [
-                'minimum' => '0K',
-                'maximum' => '4M',
-            ],
-            'mimeType' => [
-                'allowedMimeTypes' => [
-                    'image/gif',
-                    'image/jpeg',
-                    'image/png',
-                ],
-            ],
-            'fileExtension' => [
-                'allowedFileExtensions' => [
-                    'gif',
-                    'jpg',
-                    'jpeg',
-                    'png',
-                ],
-            ],
-        ],
-        'uploadFolder' => '1:/user_upload/tx_clubdirectory/',
-        'duplicationBehavior' => DuplicationBehavior::RENAME,
-        'createUploadFolderIfNotExist' => true,
-    ])]
     protected ObjectStorage $logo;
 
     /**
-     * The uploadFolder will be overridden by ApplyUploadFolderEventListener with
-     * the TypoScript setting "settings.new.uploadFolder".
-     * Modifying the FileUpload is described here:
-     * @link https://docs.typo3.org/c/typo3/cms-core/main/en-us/Changelog/13.3/Feature-103511-IntroduceExtbaseFileUploadHandling.html#modifying-existing-configuration
-     *
      * @var ObjectStorage<FileReference>
      */
-    #[Extbase\FileUpload([
-        'validation' => [
-            'required' => false,
-            'maxFiles' => 5,
-            'fileSize' => [
-                'minimum' => '0K',
-                'maximum' => '4M',
-            ],
-            'mimeType' => [
-                'allowedMimeTypes' => [
-                    'image/gif',
-                    'image/jpeg',
-                    'image/png',
-                ],
-            ],
-            'fileExtension' => [
-                'allowedFileExtensions' => [
-                    'gif',
-                    'jpg',
-                    'jpeg',
-                    'png',
-                ],
-            ],
-        ],
-        'uploadFolder' => '1:/user_upload/tx_clubdirectory/',
-        'duplicationBehavior' => DuplicationBehavior::RENAME,
-        'createUploadFolderIfNotExist' => true,
-    ])]
     protected ObjectStorage $images;
 
-    #[Extbase\Validate(['validator' => 'Url', 'options' => ['message' => self::URL_ERROR_MESSAGE]])]
     protected string $facebook = '';
 
-    #[Extbase\Validate(['validator' => 'Url', 'options' => ['message' => self::URL_ERROR_MESSAGE]])]
     protected string $twitter = '';
 
-    #[Extbase\Validate(['validator' => 'Url', 'options' => ['message' => self::URL_ERROR_MESSAGE]])]
     protected string $instagram = '';
 
     protected string $tags = '';
@@ -513,20 +438,5 @@ class Club extends AbstractEntity
     public function removeCategory(Category $category): void
     {
         $this->categories->detach($category);
-    }
-
-    /**
-     * Helper method to build a baseRecord for path_segment
-     * Needed in PathSegmentHelper
-     *
-     * @return array{uid: int|null, pid: int|null, title: string}
-     */
-    public function getBaseRecordForPathSegment(): array
-    {
-        return [
-            'uid' => $this->getUid(),
-            'pid' => $this->getPid(),
-            'title' => $this->getTitle(),
-        ];
     }
 }

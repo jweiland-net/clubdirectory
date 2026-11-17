@@ -20,6 +20,29 @@ services:
   JWeiland\Clubdirectory\Helper\HiddenObjectHelper:
     public: true
 
+  # Called by container->get in FormRequestHandler of EXT:form
+  JWeiland\Clubdirectory\Domain\Factory\ArrayFormFactory:
+    public: true
+
+  # Called by makeInstance in FormDefinition of EXT:form. The finisher is used
+  # in several steps of a form, so each step needs its own instance.
+  JWeiland\Clubdirectory\Domain\Finisher\SaveClubFinisher:
+    public: true
+    shared: false
+
+  # Called by makeInstance in ValidatorResolver of Extbase
+  JWeiland\Clubdirectory\Domain\Validator\GeocodingFailureValidator:
+    public: true
+    shared: false
+
+  # Called by makeInstance from the hooks of EXT:form
+  JWeiland\Clubdirectory\Hook\Form\GeocodeAddressesHook:
+    public: true
+  JWeiland\Clubdirectory\Hook\Form\PrefillForEditUsageHook:
+    public: true
+  JWeiland\Clubdirectory\Hook\Form\PrefillOptionsHook:
+    public: true
+
   JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener:
     tags:
     - name: event.listener

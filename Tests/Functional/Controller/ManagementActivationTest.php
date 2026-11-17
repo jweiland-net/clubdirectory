@@ -32,6 +32,10 @@ class ManagementActivationTest extends FunctionalTestCase
 
     private const PLUGIN_NAMESPACE = 'tx_clubdirectory_management';
 
+    protected array $coreExtensionsToLoad = [
+        'typo3/cms-form',
+    ];
+
     protected array $testExtensionsToLoad = [
         'jweiland/maps2',
         'jweiland/glossary2',

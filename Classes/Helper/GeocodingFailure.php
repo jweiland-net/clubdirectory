@@ -11,16 +11,32 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Helper;
 
-use JWeiland\Clubdirectory\Domain\Model\Address;
 use JWeiland\Maps2\Client\ClientError;
+use JWeiland\Maps2\Client\ClientErrorEnum;
 
 /**
  * The address which could not be geocoded and the error of the map provider
  */
 final readonly class GeocodingFailure
 {
+    private const LABEL_PREFIX = 'error.geocoding.';
+
     public function __construct(
-        public Address $address,
+        public string $address,
         public ?ClientError $error = null,
     ) {}
+
+    /**
+     * Only "no positions found" is caused by the user input. For all other
+     * errors the user can not do anything, so the label asks to inform the
+     * administrator. Append "title" or "body" to get the label key.
+     */
+    public function getLabelPrefix(): string
+    {
+        return self::LABEL_PREFIX . match ($this->error?->type) {
+            ClientErrorEnum::NO_POSITIONS_FOUND => 'noPositionsFound',
+            ClientErrorEnum::REQUEST_DENIED => 'requestDenied',
+            default => 'serviceError',
+        } . '.';
+    }
 }

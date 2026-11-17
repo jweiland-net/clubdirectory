@@ -1,0 +1,15 @@
+"sys_category",,,,,
+,"uid","pid","title","parent","sys_language_uid"
+,7,1,"Sports",0,0
+,8,1,"Music",0,0
+,9,1,"Category of other root",3,0
+"sys_category_record_mm",,,,,
+,"uid_local","uid_foreign","tablenames","fieldname","sorting_foreign"
+,8,1,"tx_clubdirectory_domain_model_club","categories",1
+"tx_clubdirectory_domain_model_district",,,,
+,"uid","pid","district","sys_language_uid"
+,1,1,"Wiehre",0
+,2,1,"Altstadt",0
+"tx_maps2_domain_model_poicollection",,,,,,,
+,"uid","pid","title","collection_type","latitude","longitude","address"
+,11,1,"Swimming club","Point",47.9,7.8,"Main street 1, 79100 Freiburg"

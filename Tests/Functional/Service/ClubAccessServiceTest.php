@@ -17,6 +17,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\TypoScript\AST\Node\RootNode;
+use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
@@ -25,6 +28,10 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 class ClubAccessServiceTest extends FunctionalTestCase
 {
     use ClubAccessTestTrait;
+
+    protected array $coreExtensionsToLoad = [
+        'typo3/cms-form',
+    ];
 
     protected array $testExtensionsToLoad = [
         'jweiland/maps2',
@@ -190,117 +197,6 @@ class ClubAccessServiceTest extends FunctionalTestCase
         );
     }
 
-    public static function clubArgumentDataProvider(): array
-    {
-        return [
-            'no addresses' => [
-                ['title' => 'Swimming club'],
-                self::VISIBLE_CLUB,
-                true,
-            ],
-            'new addresses only' => [
-                ['addresses' => [['title' => 'postAddress'], ['title' => 'clubAddress']]],
-                self::VISIBLE_CLUB,
-                true,
-            ],
-            'own address' => [
-                ['addresses' => [['__identity' => '1', 'title' => 'organizationAddress']]],
-                self::VISIBLE_CLUB,
-                true,
-            ],
-            'own address with own POI' => [
-                ['addresses' => [['__identity' => '1', 'txMaps2Uid' => ['__identity' => '11']]]],
-                self::VISIBLE_CLUB,
-                true,
-            ],
-            'own address with scalar POI identity' => [
-                ['addresses' => [['__identity' => '1', 'txMaps2Uid' => '11']]],
-                self::VISIBLE_CLUB,
-                true,
-            ],
-            'own address as scalar identity' => [
-                ['addresses' => ['1']],
-                self::VISIBLE_CLUB,
-                true,
-            ],
-            'own address with foreign POI' => [
-                ['addresses' => [['__identity' => '1', 'txMaps2Uid' => ['__identity' => '12']]]],
-                self::VISIBLE_CLUB,
-                false,
-            ],
-            'foreign address' => [
-                ['addresses' => [['__identity' => '3', 'title' => 'organizationAddress']]],
-                self::VISIBLE_CLUB,
-                false,
-            ],
-            'foreign address as scalar identity' => [
-                ['addresses' => ['3']],
-                self::VISIBLE_CLUB,
-                false,
-            ],
-            'own and foreign address' => [
-                ['addresses' => [['__identity' => '1'], ['__identity' => '3']]],
-                self::VISIBLE_CLUB,
-                false,
-            ],
-            'unknown address' => [
-                ['addresses' => [['__identity' => '999']]],
-                self::VISIBLE_CLUB,
-                false,
-            ],
-            'new address with foreign POI' => [
-                ['addresses' => [['title' => 'postAddress', 'txMaps2Uid' => ['__identity' => '12']]]],
-                self::VISIBLE_CLUB,
-                false,
-            ],
-            'existing address for new club' => [
-                ['addresses' => [['__identity' => '1']]],
-                0,
-                false,
-            ],
-            'new address for new club' => [
-                ['addresses' => [['title' => 'postAddress']]],
-                0,
-                true,
-            ],
-            'scalar address identity instead of list' => [
-                ['addresses' => '3'],
-                self::VISIBLE_CLUB,
-                false,
-            ],
-            'empty string instead of list' => [
-                ['addresses' => ''],
-                self::VISIBLE_CLUB,
-                true,
-            ],
-        ];
-    }
-
-    #[Test]
-    #[DataProvider('clubArgumentDataProvider')]
-    public function hasOnlyRecordsOfClubReturnsExpectedResult(array $clubArgument, int $clubUid, bool $expected): void
-    {
-        self::assertSame(
-            $expected,
-            $this->createSubject(self::OWNER)->hasOnlyRecordsOfClub($clubArgument, $clubUid),
-        );
-    }
-
-    #[Test]
-    public function hasOnlyRecordsOfClubWithDeletedAddressReturnsFalse(): void
-    {
-        $this->getConnectionPool()
-            ->getConnectionForTable('tx_clubdirectory_domain_model_address')
-            ->update('tx_clubdirectory_domain_model_address', ['deleted' => 1], ['uid' => 1]);
-
-        self::assertFalse(
-            $this->createSubject(self::OWNER)->hasOnlyRecordsOfClub(
-                ['addresses' => [['__identity' => '1']]],
-                self::VISIBLE_CLUB,
-            ),
-        );
-    }
-
     private function updateTimestampOfClub(int $clubUid, int $timestamp): void
     {
         $this->getConnectionPool()
@@ -445,5 +341,120 @@ class ClubAccessServiceTest extends FunctionalTestCase
             ->update('tx_clubdirectory_domain_model_club', ['hidden' => 1], ['uid' => self::DELETED_CLUB]);
 
         self::assertFalse($this->createSubject()->isClubHidden(self::DELETED_CLUB));
+    }
+
+    private function createFormRequest(int $clubUid = 0, string $moderationToken = ''): ServerRequest
+    {
+        $frontendTypoScript = new FrontendTypoScript(new RootNode(), [], [], []);
+        $frontendTypoScript->setSetupArray([
+            'plugin.' => [
+                'tx_clubdirectory.' => [
+                    'settings.' => [
+                        'userGroup' => (string)self::USER_GROUP,
+                    ],
+                ],
+            ],
+        ]);
+
+        return (new ServerRequest('https://www.example.com/', 'POST'))
+            ->withQueryParams([
+                'tx_clubdirectory_management' => array_filter([
+                    'club' => $clubUid > 0 ? (string)$clubUid : '',
+                    'moderationToken' => $moderationToken,
+                ]),
+            ])
+            ->withAttribute('frontend.typoscript', $frontendTypoScript);
+    }
+
+    #[Test]
+    public function getClubUidFromQueryReturnsClubUid(): void
+    {
+        self::assertSame(
+            self::HIDDEN_CLUB,
+            $this->createSubject()->getClubUidFromQuery($this->createFormRequest(self::HIDDEN_CLUB)),
+        );
+    }
+
+    #[Test]
+    public function getClubUidFromQueryIgnoresArraysAndNegativeValues(): void
+    {
+        $subject = $this->createSubject();
+
+        self::assertSame(0, $subject->getClubUidFromQuery(
+            (new ServerRequest())->withQueryParams(['tx_clubdirectory_management' => ['club' => ['__identity' => '2']]]),
+        ));
+        self::assertSame(0, $subject->getClubUidFromQuery(
+            (new ServerRequest())->withQueryParams(['tx_clubdirectory_management' => ['club' => '-2']]),
+        ));
+    }
+
+    #[Test]
+    public function isFormAccessAllowedForNewClubWithMemberReturnsTrue(): void
+    {
+        self::assertTrue($this->createSubject(self::OWNER)->isFormAccessAllowed($this->createFormRequest()));
+    }
+
+    #[Test]
+    public function isFormAccessAllowedForNewClubWithUserOfOtherGroupReturnsFalse(): void
+    {
+        self::assertFalse($this->createSubject(self::OTHER_GROUP_USER)->isFormAccessAllowed($this->createFormRequest()));
+    }
+
+    #[Test]
+    public function isFormAccessAllowedForNewClubWithoutLoginReturnsFalse(): void
+    {
+        self::assertFalse($this->createSubject()->isFormAccessAllowed($this->createFormRequest()));
+    }
+
+    #[Test]
+    public function isFormAccessAllowedWithOwnerReturnsTrue(): void
+    {
+        self::assertTrue(
+            $this->createSubject(self::OWNER)->isFormAccessAllowed($this->createFormRequest(self::HIDDEN_CLUB)),
+        );
+    }
+
+    #[Test]
+    public function isFormAccessAllowedWithForeignUserReturnsFalse(): void
+    {
+        self::assertFalse(
+            $this->createSubject(self::FOREIGN_USER)->isFormAccessAllowed($this->createFormRequest(self::HIDDEN_CLUB)),
+        );
+    }
+
+    #[Test]
+    public function isFormAccessAllowedWithBackendAdminReturnsTrue(): void
+    {
+        self::assertTrue(
+            $this->createSubject(0, true)->isFormAccessAllowed($this->createFormRequest(self::HIDDEN_CLUB)),
+        );
+    }
+
+    #[Test]
+    public function isFormAccessAllowedWithBackendAdminAndDeletedClubReturnsFalse(): void
+    {
+        self::assertFalse(
+            $this->createSubject(0, true)->isFormAccessAllowed($this->createFormRequest(self::DELETED_CLUB)),
+        );
+    }
+
+    #[Test]
+    public function isFormAccessAllowedWithValidModerationTokenAndWithoutLoginReturnsTrue(): void
+    {
+        $moderationToken = $this->createSubject()->generateModerationToken(self::HIDDEN_CLUB);
+
+        self::assertTrue(
+            $this->createSubject()->isFormAccessAllowed($this->createFormRequest(self::HIDDEN_CLUB, $moderationToken)),
+        );
+    }
+
+    #[Test]
+    public function isFormAccessAllowedWithModerationTokenOfAnotherClubReturnsFalse(): void
+    {
+        $moderationToken = $this->createSubject()->generateModerationToken(self::FOREIGN_CLUB);
+
+        self::assertFalse(
+            $this->createSubject()->isFormAccessAllowed($this->createFormRequest(self::HIDDEN_CLUB, $moderationToken)),
+        );
     }
 }

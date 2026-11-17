@@ -29,8 +29,9 @@
 	},
 	"require": {
 		"jweiland/glossary2": ">=7.1.0",
-		"jweiland/maps2": ">=12.2.1",
+		"jweiland/maps2": "^12.3",
 		"typo3/cms-core": "^13.4",
+		"typo3/cms-form": "^13.4",
 		"typo3/cms-redirects": "^13.4"
 	},
 	"require-dev": {
@@ -38,6 +39,7 @@
 		"friendsofphp/php-cs-fixer": "^3.14",
 		"phpstan/phpstan": "^1.10",
 		"roave/security-advisories": "dev-latest",
+		"typo3/cms-rte-ckeditor": "^13.4",
 		"typo3/coding-standards": "^0.8",
 		"typo3/testing-framework": "^9.0.1"
 	},
@@ -45,7 +47,7 @@
 		"typo3-ter/clubdirectory": "self.version"
 	},
 	"suggest": {
-		"jweiland/checkfaluploads": "Adds a mandatory rights checkbox to the logo/images upload fields in clubdirectory's frontend forms. Requires at least version 6.0.0."
+		"typo3/cms-rte-ckeditor": "Needed for the optional rich text editor (CKEditor 5) of the frontend form (site setting clubdirectory.form.richText.enable)."
 	},
 	"autoload": {
 		"psr-4": {

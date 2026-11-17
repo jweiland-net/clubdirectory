@@ -34,6 +34,10 @@ class ClubPageCacheTest extends FunctionalTestCase
 {
     private const TAG_TABLE = 'tx_clubdirectory_domain_model_club';
 
+    protected array $coreExtensionsToLoad = [
+        'typo3/cms-form',
+    ];
+
     protected array $testExtensionsToLoad = [
         'jweiland/maps2',
         'jweiland/glossary2',

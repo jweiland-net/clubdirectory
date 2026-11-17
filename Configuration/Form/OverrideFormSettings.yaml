@@ -1,0 +1,26 @@
+TYPO3:
+  CMS:
+    Form:
+      prototypes:
+        standard:
+          finishersDefinition:
+            EmailToReceiver:
+              implementationClassName: TYPO3\CMS\Form\Domain\Finishers\EmailFinisher
+              options:
+                templateName: '{@format}.html'
+                templateRootPaths:
+                  1763337600: 'EXT:clubdirectory/Resources/Private/FormFramework/Templates/Finishers/Email/'
+            SaveClubFinisher:
+              implementationClassName: 'JWeiland\Clubdirectory\Domain\Finisher\SaveClubFinisher'
+          validatorsDefinition:
+            GeocodingFailure:
+              implementationClassName: 'JWeiland\Clubdirectory\Domain\Validator\GeocodingFailureValidator'
+          formElementsDefinition:
+            Form:
+              renderingOptions:
+                translation:
+                  translationFiles:
+                    1763337600: 'EXT:clubdirectory/Resources/Private/Language/locallang_ext_form.xlf'
+      persistenceManager:
+        allowedExtensionPaths:
+          1763337600: EXT:clubdirectory/Configuration/Form/

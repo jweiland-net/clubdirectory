@@ -19,7 +19,9 @@ use TYPO3\CMS\Core\Attribute\AsEventListener;
 
 /**
  * New and updated clubs are hidden until they get activated. Register the
- * hidden club in the Extbase session, so that the property mapper can resolve it.
+ * hidden club in the Extbase session, so that the property mapper can resolve
+ * it for the confirmation page. The club form based on EXT:form reads the
+ * club from the database on its own.
  *
  * This EventListener has to be executed after the RestrictAccessEventListener,
  * which stops the request on denied access, so that a hidden club will never
@@ -36,13 +38,7 @@ final readonly class RegisterHiddenClubEventListener
 
     private const ALLOWED_CONTROLLER_ACTIONS = [
         'Management' => [
-            'edit',
-            'update',
             'confirmActivation',
-        ],
-        'Map' => [
-            'new',
-            'create',
         ],
     ];
 

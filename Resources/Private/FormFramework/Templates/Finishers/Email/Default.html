@@ -1,0 +1,71 @@
+<html lang="en"
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:formvh="http://typo3.org/ns/TYPO3/CMS/Form/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="SystemEmail"/>
+
+<f:section name="Title">{title}</f:section>
+
+<f:section name="Main">
+    <f:variable name="club">{finisherVariableProvider.SaveClub.insertedUids.tx_clubdirectory_domain_model_club}</f:variable>
+    <f:variable name="moderationToken">{finisherVariableProvider.SaveClub.moderationToken}</f:variable>
+
+    <p>{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.salutation')},</p>
+    <p>
+        <f:if condition="{finisherVariableProvider.SaveClub.isNewClub}">
+            <f:then>{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.body.create')}</f:then>
+            <f:else>{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.body.update')}</f:else>
+        </f:if>
+    </p>
+    <p>
+        <f:link.action pageUid="{pidOfManagementPage}" action="perform" controller="Management" extensionName="Clubdirectory" pluginName="Management" absolute="1" arguments="{club: club, moderationToken: moderationToken}">
+            {f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.editRecord')}
+        </f:link.action>
+        <br>
+        <f:link.action pageUid="{pidOfManagementPage}" action="confirmActivation" controller="Management" extensionName="Clubdirectory" pluginName="Management" absolute="1" arguments="{club: club, moderationToken: moderationToken}">
+            {f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.activateRecord')}
+        </f:link.action>
+    </p>
+
+    <table>
+        <tr>
+            <th align="left">{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.property')}</th>
+            <th align="left">{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.value')}</th>
+        </tr>
+        <formvh:renderAllFormValues renderable="{form.formDefinition}" as="formValue">
+            <tr>
+                <f:if condition="{formValue.isSection}">
+                    <f:then>
+                        <td colspan="2"><b>{formvh:translateElementProperty(element: formValue.element, property: 'label')}</b></td>
+                    </f:then>
+                    <f:else>
+                        <td valign="top" align="left">{formvh:translateElementProperty(element: formValue.element, property: 'label')}</td>
+                        <td valign="top" align="left">
+                            <f:render section="Value" arguments="{formValue: formValue}"/>
+                        </td>
+                    </f:else>
+                </f:if>
+            </tr>
+        </formvh:renderAllFormValues>
+    </table>
+</f:section>
+
+<f:section name="Value">
+    <f:if condition="{formValue.value}">
+        <f:then>
+            <f:if condition="{formValue.isMultiValue}">
+                <f:then>
+                    <f:for each="{formValue.processedValue}" as="value" iteration="iterator">
+                        {value}<f:if condition="{iterator.isLast}"><f:else><br></f:else></f:if>
+                    </f:for>
+                </f:then>
+                <f:else>
+                    <f:format.nl2br>{formValue.processedValue}</f:format.nl2br>
+                </f:else>
+            </f:if>
+        </f:then>
+        <f:else>-</f:else>
+    </f:if>
+</f:section>
+</html>

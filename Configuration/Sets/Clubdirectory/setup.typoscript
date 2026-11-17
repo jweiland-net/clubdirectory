@@ -1,3 +1,6 @@
+# Register the finisher, validator and translations of the club form based on EXT:form
+plugin.tx_form.settings.yamlConfigurations.1763337600 = EXT:clubdirectory/Configuration/Form/OverrideFormSettings.yaml
+
 plugin.tx_clubdirectory {
   view {
     templateRootPaths {
@@ -55,8 +58,23 @@ plugin.tx_clubdirectory {
       }
     }
 
-    new {
-      uploadFolder = {$clubdirectory.newUploadPath}
+    # Configuration of the club form based on EXT:form
+    # See EXT:clubdirectory/Configuration/Form/NewClub.form.yaml for all values
+    overrideForm {
+      # Logo and images of page 1
+      renderables.0.renderables.18.properties.saveToFileMount = {$clubdirectory.newUploadPath}
+      renderables.0.renderables.19.properties.saveToFileMount = {$clubdirectory.newUploadPath}
+      renderables.0.renderables.20.properties.saveToFileMount = {$clubdirectory.newUploadPath}
+      renderables.0.renderables.21.properties.saveToFileMount = {$clubdirectory.newUploadPath}
+
+      # New clubs and addresses are stored in the first page of storagePid
+      finishers.1.options.1.databaseColumnMappings.pid.value = {$clubdirectory.storagePid}
+      finishers.1.options.4.databaseColumnMappings.pid.value = {$clubdirectory.storagePid}
+      finishers.1.options.5.databaseColumnMappings.pid.value = {$clubdirectory.storagePid}
+      finishers.1.options.6.databaseColumnMappings.pid.value = {$clubdirectory.storagePid}
+
+      finishers.2.options.variables.pidOfManagementPage = {$clubdirectory.pidOfManagementPage}
+      finishers.5.options.pageUid = {$clubdirectory.pidOfManagementPage}
     }
 
     glossary {
@@ -69,18 +87,6 @@ plugin.tx_clubdirectory {
     }
   }
 }
-
-plugin.tx_clubdirectory._CSS_DEFAULT_STYLE (
-  textarea.f3-form-error {
-    background-color:#FF9F9F;
-    border: 1px #FF0000 solid;
-  }
-
-  input.f3-form-error {
-    background-color:#FF9F9F;
-    border: 1px #FF0000 solid;
-  }
-)
 
 # The list and detail view render links for the logged-in frontend user
 # (e.g. edit link for the owner of a club). The page cache only varies by

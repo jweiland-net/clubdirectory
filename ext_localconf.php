@@ -15,8 +15,10 @@ if (!defined('TYPO3')) {
 
 use JWeiland\Clubdirectory\Controller\ClubController;
 use JWeiland\Clubdirectory\Controller\ManagementController;
-use JWeiland\Clubdirectory\Controller\MapController;
 use JWeiland\Clubdirectory\Controller\SearchController;
+use JWeiland\Clubdirectory\Hook\Form\GeocodeAddressesHook;
+use JWeiland\Clubdirectory\Hook\Form\PrefillForEditUsageHook;
+use JWeiland\Clubdirectory\Hook\Form\PrefillOptionsHook;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 ExtensionUtility::configurePlugin(
@@ -34,13 +36,11 @@ ExtensionUtility::configurePlugin(
     'Clubdirectory',
     'Management',
     [
-        ManagementController::class => 'listMyClubs, new, create, edit, update, confirmActivation, activate',
-        MapController::class => 'new, create',
+        ManagementController::class => 'listMyClubs, perform, confirmActivation, activate',
     ],
     // non-cacheable actions
     [
-        ManagementController::class => 'listMyClubs, edit, create, update, confirmActivation, activate',
-        MapController::class => 'new, create',
+        ManagementController::class => 'listMyClubs, perform, confirmActivation, activate',
     ],
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
@@ -58,4 +58,12 @@ ExtensionUtility::configurePlugin(
     ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT,
 );
 
-$GLOBALS['TYPO3_CONF_VARS']['MAIL']['templateRootPaths'][1000] = 'EXT:clubdirectory/Resources/Private/Templates/Email';
+// Add the options of categories and districts to the club form
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['initializeFormElement'][1763337600]
+    = PrefillOptionsHook::class;
+// Prefill the club form with the values of the club to edit
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['afterBuildingFinished'][1763337601]
+    = PrefillForEditUsageHook::class;
+// Geocode the addresses of the club form, before the map positions are shown
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['afterSubmit'][1763337602]
+    = GeocodeAddressesHook::class;

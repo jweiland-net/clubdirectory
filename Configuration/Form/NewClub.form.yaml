@@ -1,0 +1,878 @@
+type: Form
+identifier: newClub
+label: 'Club'
+prototypeName: standard
+renderingOptions:
+  submitButtonLabel: Submit
+  templateVariant: version2
+renderables:
+  - type: Page
+    identifier: club-data
+    label: 'Club data'
+    renderingOptions:
+      nextButtonLabel: 'Next page'
+    renderables:
+      - type: Text
+        identifier: title
+        label: Title
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: title
+          elementDescription: 'The title is mandatory'
+          fluidAdditionalAttributes:
+            required: required
+        validators:
+          - identifier: NotEmpty
+      - type: MultiCheckbox
+        identifier: categories
+        label: Categories
+        properties:
+          dbMapping:
+            relation:
+              valueColumn: uid_local
+              table: sys_category_record_mm
+              expressions:
+                - column: tablenames
+                  expression: eq
+                  value: tx_clubdirectory_domain_model_club
+                - column: fieldname
+                  expression: eq
+                  value: categories
+                - column: uid_foreign
+                  expression: eq
+                  value: '{club:uid}'
+          # The options are added by PrefillOptionsHook
+          elementDescription: 'Please select the categories of the club.'
+      - type: Textarea
+        identifier: activity
+        label: Activity
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: activity
+            dataType: plainText
+          elementDescription: 'Describe the activities/goals of the club.'
+      - type: Textarea
+        identifier: description
+        label: Description
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: description
+            dataType: plainText
+          elementDescription: 'Further descriptions'
+      - type: Text
+        identifier: contact-person
+        label: 'Contact person'
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: contact_person
+          elementDescription: 'Enter the contact person of the club'
+      - type: Textarea
+        identifier: contact-times
+        label: 'Contact times'
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: contact_times
+            dataType: plainText
+          elementDescription: 'Specify the times when the contact person is available.'
+      - type: Email
+        identifier: email
+        label: Email
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: email
+          elementDescription: 'Enter the email address of the club or contact person.'
+        validators:
+          - identifier: EmailAddress
+      - type: Url
+        identifier: website
+        label: Website
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: website
+          elementDescription: 'If the club has a website, enter its complete address including https://.'
+        validators:
+          - identifier: RegularExpression
+            options:
+              regularExpression: '/^https?:\/\/\S+$/i'
+      - type: Text
+        identifier: members
+        label: Members
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: members
+          elementDescription: 'Enter the number of members of the club.'
+      - type: Text
+        identifier: club-home
+        label: 'Club home'
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: club_home
+          elementDescription: 'Enter the name of the clubhouse if it exists.'
+      - type: SingleSelect
+        identifier: district
+        label: District
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: district
+          prependOptionLabel: 'Please choose'
+          # The options are added by PrefillOptionsHook
+      - type: Fieldset
+        identifier: address-1
+        label: 'Address 1'
+        renderables:
+          - type: SingleSelect
+            identifier: address-1-title
+            label: 'Address type'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: title
+                address: 1
+              prependOptionLabel: 'Please choose'
+              options:
+                organizationAddress: 'Organization address'
+                postAddress: 'Postal address'
+                clubAddress: 'Club address'
+              elementDescription: 'Choose the address type of the club and add the address infos.'
+            validators:
+              - identifier: NotEmpty
+          - type: Text
+            identifier: address-1-street
+            label: 'Street'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: street
+                address: 1
+            variants:
+              - identifier: address-1-street-required
+                condition: 'traverse(formValues, "address-1-title") != ""'
+                validators:
+                  - identifier: NotEmpty
+          - type: Text
+            identifier: address-1-house-number
+            label: 'House number'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: house_number
+                address: 1
+          - type: Text
+            identifier: address-1-zip
+            label: 'Zip'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: zip
+                address: 1
+            validators:
+              - identifier: RegularExpression
+                options:
+                  regularExpression: '/^\d{4,5}$/'
+            variants:
+              - identifier: address-1-zip-required
+                condition: 'traverse(formValues, "address-1-title") != ""'
+                validators:
+                  - identifier: RegularExpression
+                    options:
+                      regularExpression: '/^\d{4,5}$/'
+                  - identifier: NotEmpty
+          - type: Text
+            identifier: address-1-city
+            label: 'City'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: city
+                address: 1
+            variants:
+              - identifier: address-1-city-required
+                condition: 'traverse(formValues, "address-1-title") != ""'
+                validators:
+                  - identifier: NotEmpty
+          - type: Telephone
+            identifier: address-1-telephone
+            label: 'Telephone'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: telephone
+                address: 1
+          - type: Telephone
+            identifier: address-1-fax
+            label: 'Fax'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: fax
+                address: 1
+          - type: Checkbox
+            identifier: address-1-barrier-free
+            label: 'Barrier free'
+            properties:
+              dbMapping:
+                column: barrier_free
+                address: 1
+      - type: Fieldset
+        identifier: address-2
+        label: 'Address 2'
+        renderables:
+          - type: SingleSelect
+            identifier: address-2-title
+            label: 'Address type'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: title
+                address: 2
+              prependOptionLabel: 'Please choose'
+              options:
+                organizationAddress: 'Organization address'
+                postAddress: 'Postal address'
+                clubAddress: 'Club address'
+              elementDescription: 'Enter a further address type of the club with all address infos.'
+          - type: Text
+            identifier: address-2-street
+            label: 'Street'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: street
+                address: 2
+            variants:
+              - identifier: address-2-street-required
+                condition: 'traverse(formValues, "address-2-title") != ""'
+                validators:
+                  - identifier: NotEmpty
+          - type: Text
+            identifier: address-2-house-number
+            label: 'House number'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: house_number
+                address: 2
+          - type: Text
+            identifier: address-2-zip
+            label: 'Zip'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: zip
+                address: 2
+            validators:
+              - identifier: RegularExpression
+                options:
+                  regularExpression: '/^\d{4,5}$/'
+            variants:
+              - identifier: address-2-zip-required
+                condition: 'traverse(formValues, "address-2-title") != ""'
+                validators:
+                  - identifier: RegularExpression
+                    options:
+                      regularExpression: '/^\d{4,5}$/'
+                  - identifier: NotEmpty
+          - type: Text
+            identifier: address-2-city
+            label: 'City'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: city
+                address: 2
+            variants:
+              - identifier: address-2-city-required
+                condition: 'traverse(formValues, "address-2-title") != ""'
+                validators:
+                  - identifier: NotEmpty
+          - type: Telephone
+            identifier: address-2-telephone
+            label: 'Telephone'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: telephone
+                address: 2
+          - type: Telephone
+            identifier: address-2-fax
+            label: 'Fax'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: fax
+                address: 2
+          - type: Checkbox
+            identifier: address-2-barrier-free
+            label: 'Barrier free'
+            properties:
+              dbMapping:
+                column: barrier_free
+                address: 2
+      - type: Fieldset
+        identifier: address-3
+        label: 'Address 3'
+        renderables:
+          - type: SingleSelect
+            identifier: address-3-title
+            label: 'Address type'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: title
+                address: 3
+              prependOptionLabel: 'Please choose'
+              options:
+                organizationAddress: 'Organization address'
+                postAddress: 'Postal address'
+                clubAddress: 'Club address'
+              elementDescription: 'Enter a further address type of the club with all address infos.'
+          - type: Text
+            identifier: address-3-street
+            label: 'Street'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: street
+                address: 3
+            variants:
+              - identifier: address-3-street-required
+                condition: 'traverse(formValues, "address-3-title") != ""'
+                validators:
+                  - identifier: NotEmpty
+          - type: Text
+            identifier: address-3-house-number
+            label: 'House number'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: house_number
+                address: 3
+          - type: Text
+            identifier: address-3-zip
+            label: 'Zip'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: zip
+                address: 3
+            validators:
+              - identifier: RegularExpression
+                options:
+                  regularExpression: '/^\d{4,5}$/'
+            variants:
+              - identifier: address-3-zip-required
+                condition: 'traverse(formValues, "address-3-title") != ""'
+                validators:
+                  - identifier: RegularExpression
+                    options:
+                      regularExpression: '/^\d{4,5}$/'
+                  - identifier: NotEmpty
+          - type: Text
+            identifier: address-3-city
+            label: 'City'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: city
+                address: 3
+            variants:
+              - identifier: address-3-city-required
+                condition: 'traverse(formValues, "address-3-title") != ""'
+                validators:
+                  - identifier: NotEmpty
+          - type: Telephone
+            identifier: address-3-telephone
+            label: 'Telephone'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: telephone
+                address: 3
+          - type: Telephone
+            identifier: address-3-fax
+            label: 'Fax'
+            defaultValue: ''
+            properties:
+              dbMapping:
+                column: fax
+                address: 3
+          - type: Checkbox
+            identifier: address-3-barrier-free
+            label: 'Barrier free'
+            properties:
+              dbMapping:
+                column: barrier_free
+                address: 3
+      - type: Url
+        identifier: facebook
+        label: Facebook
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: facebook
+          elementDescription: 'Enter the complete URL to Facebook including https://.'
+        validators:
+          - identifier: RegularExpression
+            options:
+              regularExpression: '/^https?:\/\/\S+$/i'
+      - type: Url
+        identifier: twitter
+        label: Twitter
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: twitter
+          elementDescription: 'Enter the complete URL to Twitter including https://.'
+        validators:
+          - identifier: RegularExpression
+            options:
+              regularExpression: '/^https?:\/\/\S+$/i'
+      - type: Url
+        identifier: instagram
+        label: Instagram
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: instagram
+          elementDescription: 'Enter the complete URL to Instagram including https://.'
+        validators:
+          - identifier: RegularExpression
+            options:
+              regularExpression: '/^https?:\/\/\S+$/i'
+      - type: Text
+        identifier: tags
+        label: Tags
+        defaultValue: ''
+        properties:
+          dbMapping:
+            column: tags
+          elementDescription: 'Enter further tags for the alphabetic list view.'
+      - type: ImageUpload
+        identifier: logo
+        label: 'Logo'
+        properties:
+          dbMapping:
+            column: logo
+            dataType: file
+            position: 1
+          # Overridden by the site setting clubdirectory.newUploadPath
+          saveToFileMount: '1:/user_upload/tx_clubdirectory/'
+          allowedMimeTypes:
+            - image/gif
+            - image/jpeg
+            - image/png
+          elementDescription: 'Upload the logo file (jpg, gif, png) in a square formatting. A new logo replaces the existing one.'
+      - type: ImageUpload
+        identifier: image-1
+        label: 'Image 1'
+        properties:
+          dbMapping:
+            column: images
+            dataType: file
+            position: 1
+          # Overridden by the site setting clubdirectory.newUploadPath
+          saveToFileMount: '1:/user_upload/tx_clubdirectory/'
+          allowedMimeTypes:
+            - image/gif
+            - image/jpeg
+            - image/png
+          elementDescription: 'Upload an image file (jpg, gif, png). A new image replaces the existing one.'
+      - type: ImageUpload
+        identifier: image-2
+        label: 'Image 2'
+        properties:
+          dbMapping:
+            column: images
+            dataType: file
+            position: 2
+          # Overridden by the site setting clubdirectory.newUploadPath
+          saveToFileMount: '1:/user_upload/tx_clubdirectory/'
+          allowedMimeTypes:
+            - image/gif
+            - image/jpeg
+            - image/png
+          elementDescription: 'Upload an image file (jpg, gif, png). A new image replaces the existing one.'
+      - type: ImageUpload
+        identifier: image-3
+        label: 'Image 3'
+        properties:
+          dbMapping:
+            column: images
+            dataType: file
+            position: 3
+          # Overridden by the site setting clubdirectory.newUploadPath
+          saveToFileMount: '1:/user_upload/tx_clubdirectory/'
+          allowedMimeTypes:
+            - image/gif
+            - image/jpeg
+            - image/png
+          elementDescription: 'Upload an image file (jpg, gif, png). A new image replaces the existing one.'
+  - type: Page
+    identifier: map-positions
+    label: 'Map positions'
+    renderingOptions:
+      previousButtonLabel: 'Previous page'
+    renderables:
+      - type: StaticText
+        identifier: map-positions-description
+        label: 'Check the positions'
+        properties:
+          text: 'Please check the position of each address on the map. Drag the marker to correct it.'
+      - type: Maps2PoiPosition
+        identifier: address-1-position
+        label: 'Position of address 1'
+        properties:
+          zoom: 15
+          dbMapping:
+            address: 1
+            dataType: poiCollection
+          geocoding:
+            requiredElement: address-1-title
+            errorElement: address-1-street
+            addressElements:
+              street: address-1-street
+              houseNumber: address-1-house-number
+              zip: address-1-zip
+              city: address-1-city
+        renderingOptions:
+          enabled: false
+        variants:
+          - identifier: address-1-position-enabled
+            condition: 'traverse(formValues, "address-1-title") != ""'
+            renderingOptions:
+              enabled: true
+      - type: Maps2PoiPosition
+        identifier: address-2-position
+        label: 'Position of address 2'
+        properties:
+          zoom: 15
+          dbMapping:
+            address: 2
+            dataType: poiCollection
+          geocoding:
+            requiredElement: address-2-title
+            errorElement: address-2-street
+            addressElements:
+              street: address-2-street
+              houseNumber: address-2-house-number
+              zip: address-2-zip
+              city: address-2-city
+        renderingOptions:
+          enabled: false
+        variants:
+          - identifier: address-2-position-enabled
+            condition: 'traverse(formValues, "address-2-title") != ""'
+            renderingOptions:
+              enabled: true
+      - type: Maps2PoiPosition
+        identifier: address-3-position
+        label: 'Position of address 3'
+        properties:
+          zoom: 15
+          dbMapping:
+            address: 3
+            dataType: poiCollection
+          geocoding:
+            requiredElement: address-3-title
+            errorElement: address-3-street
+            addressElements:
+              street: address-3-street
+              houseNumber: address-3-house-number
+              zip: address-3-zip
+              city: address-3-city
+        renderingOptions:
+          enabled: false
+        variants:
+          - identifier: address-3-position-enabled
+            condition: 'traverse(formValues, "address-3-title") != ""'
+            renderingOptions:
+              enabled: true
+finishers:
+  1:
+    identifier: SaveClubFinisher
+    options:
+      1:
+        table: tx_clubdirectory_domain_model_club
+        mode: insert
+        elements:
+          title:
+            mapOnDatabaseColumn: title
+          activity:
+            mapOnDatabaseColumn: activity
+            normalizePlainText: true
+          description:
+            mapOnDatabaseColumn: description
+            convertPlainTextToHtml: true
+          contact-person:
+            mapOnDatabaseColumn: contact_person
+          contact-times:
+            mapOnDatabaseColumn: contact_times
+            normalizePlainText: true
+          email:
+            mapOnDatabaseColumn: email
+          website:
+            mapOnDatabaseColumn: website
+          members:
+            mapOnDatabaseColumn: members
+          club-home:
+            mapOnDatabaseColumn: club_home
+          district:
+            mapOnDatabaseColumn: district
+            castToInteger: true
+          facebook:
+            mapOnDatabaseColumn: facebook
+          twitter:
+            mapOnDatabaseColumn: twitter
+          instagram:
+            mapOnDatabaseColumn: instagram
+          tags:
+            mapOnDatabaseColumn: tags
+        databaseColumnMappings:
+          pid:
+            value: 0
+          crdate:
+            value: '{__currentTimestamp}'
+          tstamp:
+            value: '{__currentTimestamp}'
+          hidden:
+            value: 0
+      2:
+        table: sys_category_record_mm
+        mode: insert
+        elements:
+          categories:
+            mapOnDatabaseColumn: categories
+        databaseColumnMappings:
+          uid_foreign:
+            value: '{SaveClub.insertedUids.1}'
+          tablenames:
+            value: tx_clubdirectory_domain_model_club
+          fieldname:
+            value: categories
+      3:
+        table: tx_clubdirectory_club_user_mm
+        mode: insert
+        databaseColumnMappings:
+          uid_local:
+            value: '{SaveClub.insertedUids.1}'
+          uid_foreign:
+            value: '{__currentFrontendUser}'
+      4:
+        table: tx_clubdirectory_domain_model_address
+        mode: insert
+        position: 1
+        elements:
+          address-1-title:
+            mapOnDatabaseColumn: title
+          address-1-street:
+            mapOnDatabaseColumn: street
+          address-1-house-number:
+            mapOnDatabaseColumn: house_number
+          address-1-zip:
+            mapOnDatabaseColumn: zip
+          address-1-city:
+            mapOnDatabaseColumn: city
+          address-1-telephone:
+            mapOnDatabaseColumn: telephone
+          address-1-fax:
+            mapOnDatabaseColumn: fax
+          address-1-barrier-free:
+            mapOnDatabaseColumn: barrier_free
+            castToInteger: true
+          address-1-position:
+            mapOnDatabaseColumn: tx_maps2_uid
+            poiCollection: true
+        databaseColumnMappings:
+          pid:
+            value: 0
+          crdate:
+            value: '{__currentTimestamp}'
+          tstamp:
+            value: '{__currentTimestamp}'
+          club:
+            value: '{SaveClub.insertedUids.1}'
+      5:
+        table: tx_clubdirectory_domain_model_address
+        mode: insert
+        position: 2
+        elements:
+          address-2-title:
+            mapOnDatabaseColumn: title
+          address-2-street:
+            mapOnDatabaseColumn: street
+          address-2-house-number:
+            mapOnDatabaseColumn: house_number
+          address-2-zip:
+            mapOnDatabaseColumn: zip
+          address-2-city:
+            mapOnDatabaseColumn: city
+          address-2-telephone:
+            mapOnDatabaseColumn: telephone
+          address-2-fax:
+            mapOnDatabaseColumn: fax
+          address-2-barrier-free:
+            mapOnDatabaseColumn: barrier_free
+            castToInteger: true
+          address-2-position:
+            mapOnDatabaseColumn: tx_maps2_uid
+            poiCollection: true
+        databaseColumnMappings:
+          pid:
+            value: 0
+          crdate:
+            value: '{__currentTimestamp}'
+          tstamp:
+            value: '{__currentTimestamp}'
+          club:
+            value: '{SaveClub.insertedUids.1}'
+      6:
+        table: tx_clubdirectory_domain_model_address
+        mode: insert
+        position: 3
+        elements:
+          address-3-title:
+            mapOnDatabaseColumn: title
+          address-3-street:
+            mapOnDatabaseColumn: street
+          address-3-house-number:
+            mapOnDatabaseColumn: house_number
+          address-3-zip:
+            mapOnDatabaseColumn: zip
+          address-3-city:
+            mapOnDatabaseColumn: city
+          address-3-telephone:
+            mapOnDatabaseColumn: telephone
+          address-3-fax:
+            mapOnDatabaseColumn: fax
+          address-3-barrier-free:
+            mapOnDatabaseColumn: barrier_free
+            castToInteger: true
+          address-3-position:
+            mapOnDatabaseColumn: tx_maps2_uid
+            poiCollection: true
+        databaseColumnMappings:
+          pid:
+            value: 0
+          crdate:
+            value: '{__currentTimestamp}'
+          tstamp:
+            value: '{__currentTimestamp}'
+          club:
+            value: '{SaveClub.insertedUids.1}'
+      7:
+        table: sys_file_reference
+        mode: insert
+        position: 1
+        elements:
+          logo:
+            mapOnDatabaseColumn: uid_local
+        databaseColumnMappings:
+          tablenames:
+            value: tx_clubdirectory_domain_model_club
+          fieldname:
+            value: logo
+          tstamp:
+            value: '{__currentTimestamp}'
+          crdate:
+            value: '{__currentTimestamp}'
+          uid_foreign:
+            value: '{SaveClub.insertedUids.1}'
+      8:
+        table: sys_file_reference
+        mode: insert
+        position: 1
+        elements:
+          image-1:
+            mapOnDatabaseColumn: uid_local
+        databaseColumnMappings:
+          tablenames:
+            value: tx_clubdirectory_domain_model_club
+          fieldname:
+            value: images
+          tstamp:
+            value: '{__currentTimestamp}'
+          crdate:
+            value: '{__currentTimestamp}'
+          uid_foreign:
+            value: '{SaveClub.insertedUids.1}'
+      9:
+        table: sys_file_reference
+        mode: insert
+        position: 2
+        elements:
+          image-2:
+            mapOnDatabaseColumn: uid_local
+        databaseColumnMappings:
+          tablenames:
+            value: tx_clubdirectory_domain_model_club
+          fieldname:
+            value: images
+          tstamp:
+            value: '{__currentTimestamp}'
+          crdate:
+            value: '{__currentTimestamp}'
+          uid_foreign:
+            value: '{SaveClub.insertedUids.1}'
+      10:
+        table: sys_file_reference
+        mode: insert
+        position: 3
+        elements:
+          image-3:
+            mapOnDatabaseColumn: uid_local
+        databaseColumnMappings:
+          tablenames:
+            value: tx_clubdirectory_domain_model_club
+          fieldname:
+            value: images
+          tstamp:
+            value: '{__currentTimestamp}'
+          crdate:
+            value: '{__currentTimestamp}'
+          uid_foreign:
+            value: '{SaveClub.insertedUids.1}'
+  2:
+    identifier: EmailToReceiver
+    options:
+      subject: 'A club record was created or updated'
+      useFluidEmail: 1
+      # Sender and recipient are taken from the extension settings of
+      # clubdirectory by ArrayFormFactory, if they are not set here.
+      #recipients:
+      #  change-me@example.com: 'Change or overwrite me'
+      #senderAddress:
+      #senderName:
+  3:
+    # Hide the club after the mail was sent in a separate step. Else the
+    # links of the mail could not be built with the path segment of the club.
+    identifier: SaveClubFinisher
+    options:
+      1:
+        table: tx_clubdirectory_domain_model_club
+        mode: update
+        whereClause:
+          uid: '{SaveClub.insertedUids.1}'
+        databaseColumnMappings:
+          hidden:
+            value: 1
+  4:
+    identifier: FlashMessage
+    options:
+      messageCode: 1763337602
+      messageBody: 'Thank you. The club will be published after it was checked by an administrator.'
+      severity: 0
+  5:
+    # Overridden by the site setting clubdirectory.pidOfManagementPage
+    identifier: Redirect
+    options:
+      pageUid: 0

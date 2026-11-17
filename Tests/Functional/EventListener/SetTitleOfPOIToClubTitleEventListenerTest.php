@@ -24,6 +24,10 @@ class SetTitleOfPOIToClubTitleEventListenerTest extends FunctionalTestCase
 {
     protected SetTitleOfPOIToClubTitleEventListener $subject;
 
+    protected array $coreExtensionsToLoad = [
+        'typo3/cms-form',
+    ];
+
     protected array $testExtensionsToLoad = [
         'jweiland/maps2',
         'jweiland/glossary2',

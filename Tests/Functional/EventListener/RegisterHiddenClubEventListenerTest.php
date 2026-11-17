@@ -30,6 +30,10 @@ class RegisterHiddenClubEventListenerTest extends FunctionalTestCase
 {
     use ClubAccessTestTrait;
 
+    protected array $coreExtensionsToLoad = [
+        'typo3/cms-form',
+    ];
+
     protected array $testExtensionsToLoad = [
         'jweiland/maps2',
         'jweiland/glossary2',
@@ -51,9 +55,7 @@ class RegisterHiddenClubEventListenerTest extends FunctionalTestCase
     public static function coveredActionDataProvider(): array
     {
         return [
-            'Management edit' => ['Management', 'edit'],
             'Management confirmActivation' => ['Management', 'confirmActivation'],
-            'Map new' => ['Map', 'new'],
         ];
     }
 

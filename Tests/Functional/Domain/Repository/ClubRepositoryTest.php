@@ -26,6 +26,10 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  */
 class ClubRepositoryTest extends FunctionalTestCase
 {
+    protected array $coreExtensionsToLoad = [
+        'typo3/cms-form',
+    ];
+
     protected array $testExtensionsToLoad = [
         'jweiland/maps2',
         'jweiland/glossary2',

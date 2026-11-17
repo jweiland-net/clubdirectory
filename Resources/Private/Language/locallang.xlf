@@ -150,37 +150,8 @@
 			<trans-unit id="listMyClubs.accessDenied">
 				<source>You do not have access to visit this page</source>
 			</trans-unit>
-			<trans-unit id="create">
-				<source>Create</source>
-			</trans-unit>
-			<trans-unit id="update">
-				<source>Edit</source>
-			</trans-unit>
-			<trans-unit id="clubCreated">
-				<source>Thank you! Your club has been saved. It will be visible in the club directory as soon as it has been checked and released by the administrator. No further action is required, unless you are asked for changes.</source>
-			</trans-unit>
-			<trans-unit id="clubUpdated">
-				<source>Thank you! Your changes have been saved. Until they have been checked and released by the administrator, the club is not visible in the club directory.</source>
-			</trans-unit>
 			<trans-unit id="clubActivated">
 				<source>The club was activated and is now visible in frontend</source>
-			</trans-unit>
-			<trans-unit id="deleteLogo">
-				<source>Delete Logo</source>
-				<target>Logo entfernen</target>
-			</trans-unit>
-			<trans-unit id="deleteImage">
-				<source>Delete Image</source>
-				<target>Bild entfernen</target>
-			</trans-unit>
-			<trans-unit id="error.addresses.missing">
-				<source>Please enter at least one address.</source>
-			</trans-unit>
-			<trans-unit id="error.address.incomplete">
-				<source>%s: Please enter at least street, ZIP and city.</source>
-			</trans-unit>
-			<trans-unit id="error.url.invalid">
-				<source>Please enter the complete URL including https://.</source>
 			</trans-unit>
 			<trans-unit id="error.geocoding.noPositionsFound.title">
 				<source>Address not found</source>
@@ -199,69 +170,6 @@
 			</trans-unit>
 			<trans-unit id="error.geocoding.serviceError.body">
 				<source>The position of the address "%s" could not be determined, because the map service is currently not available. Your input was not saved. Please try again later or inform the website administrator.</source>
-			</trans-unit>
-			<trans-unit id="addressNumber">
-				<source>Address %d</source>
-			</trans-unit>
-			<trans-unit id="pleaseChoose">
-				<source>Please choose</source>
-			</trans-unit>
-			<trans-unit id="cshtitle">
-				<source>The title is mandatory</source>
-			</trans-unit>
-			<trans-unit id="cshcategories">
-				<source>Please select the category of the club. Multiple selection by holding down the Ctrl key (Cmd on macOS).</source>
-			</trans-unit>
-			<trans-unit id="cshactivity">
-				<source>Describe the activities/goals of the club.</source>
-			</trans-unit>
-			<trans-unit id="cshdescription">
-				<source>Further descriptions</source>
-			</trans-unit>
-			<trans-unit id="cshcontactPerson">
-				<source>Enter the contact person of the club</source>
-			</trans-unit>
-			<trans-unit id="cshcontactTimes">
-				<source>Specify the times when the contact person is available.</source>
-			</trans-unit>
-			<trans-unit id="cshemail">
-				<source>Enter the email address of the club or contact person.</source>
-			</trans-unit>
-			<trans-unit id="cshwebsite">
-				<source>If the club has a website, enter its complete address including https://.</source>
-			</trans-unit>
-			<trans-unit id="cshmembers">
-				<source>Enter the number of members of the club.</source>
-			</trans-unit>
-			<trans-unit id="cshclubHome">
-				<source>Enter the name of the clubhouse if it exists.</source>
-			</trans-unit>
-			<trans-unit id="cshtitle_0">
-				<source>Choose the address type of the club and add the address infos.</source>
-			</trans-unit>
-			<trans-unit id="cshtitle_1">
-				<source>Enter a further address type of the club with all address infos.</source>
-			</trans-unit>
-			<trans-unit id="cshtitle_2">
-				<source>Enter a further address type of the club with all address infos.</source>
-			</trans-unit>
-			<trans-unit id="cshfacebook">
-				<source>Enter the complete URL to Facebook including https://.</source>
-			</trans-unit>
-			<trans-unit id="cshtwitter">
-				<source>Enter the complete URL to Twitter including https://.</source>
-			</trans-unit>
-			<trans-unit id="cshinstagram">
-				<source>Enter the complete URL to Instagram including https://.</source>
-			</trans-unit>
-			<trans-unit id="cshlogo">
-				<source>Upload the logo file (jpg, gif, png, max. 4 MB) in a square formatting. To replace an existing logo, mark it for deletion and upload a new one.</source>
-			</trans-unit>
-			<trans-unit id="cshtags">
-				<source>Enter further tags for the alphabetic list view.</source>
-			</trans-unit>
-			<trans-unit id="cshimages">
-				<source>Upload max. 5 image files (jpg, gif, png, max. 4 MB each). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
 			</trans-unit>
 			<trans-unit id="altTextMapImg">
 				<source>Map</source>
@@ -286,14 +194,8 @@
 				<source>Last</source>
 			</trans-unit>
 
-			<trans-unit id="email.subject.create">
-				<source>A new record was created</source>
-			</trans-unit>
 			<trans-unit id="email.body.create">
 				<source>A new record of type club was created. Following you see the entered data.</source>
-			</trans-unit>
-			<trans-unit id="email.subject.update">
-				<source>A record was updated</source>
 			</trans-unit>
 			<trans-unit id="email.body.update">
 				<source>A record of type club was edited. Following you see its properties.</source>
