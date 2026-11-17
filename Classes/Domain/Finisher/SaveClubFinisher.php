@@ -18,6 +18,7 @@ use JWeiland\Clubdirectory\Service\ClubCacheService;
 use JWeiland\Clubdirectory\Service\ClubFormRecordService;
 use JWeiland\Clubdirectory\Service\GeocodingService;
 use JWeiland\Clubdirectory\Service\PoiCollectionService;
+use JWeiland\Clubdirectory\Service\RichTextService;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -41,6 +42,8 @@ use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
  * - castToInteger: Store the value as integer
  * - normalizePlainText: Store plain text like the backend textarea
  * - convertPlainTextToHtml: Store plain text like the backend RTE
+ * - sanitizeRichText: Sanitize the HTML of the rich text editor and store
+ *   it like the backend RTE. See RichTextFormElementConfigurator.
  * - poiCollection: Store the position of "Maps2PoiPosition" in EXT:maps2
  *
  * Values of elements with "options" (select boxes, checkboxes) are stored
@@ -70,6 +73,7 @@ class SaveClubFinisher extends AbstractFinisher
         protected readonly PoiCollectionService $poiCollectionService,
         protected readonly GeocodingService $geocodingService,
         protected readonly RteContentConverter $rteContentConverter,
+        protected readonly RichTextService $richTextService,
         protected readonly Context $context,
     ) {}
 
@@ -150,13 +154,28 @@ class SaveClubFinisher extends AbstractFinisher
                 continue;
             }
 
-            $data[(string)$configuration['mapOnDatabaseColumn']] = $this->convertValue(
-                $this->restrictToOptions($formValues[$identifier] ?? null, $element),
-                $configuration,
-            );
+            $column = (string)$configuration['mapOnDatabaseColumn'];
+            $value = $this->restrictToOptions($formValues[$identifier] ?? null, $element);
+            $data[$column] = ($configuration['sanitizeRichText'] ?? false) === true
+                ? $this->prepareRichText($this->toString($value), $column, $this->toInteger($data['pid'] ?? 0))
+                : $this->convertValue($value, $configuration);
         }
 
         return $data;
+    }
+
+    /**
+     * Sanitizes the value of a rich text element for the column of the
+     * current table. t3:// links are compared with the stored record.
+     */
+    protected function prepareRichText(string $value, string $column, int $pid): string
+    {
+        $table = (string)$this->parseOption('table');
+        $uid = $table === ClubFormRecordService::TABLE_CLUB
+            ? $this->clubAccessService->getClubUidFromQuery($this->finisherContext->getRequest())
+            : 0;
+
+        return $this->richTextService->prepareForPersistence($value, $table, $column, $uid, $pid);
     }
 
     /**

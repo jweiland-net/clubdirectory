@@ -24,6 +24,8 @@ $EM_CONF[$_EXTKEY] = [
             'glossary2' => '7.1.0-0.0.0',
         ],
         'conflicts' => [],
-        'suggests' => [],
+        'suggests' => [
+            'rte_ckeditor' => '13.4.0-13.4.99',
+        ],
     ],
 ];

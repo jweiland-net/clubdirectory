@@ -42,6 +42,8 @@ use TYPO3\CMS\Form\Domain\Model\Renderable\RenderableInterface;
  *   of all matching records. "{club:<column>}" is replaced by the column of
  *   the club.
  * - dataType "plainText": The HTML of the column is converted to plain text
+ * - dataType "richText": The HTML of the column is used for the rich text
+ *   editor. Fluid escapes it for the textarea.
  *
  * The form could be used outside the Management plugin (e.g. as form content
  * element). So the access is checked here, too. Else everyone could read
