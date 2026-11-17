@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\Tests\Unit\Domain\Factory;
 
 use JWeiland\Clubdirectory\Configuration\ExtConf;
 use JWeiland\Clubdirectory\Domain\Factory\ArrayFormFactory;
+use JWeiland\Clubdirectory\Form\RichTextFormElementConfigurator;
 use JWeiland\Clubdirectory\Service\ClubAccessService;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ServerRequestInterface;
@@ -30,7 +31,9 @@ class ArrayFormFactoryTest extends UnitTestCase
         $clubAccessService->method('getClubUidFromQuery')->willReturn($clubUid);
         $clubAccessService->method('getModerationTokenFromQuery')->willReturn($moderationToken);
 
-        return new class ($extConf, $clubAccessService) extends ArrayFormFactory {
+        $configurator = self::createStub(RichTextFormElementConfigurator::class);
+
+        return new class ($extConf, $clubAccessService, $configurator) extends ArrayFormFactory {
             /**
              * @param array<string, mixed> $configuration
              * @return array<string, mixed>

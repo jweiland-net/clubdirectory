@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Factory;
 
 use JWeiland\Clubdirectory\Configuration\ExtConf;
+use JWeiland\Clubdirectory\Form\RichTextFormElementConfigurator;
 use JWeiland\Clubdirectory\Service\ClubAccessService;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Form\Domain\Exception\RenderingException;
@@ -25,6 +26,8 @@ use TYPO3\CMS\Form\Domain\Model\FormDefinition;
  *   the form action
  * - Sender and recipients of the EmailToReceiver finisher are taken from
  *   the extension settings, if they are not configured in the form
+ * - Rich text elements and their mappings are configured, see
+ *   RichTextFormElementConfigurator
  */
 class ArrayFormFactory extends \TYPO3\CMS\Form\Domain\Factory\ArrayFormFactory
 {
@@ -33,6 +36,7 @@ class ArrayFormFactory extends \TYPO3\CMS\Form\Domain\Factory\ArrayFormFactory
     public function __construct(
         protected readonly ExtConf $extConf,
         protected readonly ClubAccessService $clubAccessService,
+        protected readonly RichTextFormElementConfigurator $richTextFormElementConfigurator,
     ) {}
 
     /**
@@ -52,6 +56,7 @@ class ArrayFormFactory extends \TYPO3\CMS\Form\Domain\Factory\ArrayFormFactory
             $this->addEmailAddressesToFinisher(...),
             is_array($configuration['finishers'] ?? null) ? $configuration['finishers'] : [],
         );
+        $configuration = $this->richTextFormElementConfigurator->configure($configuration, $request);
 
         return parent::build($configuration, $prototypeName, $request);
     }

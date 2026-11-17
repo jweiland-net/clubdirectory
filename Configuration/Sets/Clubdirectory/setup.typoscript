@@ -58,6 +58,15 @@ plugin.tx_clubdirectory {
       }
     }
 
+    new {
+      # CKEditor 5 of EXT:rte_ckeditor for rich text elements of the club form
+      richText {
+        enable = {$clubdirectory.form.richText.enable}
+        # Comma separated identifiers of form elements
+        elements = {$clubdirectory.form.richText.elements}
+      }
+    }
+
     # Configuration of the club form based on EXT:form
     # See EXT:clubdirectory/Configuration/Form/NewClub.form.yaml for all values
     overrideForm {

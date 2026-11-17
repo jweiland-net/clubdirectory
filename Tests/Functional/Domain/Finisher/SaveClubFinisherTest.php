@@ -19,6 +19,7 @@ use JWeiland\Clubdirectory\Service\ClubCacheService;
 use JWeiland\Clubdirectory\Service\ClubFormRecordService;
 use JWeiland\Clubdirectory\Service\GeocodingService;
 use JWeiland\Clubdirectory\Service\PoiCollectionService;
+use JWeiland\Clubdirectory\Service\RichTextService;
 use JWeiland\Clubdirectory\Tests\Functional\Traits\ClubAccessTestTrait;
 use JWeiland\Clubdirectory\Tests\Functional\Traits\ClubFormTestTrait;
 use JWeiland\Maps2\Service\GeoCodeService;
@@ -67,6 +68,7 @@ class SaveClubFinisherTest extends FunctionalTestCase
         int $frontendUserUid = self::OWNER,
         int $clubUid = 0,
         bool $isBackendAdmin = false,
+        bool $sanitizeRichText = false,
     ): FinisherContext {
         $context = $this->createContext($frontendUserUid, $isBackendAdmin);
         $clubAccessService = new ClubAccessService($this->get(ConnectionPool::class), $context, new HashService());
@@ -85,10 +87,15 @@ class SaveClubFinisherTest extends FunctionalTestCase
             ),
             new GeocodingService(self::createStub(GeoCodeService::class), new NullLogger()),
             new RteContentConverter(),
+            $this->get(RichTextService::class),
             $context,
         );
         $subject->setFinisherIdentifier('SaveClubFinisher');
-        $subject->setOptions($this->getSaveClubFinisherOptions());
+        $options = $this->getSaveClubFinisherOptions();
+        if ($sanitizeRichText) {
+            $options[1]['elements']['description'] = ['mapOnDatabaseColumn' => 'description', 'sanitizeRichText' => true];
+        }
+        $subject->setOptions($options);
 
         $formState = new FormState();
         foreach ($formValues as $identifier => $value) {
@@ -289,5 +296,25 @@ class SaveClubFinisherTest extends FunctionalTestCase
         $this->expectException(FinisherException::class);
 
         $this->executeFinisher(['title' => 'Anonymous club'], 0);
+    }
+
+    #[Test]
+    public function executeWithRichTextStoresSanitizedHtmlLikeBackend(): void
+    {
+        $this->executeFinisher(
+            [
+                'title' => 'Swimming club',
+                'description' => '<h2 class="x">Training</h2><p onclick="alert(1)">Every <b>Monday</b></p><script>alert(1)</script>',
+            ],
+            self::OWNER,
+            self::VISIBLE_CLUB,
+            false,
+            true,
+        );
+
+        self::assertSame(
+            "<h2>Training</h2>\r\n<p>Every <strong>Monday</strong></p>",
+            $this->fetchRecord('tx_clubdirectory_domain_model_club', self::VISIBLE_CLUB)['description'],
+        );
     }
 }

@@ -42,6 +42,8 @@ services:
     public: true
   JWeiland\Clubdirectory\Hook\Form\PrefillOptionsHook:
     public: true
+  JWeiland\Clubdirectory\Hook\Form\RichTextEditorHook:
+    public: true
 
   JWeiland\Clubdirectory\EventListener\SetTitleOfPOIToClubTitleEventListener:
     tags:

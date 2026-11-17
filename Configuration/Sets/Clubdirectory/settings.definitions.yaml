@@ -10,6 +10,8 @@ categories:
     parent: clubdirectory
   clubdirectory.glossary2:
     parent: clubdirectory
+  clubdirectory.form:
+    parent: clubdirectory
 
 settings:
   clubdirectory.templateRootPath:
@@ -135,6 +137,15 @@ settings:
     category: clubdirectory.media
     type: string
     default: '280'
+
+  clubdirectory.form.richText.enable:
+    category: clubdirectory.form
+    type: bool
+    default: false
+  clubdirectory.form.richText.elements:
+    category: clubdirectory.form
+    type: string
+    default: 'description'
 
   clubdirectory.glossary2.mergeNumbers:
     category: clubdirectory.glossary2

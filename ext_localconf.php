@@ -19,6 +19,7 @@ use JWeiland\Clubdirectory\Controller\SearchController;
 use JWeiland\Clubdirectory\Hook\Form\GeocodeAddressesHook;
 use JWeiland\Clubdirectory\Hook\Form\PrefillForEditUsageHook;
 use JWeiland\Clubdirectory\Hook\Form\PrefillOptionsHook;
+use JWeiland\Clubdirectory\Hook\Form\RichTextEditorHook;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 ExtensionUtility::configurePlugin(
@@ -67,3 +68,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['afterBuildingFinished'][1
 // Geocode the addresses of the club form, before the map positions are shown
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['afterSubmit'][1763337602]
     = GeocodeAddressesHook::class;
+// Add the CKEditor to rich text elements of the current page
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/form']['beforeRendering'][1763337603]
+    = RichTextEditorHook::class;

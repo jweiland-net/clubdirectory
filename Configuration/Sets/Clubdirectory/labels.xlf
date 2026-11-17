@@ -25,6 +25,21 @@
 			<trans-unit id="categories.clubdirectory.glossary2">
 				<source>Glossary2</source>
 			</trans-unit>
+			<trans-unit id="categories.clubdirectory.form">
+				<source>Club form</source>
+			</trans-unit>
+			<trans-unit id="settings.clubdirectory.form.richText.enable">
+				<source>Enable rich text editor</source>
+			</trans-unit>
+			<trans-unit id="settings.description.clubdirectory.form.richText.enable">
+				<source>Use CKEditor 5 of EXT:rte_ckeditor for the rich text elements of the club form based on EXT:form. Requires EXT:rte_ckeditor.</source>
+			</trans-unit>
+			<trans-unit id="settings.clubdirectory.form.richText.elements">
+				<source>Rich text elements</source>
+			</trans-unit>
+			<trans-unit id="settings.description.clubdirectory.form.richText.elements">
+				<source>Comma separated identifiers of form elements, which get the rich text editor. Elements with "dataType: richText" in the form definition get it, too.</source>
+			</trans-unit>
 
 			<trans-unit id="settings.clubdirectory.templateRootPath">
 				<source>Templates</source>
