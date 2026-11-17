@@ -17,7 +17,12 @@ All controller events implement
 :php:`\JWeiland\Clubdirectory\Event\ControllerActionEventInterface` with the
 methods `getRequest()`, `getControllerName()`, `getActionName()` and
 `getSettings()`. The controller name is the short name like `Club`,
-`Management`, `Map` or `Search`.
+`Management` or `Search`.
+
+The club form based on EXT:form does not dispatch these events, use the
+hooks of EXT:form instead. The tags of the rich text editor of the form can
+be modified with the PSR-14 event `ModifyRichTextSanitizerConfigurationEvent`,
+see :ref:`frontend-rich-text-editor-sanitizer-event`.
 
 ..  _developer-events-pre-process:
 
@@ -91,8 +96,8 @@ or `after` one of them.
 
     *   -   `clubdirectory/restrictAccess`
         -   `PreProcessControllerActionEvent`
-        -   `Management`: create, edit, update, activate.
-            `Map`: new, create. Allows the access to the club for owners,
+        -   `Management`: perform, confirmActivation, activate. Allows the
+            access to the club for owners,
             backend administrators and valid moderation tokens only. Stops
             with the 403 error handling of the site otherwise. `activate`
             gets the club UID as scalar argument `clubUid`. See
@@ -100,20 +105,9 @@ or `after` one of them.
 
     *   -   `clubdirectory/register-hidden-club`
         -   `PreProcessControllerActionEvent`
-        -   `Management`: edit, update, confirmActivation. `Map`: new,
-            create. Registers the hidden club for the property mapper.
+        -   `Management`: confirmActivation. Registers the hidden club for
+            the property mapper.
             Executed after `clubdirectory/restrictAccess`.
-
-    *   -   `clubdirectory/apply-upload-folder`
-        -   `PreProcessControllerActionEvent`
-        -   `Management`: create, update. Sets the upload folder of
-            logo and images from `settings.new.uploadFolder`.
-
-    *   -   `clubdirectory/check-fal-uploads`
-        -   `PreProcessControllerActionEvent`
-        -   `Management`: create, update. Adds the validator of
-            checkfaluploads to logo and images, if checkfaluploads is
-            installed. See :ref:`upgrade-9-0-0-checkfaluploads`.
 
     *   -   `clubdirectory/allow-search-parameter`
         -   `PreProcessControllerActionEvent`
@@ -140,3 +134,31 @@ or `after` one of them.
     `DeleteUploadedFilesEventListener` have been removed. The listeners
     `clubdirectory/restrictAccess` and `clubdirectory/allow-search-parameter`
     listen to `PreProcessControllerActionEvent` now.
+
+..  versionchanged:: 10.0.0
+
+    The event listeners `clubdirectory/apply-upload-folder` and
+    `clubdirectory/check-fal-uploads` have been removed together with the
+    Extbase form, see :ref:`upgrade-10-0-0`.
+
+..  _developer-form-hooks:
+
+Hooks of the club form
+======================
+
+`clubdirectory` registers these hooks of EXT:form for its club form, see
+:ref:`club-form`:
+
+`initializeFormElement`: :php:`\JWeiland\Clubdirectory\Hook\Form\PrefillOptionsHook`
+    Adds the options of the elements `categories` and `district`.
+
+`afterBuildingFinished`: :php:`\JWeiland\Clubdirectory\Hook\Form\PrefillForEditUsageHook`
+    Prefills the form with the club to edit.
+
+`afterSubmit`: :php:`\JWeiland\Clubdirectory\Hook\Form\GeocodeAddressesHook`
+    Geocodes the addresses of a submitted page for the elements of type
+    `Maps2PoiPosition`, see :ref:`club-form-position-element`.
+
+`beforeRendering`: :php:`\JWeiland\Clubdirectory\Hook\Form\RichTextEditorHook`
+    Adds the CKEditor to rich text elements, see
+    :ref:`frontend-rich-text-editor-elements`.

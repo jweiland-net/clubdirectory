@@ -8,6 +8,135 @@ Upgrade
 If you upgrade `clubdirectory` to a newer version, please read this
 section carefully!
 
+..  _upgrade-10-0-0:
+
+Update to version 10.0.0
+========================
+
+The club form of the Management plugin is based on EXT:form now. The
+Extbase form and the map step of the MapController have been removed.
+Please go through all steps below.
+
+..  _upgrade-10-0-0-requirements:
+
+New requirements
+----------------
+
+*   EXT:form (:composer:`typo3/cms-form`) is required.
+*   maps2 12.3.0 or newer is required. It provides the form element
+    `Maps2PoiPosition` of the map step.
+*   The site set `jweiland/clubdirectory` depends on the site set
+    `jweiland/maps2-default` now. If you include the TypoScript of
+    clubdirectory without site sets, include the form setup
+    :file:`EXT:maps2/Configuration/Form/FormSetup.yaml` and
+    :file:`EXT:clubdirectory/Configuration/Form/OverrideFormSettings.yaml`
+    in :typoscript:`plugin.tx_form.settings.yamlConfigurations` yourself.
+*   EXT:rte_ckeditor is optional. It is needed for the
+    :ref:`rich text editor <frontend-rich-text-editor>` only.
+
+..  _upgrade-10-0-0-plugin:
+
+Management plugin
+-----------------
+
+*   The actions `new`, `create`, `edit` and `update` of the
+    `ManagementController` have been removed. The new action `perform`
+    renders the club form. Without the argument `club` it creates a new
+    club, with it the club is edited.
+*   The `MapController` (actions `new` and `create`) has been removed. The
+    position of the addresses is corrected on the second page of the club
+    form.
+*   Links to the removed actions do not work anymore. Change links in your
+    own templates from `action="new"` and `action="edit"` to
+    `action="perform"`. The templates :file:`Club/Show.html` and the
+    partial :file:`Club/InsertEditLinks.html` of clubdirectory have been
+    adapted. Links in mails sent by former versions open the confirmation
+    page and the club form, as long as the club was not changed since.
+*   Content elements of the plugin need no change.
+
+..  _upgrade-10-0-0-templates:
+
+Removed templates and partials
+------------------------------
+
+Remove your overrides of these files, they are not used anymore:
+
+*   :file:`Templates/Management/New.html`, :file:`Edit.html` and
+    :file:`Update.html`
+*   :file:`Templates/Map/New.html` and :file:`Create.html`
+*   :file:`Templates/Email/SendNotification.html`
+*   :file:`Partials/Club/FormFields.html` and :file:`Partials/FormErrors.html`
+
+The form is defined in :file:`Configuration/Form/NewClub.form.yaml` and
+rendered with the Bootstrap 5 templates of EXT:form (`templateVariant:
+version2`). The mail templates are located in
+:file:`Resources/Private/FormFramework/Templates/Finishers/Email/`. See
+:ref:`club-form-own-definition` and :ref:`club-form-mail`, if you want to
+change them.
+
+..  _upgrade-10-0-0-typoscript:
+
+TypoScript and site settings
+----------------------------
+
+*   :typoscript:`plugin.tx_clubdirectory.settings.new.uploadFolder` has been
+    removed. The site setting :confval:`clubdirectory.newUploadPath
+    <site-setting-newuploadpath>` is used for the uploads of the club form
+    in :typoscript:`plugin.tx_clubdirectory.settings.overrideForm` now.
+*   New clubs are stored on the first page of
+    :confval:`clubdirectory.storagePid <site-setting-storagepid>`.
+*   :typoscript:`plugin.tx_clubdirectory._CSS_DEFAULT_STYLE` with the error
+    styles of the Extbase form has been removed.
+*   The new site settings `clubdirectory.form.richText.enable` and
+    `clubdirectory.form.richText.elements` configure the rich text editor.
+
+..  _upgrade-10-0-0-uploads:
+
+Logo and images
+---------------
+
+The club form contains one logo and up to three images. A new file
+replaces the file at the same position. Files can not be removed in the
+frontend anymore, use the backend. Clubs with more than three images keep
+their images. The integration of checkfaluploads has been removed, as
+checkfaluploads supports the file uploads of Extbase only.
+
+..  _upgrade-10-0-0-description:
+
+Description
+-----------
+
+The description of the club form is stored like the backend RTE stores it
+(:html:`<p>` and :html:`<br />`). Descriptions saved by the Extbase form
+with plain line breaks are converted, when the club is edited and saved
+again.
+
+..  _upgrade-10-0-0-developer:
+
+Removed classes and labels
+--------------------------
+
+*   `MapController`, `ClubValidator`, `AddressTrait`, `MapHelper`,
+    `MailHelper`, `ApplyUploadFolderEventListener` and
+    `CheckFalUploadsEventListener` have been removed.
+*   `GeocodingFailure` contains the address as string now and provides the
+    label prefix of the error with `getLabelPrefix()`.
+*   `ClubAccessService::hasOnlyRecordsOfClub()`,
+    `PathSegmentHelper::updatePathSegmentForClub()` and
+    `Club::getBaseRecordForPathSegment()` have been removed.
+*   The `#[FileUpload]` and `#[Validate]` attributes of the club model have
+    been removed.
+*   `PreProcessControllerActionEvent` and `PostProcessFluidVariablesEvent`
+    are not dispatched for the club form. Use the hooks of EXT:form, see
+    :ref:`developer-form-hooks`.
+*   The labels of the Extbase form (`csh*`, `create`, `update`,
+    `clubCreated`, `clubUpdated`, `deleteLogo`, `deleteImage`,
+    `addressNumber`, `pleaseChoose`, `error.addresses.missing`,
+    `error.address.incomplete`, `error.url.invalid`, `email.subject.create`
+    and `email.subject.update`) have been removed. The labels of the club
+    form are located in
+    :file:`Resources/Private/Language/locallang_ext_form.xlf`.
+
 ..  _upgrade-9-0-1:
 
 Update to version 9.0.1

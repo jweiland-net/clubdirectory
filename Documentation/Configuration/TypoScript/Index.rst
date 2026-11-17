@@ -48,8 +48,14 @@ The site settings are available in TypoScript as follows:
 `settings.pidOfMaps2Plugin`
     :confval:`site-setting-pidofmaps2plugin`
 
-`settings.new.uploadFolder`
+`settings.overrideForm.renderables.0.renderables.18.properties.saveToFileMount` (and the images)
     :confval:`site-setting-newuploadpath`
+
+`settings.new.richText.enable`
+    :confval:`site-setting-form-richtext-enable`
+
+`settings.new.richText.elements`
+    :confval:`site-setting-form-richtext-elements`
 
 `settings.pageBrowser.itemsPerPage`
     :confval:`site-setting-itemsperpage`
