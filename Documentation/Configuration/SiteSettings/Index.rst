@@ -152,9 +152,14 @@ Settings
     :default: `1:user_upload/tx_clubdirectory/`
 
     Folder (combined identifier) for the logo and the images uploaded in
-    the club form. The folder is created, if it does not exist. One logo
-    and up to five images of type GIF, JPEG or PNG with up to 4 MB each
-    are allowed.
+    the club form based on EXT:form (`saveToFileMount` of the elements
+    `logo` and `image-1` to `image-3`). One logo and up to three images of
+    type GIF, JPEG or PNG are allowed. See :ref:`club-form`.
+
+The settings of the rich text editor of the club form,
+`clubdirectory.form.richText.enable` and
+`clubdirectory.form.richText.elements`, are described in
+:ref:`frontend-rich-text-editor-site-settings`.
 
 ..  _site-settings-media:
 

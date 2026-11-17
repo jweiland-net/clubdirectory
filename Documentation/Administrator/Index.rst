@@ -12,6 +12,8 @@ of view.
     :maxdepth: 2
     :titlesonly:
 
+    ClubForm/Index
+    FrontendRichTextEditor/Index
     Moderation/Index
     Routes/Index
     Upgrade/Index
