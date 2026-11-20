@@ -195,45 +195,9 @@
         <source>You do not have access to visit this page</source>
         <target state="needs-translation">You do not have access to visit this page</target>
       </trans-unit>
-      <trans-unit id="create">
-        <source>Create</source>
-        <target state="translated">Létrehozás</target>
-      </trans-unit>
-      <trans-unit id="update">
-        <source>Edit</source>
-        <target state="translated">Szerkesztés</target>
-      </trans-unit>
-      <trans-unit id="clubCreated">
-        <source>Thank you! Your club has been saved. It will be visible in the club directory as soon as it has been checked and released by the administrator. No further action is required, unless you are asked for changes.</source>
-        <target state="needs-translation">Thank you! Your club has been saved. It will be visible in the club directory as soon as it has been checked and released by the administrator. No further action is required, unless you are asked for changes.</target>
-      </trans-unit>
-      <trans-unit id="clubUpdated">
-        <source>Thank you! Your changes have been saved. Until they have been checked and released by the administrator, the club is not visible in the club directory.</source>
-        <target state="needs-translation">Thank you! Your changes have been saved. Until they have been checked and released by the administrator, the club is not visible in the club directory.</target>
-      </trans-unit>
       <trans-unit id="clubActivated">
         <source>The club was activated and is now visible in frontend</source>
         <target state="translated">A klub aktiválásra került, és mostantól látható a frontendben</target>
-      </trans-unit>
-      <trans-unit id="deleteLogo">
-        <source>Delete Logo</source>
-        <target state="translated">Logó törlése</target>
-      </trans-unit>
-      <trans-unit id="deleteImage">
-        <source>Delete Image</source>
-        <target state="translated">Kép törlése</target>
-      </trans-unit>
-      <trans-unit id="error.addresses.missing">
-        <source>Please enter at least one address.</source>
-        <target state="needs-translation">Please enter at least one address.</target>
-      </trans-unit>
-      <trans-unit id="error.address.incomplete">
-        <source>%s: Please enter at least street, ZIP and city.</source>
-        <target state="needs-translation">%s: Please enter at least street, ZIP and city.</target>
-      </trans-unit>
-      <trans-unit id="error.url.invalid">
-        <source>Please enter the complete URL including https://.</source>
-        <target state="needs-translation">Please enter the complete URL including https://.</target>
       </trans-unit>
       <trans-unit id="error.geocoding.noPositionsFound.title">
         <source>Address not found</source>
@@ -259,90 +223,6 @@
         <source>The position of the address "%s" could not be determined, because the map service is currently not available. Your input was not saved. Please try again later or inform the website administrator.</source>
         <target state="needs-translation">The position of the address "%s" could not be determined, because the map service is currently not available. Your input was not saved. Please try again later or inform the website administrator.</target>
       </trans-unit>
-      <trans-unit id="addressNumber">
-        <source>Address %d</source>
-        <target state="needs-translation">Address %d</target>
-      </trans-unit>
-      <trans-unit id="pleaseChoose">
-        <source>Please choose</source>
-        <target state="needs-translation">Please choose</target>
-      </trans-unit>
-      <trans-unit id="cshtitle">
-        <source>The title is mandatory</source>
-        <target state="translated">A cím megadása kötelező</target>
-      </trans-unit>
-      <trans-unit id="cshcategories">
-        <source>Please select the category of the club. Multiple selection by holding down the Ctrl key (Cmd on macOS).</source>
-        <target state="needs-translation">Please select the category of the club. Multiple selection by holding down the Ctrl key (Cmd on macOS).</target>
-      </trans-unit>
-      <trans-unit id="cshactivity">
-        <source>Describe the activities/goals of the club.</source>
-        <target state="translated">Írja le a klub tevékenységeit/céljait.</target>
-      </trans-unit>
-      <trans-unit id="cshdescription">
-        <source>Further descriptions</source>
-        <target state="translated">További leírások</target>
-      </trans-unit>
-      <trans-unit id="cshcontactPerson">
-        <source>Enter the contact person of the club</source>
-        <target state="translated">Adja meg a klub kapcsolattartóját</target>
-      </trans-unit>
-      <trans-unit id="cshcontactTimes">
-        <source>Specify the times when the contact person is available.</source>
-        <target state="translated">Adja meg azokat az időpontokat, amikor a kapcsolattartó elérhető.</target>
-      </trans-unit>
-      <trans-unit id="cshemail">
-        <source>Enter the email address of the club or contact person.</source>
-        <target state="translated">Adja meg a klub vagy a kapcsolattartó e-mail címét.</target>
-      </trans-unit>
-      <trans-unit id="cshwebsite">
-        <source>If the club has a website, enter its complete address including https://.</source>
-        <target state="needs-translation">If the club has a website, enter its complete address including https://.</target>
-      </trans-unit>
-      <trans-unit id="cshmembers">
-        <source>Enter the number of members of the club.</source>
-        <target state="translated">Adja meg a klub tagjainak számát.</target>
-      </trans-unit>
-      <trans-unit id="cshclubHome">
-        <source>Enter the name of the clubhouse if it exists.</source>
-        <target state="translated">Adja meg a klubhelyiség nevét, ha létezik.</target>
-      </trans-unit>
-      <trans-unit id="cshtitle_0">
-        <source>Choose the address type of the club and add the address infos.</source>
-        <target state="translated">Válassza ki a klub címének típusát, és adja meg a cím adatait.</target>
-      </trans-unit>
-      <trans-unit id="cshtitle_1">
-        <source>Enter a further address type of the club with all address infos.</source>
-        <target state="translated">Adjon meg egy további címtípust a klubhoz az összes címadat megadásával.</target>
-      </trans-unit>
-      <trans-unit id="cshtitle_2">
-        <source>Enter a further address type of the club with all address infos.</source>
-        <target state="translated">Adjon meg egy további címtípust a klubhoz az összes címadat megadásával.</target>
-      </trans-unit>
-      <trans-unit id="cshfacebook">
-        <source>Enter the complete URL to Facebook including https://.</source>
-        <target state="needs-translation">Enter the complete URL to Facebook including https://.</target>
-      </trans-unit>
-      <trans-unit id="cshtwitter">
-        <source>Enter the complete URL to Twitter including https://.</source>
-        <target state="needs-translation">Enter the complete URL to Twitter including https://.</target>
-      </trans-unit>
-      <trans-unit id="cshinstagram">
-        <source>Enter the complete URL to Instagram including https://.</source>
-        <target state="needs-translation">Enter the complete URL to Instagram including https://.</target>
-      </trans-unit>
-      <trans-unit id="cshlogo">
-        <source>Upload the logo file (jpg, gif, png, max. 4 MB) in a square formatting. To replace an existing logo, mark it for deletion and upload a new one.</source>
-        <target state="needs-translation">Upload the logo file (jpg, gif, png, max. 4 MB) in a square formatting. To replace an existing logo, mark it for deletion and upload a new one.</target>
-      </trans-unit>
-      <trans-unit id="cshtags">
-        <source>Enter further tags for the alphabetic list view.</source>
-        <target state="translated">Adjon meg további címkéket az ábécérendes listanézetéhez.</target>
-      </trans-unit>
-      <trans-unit id="cshimages">
-        <source>Upload max. 5 image files (jpg, gif, png, max. 4 MB each). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</source>
-        <target state="needs-translation">Upload max. 5 image files (jpg, gif, png, max. 4 MB each). Please use the same image dimensions (i.e. 3:2, 3:4) if uploading more than one image.</target>
-      </trans-unit>
       <trans-unit id="altTextMapImg">
         <source>Map</source>
         <target state="translated">Térkép</target>
@@ -354,6 +234,10 @@
       <trans-unit id="no">
         <source>No</source>
         <target state="translated">Nem</target>
+      </trans-unit>
+      <trans-unit id="pageBrowser">
+        <source>Pagination</source>
+        <target state="needs-translation">Pagination</target>
       </trans-unit>
       <trans-unit id="pageBrowser.first">
         <source>First</source>
@@ -371,17 +255,9 @@
         <source>Last</source>
         <target state="translated">Utolsó</target>
       </trans-unit>
-      <trans-unit id="email.subject.create">
-        <source>A new record was created</source>
-        <target state="translated">Új rekord jött létre</target>
-      </trans-unit>
       <trans-unit id="email.body.create">
         <source>A new record of type club was created. Following you see the entered data.</source>
         <target state="translated">Új klub típusú rekord jött létre. Az alábbiakban a megadott adatokat láthatja.</target>
-      </trans-unit>
-      <trans-unit id="email.subject.update">
-        <source>A record was updated</source>
-        <target state="translated">A rekord frissítésre került</target>
       </trans-unit>
       <trans-unit id="email.body.update">
         <source>A record of type club was edited. Following you see its properties.</source>
@@ -398,6 +274,18 @@
       <trans-unit id="email.activateRecord">
         <source>Activate record</source>
         <target state="translated">Rekord aktiválása</target>
+      </trans-unit>
+      <trans-unit id="richText.openInNewTab">
+        <source>Open in a new tab</source>
+        <target state="needs-translation">Open in a new tab</target>
+      </trans-unit>
+      <trans-unit id="activation.alreadyActivated">
+        <source>The club is activated already.</source>
+        <target state="needs-translation">The club is activated already.</target>
+      </trans-unit>
+      <trans-unit id="activation.invalidToken">
+        <source>The club could not be activated. The link is invalid, outdated or the club does not exist anymore.</source>
+        <target state="needs-translation">The club could not be activated. The link is invalid, outdated or the club does not exist anymore.</target>
       </trans-unit>
       <trans-unit id="confirmActivation.header">
         <source>Activate club</source>
