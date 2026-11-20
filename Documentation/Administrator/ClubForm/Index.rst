@@ -116,6 +116,18 @@ of select boxes and checkboxes only, if they are an option of the element.
     <ext-conf-poicollectionpid>` with the club title as title. The
     position of existing POI records is updated.
 
+..  _club-form-checkfaluploads:
+
+Rights checkbox of EXT:checkfaluploads
+--------------------------------------
+
+The uploads of logo and images are plain EXT:form elements of type
+`ImageUpload`. To add the rights checkbox of EXT:checkfaluploads (6.0.0 or
+higher), add a checkbox with :yaml:`checkboxType: uploadRights` and
+:yaml:`referenceUploadIdentifier` to your copy of the form definition, as
+described in the :ref:`documentation of EXT:checkfaluploads
+<checkfaluploads:developer-manual>`.
+
 ..  _club-form-configuration:
 
 Configuration of the club form

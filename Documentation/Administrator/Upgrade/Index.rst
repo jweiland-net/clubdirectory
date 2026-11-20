@@ -108,8 +108,11 @@ Logo and images
 The club form contains one logo and up to three images. A new file
 replaces the file at the same position. Files can not be removed in the
 frontend anymore, use the backend. Clubs with more than three images keep
-their images. The integration of checkfaluploads has been removed, as
-checkfaluploads supports the file uploads of Extbase only.
+their images.
+
+The `CheckFalUploadsEventListener` for the Extbase form has been removed.
+To get the rights checkbox of checkfaluploads in the club form, see
+:ref:`club-form-checkfaluploads`.
 
 ..  _upgrade-10-0-0-description:
 

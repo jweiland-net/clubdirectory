@@ -47,6 +47,7 @@
 		"typo3-ter/clubdirectory": "self.version"
 	},
 	"suggest": {
+		"jweiland/checkfaluploads": "Adds a mandatory rights checkbox to the logo/images upload fields of the club form based on EXT:form. Requires at least version 6.0.0.",
 		"typo3/cms-rte-ckeditor": "Needed for the optional rich text editor (CKEditor 5) of the frontend form (site setting clubdirectory.form.richText.enable)."
 	},
 	"autoload": {

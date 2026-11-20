@@ -19,8 +19,9 @@ Breaking changes:
     geocoded with maps2 when the page is submitted. On the second page the
     position of each address can be corrected with the form element
     `Maps2PoiPosition` of maps2 12.3. The Extbase form, the
-    `MapController` and the integration of checkfaluploads have been
-    removed
+    `MapController` and the `CheckFalUploadsEventListener` have been
+    removed. The rights checkbox of checkfaluploads 6 can be added to the
+    upload elements of the club form, see :ref:`club-form-checkfaluploads`
 
 Features:
 

@@ -25,6 +25,7 @@ $EM_CONF[$_EXTKEY] = [
         ],
         'conflicts' => [],
         'suggests' => [
+            'checkfaluploads' => '6.0.0-6.99.99',
             'rte_ckeditor' => '13.4.0-13.4.99',
         ],
     ],
