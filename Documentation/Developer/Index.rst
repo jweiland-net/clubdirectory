@@ -128,6 +128,14 @@ or `after` one of them.
         -   Sets the club title as title of the POI records of clubs
             saved in the backend.
 
+    *   -   `clubdirectory/add-plugin-preview-data`
+        -   `\TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent`
+        -   Adds the variable `clubdirectory` (plugin key, FlexForm settings,
+            titles of category and district) to the preview of the plugins
+            in the page module. Executed before the Fluid based preview of
+            TYPO3, which renders the template of page TSconfig
+            `mod.web_layout.tt_content.preview.[CType]`.
+
 ..  versionchanged:: 9.0.0
 
     The event listeners `AssignMediaTypeConverterEventListener` and

@@ -3,43 +3,42 @@
       xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Config</th>
-        <th>Value</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td><strong>Plugin</strong></td>
-        <td>Club Directory</td>
-    </tr>
-    <tr>
-        <td><strong>Show A-Z links</strong></td>
-        <td>
-            <f:if condition="{pi_flexform_transformed.settings.showGlossar}">
-                <f:then>
-                    <core:icon identifier="actions-check"/>
-                </f:then>
-                <f:else>
-                    <core:icon identifier="actions-message-ok-close"/>
-                </f:else>
-            </f:if>
-        </td>
-    </tr>
-    <f:if condition="{pi_flexform_transformed.settings.category}">
+<f:comment>
+    <!--
+    Preview of the plugins of clubdirectory in the page module. Registered in
+    page TSconfig "mod.web_layout.tt_content.preview.[CType]". The variable
+    "clubdirectory" is added by AddPluginPreviewDataEventListener.
+    -->
+</f:comment>
+<f:variable name="languageFile" value="LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf"/>
+<f:variable name="flexFormLanguageFile" value="LLL:EXT:clubdirectory/Resources/Private/Language/FlexForms.xlf"/>
+
+<p>
+    <strong>{f:translate(key: '{languageFile}:plugin.{clubdirectory.pluginKey}.title')}</strong><br>
+    {f:translate(key: '{languageFile}:plugin.{clubdirectory.pluginKey}.description')}
+</p>
+
+<f:if condition="{clubdirectory.pluginKey} == 'clubdirectory'">
+    <table class="table table-sm">
+        <tbody>
         <tr>
-            <td><strong>Show category</strong></td>
-            <td>{pi_flexform_transformed.settings.category}</td>
+            <th scope="row">{f:translate(key: '{flexFormLanguageFile}:showGlossar')}</th>
+            <td>
+                <f:if condition="{clubdirectory.settings.showGlossar}">
+                    <f:then><core:icon identifier="actions-check"/></f:then>
+                    <f:else><core:icon identifier="actions-close"/></f:else>
+                </f:if>
+            </td>
         </tr>
-    </f:if>
-    <f:if condition="{pi_flexform_transformed.settings.district}">
         <tr>
-            <td><strong>Show district</strong></td>
-            <td>{pi_flexform_transformed.settings.district}</td>
+            <th scope="row">{f:translate(key: '{flexFormLanguageFile}:category')}</th>
+            <td>{f:if(condition: clubdirectory.categoryTitle, then: clubdirectory.categoryTitle, else: '{f:translate(key: \'{flexFormLanguageFile}:allCategories\')}')}</td>
         </tr>
-    </f:if>
-    </tbody>
-</table>
+        <tr>
+            <th scope="row">{f:translate(key: '{flexFormLanguageFile}:district')}</th>
+            <td>{f:if(condition: clubdirectory.districtTitle, then: clubdirectory.districtTitle, else: '{f:translate(key: \'{flexFormLanguageFile}:allDistricts\')}')}</td>
+        </tr>
+        </tbody>
+    </table>
+</f:if>
 </html>
