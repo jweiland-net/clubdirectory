@@ -84,6 +84,62 @@ version2`). The mail templates are located in
 :ref:`club-form-own-definition` and :ref:`club-form-mail`, if you want to
 change them.
 
+..  _upgrade-10-0-0-bootstrap:
+
+Frontend markup uses Bootstrap 5
+--------------------------------
+
+The templates of clubdirectory and the club form use the classes of
+Bootstrap 5. On a page with Bootstrap 5 the output works without own CSS
+or template overrides.
+
+The club form uses the template variant `version2` of EXT:form
+(:yaml:`renderingOptions.templateVariant: version2` in
+:file:`NewClub.form.yaml`), see :ref:`club-form-markup`. Keep it in an own
+copy of the form definition. The legacy templates of EXT:form are
+deprecated since TYPO3 12 and removed in TYPO3 14.
+
+Please compare your overrides of the templates and partials with the new
+files. The following classes have been replaced:
+
+..  list-table::
+    :header-rows: 1
+
+    *   -   Old class
+        -   New class
+    *   -   `media`
+        -   `d-flex`
+    *   -   `media-body`
+        -   `flex-grow-1`
+    *   -   `mr-3` of the logo
+        -   `flex-shrink-0 me-3`
+    *   -   `nav flex-column` of the club list
+        -   `tx-clubdirectory-list`
+    *   -   `card-deck` of the images
+        -   `row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3` with `col`
+            and `card h-100`, the images get `card-img-top img-fluid`
+    *   -   `mr-3` of the map thumbnail
+        -   `figure-img img-fluid`
+    *   -   `form-group` of the filter
+        -   `mb-3`, labels with `form-label`
+    *   -   `form-control` of `select`
+        -   `form-select`
+    *   -   `form-inline` and `form-group` of the search
+        -   `row g-2 align-items-center` with `col-auto`
+    *   -   `btn-default`
+        -   `btn-secondary`
+    *   -   `f3-widget-paginator` of the pagination
+        -   `pagination` in a :html:`<nav>` with `aria-label`,
+            `page-item` and `page-link`
+
+The pagination is rendered with more than one page only. Its
+:html:`<nav>` gets the new label `pageBrowser` as `aria-label`.
+
+The icon span with the class `icon-arrowright` of the edit link has been
+removed, as Bootstrap 5 contains no icon font. The inline SVGs of
+Bootstrap Icons (`bi bi-*`) are kept and get `aria-hidden="true"` and
+`me-1`.
+
 ..  _upgrade-10-0-0-typoscript:
 
 TypoScript and site settings
