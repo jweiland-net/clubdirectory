@@ -147,7 +147,18 @@ Hooks of the club form
 ======================
 
 `clubdirectory` registers these hooks of EXT:form for its club form, see
-:ref:`club-form`:
+:ref:`club-form`. EXT:form calls them for all forms of the installation,
+but they act on forms built by the `ArrayFormFactory` of clubdirectory
+only. The factory marks these forms with the rendering option
+`formOwner: clubdirectory` (:php:`\JWeiland\Clubdirectory\Form\FormOwner`).
+Other extensions like events2 and yellowpages2 use the same rendering
+option with their own value, so each extension adds its rich text editor,
+prefill and geocoding to its own forms only.
+
+If you copy :file:`NewClub.form.yaml`, render it with the action `perform`
+of the Management plugin and the factory class of clubdirectory, see
+:ref:`club-form-own-definition`. Rendered with the form plugin of EXT:form,
+the form gets no options, prefill, geocoding and rich text editor.
 
 `initializeFormElement`: :php:`\JWeiland\Clubdirectory\Hook\Form\PrefillOptionsHook`
     Adds the options of the elements `categories` and `district`.

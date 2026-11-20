@@ -12,10 +12,12 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Tests\Unit\Hook\Form;
 
 use JWeiland\Clubdirectory\Event\ModifyRichTextSanitizerConfigurationEvent;
+use JWeiland\Clubdirectory\Form\FormOwner;
 use JWeiland\Clubdirectory\Form\RichTextEditorAssets;
 use JWeiland\Clubdirectory\Hook\Form\RichTextEditorHook;
 use JWeiland\Clubdirectory\Sanitizer\RichTextSanitizer;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Form\Domain\Model\FormDefinition;
@@ -48,8 +50,7 @@ class RichTextEditorHookTest extends UnitTestCase
             ->method('getEditorOptions')
             ->willReturnOnConsecutiveCalls(['language' => 'de'], ['language' => 'en']);
 
-        $this->formRuntime = $this->createMock(FormRuntime::class);
-        $this->formRuntime->method('getRequest')->willReturn($this->createMock(Request::class));
+        $this->formRuntime = $this->createFormRuntime(FormOwner::CLUBDIRECTORY);
 
         $this->subject = new RichTextEditorHook($this->richTextEditorAssets, new RichTextSanitizer($this->createEventDispatcher()));
     }
@@ -140,6 +141,42 @@ class RichTextEditorHookTest extends UnitTestCase
         $this->richTextEditorAssets->expects(self::never())->method('load');
 
         $this->subject->beforeRendering($this->formRuntime, new FormDefinition('newClub'));
+    }
+
+    #[Test]
+    public function beforeRenderingIgnoresRichTextElementOfForeignForm(): void
+    {
+        $element = $this->buildElement('description', 'richText');
+        $this->richTextEditorAssets->expects(self::never())->method('load');
+
+        $this->subject->beforeRendering($this->createFormRuntime('events2'), $element);
+
+        self::assertSame(['class' => 'x'], $element->getProperties()['fluidAdditionalAttributes']);
+    }
+
+    #[Test]
+    public function beforeRenderingIgnoresRichTextElementOfFormWithoutOwner(): void
+    {
+        $element = $this->buildElement('description', 'richText');
+        $this->richTextEditorAssets->expects(self::never())->method('load');
+
+        $this->subject->beforeRendering($this->createFormRuntime(''), $element);
+
+        self::assertSame(['class' => 'x'], $element->getProperties()['fluidAdditionalAttributes']);
+    }
+
+    private function createFormRuntime(string $formOwner): FormRuntime&MockObject
+    {
+        $formDefinition = new FormDefinition('newClub');
+        if ($formOwner !== '') {
+            $formDefinition->setRenderingOption(FormOwner::RENDERING_OPTION, $formOwner);
+        }
+
+        $formRuntime = $this->createMock(FormRuntime::class);
+        $formRuntime->method('getRequest')->willReturn($this->createMock(Request::class));
+        $formRuntime->method('getFormDefinition')->willReturn($formDefinition);
+
+        return $formRuntime;
     }
 
     private function buildElement(string $identifier, string $dataType): GenericFormElement

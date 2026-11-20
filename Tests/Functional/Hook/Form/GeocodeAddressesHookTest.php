@@ -254,4 +254,16 @@ class GeocodeAddressesHookTest extends FunctionalTestCase
         self::assertSame([$expectedMessage], $this->getErrorMessagesOfStreet());
         self::assertNull($this->formState->getFormValue('address-1-position'));
     }
+
+    #[Test]
+    public function afterSubmitIgnoresFormOfOtherExtension(): void
+    {
+        $this->formDefinition = $this->createFormDefinition('yellowpages2');
+        $this->geoCodeServiceMock->expects(self::never())->method('getGeoCodeResult');
+
+        $this->submitPage('club-data');
+
+        self::assertNull($this->formState->getFormValue('address-1-position'));
+        self::assertSame([], $this->getErrorMessagesOfStreet());
+    }
 }

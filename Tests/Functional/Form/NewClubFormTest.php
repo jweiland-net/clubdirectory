@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Tests\Functional\Form;
 
 use JWeiland\Clubdirectory\Domain\Factory\ArrayFormFactory;
+use JWeiland\Clubdirectory\Form\FormOwner;
+use JWeiland\Clubdirectory\Hook\Form\RichTextEditorHook;
 use JWeiland\Clubdirectory\Tests\Functional\Traits\ClubAccessTestTrait;
 use JWeiland\Clubdirectory\Tests\Functional\Traits\ClubFormTestTrait;
 use JWeiland\Maps2\Client\ClientError;
@@ -33,6 +35,8 @@ use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Form\Domain\Configuration\ConfigurationService;
+use TYPO3\CMS\Form\Domain\Factory\ArrayFormFactory as CoreArrayFormFactory;
+use TYPO3\CMS\Form\Domain\Factory\FormFactoryInterface;
 use TYPO3\CMS\Form\Domain\Finishers\EmailFinisher;
 use TYPO3\CMS\Form\Domain\Model\FormDefinition;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
@@ -87,7 +91,7 @@ class NewClubFormTest extends FunctionalTestCase
     /**
      * @param array<string, mixed> $settings Additional settings of plugin.tx_clubdirectory
      */
-    private function buildForm(Request $request, array $settings = []): FormDefinition
+    private function buildForm(Request $request, array $settings = [], ?FormFactoryInterface $formFactory = null): FormDefinition
     {
         $frontendTypoScript = $request->getAttribute('frontend.typoscript');
         self::assertInstanceOf(FrontendTypoScript::class, $frontendTypoScript);
@@ -106,6 +110,12 @@ class NewClubFormTest extends FunctionalTestCase
         $this->get(ConfigurationManagerInterface::class)->setRequest($request);
 
         $configuration = Yaml::parseFile(__DIR__ . '/../../../Configuration/Form/NewClub.form.yaml');
+        if ($formFactory instanceof FormFactoryInterface) {
+            // A copy of the club form with a rich text element, rendered by the form plugin of EXT:form
+            $configuration['renderables'][0]['renderables'][3]['properties']['dbMapping']['dataType'] = 'richText';
+
+            return $formFactory->build($configuration, null, $request);
+        }
 
         return $this->get(ArrayFormFactory::class)->build($configuration, null, $request);
     }
@@ -223,13 +233,67 @@ class NewClubFormTest extends FunctionalTestCase
         self::assertArrayHasKey(10, $options['templateRootPaths']);
     }
 
+    #[Test]
+    public function buildMarksClubFormWithFormOwner(): void
+    {
+        $this->setUserAspects($this->get(Context::class), self::OWNER);
+
+        $formDefinition = $this->buildForm($this->createFormRequest());
+
+        self::assertSame(FormOwner::CLUBDIRECTORY, $formDefinition->getRenderingOptions()[FormOwner::RENDERING_OPTION]);
+    }
+
+    /**
+     * Integrators could render a copy of NewClub.form.yaml with the form
+     * plugin of EXT:form. The hooks of clubdirectory must not touch it.
+     */
+    #[Test]
+    public function hooksOfClubdirectoryIgnoreFormBuiltByFactoryOfCore(): void
+    {
+        $this->setUserAspects($this->get(Context::class), self::OWNER);
+        $request = $this->createFormRequest(self::VISIBLE_CLUB)
+            ->withAttribute('frontend.user', new FrontendUserAuthentication());
+        $formDefinition = $this->buildForm($request, [], GeneralUtility::makeInstance(CoreArrayFormFactory::class));
+
+        self::assertArrayNotHasKey(FormOwner::RENDERING_OPTION, $formDefinition->getRenderingOptions());
+        // The default value of the form definition, not the title of the club
+        self::assertSame('', $formDefinition->getElementDefaultValueByIdentifier('title'));
+        self::assertNull($formDefinition->getElementDefaultValueByIdentifier('address-1-position'));
+        self::assertArrayNotHasKey('options', $formDefinition->getElementByIdentifier('categories')?->getProperties() ?? []);
+        self::assertArrayNotHasKey('options', $formDefinition->getElementByIdentifier('district')?->getProperties() ?? []);
+
+        $description = $formDefinition->getElementByIdentifier('description');
+        self::assertNotNull($description);
+        GeneralUtility::makeInstance(RichTextEditorHook::class)->beforeRendering($formDefinition->bind($request), $description);
+        self::assertArrayNotHasKey(
+            RichTextEditorHook::DATA_ATTRIBUTE,
+            $description->getProperties()['fluidAdditionalAttributes'] ?? [],
+        );
+    }
+
+    #[Test]
+    public function submitOfAddressPageOfFormBuiltByFactoryOfCoreDoesNotGeocode(): void
+    {
+        $geoCodeService = $this->createMock(GeoCodeService::class);
+        $geoCodeService->expects(self::never())->method('getGeoCodeResult');
+        $this->getContainer()->set(GeoCodeService::class, $geoCodeService);
+
+        $formRuntime = $this->submitAddressPage(
+            $this->getValuesOfAddressPage(),
+            GeneralUtility::makeInstance(CoreArrayFormFactory::class),
+        );
+
+        self::assertSame('map-positions', $formRuntime->getCurrentPage()?->getIdentifier());
+        self::assertNull($formRuntime->getElementValue('address-1-position'));
+    }
+
     /**
      * Submits the first page of the form with the given values, so EXT:form
      * processes the page transition incl. the hooks of clubdirectory.
      *
      * @param array<string, mixed> $values
      */
-    private function submitAddressPage(array $values): FormRuntime
+    private function submitAddressPage(array $values, ?FormFactoryInterface $formFactory = null): FormRuntime
     {
         $this->setUserAspects($this->get(Context::class), self::OWNER);
         $formState = new FormState();
@@ -242,7 +306,7 @@ class NewClubFormTest extends FunctionalTestCase
             // The honeypot of EXT:form is stored in the session of the frontend user
             ->withAttribute('frontend.user', new FrontendUserAuthentication())
             ->withAttribute('language', new SiteLanguage(0, 'en_US.UTF-8', new Uri('https://www.example.com/'), []));
-        $formDefinition = $this->buildForm($request);
+        $formDefinition = $this->buildForm($request, [], $formFactory);
         $request = $request->withArguments([
             'newClub' => array_replace($values, [
                 '__state' => $this->get(HashService::class)->appendHmac(

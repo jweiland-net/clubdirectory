@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Hook\Form;
 
+use JWeiland\Clubdirectory\Form\FormOwner;
 use JWeiland\Clubdirectory\Helper\GeocodingFailure;
 use JWeiland\Clubdirectory\Service\GeocodingService;
 use JWeiland\Maps2\Domain\Model\Position;
@@ -44,6 +45,8 @@ use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
  * prefilled on edit). So a corrected position is kept, as long as the
  * address is not changed. If the address could not be geocoded, the
  * "errorElement" gets an error and the user stays on the page.
+ *
+ * Forms, which are not built by clubdirectory, are skipped.
  */
 final readonly class GeocodeAddressesHook
 {
@@ -66,7 +69,7 @@ final readonly class GeocodeAddressesHook
         mixed $elementValue = null,
         array $requestArguments = [],
     ): mixed {
-        if (!$renderable instanceof Page) {
+        if (!$renderable instanceof Page || !FormOwner::isClubdirectoryForm($formRuntime->getFormDefinition())) {
             return $elementValue;
         }
 
