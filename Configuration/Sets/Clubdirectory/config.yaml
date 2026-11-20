@@ -1,4 +1,6 @@
 name: jweiland/clubdirectory
 dependencies:
+  # Provides the frontend configuration of EXT:form for the club form
+  - typo3/form
   # Provides the form element "Maps2PoiPosition" of the club form
   - jweiland/maps2-default

@@ -26,7 +26,8 @@ of EXT:form.
 Requirements of the club form
 =============================
 
-*   The system extension EXT:form (:composer:`typo3/cms-form`).
+*   The system extension EXT:form (:composer:`typo3/cms-form`). The site
+    set `jweiland/clubdirectory` depends on its site set `typo3/form`.
 *   EXT:maps2 12.3 or newer. It provides the form element
     `Maps2PoiPosition`, which shows a map with a draggable marker. The
     site set `jweiland/clubdirectory` depends on the site set
@@ -240,9 +241,12 @@ logged-in frontend user.
 Mail of the club form
 =====================
 
-The finisher `EmailToReceiver` uses the templates
+The finisher `EmailToReceiver` of the club form uses the templates
 :file:`EXT:clubdirectory/Resources/Private/FormFramework/Templates/Finishers/Email/Default.html`
-and :file:`Default.txt`. They contain the links to edit and to activate
+and :file:`Default.txt`. They are configured with the options
+`templateName` and `templateRootPaths` of the finisher in
+:file:`NewClub.form.yaml`, not in the prototype of EXT:form. So the mails
+of all other forms of the installation keep their templates. They contain the links to edit and to activate
 the club with the moderation token and all values of the form. Rich text
 elements are rendered with the `FormatRichTextViewHelper`, see
 :ref:`frontend-rich-text-editor-mail`.

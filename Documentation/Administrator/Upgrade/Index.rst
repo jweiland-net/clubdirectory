@@ -22,7 +22,8 @@ Please go through all steps below.
 New requirements
 ----------------
 
-*   EXT:form (:composer:`typo3/cms-form`) is required.
+*   EXT:form (:composer:`typo3/cms-form`) is required. The site set
+    `jweiland/clubdirectory` depends on the site set `typo3/form`.
 *   maps2 12.3.0 or newer is required. It provides the form element
     `Maps2PoiPosition` of the map step.
 *   The site set `jweiland/clubdirectory` depends on the site set

@@ -27,10 +27,13 @@ use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
 use TYPO3\CMS\Core\TypoScript\FrontendTypoScript;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
 use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Form\Domain\Configuration\ConfigurationService;
+use TYPO3\CMS\Form\Domain\Finishers\EmailFinisher;
 use TYPO3\CMS\Form\Domain\Model\FormDefinition;
 use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
 use TYPO3\CMS\Form\Domain\Runtime\FormState;
@@ -178,6 +181,46 @@ class NewClubFormTest extends FunctionalTestCase
             'richText',
             $formDefinition->getElementByIdentifier('description')?->getProperties()['dbMapping']['dataType'],
         );
+    }
+
+    /**
+     * The mail templates of the club form must not change the mails of other
+     * forms of the installation. So the prototype keeps the templates of
+     * EXT:form.
+     */
+    #[Test]
+    public function formSetupKeepsMailTemplatesOfPrototype(): void
+    {
+        $this->setUserAspects($this->get(Context::class), self::OWNER);
+        $this->buildForm($this->createFormRequest());
+
+        $emailFinisherDefinition = GeneralUtility::makeInstance(ConfigurationService::class)
+            ->getPrototypeConfiguration('standard')['finishersDefinition']['EmailToReceiver'];
+
+        self::assertSame('Default', $emailFinisherDefinition['options']['templateName']);
+        foreach ($emailFinisherDefinition['options']['templateRootPaths'] as $templateRootPath) {
+            self::assertStringStartsWith('EXT:form/', $templateRootPath);
+        }
+    }
+
+    #[Test]
+    public function emailFinisherOfClubFormUsesMailTemplatesOfClubdirectory(): void
+    {
+        $this->setUserAspects($this->get(Context::class), self::OWNER);
+        $formDefinition = $this->buildForm($this->createFormRequest());
+
+        $emailFinishers = array_values(array_filter(
+            $formDefinition->getFinishers(),
+            static fn(object $finisher): bool => $finisher instanceof EmailFinisher,
+        ));
+        self::assertCount(1, $emailFinishers);
+        $options = (new \ReflectionProperty(EmailFinisher::class, 'options'))->getValue($emailFinishers[0]);
+
+        self::assertSame(
+            'EXT:clubdirectory/Resources/Private/FormFramework/Templates/Finishers/Email/',
+            $options['templateRootPaths'][1763337600],
+        );
+        self::assertArrayHasKey(10, $options['templateRootPaths']);
     }
 
     /**
