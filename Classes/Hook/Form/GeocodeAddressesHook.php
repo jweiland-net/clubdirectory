@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Hook\Form;
 
+use JWeiland\Clubdirectory\Domain\Validator\GeocodingFailureValidator;
 use JWeiland\Clubdirectory\Form\FormOwner;
 use JWeiland\Clubdirectory\Helper\GeocodingFailure;
 use JWeiland\Clubdirectory\Service\GeocodingService;
@@ -215,7 +216,7 @@ final readonly class GeocodeAddressesHook
             }
 
             $labelPrefix = $failure->getLabelPrefix();
-            $element->createValidator('GeocodingFailure', [
+            $element->createValidator(GeocodingFailureValidator::IDENTIFIER, [
                 'message' => LocalizationUtility::translate($labelPrefix . 'title', 'clubdirectory') . ': '
                     . LocalizationUtility::translate($labelPrefix . 'body', 'clubdirectory', [$failure->address]),
             ]);

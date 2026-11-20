@@ -79,7 +79,7 @@ trait ClubFormTestTrait
                 'Maps2PoiPosition' => $genericElement,
             ],
             'validatorsDefinition' => [
-                'GeocodingFailure' => ['implementationClassName' => GeocodingFailureValidator::class],
+                GeocodingFailureValidator::IDENTIFIER => ['implementationClassName' => GeocodingFailureValidator::class],
             ],
         ]);
 

@@ -21,6 +21,11 @@ use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 final class GeocodingFailureValidator extends AbstractValidator
 {
     /**
+     * Identifier of the validator in the prototype of EXT:form
+     */
+    public const IDENTIFIER = 'ClubdirectoryGeocodingFailure';
+
+    /**
      * The value of the element is not relevant. The validator has to fail always.
      *
      * @var bool
