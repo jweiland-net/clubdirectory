@@ -2,10 +2,10 @@
       xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<div class="media mb-3">
+<div class="d-flex mb-3">
     <f:if condition="{club.logo.0}">
         <f:image image="{club.logo.0}"
-                 class="mr-3"
+                 class="flex-shrink-0 me-3"
                  alt="{club.title}"
                  width="{settings.show.logo.width}"
                  height="{settings.show.logo.height}"
@@ -15,7 +15,7 @@
                  maxHeight="{settings.show.logo.maxHeight}"
         />
     </f:if>
-    <div class="media-body">
+    <div class="flex-grow-1">
         <h2 class="mt-0">{club.title}</h2>
         <f:if condition="{club.activity}">
             <p class="lead">
@@ -40,7 +40,7 @@
 
     <f:if condition="{club.email}">
         <div>
-            <svg class="bi bi-envelope" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor"
+            <svg class="bi bi-envelope me-1" aria-hidden="true" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
                       d="M16 5H4a1 1 0 00-1 1v8a1 1 0 001 1h12a1 1 0 001-1V6a1 1 0 00-1-1zM4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4z"
@@ -58,7 +58,7 @@
     <f:variable name="websiteUri" value="{f:uri.typolink(parameter: club.website)}"/>
     <f:if condition="{websiteUri}">
         <div>
-            <svg class="bi bi-house" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor"
+            <svg class="bi bi-house me-1" aria-hidden="true" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
                       d="M9.646 3.146a.5.5 0 01.708 0l6 6a.5.5 0 01.146.354v7a.5.5 0 01-.5.5h-4.5a.5.5 0 01-.5-.5v-4H9v4a.5.5 0 01-.5.5H4a.5.5 0 01-.5-.5v-7a.5.5 0 01.146-.354l6-6zM4.5 9.707V16H8v-4a.5.5 0 01.5-.5h3a.5.5 0 01.5.5v4h3.5V9.707l-5.5-5.5-5.5 5.5z"
@@ -108,25 +108,28 @@
 </div>
 
 <f:section name="renderImages">
-    <div class="card-deck">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3">
         <f:for each="{club.images}" as="extbaseResource" iteration="iterator">
             <f:variable name="image" value="{extbaseResource.originalResource}"/>
-            <div class="card">
-                <f:image image="{image}"
-                         alt="{image.alternative}"
-                         width="{settings.show.image.width}"
-                         height="{settings.show.image.height}"
-                />
-                <f:if condition="{image.title} || {image.description}">
-                    <div class="card-body">
-                        <f:if condition="{image.title}">
-                            <h5 class="card-title">{image.title}</h5>
-                        </f:if>
-                        <f:if condition="{image.description}">
-                            <p class="card-text">{image.description}</p>
-                        </f:if>
-                    </div>
-                </f:if>
+            <div class="col">
+                <div class="card h-100">
+                    <f:image image="{image}"
+                             class="card-img-top img-fluid"
+                             alt="{image.alternative}"
+                             width="{settings.show.image.width}"
+                             height="{settings.show.image.height}"
+                    />
+                    <f:if condition="{image.title} || {image.description}">
+                        <div class="card-body">
+                            <f:if condition="{image.title}">
+                                <h5 class="card-title">{image.title}</h5>
+                            </f:if>
+                            <f:if condition="{image.description}">
+                                <p class="card-text">{image.description}</p>
+                            </f:if>
+                        </div>
+                    </f:if>
+                </div>
             </div>
         </f:for>
     </div>
@@ -146,7 +149,7 @@
     <f:variable name="typolinkUri" value="{f:uri.typolink(parameter: uri)}"/>
     <f:if condition="{typolinkUri}">
         <div>
-            <svg class="bi bi-cloud" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor"
+            <svg class="bi bi-cloud me-1" aria-hidden="true" width="1em" height="1em" viewBox="0 0 20 20" fill="currentColor"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
                       d="M6.887 9.2l-.964-.165A2.5 2.5 0 105.5 14h10a1.5 1.5 0 00.237-2.982l-1.038-.164.216-1.028a4 4 0 10-7.843-1.587l-.185.96zm9.084.341a5 5 0 00-9.88-1.492A3.5 3.5 0 105.5 15h9.999a2.5 2.5 0 00.394-4.968c.033-.16.06-.324.077-.49z"

@@ -87,6 +87,18 @@ class ClubControllerTest extends FunctionalTestCase
         self::assertStringContainsString('Swimming club', (string)$response->getBody());
     }
 
+    #[Test]
+    public function showActionRendersMarkupOfBootstrap5(): void
+    {
+        $body = (string)$this->requestShowAction(1)->getBody();
+
+        self::assertStringContainsString('<div class="d-flex mb-3">', $body);
+        self::assertStringContainsString('<div class="flex-grow-1">', $body);
+        foreach (['media-body', 'class="media', 'mr-3', 'card-deck', 'icon-arrowright'] as $legacyClass) {
+            self::assertStringNotContainsString($legacyClass, $body);
+        }
+    }
+
     public static function unavailableClubDataProvider(): array
     {
         return [

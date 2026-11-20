@@ -2,12 +2,12 @@
       xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<nav class="nav flex-column">
+<div class="tx-clubdirectory-list">
     <f:for each="{clubs}" as="club">
-        <div class="media mb-3">
+        <div class="d-flex mb-3">
             <f:if condition="{club.logo.0}">
                 <f:image image="{club.logo.0}"
-                         class="mr-3"
+                         class="flex-shrink-0 me-3"
                          alt="{club.title}"
                          width="{settings.list.image.width}"
                          height="{settings.list.image.height}"
@@ -17,7 +17,7 @@
                          maxHeight="{settings.list.image.maxHeight}"
                 />
             </f:if>
-            <div class="media-body">
+            <div class="flex-grow-1">
                 <h5 class="mt-0">
                     <f:link.action
                         action="show"
@@ -38,5 +38,5 @@
     </f:for>
     <f:render partial="Component/Pagination"
               arguments="{pagination: pagination, paginator: paginator, actionName: actionName}"/>
-</nav>
+</div>
 </html>
