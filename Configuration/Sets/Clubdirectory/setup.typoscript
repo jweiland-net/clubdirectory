@@ -64,6 +64,8 @@ plugin.tx_clubdirectory {
         enable = {$clubdirectory.form.richText.enable}
         # Comma separated identifiers of form elements
         elements = {$clubdirectory.form.richText.elements}
+        # Folder with the translations of CKEditor
+        translationsPath = {$clubdirectory.form.richText.translationsPath}
       }
     }
 

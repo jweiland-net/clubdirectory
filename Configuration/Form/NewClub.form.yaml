@@ -5,6 +5,10 @@ prototypeName: standard
 renderingOptions:
   submitButtonLabel: Submit
   templateVariant: version2
+  # Partials of this form only, e.g. of the rich text editor. Add an own
+  # path with a higher key to override them.
+  partialRootPaths:
+    1763337600: 'EXT:clubdirectory/Resources/Private/FormFramework/Partials/'
   # Translations of this form only. Do not register them in the prototype,
   # as the keys "element.<identifier>..." would translate other forms, too.
   translation:

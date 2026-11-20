@@ -3,4 +3,5 @@
 plugin.tx_clubdirectory.settings.new.richText {
   enable = 1
   elements = description
+  translationsPath = EXT:rte_ckeditor/Resources/Public/Contrib/translations/
 }

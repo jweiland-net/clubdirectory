@@ -121,6 +121,16 @@ class ClubFormRichTextEditorTest extends FunctionalTestCase
     }
 
     #[Test]
+    public function richTextElementLoadsAssetsOfPartial(): void
+    {
+        $content = $this->renderClubForm();
+
+        self::assertStringContainsString('@jweiland/clubdirectory/rich-text-editor.js', $content);
+        self::assertMatchesRegularExpression('#<link[^>]*rte_ckeditor/Resources/Public/Css/editor\.css#', $content);
+        self::assertMatchesRegularExpression('#<link[^>]*clubdirectory/Resources/Public/Css/RichTextEditor\.css#', $content);
+    }
+
+    #[Test]
     public function activityIsPlainTextarea(): void
     {
         $content = $this->renderClubForm();

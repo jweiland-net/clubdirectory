@@ -73,6 +73,18 @@ The following settings are provided by the site set
         text editor. Elements with :yaml:`dataType: richText` in their
         :yaml:`dbMapping` get the editor, too.
 
+    ..  confval:: clubdirectory.form.richText.translationsPath
+        :name: site-setting-form-richtext-translationspath
+        :type: string
+        :default: `EXT:rte_ckeditor/Resources/Public/Contrib/translations/`
+
+        Folder with the translations of the user interface of CKEditor 5,
+        e.g. :file:`de.js`. The translation of the language of the current
+        site is loaded, if it exists. Leave it empty to use the English user
+        interface only. The property
+        :yaml:`properties.richTextEditor.translationsPath` of a form element
+        takes precedence.
+
 ..  _frontend-rich-text-editor-enable:
 
 Enable the frontend rich text editor
@@ -121,6 +133,14 @@ automatically:
 *   The mapping of the element in the `SaveClubFinisher` gets
     :yaml:`sanitizeRichText: true` (instead of
     :yaml:`convertPlainTextToHtml` or :yaml:`normalizePlainText`).
+*   The element is rendered with the partial
+    :file:`RichTextEditor/Textarea.html`
+    (:yaml:`renderingOptions.templateName`), which loads the assets of the
+    editor, see :ref:`frontend-rich-text-editor-assets`. The element gets
+    the property :yaml:`richTextEditor.translationsPath` of the site
+    setting :confval:`clubdirectory.form.richText.translationsPath
+    <site-setting-form-richtext-translationspath>`. Values of the form
+    definition are kept.
 *   While rendering, the textarea gets the attribute
     :html:`data-clubdirectory-rich-text` with the options of the editor,
     including the allowed tags of its column (see
@@ -214,17 +234,51 @@ the identifier to the site setting:
 Loaded files of the frontend rich text editor
 =============================================
 
+Rich text elements are rendered with the partial
+:file:`EXT:clubdirectory/Resources/Private/FormFramework/Partials/RichTextEditor/Textarea.html`.
+It is based on the partial :file:`Textarea.html` of EXT:form and renders
+the partial :file:`RichTextEditor/LoadAssets.html`, which loads the
+assets with the ViewHelpers :html:`<f:asset.module>` and
+:html:`<f:asset.css>`:
+
+*   The ES module `@jweiland/clubdirectory/rich-text-editor.js`
+    (:file:`EXT:clubdirectory/Resources/Public/JavaScript/rich-text-editor.js`)
+    creates an editor for each textarea with the attribute
+    :html:`data-clubdirectory-rich-text`. It loads the UI translation of
+    the current site language from
+    :confval:`clubdirectory.form.richText.translationsPath
+    <site-setting-form-richtext-translationspath>`.
+*   The style sheets :file:`EXT:rte_ckeditor/Resources/Public/Css/editor.css`
+    (identifier `clubdirectory-ckeditor`) and
+    :file:`EXT:clubdirectory/Resources/Public/Css/RichTextEditor.css`
+    (identifier `clubdirectory-rich-text-editor`).
+
 The import map of the CKEditor modules is defined in
-:file:`EXT:clubdirectory/Configuration/JavaScriptModules.php` and rendered by the
-:php:`PageRenderer` of TYPO3 (:html:`<script type="importmap">`,
-respecting the Content Security Policy of the site). The ES module
-:file:`EXT:clubdirectory/Resources/Public/JavaScript/rich-text-editor.js` creates
-an editor for each textarea with the attribute
-:html:`data-clubdirectory-rich-text`. It loads the UI translation of the current
-site language. The style sheets
-:file:`EXT:rte_ckeditor/Resources/Public/Css/editor.css` and
-:file:`EXT:clubdirectory/Resources/Public/Css/RichTextEditor.css` are added with
-the :php:`AssetCollector`.
+:file:`EXT:clubdirectory/Configuration/JavaScriptModules.php` and rendered
+by the :php:`PageRenderer` of TYPO3 (:html:`<script type="importmap">`,
+respecting the Content Security Policy of the site).
+
+..  _frontend-rich-text-editor-assets-override:
+
+Override the files of the frontend rich text editor
+---------------------------------------------------
+
+The partial root path of clubdirectory is set in :file:`NewClub.form.yaml`
+for the club form only (key `1763337600`). To load own files, copy
+:file:`RichTextEditor/LoadAssets.html` into your site package and add
+your partial root path with a higher key, either in your copy of the form
+definition or with TypoScript:
+
+..  code-block:: typoscript
+    :caption: EXT:my_sitepackage/Configuration/Sets/MySitepackage/setup.typoscript
+
+    plugin.tx_clubdirectory.settings.overrideForm {
+      renderingOptions.partialRootPaths.1800000000 = EXT:my_sitepackage/Resources/Private/FormFramework/Partials/
+    }
+
+To render a single element with another partial, set
+:yaml:`renderingOptions.templateName` of the element in your copy of the
+form definition.
 
 The files are about 1.6 MB uncompressed and about 400 KB compressed with
 gzip.
