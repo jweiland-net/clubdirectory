@@ -244,14 +244,21 @@ Mail of the club form
 =====================
 
 The finisher `EmailToReceiver` of the club form uses the templates
-:file:`EXT:clubdirectory/Resources/Private/FormFramework/Templates/Finishers/Email/Default.html`
-and :file:`Default.txt`. They are configured with the options
-`templateName` and `templateRootPaths` of the finisher in
+:file:`EXT:clubdirectory/Resources/Private/FormFramework/Templates/Finishers/Email/ClubModeration.html`
+and :file:`ClubModeration.txt`. They are configured with the options
+`templateName: ClubModeration` and `templateRootPaths` of the finisher in
 :file:`NewClub.form.yaml`, not in the prototype of EXT:form. So the mails
-of all other forms of the installation keep their templates. They contain the links to edit and to activate
-the club with the moderation token and all values of the form. Rich text
-elements are rendered with the `FormatRichTextViewHelper`, see
+of all other forms of the installation keep their templates.
+
+The templates contain the links to edit and to activate the club with the
+moderation token and all values of the form. Rich text elements are
+rendered with the `FormatRichTextViewHelper`, see
 :ref:`frontend-rich-text-editor-mail`.
+
+To override the templates, copy :file:`ClubModeration.html` and
+:file:`ClubModeration.txt` into your site package and add their folder to
+`templateRootPaths` of the finisher in your copy of
+:file:`NewClub.form.yaml` with a key higher than `1763337600`.
 
 If you override the templates, keep the argument `moderationToken` of both
 links. The token is available as

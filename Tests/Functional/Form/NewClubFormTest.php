@@ -281,6 +281,7 @@ class NewClubFormTest extends FunctionalTestCase
             'EXT:clubdirectory/Resources/Private/FormFramework/Templates/Finishers/Email/',
             $options['templateRootPaths'][1763337600],
         );
+        self::assertSame('ClubModeration', $options['templateName']);
         self::assertArrayHasKey(10, $options['templateRootPaths']);
     }
 

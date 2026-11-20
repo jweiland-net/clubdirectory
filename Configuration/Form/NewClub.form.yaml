@@ -854,7 +854,7 @@ finishers:
       # The mail templates of the club form with the links to edit and to
       # activate the club. They are set here and not in the prototype, so
       # other forms of the installation keep their mail templates.
-      templateName: '{@format}.html'
+      templateName: ClubModeration
       templateRootPaths:
         1763337600: 'EXT:clubdirectory/Resources/Private/FormFramework/Templates/Finishers/Email/'
       # Sender and recipient are taken from the extension settings of

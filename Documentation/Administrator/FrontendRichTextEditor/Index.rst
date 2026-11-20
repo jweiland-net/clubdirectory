@@ -450,7 +450,7 @@ If you use your own mail templates, add the ViewHelper to them, see
 :ref:`club-form-mail`:
 
 ..  code-block:: html
-    :caption: EXT:my_sitepackage/Resources/Private/FormFramework/Templates/Finishers/Email/Default.html (excerpt)
+    :caption: EXT:my_sitepackage/Resources/Private/FormFramework/Templates/Finishers/Email/ClubModeration.html (excerpt)
 
     <c:formatRichText element="{formValue.element}" value="{formValue.processedValue}"/>
     <c:formatRichText element="{formValue.element}" value="{formValue.processedValue}" format="plaintext"/>
