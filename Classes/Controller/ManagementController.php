@@ -20,12 +20,11 @@ use JWeiland\Clubdirectory\Domain\Model\Club;
 use JWeiland\Clubdirectory\Service\ClubAccessService;
 use JWeiland\Clubdirectory\Service\ClubCacheService;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Http\PropagateResponseException;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Frontend\Controller\ErrorController;
 
 /**
  * Controller to let frontend users create, edit and manage their own clubs
@@ -43,7 +42,6 @@ class ManagementController extends ActionController
         protected ClubAccessService $clubAccessService,
         protected ClubCacheService $clubCacheService,
         protected PersistenceManagerInterface $persistenceManager,
-        protected ErrorController $errorController,
     ) {}
 
     public function listMyClubsAction(): ResponseInterface
@@ -80,13 +78,20 @@ class ManagementController extends ActionController
      * Mail security scanners and link previews open the links of a mail
      * automatically. So the activation link of the mail shows this summary
      * of the club only. Its form activates the club via POST.
+     * Without a valid "moderationToken" or for an active club, the moderator
+     * is redirected to the club list with a message.
      */
     #[Extbase\IgnoreValidation(['value' => 'club'])]
     public function confirmActivationAction(Club $club): ResponseInterface
     {
+        $moderationToken = $this->clubAccessService->getValidModerationToken($this->request, (int)$club->getUid());
+        if ($moderationToken === '' || !$club->getHidden()) {
+            return $this->redirectToClubList(...$this->getActivationError($moderationToken));
+        }
+
         $this->postProcessAndAssignFluidVariables([
             'club' => $club,
-            'moderationToken' => $this->clubAccessService->getValidModerationToken($this->request, (int)$club->getUid()),
+            'moderationToken' => $moderationToken,
         ]);
 
         return $this->htmlResponse();
@@ -98,17 +103,16 @@ class ManagementController extends ActionController
     }
 
     /**
-     * The club is activated via POST only. GET requests are redirected to
-     * the confirmation page.
+     * The club is activated via POST only. GET requests (e.g. activation
+     * links of former mails) are redirected to the confirmation page.
      * The action gets the club UID only, so no property of the club is
      * mapped, even if "__trustedProperties" of another form allow it.
      * Activation changes the "hidden" state only. The club is not validated,
      * so values saved in backend, which do not pass the validators of the
      * frontend form, do not prevent the activation.
-     *
-     * @throws PropagateResponseException
+     * The result is shown as flash message of the club list.
      */
-    public function activateAction(int $clubUid): ResponseInterface
+    public function activateAction(int $clubUid = 0): ResponseInterface
     {
         if ($this->request->getMethod() !== 'POST') {
             return $this->redirect('confirmActivation', null, null, [
@@ -117,32 +121,48 @@ class ManagementController extends ActionController
             ]);
         }
 
-        $club = $this->getClubToActivate($clubUid);
-        $club->setHidden(false);
-        $this->clubRepository->update($club);
-        $this->persistenceManager->persistAll();
-        $this->clubCacheService->flushCachesOfClub($clubUid);
+        $club = $this->clubRepository->findHiddenObject($clubUid);
+        $moderationToken = $club instanceof Club
+            ? $this->clubAccessService->getValidModerationToken($this->request, $clubUid)
+            : '';
+        if (!$club instanceof Club || $moderationToken === '' || !$club->getHidden()) {
+            return $this->redirectToClubList(...$this->getActivationError($moderationToken));
+        }
+
+        $this->activateClub($club);
 
         return $this->redirectToClubList(
             (string)LocalizationUtility::translate('clubActivated', 'clubdirectory'),
         );
     }
 
-    /**
-     * Unknown clubs result in the 404 error handling of the site
-     *
-     * @throws PropagateResponseException
-     */
-    protected function getClubToActivate(int $clubUid): Club
+    protected function activateClub(Club $club): void
     {
-        $club = $this->clubRepository->findHiddenObject($clubUid);
-        if (!$club instanceof Club) {
-            throw new PropagateResponseException(
-                $this->errorController->pageNotFoundAction($this->request, 'Club not found'),
-                1762358400,
-            );
+        $club->setHidden(false);
+        $this->clubRepository->update($club);
+        $this->persistenceManager->persistAll();
+        $this->clubCacheService->flushCachesOfClub((int)$club->getUid());
+    }
+
+    /**
+     * Without a valid token the club can not be activated. Owners never get
+     * a token, so they can not bypass the moderation. With a valid token the
+     * club is active already.
+     *
+     * @return array{0: string, 1: ContextualFeedbackSeverity}
+     */
+    protected function getActivationError(string $moderationToken): array
+    {
+        if ($moderationToken === '') {
+            return [
+                (string)LocalizationUtility::translate('activation.invalidToken', 'clubdirectory'),
+                ContextualFeedbackSeverity::ERROR,
+            ];
         }
 
-        return $club;
+        return [
+            (string)LocalizationUtility::translate('activation.alreadyActivated', 'clubdirectory'),
+            ContextualFeedbackSeverity::INFO,
+        ];
     }
 }

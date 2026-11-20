@@ -54,6 +54,15 @@ Management plugin
     adapted. Links in mails sent by former versions open the confirmation
     page and the club form, as long as the club was not changed since.
 *   Content elements of the plugin need no change.
+*   The actions `confirmActivation` and `activate` check the moderation
+    token on their own. An invalid or outdated token, a token of another
+    club or an owner without token do not end with the 403 error page
+    anymore. The administrator is redirected to the club list, which shows
+    an error message. An active club results in an information. The club
+    list renders the flash messages with :html:`<f:flashMessages/>` in
+    :file:`Templates/Club/List.html`. Keep it in your template override.
+    The new labels are `activation.invalidToken` and
+    `activation.alreadyActivated`.
 
 ..  _upgrade-10-0-0-templates:
 

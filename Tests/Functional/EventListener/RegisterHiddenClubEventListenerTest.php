@@ -18,7 +18,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Http\PropagateResponseException;
 use TYPO3\CMS\Extbase\Persistence\Generic\Session;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -75,23 +74,6 @@ class RegisterHiddenClubEventListenerTest extends FunctionalTestCase
         );
 
         self::assertTrue($this->isClubRegisteredInSession(self::HIDDEN_CLUB));
-    }
-
-    #[Test]
-    #[DataProvider('coveredActionDataProvider')]
-    public function dispatchWithDeniedAccessDoesNotRegisterHiddenClub(string $controllerName, string $actionName): void
-    {
-        $this->setUserAspects($this->get(Context::class), self::FOREIGN_USER);
-
-        try {
-            $this->get(EventDispatcherInterface::class)->dispatch(
-                $this->createEvent($controllerName, $actionName, ['club' => (string)self::HIDDEN_CLUB]),
-            );
-            self::fail('Access was granted, but PropagateResponseException was expected.');
-        } catch (PropagateResponseException) {
-        }
-
-        self::assertFalse($this->isClubRegisteredInSession(self::HIDDEN_CLUB));
     }
 
     #[Test]

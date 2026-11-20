@@ -65,7 +65,9 @@ Moderation flow
     of the club with a button. The club is activated after submitting this
     form only, so mail security scanners opening the link can not activate
     it. After the activation the administrator is redirected to the list
-    page, which shows a confirmation message.
+    page, which shows a confirmation message. If the link is invalid or
+    outdated, the list page shows an error message. If the club is active
+    already, it shows an information.
 
 The list page is not cached, while it shows such a message. The
 `Clubdirectory` plugin tags its cached list pages with
@@ -97,7 +99,9 @@ record:
 
 *   A club can be activated in frontend with a valid token only. Neither
     the owner nor a logged-in backend administrator can activate a club
-    without it.
+    without it. The actions `confirmActivation` and `activate` check the
+    token on their own. Without a valid token they redirect to the list
+    page, which shows an error message.
 
 *   As soon as the club is changed again, in frontend or backend, the
     `tstamp` changes and the links of all older mails stop working. Only
@@ -130,12 +134,15 @@ Access control and error pages
     (:html:`<f:security.ifHasRole>` in the partial
     :file:`Partials/Club/InsertEditLinks.html`). The list of the own clubs
     shows a message to all other users, that they have no access.
-*   The club form (action `perform`) and the activation require a
-    logged-in member of this usergroup or a valid moderation token. Access
-    is denied before the form is rendered. The finisher of the form checks
-    the access again before anything is stored. Additionally restrict the access of the management page to the
-    same usergroup in the page properties (field :guilabel:`Usergroup
-    Access Rights`).
+*   The club form (action `perform`) requires a logged-in member of this
+    usergroup or a valid moderation token. Access is denied before the form
+    is rendered. The finisher of the form checks the access again before
+    anything is stored. Additionally restrict the access of the management
+    page to the same usergroup in the page properties (field
+    :guilabel:`Usergroup Access Rights`).
+*   The activation (actions `confirmActivation` and `activate`) requires a
+    valid moderation token. Without it, the administrator is redirected to
+    the list page with an error message, see :ref:`moderation-mail-links`.
 *   Members of this usergroup are allowed to edit and update the clubs
     assigned to them only (field :guilabel:`Assign Frontend Users` of the
     club record). Backend administrators are allowed to edit and update
@@ -144,7 +151,8 @@ Access control and error pages
     the form action. Addresses and POI records are taken from this club.
     Values of select boxes and checkboxes are stored only, if they are an
     option of the form.
-*   All other requests stop with the 403 error handling of the site.
+*   All other requests to the club form stop with the 403 error handling
+    of the site.
 *   The detail view of a hidden, deleted or unknown club stops with the
     404 error handling of the site.
 

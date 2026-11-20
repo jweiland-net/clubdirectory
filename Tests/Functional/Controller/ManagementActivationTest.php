@@ -20,11 +20,14 @@ use TYPO3\CMS\Core\Utility\HttpUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\MvcPropertyMappingConfigurationService;
 use TYPO3\CMS\Frontend\Page\CacheHashCalculator;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
+use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequestContext;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * Mail security scanners open the activation link of the mail. So a GET
  * request must never activate a club, only the POST of the confirmation.
+ * Both actions check the moderation token on their own. The result is
+ * shown as flash message of the club list after the redirect.
  */
 class ManagementActivationTest extends FunctionalTestCase
 {
@@ -71,8 +74,12 @@ class ManagementActivationTest extends FunctionalTestCase
     /**
      * @param array<string, mixed> $pluginArguments
      */
-    private function requestAction(string $actionName, array $pluginArguments, string $method = 'GET'): ResponseInterface
-    {
+    private function requestAction(
+        string $actionName,
+        array $pluginArguments,
+        string $method = 'GET',
+        int $frontendUserUid = 0,
+    ): ResponseInterface {
         $queryParameters = [
             'id' => 1,
             self::PLUGIN_NAMESPACE . '[action]' => $actionName,
@@ -94,7 +101,12 @@ class ManagementActivationTest extends FunctionalTestCase
         $queryParameters['cHash'] = $this->get(CacheHashCalculator::class)
             ->generateForParameters(HttpUtility::buildQueryString($queryParameters));
 
-        return $this->executeFrontendSubRequest($request->withQueryParameters($queryParameters));
+        $context = new InternalRequestContext();
+        if ($frontendUserUid > 0) {
+            $context = $context->withFrontendUserId($frontendUserUid);
+        }
+
+        return $this->executeFrontendSubRequest($request->withQueryParameters($queryParameters), $context);
     }
 
     /**
@@ -173,6 +185,20 @@ class ManagementActivationTest extends FunctionalTestCase
         return (int)$hidden === 1;
     }
 
+    /**
+     * The flash messages of all sessions. They are stored in the session of
+     * the visitor, as the club list renders them after the redirect.
+     */
+    private function getFlashMessages(): string
+    {
+        $sessionData = $this->getConnectionPool()
+            ->getConnectionForTable('fe_sessions')
+            ->select(['ses_data'], 'fe_sessions')
+            ->fetchFirstColumn();
+
+        return implode('', array_map('strval', $sessionData));
+    }
+
     #[Test]
     public function getConfirmActivationShowsFormAndKeepsClubHidden(): void
     {
@@ -184,9 +210,43 @@ class ManagementActivationTest extends FunctionalTestCase
         self::assertSame(200, $response->getStatusCode());
         self::assertStringContainsString('Hidden club', $content);
         self::assertStringContainsString('method="post"', $content);
+        self::assertMatchesRegularExpression('/<input[^>]*type="submit"[^>]*value="Activate club"/', $content);
         self::assertStringContainsString('name="' . self::PLUGIN_NAMESPACE . '[clubUid]" value="' . self::HIDDEN_CLUB . '"', $content);
         self::assertStringContainsString('value="' . $arguments['moderationToken'] . '"', $content);
         self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
+    }
+
+    #[Test]
+    public function getConfirmActivationWithoutModerationTokenRedirectsWithError(): void
+    {
+        $content = (string)$this->requestAction('confirmActivation', ['club' => (string)self::HIDDEN_CLUB])->getBody();
+
+        self::assertStringNotContainsString('Activate club', $content);
+        self::assertStringContainsString('The club could not be activated', $this->getFlashMessages());
+        self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
+    }
+
+    #[Test]
+    public function getConfirmActivationWithInvalidModerationTokenRedirectsWithError(): void
+    {
+        $content = (string)$this->requestAction('confirmActivation', [
+            'club' => (string)self::HIDDEN_CLUB,
+            'moderationToken' => 'invalid',
+        ])->getBody();
+
+        self::assertStringNotContainsString('Activate club', $content);
+        self::assertStringContainsString('The club could not be activated', $this->getFlashMessages());
+    }
+
+    #[Test]
+    public function getConfirmActivationOfActiveClubRedirectsWithInfo(): void
+    {
+        $this->requestAction('confirmActivation', [
+            'club' => (string)self::VISIBLE_CLUB,
+            'moderationToken' => $this->get(ClubAccessService::class)->generateModerationToken(self::VISIBLE_CLUB),
+        ]);
+
+        self::assertStringContainsString('The club is activated already.', $this->getFlashMessages());
     }
 
     /**
@@ -199,23 +259,16 @@ class ManagementActivationTest extends FunctionalTestCase
         $this->requestAction('activate', $this->getActivationArguments());
 
         self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
+        self::assertStringNotContainsString('The club was activated', $this->getFlashMessages());
     }
 
     #[Test]
-    public function postActivateWithClubArgumentInsteadOfClubUidDeniesAccess(): void
-    {
-        $response = $this->requestAction('activate', $this->getActivationArguments('club'), 'POST');
-
-        self::assertSame(403, $response->getStatusCode());
-        self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
-    }
-
-    #[Test]
-    public function postActivateActivatesClub(): void
+    public function postActivateActivatesClubWithMessage(): void
     {
         $this->requestAction('activate', $this->getActivationArguments(), 'POST');
 
         self::assertFalse($this->isClubHidden(self::HIDDEN_CLUB));
+        self::assertStringContainsString('The club was activated and is now visible in frontend', $this->getFlashMessages());
     }
 
     /**
@@ -245,33 +298,70 @@ class ManagementActivationTest extends FunctionalTestCase
     }
 
     #[Test]
-    public function postActivateWithClubPropertiesAndInvalidModerationTokenDeniesAccess(): void
+    public function postActivateWithClubPropertiesAndInvalidModerationTokenKeepsClubHidden(): void
     {
         $clubProperties = $this->getClubProperties(self::HIDDEN_CLUB);
         $arguments = $this->getActivationArgumentsWithClubProperties();
         $arguments['moderationToken'] = 'invalid';
 
-        $response = $this->requestAction('activate', $arguments, 'POST');
+        $this->requestAction('activate', $arguments, 'POST');
 
-        self::assertSame(403, $response->getStatusCode());
         self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
         self::assertSame($clubProperties, $this->getClubProperties(self::HIDDEN_CLUB));
+        self::assertStringContainsString('The club could not be activated', $this->getFlashMessages());
     }
 
     #[Test]
-    public function postActivateWithoutModerationTokenDeniesAccess(): void
+    public function postActivateWithoutModerationTokenKeepsClubHiddenWithError(): void
     {
-        $response = $this->requestAction('activate', ['clubUid' => (string)self::HIDDEN_CLUB], 'POST');
+        $this->requestAction('activate', ['clubUid' => (string)self::HIDDEN_CLUB], 'POST');
 
-        self::assertSame(403, $response->getStatusCode());
         self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
+        self::assertStringContainsString('The club could not be activated', $this->getFlashMessages());
     }
 
     #[Test]
-    public function getConfirmActivationWithoutModerationTokenDeniesAccess(): void
+    public function postActivateWithModerationTokenOfOtherClubKeepsClubHiddenWithError(): void
     {
-        $response = $this->requestAction('confirmActivation', ['club' => (string)self::HIDDEN_CLUB]);
+        $this->requestAction('activate', [
+            'clubUid' => (string)self::HIDDEN_CLUB,
+            'moderationToken' => $this->get(ClubAccessService::class)->generateModerationToken(self::FOREIGN_CLUB),
+        ], 'POST');
 
-        self::assertSame(403, $response->getStatusCode());
+        self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
+        self::assertStringContainsString('The club could not be activated', $this->getFlashMessages());
+    }
+
+    /**
+     * Owners never get a token, so they can not bypass the moderation
+     */
+    #[Test]
+    public function postActivateByOwnerWithoutModerationTokenKeepsClubHiddenWithError(): void
+    {
+        $this->requestAction('activate', ['clubUid' => (string)self::HIDDEN_CLUB], 'POST', self::OWNER);
+
+        self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
+        self::assertStringContainsString('The club could not be activated', $this->getFlashMessages());
+    }
+
+    #[Test]
+    public function postActivateWithClubArgumentInsteadOfClubUidKeepsClubHiddenWithError(): void
+    {
+        $this->requestAction('activate', $this->getActivationArguments('club'), 'POST');
+
+        self::assertTrue($this->isClubHidden(self::HIDDEN_CLUB));
+        self::assertStringContainsString('The club could not be activated', $this->getFlashMessages());
+    }
+
+    #[Test]
+    public function postActivateOfActiveClubShowsInfo(): void
+    {
+        $this->requestAction('activate', [
+            'clubUid' => (string)self::VISIBLE_CLUB,
+            'moderationToken' => $this->get(ClubAccessService::class)->generateModerationToken(self::VISIBLE_CLUB),
+        ], 'POST');
+
+        self::assertFalse($this->isClubHidden(self::VISIBLE_CLUB));
+        self::assertStringContainsString('The club is activated already.', $this->getFlashMessages());
     }
 }

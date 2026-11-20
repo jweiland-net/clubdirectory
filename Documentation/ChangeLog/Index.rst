@@ -33,6 +33,12 @@ Features:
 *   [FEATURE] Render rich text elements in the HTML and the text part of
     the moderation mail
 
+Bugfixes:
+
+*   [BUGFIX] Check the moderation token of the activation in the
+    controller. Invalid tokens and active clubs redirect to the club list
+    with an error or information message instead of the 403 error page
+
 ..  _changelog-9-0-3:
 
 Version 9.0.3

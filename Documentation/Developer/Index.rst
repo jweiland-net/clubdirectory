@@ -96,11 +96,11 @@ or `after` one of them.
 
     *   -   `clubdirectory/restrictAccess`
         -   `PreProcessControllerActionEvent`
-        -   `Management`: perform, confirmActivation, activate. Allows the
-            access to the club for owners,
-            backend administrators and valid moderation tokens only. Stops
-            with the 403 error handling of the site otherwise. `activate`
-            gets the club UID as scalar argument `clubUid`. See
+        -   `Management`: perform. Allows the access to the club form for
+            members of the usergroup, owners, backend administrators and
+            valid moderation tokens only. Stops with the 403 error handling
+            of the site otherwise. The actions `confirmActivation` and
+            `activate` check the moderation token on their own. See
             :ref:`moderation-access`.
 
     *   -   `clubdirectory/register-hidden-club`

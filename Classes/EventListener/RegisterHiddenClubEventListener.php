@@ -23,9 +23,9 @@ use TYPO3\CMS\Core\Attribute\AsEventListener;
  * it for the confirmation page. The club form based on EXT:form reads the
  * club from the database on its own.
  *
- * This EventListener has to be executed after the RestrictAccessEventListener,
- * which stops the request on denied access, so that a hidden club will never
- * be registered for unauthorized users.
+ * The action "confirmActivation" checks the moderation token, before the
+ * club is shown. Without a valid token the moderator is redirected to the
+ * club list with a message.
  * Public actions like Club->show must never be listed here.
  */
 #[AsEventListener(
