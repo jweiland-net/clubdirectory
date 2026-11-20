@@ -846,6 +846,12 @@ finishers:
     options:
       subject: 'A club record was created or updated'
       useFluidEmail: 1
+      # The mail templates of the club form with the links to edit and to
+      # activate the club. They are set here and not in the prototype, so
+      # other forms of the installation keep their mail templates.
+      templateName: '{@format}.html'
+      templateRootPaths:
+        1763337600: 'EXT:clubdirectory/Resources/Private/FormFramework/Templates/Finishers/Email/'
       # Sender and recipient are taken from the extension settings of
       # clubdirectory by ArrayFormFactory, if they are not set here.
       #recipients:

@@ -13,3 +13,7 @@
 "tx_maps2_domain_model_poicollection",,,,,,,
 ,"uid","pid","title","collection_type","latitude","longitude","address"
 ,11,1,"Swimming club","Point",47.9,7.8,"Main street 1, 79100 Freiburg"
+"fe_groups",,,
+,"uid","pid","title"
+,1,1,"Club owners"
+,2,1,"Other group"

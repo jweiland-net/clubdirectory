@@ -1,0 +1,6 @@
+# Frontend configuration of EXT:form of the site set typo3/form
+@import 'EXT:form/Configuration/TypoScript/setup.typoscript'
+@import 'EXT:clubdirectory/Tests/Functional/Fixtures/Frontend/Management.typoscript'
+
+# The form element "Maps2PoiPosition" of the site set jweiland/maps2-default
+plugin.tx_form.settings.yamlConfigurations.1763380200 = EXT:maps2/Configuration/Form/FormSetup.yaml
