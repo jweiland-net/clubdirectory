@@ -31,6 +31,34 @@
         <source>Glossary2</source>
         <target>crwdns418667:0crwdne418667:0</target>
       </trans-unit>
+      <trans-unit id="categories.clubdirectory.form">
+        <source>Club form</source>
+        <target>crwdns420245:0crwdne420245:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.form.richText.enable">
+        <source>Enable rich text editor</source>
+        <target>crwdns420247:0crwdne420247:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.form.richText.enable">
+        <source>Use CKEditor 5 of EXT:rte_ckeditor for the rich text elements of the club form based on EXT:form. Requires EXT:rte_ckeditor.</source>
+        <target>crwdns420249:0crwdne420249:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.form.richText.elements">
+        <source>Rich text elements</source>
+        <target>crwdns420251:0crwdne420251:0</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.form.richText.translationsPath">
+        <source>Translations of the rich text editor</source>
+        <target>crwdns420253:0crwdne420253:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.form.richText.translationsPath">
+        <source>Folder with the translations of CKEditor 5 (e.g. de.js). Empty: English user interface only.</source>
+        <target>crwdns420255:0crwdne420255:0</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.form.richText.elements">
+        <source>Comma separated identifiers of form elements, which get the rich text editor. Elements with "dataType: richText" in the form definition get it, too.</source>
+        <target>crwdns420257:0crwdne420257:0</target>
+      </trans-unit>
       <trans-unit id="settings.clubdirectory.templateRootPath">
         <source>Templates</source>
         <target>crwdns418669:0crwdne418669:0</target>
