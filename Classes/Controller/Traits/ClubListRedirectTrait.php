@@ -29,11 +29,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 trait ClubListRedirectTrait
 {
-    protected function redirectToClubList(string $flashMessage = ''): ResponseInterface
-    {
+    protected function redirectToClubList(
+        string $flashMessage = '',
+        ContextualFeedbackSeverity $severity = ContextualFeedbackSeverity::OK,
+    ): ResponseInterface {
         if ($flashMessage !== '') {
             $this->getFlashMessageQueue(ClubController::FLASH_MESSAGE_QUEUE_IDENTIFIER)->enqueue(
-                GeneralUtility::makeInstance(FlashMessage::class, $flashMessage, '', ContextualFeedbackSeverity::OK, true),
+                GeneralUtility::makeInstance(FlashMessage::class, $flashMessage, '', $severity, true),
             );
         }
 

@@ -212,6 +212,12 @@
 			<trans-unit id="richText.openInNewTab">
 				<source>Open in a new tab</source>
 			</trans-unit>
+			<trans-unit id="activation.alreadyActivated">
+				<source>The club is activated already.</source>
+			</trans-unit>
+			<trans-unit id="activation.invalidToken">
+				<source>The club could not be activated. The link is invalid, outdated or the club does not exist anymore.</source>
+			</trans-unit>
 			<trans-unit id="confirmActivation.header">
 				<source>Activate club</source>
 			</trans-unit>

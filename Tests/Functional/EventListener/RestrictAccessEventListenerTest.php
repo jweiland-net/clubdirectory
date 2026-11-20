@@ -195,32 +195,6 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
         ]));
     }
 
-    public static function actionWithoutClubDataProvider(): array
-    {
-        return [
-            'Management confirmActivation' => ['Management', 'confirmActivation'],
-            'Management activate' => ['Management', 'activate'],
-        ];
-    }
-
-    #[Test]
-    #[DataProvider('actionWithoutClubDataProvider')]
-    public function restrictedActionWithoutClubDeniesAccess(string $controllerName, string $actionName): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessDenied($this->createEvent($controllerName, $actionName));
-    }
-
-    #[Test]
-    #[DataProvider('actionWithoutClubDataProvider')]
-    public function restrictedActionWithNewClubDeniesAccess(string $controllerName, string $actionName): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessDenied($this->createEvent($controllerName, $actionName, ['club' => ['title' => 'New club']]));
-    }
-
     public static function unrestrictedActionDataProvider(): array
     {
         return [
@@ -228,6 +202,9 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
             'Club list' => ['Club', 'list'],
             'Club show' => ['Club', 'show'],
             'Search show' => ['Search', 'show'],
+            // Both actions check the moderation token on their own
+            'Management confirmActivation' => ['Management', 'confirmActivation'],
+            'Management activate' => ['Management', 'activate'],
             'Management new (removed)' => ['Management', 'new'],
             'Management edit (removed)' => ['Management', 'edit'],
             'Map new (removed)' => ['Map', 'new'],
@@ -328,134 +305,6 @@ class RestrictAccessEventListenerTest extends FunctionalTestCase
 
         $this->assertAccessGranted($this->createEvent($controllerName, $actionName, [
             'club' => (string)self::HIDDEN_CLUB,
-            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
-        ]));
-    }
-
-    #[Test]
-    public function confirmActivationWithOwnerAndWithoutModerationTokenDeniesAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'confirmActivation', ['club' => (string)self::HIDDEN_CLUB]));
-    }
-
-    #[Test]
-    public function confirmActivationWithBackendAdminAndWithoutModerationTokenDeniesAccess(): void
-    {
-        $this->loginUser(0, true);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'confirmActivation', ['club' => (string)self::HIDDEN_CLUB]));
-    }
-
-    #[Test]
-    public function confirmActivationWithValidModerationTokenAndWithoutLoginGrantsAccess(): void
-    {
-        $this->loginUser();
-
-        $this->assertAccessGranted($this->createEvent('Management', 'confirmActivation', [
-            'club' => (string)self::HIDDEN_CLUB,
-            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
-        ]));
-    }
-
-    #[Test]
-    public function activateWithOwnerAndWithoutModerationTokenDeniesAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'activate', ['clubUid' => (string)self::HIDDEN_CLUB]));
-    }
-
-    #[Test]
-    public function activateWithValidModerationTokenAndWithoutLoginGrantsAccess(): void
-    {
-        $this->loginUser();
-
-        $this->assertAccessGranted($this->createEvent('Management', 'activate', [
-            'clubUid' => (string)self::HIDDEN_CLUB,
-            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
-        ]));
-    }
-
-    #[Test]
-    public function activateWithTamperedModerationTokenDeniesAccess(): void
-    {
-        $this->loginUser();
-        $token = $this->getModerationToken(self::HIDDEN_CLUB);
-        $tamperedToken = substr($token, 0, -1) . ($token[-1] === 'a' ? 'b' : 'a');
-
-        $this->assertAccessDenied($this->createEvent('Management', 'activate', [
-            'clubUid' => (string)self::HIDDEN_CLUB,
-            'moderationToken' => $tamperedToken,
-        ]));
-    }
-
-    #[Test]
-    public function activateWithModerationTokenOfOutdatedMailDeniesAccess(): void
-    {
-        $this->loginUser();
-        $token = $this->getModerationToken(self::HIDDEN_CLUB);
-
-        // The club was updated again after the mail with this token was sent
-        $this->getConnectionPool()
-            ->getConnectionForTable('tx_clubdirectory_domain_model_club')
-            ->update('tx_clubdirectory_domain_model_club', ['tstamp' => 1762000001], ['uid' => self::HIDDEN_CLUB]);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'activate', [
-            'clubUid' => (string)self::HIDDEN_CLUB,
-            'moderationToken' => $token,
-        ]));
-    }
-
-    #[Test]
-    public function activateWithModerationTokenOfAnotherClubDeniesAccess(): void
-    {
-        $this->loginUser(self::OWNER);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'activate', [
-            'clubUid' => (string)self::HIDDEN_CLUB,
-            'moderationToken' => $this->getModerationToken(self::VISIBLE_CLUB),
-        ]));
-    }
-
-    #[Test]
-    public function activateWithBackendAdminAndWithoutModerationTokenDeniesAccess(): void
-    {
-        $this->loginUser(0, true);
-
-        $this->assertAccessDenied($this->createEvent('Management', 'activate', ['clubUid' => (string)self::HIDDEN_CLUB]));
-    }
-
-    #[Test]
-    public function activateWithBackendAdminAndValidModerationTokenGrantsAccess(): void
-    {
-        $this->loginUser(0, true);
-
-        $this->assertAccessGranted($this->createEvent('Management', 'activate', [
-            'clubUid' => (string)self::HIDDEN_CLUB,
-            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
-        ]));
-    }
-
-    #[Test]
-    public function activateWithClubArgumentInsteadOfClubUidDeniesAccess(): void
-    {
-        $this->loginUser();
-
-        $this->assertAccessDenied($this->createEvent('Management', 'activate', [
-            'club' => (string)self::HIDDEN_CLUB,
-            'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
-        ]));
-    }
-
-    #[Test]
-    public function activateWithArrayInClubUidDeniesAccess(): void
-    {
-        $this->loginUser();
-
-        $this->assertAccessDenied($this->createEvent('Management', 'activate', [
-            'clubUid' => ['__identity' => (string)self::HIDDEN_CLUB],
             'moderationToken' => $this->getModerationToken(self::HIDDEN_CLUB),
         ]));
     }
