@@ -7,7 +7,6 @@
  * LICENSE file that was distributed with this source code.
  */
 
-use JWeiland\Clubdirectory\Backend\Preview\ClubDirectoryPluginPreview;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
@@ -54,7 +53,3 @@ ExtensionUtility::registerPlugin(
     'plugins',
     'LLL:EXT:clubdirectory/Resources/Private/Language/locallang_db.xlf:plugin.search.description',
 );
-
-$GLOBALS['TCA']['tt_content']['types']['clubdirectory_clubdirectory']['previewRenderer'] = ClubDirectoryPluginPreview::class;
-$GLOBALS['TCA']['tt_content']['types']['clubdirectory_management']['previewRenderer'] = ClubDirectoryPluginPreview::class;
-$GLOBALS['TCA']['tt_content']['types']['clubdirectory_search']['previewRenderer'] = ClubDirectoryPluginPreview::class;

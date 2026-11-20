@@ -188,6 +188,11 @@ Removed classes and labels
 *   `MapController`, `ClubValidator`, `AddressTrait`, `MapHelper`,
     `MailHelper`, `ApplyUploadFolderEventListener` and
     `CheckFalUploadsEventListener` have been removed.
+*   The preview renderer `ClubDirectoryPluginPreview` has been removed.
+    The previews of all three plugins in the page module are the Fluid
+    template :file:`Resources/Private/Backend/PluginPreview/TableView.html`
+    of page TSconfig `mod.web_layout.tt_content.preview.[CType]`. Set an
+    own template per CType in your page TSconfig to change the preview.
 *   `GeocodingFailure` contains the address as string now and provides the
     label prefix of the error with `getLabelPrefix()`.
 *   `ClubAccessService::hasOnlyRecordsOfClub()`,

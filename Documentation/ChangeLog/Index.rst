@@ -45,6 +45,11 @@ Features:
 
 Bugfixes:
 
+*   [BUGFIX] Show a preview of the plugins Management and Search in the
+    page module. All three plugins show their translated title and
+    description, the Club Directory plugin its FlexForm settings with the
+    titles of category and district. The templates are set in page
+    TSconfig per CType, the broken `ClubDirectoryPluginPreview` is removed
 *   [BUGFIX] Check the moderation token of the activation in the
     controller. Invalid tokens and active clubs redirect to the club list
     with an error or information message instead of the 403 error page

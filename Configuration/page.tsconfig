@@ -1,6 +1,9 @@
 # To reduce interferences with FE layout we have moved all BE related stuff into "Backend" folder
 templates.jweiland/clubdirectory.1762436543 = jweiland/clubdirectory:Resources/Private/Backend
 
-# Add CType Preview
-mod.web_layout.tt_content.preview.clubdirectory_clubdirectory = EXT:clubdirectory/Resources/Private/Backend/PluginPreview/TableView.html
-
+# Templates of the plugin previews in the page module. Replace them per CType in your own page TSconfig.
+mod.web_layout.tt_content.preview {
+  clubdirectory_clubdirectory = EXT:clubdirectory/Resources/Private/Backend/PluginPreview/TableView.html
+  clubdirectory_management = EXT:clubdirectory/Resources/Private/Backend/PluginPreview/TableView.html
+  clubdirectory_search = EXT:clubdirectory/Resources/Private/Backend/PluginPreview/TableView.html
+}
