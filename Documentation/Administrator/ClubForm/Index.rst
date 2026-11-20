@@ -78,6 +78,35 @@ the consent of the visitor before data is sent to the map provider. The
 geocoding of the addresses is done on the server and does not need this
 consent. See the documentation of maps2 for the element.
 
+..  _club-form-markup:
+
+Markup of the club form
+=======================
+
+The club form renders the markup of Bootstrap 5. It uses the template
+variant `version2` of EXT:form, which sets classes like `form-control`,
+`form-select`, `form-label`, `form-check-input` and `mb-3`. Fields with
+validation errors get the class `is-invalid`, the error messages are
+rendered with `invalid-feedback`. The navigation buttons are rendered by
+the partial of EXT:form.
+
+:file:`NewClub.form.yaml` activates the template variant:
+
+..  code-block:: yaml
+    :caption: EXT:clubdirectory/Configuration/Form/NewClub.form.yaml (excerpt)
+
+    renderingOptions:
+      submitButtonLabel: Submit
+      templateVariant: version2
+
+Keep this option in an own copy of the form definition. clubdirectory
+ships no own partials of EXT:form. The form element `Maps2PoiPosition`
+brings its partials with the form setup of maps2.
+
+The description of an element (:yaml:`properties.elementDescription`) is
+shown as text with the class `form-text` directly below the field and is
+referenced by `aria-describedby` of the field.
+
 ..  _club-form-edit:
 
 Edit a club

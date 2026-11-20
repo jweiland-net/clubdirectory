@@ -22,6 +22,10 @@ Breaking changes:
     `MapController` and the `CheckFalUploadsEventListener` have been
     removed. The rights checkbox of checkfaluploads 6 can be added to the
     upload elements of the club form, see :ref:`club-form-checkfaluploads`
+*   [!!!][TASK] Use the classes of Bootstrap 5 in all frontend templates
+    and partials, for example `d-flex`, `flex-grow-1`, `form-select`,
+    `img-fluid`, `row-cols-*` and `pagination`. The icon span of
+    `icon-arrowright` is removed. See :ref:`upgrade-10-0-0-bootstrap`
 
 Features:
 
