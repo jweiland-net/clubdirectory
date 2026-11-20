@@ -181,6 +181,9 @@
 				<source>No</source>
 			</trans-unit>
 
+			<trans-unit id="pageBrowser">
+				<source>Pagination</source>
+			</trans-unit>
 			<trans-unit id="pageBrowser.first">
 				<source>First</source>
 			</trans-unit>
