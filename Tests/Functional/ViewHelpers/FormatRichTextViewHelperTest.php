@@ -112,8 +112,8 @@ class FormatRichTextViewHelperTest extends FunctionalTestCase
     public static function mailTemplateDataProvider(): array
     {
         return [
-            'HTML part' => ['Default.html'],
-            'Text part' => ['Default.txt'],
+            'HTML part' => ['ClubModeration.html'],
+            'Text part' => ['ClubModeration.txt'],
         ];
     }
 

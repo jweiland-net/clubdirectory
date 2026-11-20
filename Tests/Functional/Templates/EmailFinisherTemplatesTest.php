@@ -35,8 +35,8 @@ class EmailFinisherTemplatesTest extends FunctionalTestCase
     public static function templateDataProvider(): array
     {
         return [
-            'HTML' => ['Default.html'],
-            'plain text' => ['Default.txt'],
+            'HTML' => ['ClubModeration.html'],
+            'plain text' => ['ClubModeration.txt'],
         ];
     }
 
