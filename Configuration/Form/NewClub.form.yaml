@@ -5,6 +5,11 @@ prototypeName: standard
 renderingOptions:
   submitButtonLabel: Submit
   templateVariant: version2
+  # Translations of this form only. Do not register them in the prototype,
+  # as the keys "element.<identifier>..." would translate other forms, too.
+  translation:
+    translationFiles:
+      1763337600: 'EXT:clubdirectory/Resources/Private/Language/locallang_ext_form.xlf'
 renderables:
   - type: Page
     identifier: club-data

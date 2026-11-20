@@ -7,14 +7,8 @@ TYPO3:
             SaveClubFinisher:
               implementationClassName: 'JWeiland\Clubdirectory\Domain\Finisher\SaveClubFinisher'
           validatorsDefinition:
-            GeocodingFailure:
+            ClubdirectoryGeocodingFailure:
               implementationClassName: 'JWeiland\Clubdirectory\Domain\Validator\GeocodingFailureValidator'
-          formElementsDefinition:
-            Form:
-              renderingOptions:
-                translation:
-                  translationFiles:
-                    1763337600: 'EXT:clubdirectory/Resources/Private/Language/locallang_ext_form.xlf'
       persistenceManager:
         allowedExtensionPaths:
           1763337600: EXT:clubdirectory/Configuration/Form/

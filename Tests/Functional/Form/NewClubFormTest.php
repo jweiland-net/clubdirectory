@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Tests\Functional\Form;
 
 use JWeiland\Clubdirectory\Domain\Factory\ArrayFormFactory;
+use JWeiland\Clubdirectory\Domain\Validator\GeocodingFailureValidator;
 use JWeiland\Clubdirectory\Form\FormOwner;
 use JWeiland\Clubdirectory\Hook\Form\RichTextEditorHook;
 use JWeiland\Clubdirectory\Tests\Functional\Traits\ClubAccessTestTrait;
@@ -211,6 +212,56 @@ class NewClubFormTest extends FunctionalTestCase
         foreach ($emailFinisherDefinition['options']['templateRootPaths'] as $templateRootPath) {
             self::assertStringStartsWith('EXT:form/', $templateRootPath);
         }
+    }
+
+    /**
+     * The keys "element.<identifier>..." of the translation file of the club
+     * form must not translate elements of other forms.
+     */
+    #[Test]
+    public function formSetupKeepsTranslationFilesOfPrototype(): void
+    {
+        $this->setUserAspects($this->get(Context::class), self::OWNER);
+        $this->buildForm($this->createFormRequest());
+
+        $translationFiles = GeneralUtility::makeInstance(ConfigurationService::class)
+            ->getPrototypeConfiguration('standard')['formElementsDefinition']['Form']['renderingOptions']['translation']['translationFiles'];
+
+        self::assertNotSame([], $translationFiles);
+        foreach ($translationFiles as $translationFile) {
+            self::assertStringStartsWith('EXT:form/', $translationFile);
+        }
+    }
+
+    #[Test]
+    public function clubFormRegistersOwnTranslationFile(): void
+    {
+        $this->setUserAspects($this->get(Context::class), self::OWNER);
+
+        $translationFiles = $this->buildForm($this->createFormRequest())
+            ->getRenderingOptions()['translation']['translationFiles'];
+
+        self::assertSame(
+            'EXT:clubdirectory/Resources/Private/Language/locallang_ext_form.xlf',
+            $translationFiles[1763337600],
+        );
+        self::assertArrayHasKey(10, $translationFiles);
+    }
+
+    #[Test]
+    public function formSetupRegistersValidatorWithIdentifierOfClubdirectory(): void
+    {
+        $this->setUserAspects($this->get(Context::class), self::OWNER);
+        $this->buildForm($this->createFormRequest());
+
+        $validatorsDefinition = GeneralUtility::makeInstance(ConfigurationService::class)
+            ->getPrototypeConfiguration('standard')['validatorsDefinition'];
+
+        self::assertSame(
+            GeocodingFailureValidator::class,
+            $validatorsDefinition[GeocodingFailureValidator::IDENTIFIER]['implementationClassName'],
+        );
+        self::assertArrayNotHasKey('GeocodingFailure', $validatorsDefinition);
     }
 
     #[Test]
