@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2013-04-58T08:30:58Z" product-name="clubdirectory" target-language="he">
+    <header/>
+    <body>
+      <trans-unit id="title.description">
+        <source>Which kind of address it belongs to?</source>
+        <target state="needs-translation">Which kind of address it belongs to?</target>
+      </trans-unit>
+      <trans-unit id="street.description">
+        <source>Type in the street name. Do not enter the house number.</source>
+        <target state="needs-translation">Type in the street name. Do not enter the house number.</target>
+      </trans-unit>
+      <trans-unit id="house_number.description">
+        <source>Just the house number</source>
+        <target state="needs-translation">Just the house number</target>
+      </trans-unit>
+      <trans-unit id="barrier_free.description">
+        <source>Does this address has a barrier free entry?</source>
+        <target state="needs-translation">Does this address has a barrier free entry?</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

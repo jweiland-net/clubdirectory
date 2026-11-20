@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2026-11-17T12:00:00Z" product-name="clubdirectory" target-language="t3">
+    <header/>
+    <body>
+      <trans-unit id="element.newClub.renderingOptions.submitButtonLabel">
+        <source>Submit</source>
+        <target>crwdns420053:0crwdne420053:0</target>
+      </trans-unit>
+      <trans-unit id="element.club-data.properties.label">
+        <source>Club data</source>
+        <target>crwdns420055:0crwdne420055:0</target>
+      </trans-unit>
+      <trans-unit id="element.club-data.renderingOptions.nextButtonLabel">
+        <source>Next page</source>
+        <target>crwdns420057:0crwdne420057:0</target>
+      </trans-unit>
+      <trans-unit id="element.title.properties.label">
+        <source>Title</source>
+        <target>crwdns420059:0crwdne420059:0</target>
+      </trans-unit>
+      <trans-unit id="element.title.properties.elementDescription">
+        <source>The title is mandatory</source>
+        <target>crwdns420061:0crwdne420061:0</target>
+      </trans-unit>
+      <trans-unit id="element.categories.properties.label">
+        <source>Categories</source>
+        <target>crwdns420063:0crwdne420063:0</target>
+      </trans-unit>
+      <trans-unit id="element.categories.properties.elementDescription">
+        <source>Please select the categories of the club.</source>
+        <target>crwdns420065:0crwdne420065:0</target>
+      </trans-unit>
+      <trans-unit id="element.activity.properties.label">
+        <source>Activity</source>
+        <target>crwdns420067:0crwdne420067:0</target>
+      </trans-unit>
+      <trans-unit id="element.activity.properties.elementDescription">
+        <source>Describe the activities/goals of the club.</source>
+        <target>crwdns420069:0crwdne420069:0</target>
+      </trans-unit>
+      <trans-unit id="element.description.properties.label">
+        <source>Description</source>
+        <target>crwdns420071:0crwdne420071:0</target>
+      </trans-unit>
+      <trans-unit id="element.description.properties.elementDescription">
+        <source>Further descriptions</source>
+        <target>crwdns420073:0crwdne420073:0</target>
+      </trans-unit>
+      <trans-unit id="element.contact-person.properties.label">
+        <source>Contact person</source>
+        <target>crwdns420075:0crwdne420075:0</target>
+      </trans-unit>
+      <trans-unit id="element.contact-person.properties.elementDescription">
+        <source>Enter the contact person of the club</source>
+        <target>crwdns420077:0crwdne420077:0</target>
+      </trans-unit>
+      <trans-unit id="element.contact-times.properties.label">
+        <source>Contact times</source>
+        <target>crwdns420079:0crwdne420079:0</target>
+      </trans-unit>
+      <trans-unit id="element.contact-times.properties.elementDescription">
+        <source>Specify the times when the contact person is available.</source>
+        <target>crwdns420081:0crwdne420081:0</target>
+      </trans-unit>
+      <trans-unit id="element.email.properties.label">
+        <source>Email</source>
+        <target>crwdns420083:0crwdne420083:0</target>
+      </trans-unit>
+      <trans-unit id="element.email.properties.elementDescription">
+        <source>Enter the email address of the club or contact person.</source>
+        <target>crwdns420085:0crwdne420085:0</target>
+      </trans-unit>
+      <trans-unit id="element.website.properties.label">
+        <source>Website</source>
+        <target>crwdns420087:0crwdne420087:0</target>
+      </trans-unit>
+      <trans-unit id="element.website.properties.elementDescription">
+        <source>If the club has a website, enter its complete address including https://.</source>
+        <target>crwdns420089:0crwdne420089:0</target>
+      </trans-unit>
+      <trans-unit id="element.members.properties.label">
+        <source>Members</source>
+        <target>crwdns420091:0crwdne420091:0</target>
+      </trans-unit>
+      <trans-unit id="element.members.properties.elementDescription">
+        <source>Enter the number of members of the club.</source>
+        <target>crwdns420093:0crwdne420093:0</target>
+      </trans-unit>
+      <trans-unit id="element.club-home.properties.label">
+        <source>Club home</source>
+        <target>crwdns420095:0crwdne420095:0</target>
+      </trans-unit>
+      <trans-unit id="element.club-home.properties.elementDescription">
+        <source>Enter the name of the clubhouse if it exists.</source>
+        <target>crwdns420097:0crwdne420097:0</target>
+      </trans-unit>
+      <trans-unit id="element.district.properties.label">
+        <source>District</source>
+        <target>crwdns420099:0crwdne420099:0</target>
+      </trans-unit>
+      <trans-unit id="element.district.properties.prependOptionLabel">
+        <source>Please choose</source>
+        <target>crwdns420101:0crwdne420101:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1.properties.label">
+        <source>Address 1</source>
+        <target>crwdns420103:0crwdne420103:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.label">
+        <source>Address type</source>
+        <target>crwdns420105:0crwdne420105:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.elementDescription">
+        <source>Choose the address type of the club and add the address infos.</source>
+        <target>crwdns420107:0crwdne420107:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.prependOptionLabel">
+        <source>Please choose</source>
+        <target>crwdns420109:0crwdne420109:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.options.organizationAddress">
+        <source>Organization address</source>
+        <target>crwdns420111:0crwdne420111:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.options.postAddress">
+        <source>Postal address</source>
+        <target>crwdns420113:0crwdne420113:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.options.clubAddress">
+        <source>Club address</source>
+        <target>crwdns420115:0crwdne420115:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-street.properties.label">
+        <source>Street</source>
+        <target>crwdns420117:0crwdne420117:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-house-number.properties.label">
+        <source>House number</source>
+        <target>crwdns420119:0crwdne420119:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-zip.properties.label">
+        <source>Zip</source>
+        <target>crwdns420121:0crwdne420121:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-city.properties.label">
+        <source>City</source>
+        <target>crwdns420123:0crwdne420123:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-telephone.properties.label">
+        <source>Telephone</source>
+        <target>crwdns420125:0crwdne420125:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-fax.properties.label">
+        <source>Fax</source>
+        <target>crwdns420127:0crwdne420127:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-barrier-free.properties.label">
+        <source>Barrier free</source>
+        <target>crwdns420129:0crwdne420129:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2.properties.label">
+        <source>Address 2</source>
+        <target>crwdns420131:0crwdne420131:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.label">
+        <source>Address type</source>
+        <target>crwdns420133:0crwdne420133:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.elementDescription">
+        <source>Enter a further address type of the club with all address infos.</source>
+        <target>crwdns420135:0crwdne420135:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.prependOptionLabel">
+        <source>Please choose</source>
+        <target>crwdns420137:0crwdne420137:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.options.organizationAddress">
+        <source>Organization address</source>
+        <target>crwdns420139:0crwdne420139:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.options.postAddress">
+        <source>Postal address</source>
+        <target>crwdns420141:0crwdne420141:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.options.clubAddress">
+        <source>Club address</source>
+        <target>crwdns420143:0crwdne420143:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-street.properties.label">
+        <source>Street</source>
+        <target>crwdns420145:0crwdne420145:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-house-number.properties.label">
+        <source>House number</source>
+        <target>crwdns420147:0crwdne420147:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-zip.properties.label">
+        <source>Zip</source>
+        <target>crwdns420149:0crwdne420149:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-city.properties.label">
+        <source>City</source>
+        <target>crwdns420151:0crwdne420151:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-telephone.properties.label">
+        <source>Telephone</source>
+        <target>crwdns420153:0crwdne420153:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-fax.properties.label">
+        <source>Fax</source>
+        <target>crwdns420155:0crwdne420155:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-barrier-free.properties.label">
+        <source>Barrier free</source>
+        <target>crwdns420157:0crwdne420157:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3.properties.label">
+        <source>Address 3</source>
+        <target>crwdns420159:0crwdne420159:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.label">
+        <source>Address type</source>
+        <target>crwdns420161:0crwdne420161:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.elementDescription">
+        <source>Enter a further address type of the club with all address infos.</source>
+        <target>crwdns420163:0crwdne420163:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.prependOptionLabel">
+        <source>Please choose</source>
+        <target>crwdns420165:0crwdne420165:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.options.organizationAddress">
+        <source>Organization address</source>
+        <target>crwdns420167:0crwdne420167:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.options.postAddress">
+        <source>Postal address</source>
+        <target>crwdns420169:0crwdne420169:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.options.clubAddress">
+        <source>Club address</source>
+        <target>crwdns420171:0crwdne420171:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-street.properties.label">
+        <source>Street</source>
+        <target>crwdns420173:0crwdne420173:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-house-number.properties.label">
+        <source>House number</source>
+        <target>crwdns420175:0crwdne420175:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-zip.properties.label">
+        <source>Zip</source>
+        <target>crwdns420177:0crwdne420177:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-city.properties.label">
+        <source>City</source>
+        <target>crwdns420179:0crwdne420179:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-telephone.properties.label">
+        <source>Telephone</source>
+        <target>crwdns420181:0crwdne420181:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-fax.properties.label">
+        <source>Fax</source>
+        <target>crwdns420183:0crwdne420183:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-barrier-free.properties.label">
+        <source>Barrier free</source>
+        <target>crwdns420185:0crwdne420185:0</target>
+      </trans-unit>
+      <trans-unit id="element.facebook.properties.label">
+        <source>Facebook</source>
+        <target>crwdns420187:0crwdne420187:0</target>
+      </trans-unit>
+      <trans-unit id="element.facebook.properties.elementDescription">
+        <source>Enter the complete URL to Facebook including https://.</source>
+        <target>crwdns420189:0crwdne420189:0</target>
+      </trans-unit>
+      <trans-unit id="element.twitter.properties.label">
+        <source>Twitter</source>
+        <target>crwdns420191:0crwdne420191:0</target>
+      </trans-unit>
+      <trans-unit id="element.twitter.properties.elementDescription">
+        <source>Enter the complete URL to Twitter including https://.</source>
+        <target>crwdns420193:0crwdne420193:0</target>
+      </trans-unit>
+      <trans-unit id="element.instagram.properties.label">
+        <source>Instagram</source>
+        <target>crwdns420195:0crwdne420195:0</target>
+      </trans-unit>
+      <trans-unit id="element.instagram.properties.elementDescription">
+        <source>Enter the complete URL to Instagram including https://.</source>
+        <target>crwdns420197:0crwdne420197:0</target>
+      </trans-unit>
+      <trans-unit id="element.tags.properties.label">
+        <source>Tags</source>
+        <target>crwdns420199:0crwdne420199:0</target>
+      </trans-unit>
+      <trans-unit id="element.tags.properties.elementDescription">
+        <source>Enter further tags for the alphabetic list view.</source>
+        <target>crwdns420201:0crwdne420201:0</target>
+      </trans-unit>
+      <trans-unit id="element.logo.properties.label">
+        <source>Logo</source>
+        <target>crwdns420203:0crwdne420203:0</target>
+      </trans-unit>
+      <trans-unit id="element.logo.properties.elementDescription">
+        <source>Upload the logo file (jpg, gif, png) in a square formatting. A new logo replaces the existing one.</source>
+        <target>crwdns420205:0crwdne420205:0</target>
+      </trans-unit>
+      <trans-unit id="element.image-1.properties.label">
+        <source>Image 1</source>
+        <target>crwdns420207:0crwdne420207:0</target>
+      </trans-unit>
+      <trans-unit id="element.image-1.properties.elementDescription">
+        <source>Upload an image file (jpg, gif, png). A new image replaces the existing one.</source>
+        <target>crwdns420209:0crwdne420209:0</target>
+      </trans-unit>
+      <trans-unit id="element.image-2.properties.label">
+        <source>Image 2</source>
+        <target>crwdns420211:0crwdne420211:0</target>
+      </trans-unit>
+      <trans-unit id="element.image-2.properties.elementDescription">
+        <source>Upload an image file (jpg, gif, png). A new image replaces the existing one.</source>
+        <target>crwdns420213:0crwdne420213:0</target>
+      </trans-unit>
+      <trans-unit id="element.image-3.properties.label">
+        <source>Image 3</source>
+        <target>crwdns420215:0crwdne420215:0</target>
+      </trans-unit>
+      <trans-unit id="element.image-3.properties.elementDescription">
+        <source>Upload an image file (jpg, gif, png). A new image replaces the existing one.</source>
+        <target>crwdns420217:0crwdne420217:0</target>
+      </trans-unit>
+      <trans-unit id="element.map-positions.properties.label">
+        <source>Map positions</source>
+        <target>crwdns420219:0crwdne420219:0</target>
+      </trans-unit>
+      <trans-unit id="element.map-positions.renderingOptions.previousButtonLabel">
+        <source>Previous page</source>
+        <target>crwdns420221:0crwdne420221:0</target>
+      </trans-unit>
+      <trans-unit id="element.map-positions-description.properties.label">
+        <source>Check the positions</source>
+        <target>crwdns420223:0crwdne420223:0</target>
+      </trans-unit>
+      <trans-unit id="element.map-positions-description.properties.text">
+        <source>Please check the position of each address on the map. Drag the marker to correct it.</source>
+        <target>crwdns420225:0crwdne420225:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-position.properties.label">
+        <source>Position of address 1</source>
+        <target>crwdns420227:0crwdne420227:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-position.properties.label">
+        <source>Position of address 2</source>
+        <target>crwdns420229:0crwdne420229:0</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-position.properties.label">
+        <source>Position of address 3</source>
+        <target>crwdns420231:0crwdne420231:0</target>
+      </trans-unit>
+      <trans-unit id="finisher.EmailToReceiver.subject">
+        <source>A club record was created or updated</source>
+        <target>crwdns420233:0crwdne420233:0</target>
+      </trans-unit>
+      <trans-unit id="finisher.FlashMessage.messageBody">
+        <source>Thank you. The club will be published after it was checked by an administrator.</source>
+        <target>crwdns420235:0crwdne420235:0</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

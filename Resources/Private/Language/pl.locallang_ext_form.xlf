@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2026-11-17T12:00:00Z" product-name="clubdirectory" target-language="pl">
+    <header/>
+    <body>
+      <trans-unit id="element.newClub.renderingOptions.submitButtonLabel">
+        <source>Submit</source>
+        <target state="needs-translation">Submit</target>
+      </trans-unit>
+      <trans-unit id="element.club-data.properties.label">
+        <source>Club data</source>
+        <target state="needs-translation">Club data</target>
+      </trans-unit>
+      <trans-unit id="element.club-data.renderingOptions.nextButtonLabel">
+        <source>Next page</source>
+        <target state="needs-translation">Next page</target>
+      </trans-unit>
+      <trans-unit id="element.title.properties.label">
+        <source>Title</source>
+        <target state="needs-translation">Title</target>
+      </trans-unit>
+      <trans-unit id="element.title.properties.elementDescription">
+        <source>The title is mandatory</source>
+        <target state="needs-translation">The title is mandatory</target>
+      </trans-unit>
+      <trans-unit id="element.categories.properties.label">
+        <source>Categories</source>
+        <target state="needs-translation">Categories</target>
+      </trans-unit>
+      <trans-unit id="element.categories.properties.elementDescription">
+        <source>Please select the categories of the club.</source>
+        <target state="needs-translation">Please select the categories of the club.</target>
+      </trans-unit>
+      <trans-unit id="element.activity.properties.label">
+        <source>Activity</source>
+        <target state="needs-translation">Activity</target>
+      </trans-unit>
+      <trans-unit id="element.activity.properties.elementDescription">
+        <source>Describe the activities/goals of the club.</source>
+        <target state="needs-translation">Describe the activities/goals of the club.</target>
+      </trans-unit>
+      <trans-unit id="element.description.properties.label">
+        <source>Description</source>
+        <target state="needs-translation">Description</target>
+      </trans-unit>
+      <trans-unit id="element.description.properties.elementDescription">
+        <source>Further descriptions</source>
+        <target state="needs-translation">Further descriptions</target>
+      </trans-unit>
+      <trans-unit id="element.contact-person.properties.label">
+        <source>Contact person</source>
+        <target state="needs-translation">Contact person</target>
+      </trans-unit>
+      <trans-unit id="element.contact-person.properties.elementDescription">
+        <source>Enter the contact person of the club</source>
+        <target state="needs-translation">Enter the contact person of the club</target>
+      </trans-unit>
+      <trans-unit id="element.contact-times.properties.label">
+        <source>Contact times</source>
+        <target state="needs-translation">Contact times</target>
+      </trans-unit>
+      <trans-unit id="element.contact-times.properties.elementDescription">
+        <source>Specify the times when the contact person is available.</source>
+        <target state="needs-translation">Specify the times when the contact person is available.</target>
+      </trans-unit>
+      <trans-unit id="element.email.properties.label">
+        <source>Email</source>
+        <target state="needs-translation">Email</target>
+      </trans-unit>
+      <trans-unit id="element.email.properties.elementDescription">
+        <source>Enter the email address of the club or contact person.</source>
+        <target state="needs-translation">Enter the email address of the club or contact person.</target>
+      </trans-unit>
+      <trans-unit id="element.website.properties.label">
+        <source>Website</source>
+        <target state="needs-translation">Website</target>
+      </trans-unit>
+      <trans-unit id="element.website.properties.elementDescription">
+        <source>If the club has a website, enter its complete address including https://.</source>
+        <target state="needs-translation">If the club has a website, enter its complete address including https://.</target>
+      </trans-unit>
+      <trans-unit id="element.members.properties.label">
+        <source>Members</source>
+        <target state="needs-translation">Members</target>
+      </trans-unit>
+      <trans-unit id="element.members.properties.elementDescription">
+        <source>Enter the number of members of the club.</source>
+        <target state="needs-translation">Enter the number of members of the club.</target>
+      </trans-unit>
+      <trans-unit id="element.club-home.properties.label">
+        <source>Club home</source>
+        <target state="needs-translation">Club home</target>
+      </trans-unit>
+      <trans-unit id="element.club-home.properties.elementDescription">
+        <source>Enter the name of the clubhouse if it exists.</source>
+        <target state="needs-translation">Enter the name of the clubhouse if it exists.</target>
+      </trans-unit>
+      <trans-unit id="element.district.properties.label">
+        <source>District</source>
+        <target state="needs-translation">District</target>
+      </trans-unit>
+      <trans-unit id="element.district.properties.prependOptionLabel">
+        <source>Please choose</source>
+        <target state="needs-translation">Please choose</target>
+      </trans-unit>
+      <trans-unit id="element.address-1.properties.label">
+        <source>Address 1</source>
+        <target state="needs-translation">Address 1</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.label">
+        <source>Address type</source>
+        <target state="needs-translation">Address type</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.elementDescription">
+        <source>Choose the address type of the club and add the address infos.</source>
+        <target state="needs-translation">Choose the address type of the club and add the address infos.</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.prependOptionLabel">
+        <source>Please choose</source>
+        <target state="needs-translation">Please choose</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.options.organizationAddress">
+        <source>Organization address</source>
+        <target state="needs-translation">Organization address</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.options.postAddress">
+        <source>Postal address</source>
+        <target state="needs-translation">Postal address</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-title.properties.options.clubAddress">
+        <source>Club address</source>
+        <target state="needs-translation">Club address</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-street.properties.label">
+        <source>Street</source>
+        <target state="needs-translation">Street</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-house-number.properties.label">
+        <source>House number</source>
+        <target state="needs-translation">House number</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-zip.properties.label">
+        <source>Zip</source>
+        <target state="needs-translation">Zip</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-city.properties.label">
+        <source>City</source>
+        <target state="needs-translation">City</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-telephone.properties.label">
+        <source>Telephone</source>
+        <target state="needs-translation">Telephone</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-fax.properties.label">
+        <source>Fax</source>
+        <target state="needs-translation">Fax</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-barrier-free.properties.label">
+        <source>Barrier free</source>
+        <target state="needs-translation">Barrier free</target>
+      </trans-unit>
+      <trans-unit id="element.address-2.properties.label">
+        <source>Address 2</source>
+        <target state="needs-translation">Address 2</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.label">
+        <source>Address type</source>
+        <target state="needs-translation">Address type</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.elementDescription">
+        <source>Enter a further address type of the club with all address infos.</source>
+        <target state="needs-translation">Enter a further address type of the club with all address infos.</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.prependOptionLabel">
+        <source>Please choose</source>
+        <target state="needs-translation">Please choose</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.options.organizationAddress">
+        <source>Organization address</source>
+        <target state="needs-translation">Organization address</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.options.postAddress">
+        <source>Postal address</source>
+        <target state="needs-translation">Postal address</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-title.properties.options.clubAddress">
+        <source>Club address</source>
+        <target state="needs-translation">Club address</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-street.properties.label">
+        <source>Street</source>
+        <target state="needs-translation">Street</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-house-number.properties.label">
+        <source>House number</source>
+        <target state="needs-translation">House number</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-zip.properties.label">
+        <source>Zip</source>
+        <target state="needs-translation">Zip</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-city.properties.label">
+        <source>City</source>
+        <target state="needs-translation">City</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-telephone.properties.label">
+        <source>Telephone</source>
+        <target state="needs-translation">Telephone</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-fax.properties.label">
+        <source>Fax</source>
+        <target state="needs-translation">Fax</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-barrier-free.properties.label">
+        <source>Barrier free</source>
+        <target state="needs-translation">Barrier free</target>
+      </trans-unit>
+      <trans-unit id="element.address-3.properties.label">
+        <source>Address 3</source>
+        <target state="needs-translation">Address 3</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.label">
+        <source>Address type</source>
+        <target state="needs-translation">Address type</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.elementDescription">
+        <source>Enter a further address type of the club with all address infos.</source>
+        <target state="needs-translation">Enter a further address type of the club with all address infos.</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.prependOptionLabel">
+        <source>Please choose</source>
+        <target state="needs-translation">Please choose</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.options.organizationAddress">
+        <source>Organization address</source>
+        <target state="needs-translation">Organization address</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.options.postAddress">
+        <source>Postal address</source>
+        <target state="needs-translation">Postal address</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-title.properties.options.clubAddress">
+        <source>Club address</source>
+        <target state="needs-translation">Club address</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-street.properties.label">
+        <source>Street</source>
+        <target state="needs-translation">Street</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-house-number.properties.label">
+        <source>House number</source>
+        <target state="needs-translation">House number</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-zip.properties.label">
+        <source>Zip</source>
+        <target state="needs-translation">Zip</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-city.properties.label">
+        <source>City</source>
+        <target state="needs-translation">City</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-telephone.properties.label">
+        <source>Telephone</source>
+        <target state="needs-translation">Telephone</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-fax.properties.label">
+        <source>Fax</source>
+        <target state="needs-translation">Fax</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-barrier-free.properties.label">
+        <source>Barrier free</source>
+        <target state="needs-translation">Barrier free</target>
+      </trans-unit>
+      <trans-unit id="element.facebook.properties.label">
+        <source>Facebook</source>
+        <target state="needs-translation">Facebook</target>
+      </trans-unit>
+      <trans-unit id="element.facebook.properties.elementDescription">
+        <source>Enter the complete URL to Facebook including https://.</source>
+        <target state="needs-translation">Enter the complete URL to Facebook including https://.</target>
+      </trans-unit>
+      <trans-unit id="element.twitter.properties.label">
+        <source>Twitter</source>
+        <target state="needs-translation">Twitter</target>
+      </trans-unit>
+      <trans-unit id="element.twitter.properties.elementDescription">
+        <source>Enter the complete URL to Twitter including https://.</source>
+        <target state="needs-translation">Enter the complete URL to Twitter including https://.</target>
+      </trans-unit>
+      <trans-unit id="element.instagram.properties.label">
+        <source>Instagram</source>
+        <target state="needs-translation">Instagram</target>
+      </trans-unit>
+      <trans-unit id="element.instagram.properties.elementDescription">
+        <source>Enter the complete URL to Instagram including https://.</source>
+        <target state="needs-translation">Enter the complete URL to Instagram including https://.</target>
+      </trans-unit>
+      <trans-unit id="element.tags.properties.label">
+        <source>Tags</source>
+        <target state="needs-translation">Tags</target>
+      </trans-unit>
+      <trans-unit id="element.tags.properties.elementDescription">
+        <source>Enter further tags for the alphabetic list view.</source>
+        <target state="needs-translation">Enter further tags for the alphabetic list view.</target>
+      </trans-unit>
+      <trans-unit id="element.logo.properties.label">
+        <source>Logo</source>
+        <target state="needs-translation">Logo</target>
+      </trans-unit>
+      <trans-unit id="element.logo.properties.elementDescription">
+        <source>Upload the logo file (jpg, gif, png) in a square formatting. A new logo replaces the existing one.</source>
+        <target state="needs-translation">Upload the logo file (jpg, gif, png) in a square formatting. A new logo replaces the existing one.</target>
+      </trans-unit>
+      <trans-unit id="element.image-1.properties.label">
+        <source>Image 1</source>
+        <target state="needs-translation">Image 1</target>
+      </trans-unit>
+      <trans-unit id="element.image-1.properties.elementDescription">
+        <source>Upload an image file (jpg, gif, png). A new image replaces the existing one.</source>
+        <target state="needs-translation">Upload an image file (jpg, gif, png). A new image replaces the existing one.</target>
+      </trans-unit>
+      <trans-unit id="element.image-2.properties.label">
+        <source>Image 2</source>
+        <target state="needs-translation">Image 2</target>
+      </trans-unit>
+      <trans-unit id="element.image-2.properties.elementDescription">
+        <source>Upload an image file (jpg, gif, png). A new image replaces the existing one.</source>
+        <target state="needs-translation">Upload an image file (jpg, gif, png). A new image replaces the existing one.</target>
+      </trans-unit>
+      <trans-unit id="element.image-3.properties.label">
+        <source>Image 3</source>
+        <target state="needs-translation">Image 3</target>
+      </trans-unit>
+      <trans-unit id="element.image-3.properties.elementDescription">
+        <source>Upload an image file (jpg, gif, png). A new image replaces the existing one.</source>
+        <target state="needs-translation">Upload an image file (jpg, gif, png). A new image replaces the existing one.</target>
+      </trans-unit>
+      <trans-unit id="element.map-positions.properties.label">
+        <source>Map positions</source>
+        <target state="needs-translation">Map positions</target>
+      </trans-unit>
+      <trans-unit id="element.map-positions.renderingOptions.previousButtonLabel">
+        <source>Previous page</source>
+        <target state="needs-translation">Previous page</target>
+      </trans-unit>
+      <trans-unit id="element.map-positions-description.properties.label">
+        <source>Check the positions</source>
+        <target state="needs-translation">Check the positions</target>
+      </trans-unit>
+      <trans-unit id="element.map-positions-description.properties.text">
+        <source>Please check the position of each address on the map. Drag the marker to correct it.</source>
+        <target state="needs-translation">Please check the position of each address on the map. Drag the marker to correct it.</target>
+      </trans-unit>
+      <trans-unit id="element.address-1-position.properties.label">
+        <source>Position of address 1</source>
+        <target state="needs-translation">Position of address 1</target>
+      </trans-unit>
+      <trans-unit id="element.address-2-position.properties.label">
+        <source>Position of address 2</source>
+        <target state="needs-translation">Position of address 2</target>
+      </trans-unit>
+      <trans-unit id="element.address-3-position.properties.label">
+        <source>Position of address 3</source>
+        <target state="needs-translation">Position of address 3</target>
+      </trans-unit>
+      <trans-unit id="finisher.EmailToReceiver.subject">
+        <source>A club record was created or updated</source>
+        <target state="needs-translation">A club record was created or updated</target>
+      </trans-unit>
+      <trans-unit id="finisher.FlashMessage.messageBody">
+        <source>Thank you. The club will be published after it was checked by an administrator.</source>
+        <target state="needs-translation">Thank you. The club will be published after it was checked by an administrator.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
