@@ -146,6 +146,10 @@ settings:
     category: clubdirectory.form
     type: string
     default: 'description'
+  clubdirectory.form.richText.translationsPath:
+    category: clubdirectory.form
+    type: string
+    default: 'EXT:rte_ckeditor/Resources/Public/Contrib/translations/'
 
   clubdirectory.glossary2.mergeNumbers:
     category: clubdirectory.glossary2

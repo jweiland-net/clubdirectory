@@ -37,6 +37,11 @@ Features:
     :ref:`frontend-rich-text-editor`
 *   [FEATURE] Render rich text elements in the HTML and the text part of
     the moderation mail
+*   [TASK] Load the assets of the rich text editor with the partial
+    :file:`RichTextEditor/LoadAssets.html` of the club form instead of PHP.
+    The folder of the CKEditor translations is the new site setting
+    `clubdirectory.form.richText.translationsPath`. See
+    :ref:`frontend-rich-text-editor-assets-override`
 
 Bugfixes:
 
