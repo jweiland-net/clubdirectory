@@ -160,7 +160,9 @@ own template of the action `perform`:
                    overrideConfiguration="{settings.overrideForm}"/>
 
 Keep the factory class: it adds the club and the moderation token to the
-form action and configures the rich text elements. Keep the element
+form action, configures the rich text elements and marks the form with
+the rendering option `formOwner: clubdirectory`. The hooks of
+clubdirectory act on marked forms only, see :ref:`developer-form-hooks`. Keep the element
 identifiers `categories` and `district`, which get their options from the
 database, and the identifier `newClub` of the form. Check the indexes of
 :typoscript:`overrideForm`, if you add or remove elements.

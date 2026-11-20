@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\Tests\Functional\Traits;
 
 use JWeiland\Clubdirectory\Configuration\ExtConf;
 use JWeiland\Clubdirectory\Domain\Validator\GeocodingFailureValidator;
+use JWeiland\Clubdirectory\Form\FormOwner;
 use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
 use TYPO3\CMS\Core\Http\ServerRequest;
@@ -62,7 +63,10 @@ trait ClubFormTestTrait
         return new Request($serverRequest);
     }
 
-    private function createFormDefinition(): FormDefinition
+    /**
+     * @param string $formOwner Rendering option "formOwner". Forms of other owners are skipped by the hooks.
+     */
+    private function createFormDefinition(string $formOwner = FormOwner::CLUBDIRECTORY): FormDefinition
     {
         $genericElement = ['implementationClassName' => GenericFormElement::class];
         $formDefinition = new FormDefinition('newClub', [
@@ -78,6 +82,8 @@ trait ClubFormTestTrait
                 'GeocodingFailure' => ['implementationClassName' => GeocodingFailureValidator::class],
             ],
         ]);
+
+        $formDefinition->setRenderingOption(FormOwner::RENDERING_OPTION, $formOwner);
 
         $page = $formDefinition->createPage('club-data');
         foreach (['title', 'description', 'address-1-street', 'address-1-house-number', 'address-1-zip', 'address-1-city'] as $identifier) {

@@ -13,6 +13,7 @@ namespace JWeiland\Clubdirectory\Hook\Form;
 
 use Doctrine\DBAL\ArrayParameterType;
 use JWeiland\Clubdirectory\Configuration\ExtConf;
+use JWeiland\Clubdirectory\Form\FormOwner;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -31,6 +32,7 @@ use TYPO3\CMS\Form\Domain\Model\Renderable\RenderableInterface;
  *
  * The options are translated into the current language and sorted by label.
  * SaveClubFinisher stores submitted values only, if they are an option.
+ * Elements of forms, which are not built by clubdirectory, are skipped.
  */
 readonly class PrefillOptionsHook
 {
@@ -47,7 +49,7 @@ readonly class PrefillOptionsHook
      */
     public function initializeFormElement(RenderableInterface $renderable): void
     {
-        if (!$renderable instanceof FormElementInterface) {
+        if (!$renderable instanceof FormElementInterface || !FormOwner::isRenderableOfClubdirectoryForm($renderable)) {
             return;
         }
 

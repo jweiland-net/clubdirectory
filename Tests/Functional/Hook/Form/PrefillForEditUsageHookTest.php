@@ -164,4 +164,15 @@ class PrefillForEditUsageHookTest extends FunctionalTestCase
 
         self::assertNull($this->getElement('title')->getDefaultValue());
     }
+
+    #[Test]
+    public function afterBuildingFinishedIgnoresFormOfOtherExtension(): void
+    {
+        $this->formDefinition = $this->createFormDefinition('events2');
+        $this->getElement('title')->setProperty('dbMapping', ['column' => 'title']);
+
+        $this->prefill(self::OWNER, self::VISIBLE_CLUB);
+
+        self::assertNull($this->getElement('title')->getDefaultValue());
+    }
 }

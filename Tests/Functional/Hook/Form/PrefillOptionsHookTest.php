@@ -47,9 +47,9 @@ class PrefillOptionsHookTest extends FunctionalTestCase
     /**
      * @return array<int|string, mixed>
      */
-    private function getOptions(string $identifier, int $rootCategory = 0): array
+    private function getOptions(string $identifier, int $rootCategory = 0, string $formOwner = 'clubdirectory'): array
     {
-        $element = $this->createFormDefinition()->getElementByIdentifier($identifier);
+        $element = $this->createFormDefinition($formOwner)->getElementByIdentifier($identifier);
         self::assertNotNull($element);
 
         $subject = new PrefillOptionsHook(
@@ -82,5 +82,18 @@ class PrefillOptionsHookTest extends FunctionalTestCase
             ->initializeFormElement($element);
 
         self::assertSame([2 => 'Altstadt', 1 => 'Wiehre'], $element->getProperties()['options']);
+    }
+
+    #[Test]
+    public function initializeFormElementIgnoresFormOfOtherExtension(): void
+    {
+        // The options of the test form definition are kept
+        self::assertSame([7 => 'Sports', 8 => 'Music'], $this->getOptions('categories', 0, 'events2'));
+    }
+
+    #[Test]
+    public function initializeFormElementIgnoresFormWithoutOwner(): void
+    {
+        self::assertSame([7 => 'Sports', 8 => 'Music'], $this->getOptions('categories', 0, ''));
     }
 }

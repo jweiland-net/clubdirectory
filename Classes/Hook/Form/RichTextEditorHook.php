@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace JWeiland\Clubdirectory\Hook\Form;
 
+use JWeiland\Clubdirectory\Form\FormOwner;
 use JWeiland\Clubdirectory\Form\RichTextEditorAssets;
 use JWeiland\Clubdirectory\Form\RichTextFormElementConfigurator;
 use JWeiland\Clubdirectory\Sanitizer\RichTextSanitizer;
@@ -27,6 +28,9 @@ use TYPO3\CMS\Form\Domain\Runtime\FormRuntime;
  * for the column of the element (see ModifyRichTextSanitizerConfigurationEvent).
  * The column is "properties.dbMapping.column", the table is
  * "properties.dbMapping.table" (default: tx_clubdirectory_domain_model_club).
+ *
+ * Other extensions use the same data type for their forms. So forms, which
+ * are not built by clubdirectory, are skipped, see FormOwner.
  */
 final readonly class RichTextEditorHook
 {
@@ -44,6 +48,7 @@ final readonly class RichTextEditorHook
         if (
             !$renderable instanceof FormElementInterface
             || ($renderable->getProperties()['dbMapping']['dataType'] ?? '') !== RichTextFormElementConfigurator::DATA_TYPE
+            || !FormOwner::isClubdirectoryForm($formRuntime->getFormDefinition())
         ) {
             return;
         }

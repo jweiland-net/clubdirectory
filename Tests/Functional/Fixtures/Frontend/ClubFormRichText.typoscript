@@ -1,0 +1,6 @@
+@import 'EXT:clubdirectory/Tests/Functional/Fixtures/Frontend/ClubForm.typoscript'
+
+plugin.tx_clubdirectory.settings.new.richText {
+  enable = 1
+  elements = description
+}

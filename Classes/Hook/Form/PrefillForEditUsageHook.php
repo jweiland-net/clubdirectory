@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Hook\Form;
 
 use JWeiland\Clubdirectory\Converter\RteContentConverter;
+use JWeiland\Clubdirectory\Form\FormOwner;
 use JWeiland\Clubdirectory\Service\ClubAccessService;
 use JWeiland\Clubdirectory\Service\ClubFormRecordService;
 use Psr\Http\Message\ServerRequestInterface;
@@ -45,6 +46,8 @@ use TYPO3\CMS\Form\Domain\Model\Renderable\RenderableInterface;
  * - dataType "richText": The HTML of the column is used for the rich text
  *   editor. Fluid escapes it for the textarea.
  *
+ * Elements of forms, which are not built by clubdirectory, are skipped.
+ *
  * The form could be used outside the Management plugin (e.g. as form content
  * element). So the access is checked here, too. Else everyone could read
  * hidden clubs of other users.
@@ -71,7 +74,10 @@ readonly class PrefillForEditUsageHook
     public function afterBuildingFinished(RenderableInterface $renderable): void
     {
         $request = $this->getRequest();
-        if (!$renderable instanceof FormElementInterface || !$request instanceof ServerRequestInterface) {
+        if (!$renderable instanceof FormElementInterface
+            || !$request instanceof ServerRequestInterface
+            || !FormOwner::isRenderableOfClubdirectoryForm($renderable)
+        ) {
             return;
         }
 

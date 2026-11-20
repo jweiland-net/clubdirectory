@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace JWeiland\Clubdirectory\Domain\Factory;
 
 use JWeiland\Clubdirectory\Configuration\ExtConf;
+use JWeiland\Clubdirectory\Form\FormOwner;
 use JWeiland\Clubdirectory\Form\RichTextFormElementConfigurator;
 use JWeiland\Clubdirectory\Service\ClubAccessService;
 use Psr\Http\Message\ServerRequestInterface;
@@ -22,6 +23,8 @@ use TYPO3\CMS\Form\Domain\Model\FormDefinition;
  * Builds the club form based on EXT:form. Before building, the
  * configuration is modified:
  *
+ * - The form is marked with the rendering option "formOwner", so the hooks
+ *   of clubdirectory act on this form only, see FormOwner
  * - The club to edit and the moderation token of the query are kept for
  *   the form action
  * - Sender and recipients of the EmailToReceiver finisher are taken from
@@ -48,6 +51,7 @@ class ArrayFormFactory extends \TYPO3\CMS\Form\Domain\Factory\ArrayFormFactory
         ?string $prototypeName = null,
         ?ServerRequestInterface $request = null,
     ): FormDefinition {
+        $configuration = FormOwner::markConfiguration($configuration);
         if ($request instanceof ServerRequestInterface) {
             $configuration = $this->addClubToFormAction($configuration, $request);
         }
