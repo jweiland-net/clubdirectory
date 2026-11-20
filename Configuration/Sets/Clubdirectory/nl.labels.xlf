@@ -31,6 +31,34 @@
         <source>Glossary2</source>
         <target state="needs-translation">Glossary2</target>
       </trans-unit>
+      <trans-unit id="categories.clubdirectory.form">
+        <source>Club form</source>
+        <target state="needs-translation">Club form</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.form.richText.enable">
+        <source>Enable rich text editor</source>
+        <target state="needs-translation">Enable rich text editor</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.form.richText.enable">
+        <source>Use CKEditor 5 of EXT:rte_ckeditor for the rich text elements of the club form based on EXT:form. Requires EXT:rte_ckeditor.</source>
+        <target state="needs-translation">Use CKEditor 5 of EXT:rte_ckeditor for the rich text elements of the club form based on EXT:form. Requires EXT:rte_ckeditor.</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.form.richText.elements">
+        <source>Rich text elements</source>
+        <target state="needs-translation">Rich text elements</target>
+      </trans-unit>
+      <trans-unit id="settings.clubdirectory.form.richText.translationsPath">
+        <source>Translations of the rich text editor</source>
+        <target state="needs-translation">Translations of the rich text editor</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.form.richText.translationsPath">
+        <source>Folder with the translations of CKEditor 5 (e.g. de.js). Empty: English user interface only.</source>
+        <target state="needs-translation">Folder with the translations of CKEditor 5 (e.g. de.js). Empty: English user interface only.</target>
+      </trans-unit>
+      <trans-unit id="settings.description.clubdirectory.form.richText.elements">
+        <source>Comma separated identifiers of form elements, which get the rich text editor. Elements with "dataType: richText" in the form definition get it, too.</source>
+        <target state="needs-translation">Comma separated identifiers of form elements, which get the rich text editor. Elements with "dataType: richText" in the form definition get it, too.</target>
+      </trans-unit>
       <trans-unit id="settings.clubdirectory.templateRootPath">
         <source>Templates</source>
         <target state="needs-translation">Templates</target>
