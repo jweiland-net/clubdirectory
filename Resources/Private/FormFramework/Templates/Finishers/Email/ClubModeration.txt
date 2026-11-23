@@ -1,27 +1,28 @@
 {namespace c=JWeiland\Clubdirectory\ViewHelpers}
+<f:comment>Text part of the mail: all output is rendered raw, as HTML entities would break the links and texts.</f:comment>
 <f:layout name="SystemEmail"/>
-<f:section name="Title">{title}</f:section>
+<f:section name="Title">{title -> f:format.raw()}</f:section>
 <f:section name="Main">
 <f:variable name="club">{finisherVariableProvider.SaveClub.insertedUids.tx_clubdirectory_domain_model_club}</f:variable>
 <f:variable name="moderationToken">{finisherVariableProvider.SaveClub.moderationToken}</f:variable>
-{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.salutation')},
+{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.salutation') -> f:format.raw()},
 
-<f:if condition="{finisherVariableProvider.SaveClub.isNewClub}"><f:then>{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.body.create')}</f:then><f:else>{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.body.update')}</f:else></f:if>
+<f:if condition="{finisherVariableProvider.SaveClub.isNewClub}"><f:then>{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.body.create') -> f:format.raw()}</f:then><f:else>{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.body.update') -> f:format.raw()}</f:else></f:if>
 
-{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.editRecord')}:
-<f:uri.action pageUid="{pidOfManagementPage}" action="perform" controller="Management" extensionName="Clubdirectory" pluginName="Management" absolute="1" arguments="{club: club, moderationToken: moderationToken}"/>
+{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.editRecord') -> f:format.raw()}:
+<f:format.raw><f:uri.action pageUid="{pidOfManagementPage}" action="perform" controller="Management" extensionName="Clubdirectory" pluginName="Management" absolute="1" arguments="{club: club, moderationToken: moderationToken}"/></f:format.raw>
 
-{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.activateRecord')}:
-<f:uri.action pageUid="{pidOfManagementPage}" action="confirmActivation" controller="Management" extensionName="Clubdirectory" pluginName="Management" absolute="1" arguments="{club: club, moderationToken: moderationToken}"/>
+{f:translate(key: 'LLL:EXT:clubdirectory/Resources/Private/Language/locallang.xlf:email.activateRecord') -> f:format.raw()}:
+<f:format.raw><f:uri.action pageUid="{pidOfManagementPage}" action="confirmActivation" controller="Management" extensionName="Clubdirectory" pluginName="Management" absolute="1" arguments="{club: club, moderationToken: moderationToken}"/></f:format.raw>
 
 <formvh:renderAllFormValues renderable="{form.formDefinition}" as="formValue"><f:spaceless>
     <f:if condition="{formValue.isSection}">
-        <f:then>*** {formvh:translateElementProperty(element: formValue.element, property: 'label')} ***</f:then>
-        <f:else if="{formValue.isMultiValue}">{formvh:translateElementProperty(element: formValue.element, property: 'label')}: <f:for each="{formValue.processedValue}" as="singleValue">- {singleValue -> f:format.raw()}
+        <f:then>*** {formvh:translateElementProperty(element: formValue.element, property: 'label') -> f:format.raw()} ***</f:then>
+        <f:else if="{formValue.isMultiValue}">{formvh:translateElementProperty(element: formValue.element, property: 'label') -> f:format.raw()}: <f:for each="{formValue.processedValue}" as="singleValue">- {singleValue -> f:format.raw()}
         </f:for></f:else>
-        <f:else if="{formValue.processedValue} && {formValue.element.properties.dbMapping.dataType} == 'richText'">{formvh:translateElementProperty(element: formValue.element, property: 'label')}:
+        <f:else if="{formValue.processedValue} && {formValue.element.properties.dbMapping.dataType} == 'richText'">{formvh:translateElementProperty(element: formValue.element, property: 'label') -> f:format.raw()}:
 <c:formatRichText element="{formValue.element}" value="{formValue.processedValue}" format="plaintext"/></f:else>
-        <f:else>{formvh:translateElementProperty(element: formValue.element, property: 'label')}: <f:if condition="{formValue.processedValue}"><f:then>{formValue.processedValue -> f:format.raw()}</f:then><f:else>-</f:else></f:if></f:else>
+        <f:else>{formvh:translateElementProperty(element: formValue.element, property: 'label') -> f:format.raw()}: <f:if condition="{formValue.processedValue}"><f:then>{formValue.processedValue -> f:format.raw()}</f:then><f:else>-</f:else></f:if></f:else>
     </f:if>
 </f:spaceless>
 </formvh:renderAllFormValues>
