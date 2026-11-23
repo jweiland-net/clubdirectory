@@ -190,6 +190,33 @@ class ClubFormModerationMailTest extends FunctionalTestCase
     }
 
     /**
+     * Returns the decoded body of the MIME part with the given content type
+     */
+    private function getMailPart(string $contentType): string
+    {
+        self::assertFileExists(self::MBOX_FILE, 'No mail was sent');
+        $mail = str_replace("\r\n", "\n", (string)file_get_contents(self::MBOX_FILE));
+        self::assertMatchesRegularExpression('/boundary=([^\s;]+)/', $mail);
+        preg_match('/boundary=([^\s;]+)/', $mail, $matches);
+        $boundary = trim($matches[1], '"');
+
+        foreach (explode('--' . $boundary, $mail) as $part) {
+            [$headers, $body] = array_pad(explode("\n\n", ltrim($part, "\n"), 2), 2, '');
+            if (stripos($headers, 'Content-Type: ' . $contentType) === false) {
+                continue;
+            }
+
+            return match (true) {
+                stripos($headers, 'Content-Transfer-Encoding: quoted-printable') !== false => quoted_printable_decode($body),
+                stripos($headers, 'Content-Transfer-Encoding: base64') !== false => (string)base64_decode($body),
+                default => $body,
+            };
+        }
+
+        self::fail('The mail has no part of type ' . $contentType);
+    }
+
+    /**
      * @return array<string, mixed>
      */
     private function getNewClub(): array
@@ -228,6 +255,35 @@ class ClubFormModerationMailTest extends FunctionalTestCase
         self::assertStringContainsString(urlencode(self::PLUGIN_NAMESPACE . '[action]') . '=perform', $mail);
         self::assertStringNotContainsString('tx_yellowpages2', $mail);
         self::assertStringNotContainsString('tx_events2', $mail);
+    }
+
+    /**
+     * Plain text clients show the text part as it is. HTML entities like
+     * "&amp;" in the links would break the parameters of the links.
+     */
+    #[Test]
+    public function textPartOfMailContainsLinksWithoutHtmlEntities(): void
+    {
+        $this->submitMapPage();
+
+        $club = $this->getNewClub();
+        $moderationToken = $this->get(ClubAccessService::class)->generateModerationToken((int)$club['uid']);
+        $textPart = $this->getMailPart('text/plain');
+
+        self::assertStringContainsString(
+            urlencode(self::PLUGIN_NAMESPACE . '[action]') . '=confirmActivation&'
+            . urlencode(self::PLUGIN_NAMESPACE . '[club]') . '=' . $club['uid'] . '&',
+            $textPart,
+        );
+        self::assertStringContainsString(
+            urlencode(self::PLUGIN_NAMESPACE . '[moderationToken]') . '=' . $moderationToken,
+            $textPart,
+        );
+        self::assertStringContainsString(urlencode(self::PLUGIN_NAMESPACE . '[action]') . '=perform&', $textPart);
+        self::assertStringContainsString('Chess club', $textPart);
+        self::assertStringNotContainsString('&amp;', $textPart);
+        self::assertStringNotContainsString('&quot;', $textPart);
+        self::assertStringNotContainsString('&#039;', $textPart);
     }
 
     #[Test]
