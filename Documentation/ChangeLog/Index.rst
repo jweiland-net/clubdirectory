@@ -5,6 +5,17 @@
 ChangeLog
 =========
 
+..  _changelog-10-0-1:
+
+Version 10.0.1
+==============
+
+Bugfixes:
+
+*   [BUGFIX] Render the links of the text part of the moderation mail
+    without HTML entities like `&amp;`, so they work in plain text mail
+    clients
+
 ..  _changelog-10-0-0:
 
 Version 10.0.0
